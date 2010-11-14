@@ -80,8 +80,15 @@ class IRCConnection {
 	 * Reads a line from socket
 	 */
 	public function readLine() {
+		// read line
 		$input = socket_read($this->socket, 512, PHP_NORMAL_READ);
+		
+		// send debug lines
 		if (defined('DEBUG')) print("--> ".$input);
+		
+		// remove \n and \r
+		$input = str_replace("\n", "", str_replace("\r", "", $input));
+		
 		return $input;
 	}
 	
