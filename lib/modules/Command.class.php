@@ -11,7 +11,7 @@ abstract class Command extends Module {
 	
 	/**
 	 * Contains the bot instance
-	 * @var	Bot
+	 * @var	BotModule
 	 */
 	protected $bot = null;
 	
@@ -24,8 +24,8 @@ abstract class Command extends Module {
 	
 	/**
 	 * Creates a new instance of type Command
-	 * @param	Bot		$bot
-	 * @param	string	$name
+	 * @param	BotModule	$bot
+	 * @param	string		$name
 	 */
 	public function __construct(&$bot, $name) {
 		$this->bot = &$bot;
