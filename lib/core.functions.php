@@ -5,6 +5,9 @@ set_exception_handler(array('Services', 'handleException'));
 // define error handler
 set_error_handler(array('Services', 'handleError'), E_ALL);
 
+// define shutdown method
+register_shutdown_function(array('Services', 'destruct'));
+
 /**
  * Autoloads default classes
  * @param	string	$className
