@@ -81,13 +81,10 @@ class IRCConnection {
 	 */
 	public function readLine() {
 		// read line
-		$input = socket_read($this->socket, 512, PHP_NORMAL_READ);
+		$input = str_replace("\n", "", socket_read($this->socket, 512, PHP_NORMAL_READ));
 		
 		// send debug lines
-		if (defined('DEBUG')) print("--> ".$input."\n");
-		
-		// remove \n and \r
-		$input = str_replace("\n", "", $input);
+		if (defined('DEBUG') and $input != "") print("--> ".$input."\n");
 		
 		return $input;
 	}
@@ -108,10 +105,23 @@ class IRCConnection {
 	}
 	
 	/**
+	 * Returnes true if the connection is alive
+	 */
+	public function isAlive() {
+		if ($this->socket !== false) return true;
+		return false;
+	}
+	
+	/**
 	 * Shuts down the connection
 	 */
 	public function shutdown() {
 		Services::getEvent()->fire($this, 'shutdown');
+		
+		// Shutdown server connection if existant
+		if ($this->socket !== false) {
+			$this->protocol->shutdownConnection();
+		}
 	}
 }
 ?>
