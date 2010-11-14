@@ -78,6 +78,7 @@ class Services {
 		$this->initUserManager();
 		$this->initBotManager();
 		$this->initConnection();
+		self::$ircObj->start();
 		$this->initModules();
 	}
 	
