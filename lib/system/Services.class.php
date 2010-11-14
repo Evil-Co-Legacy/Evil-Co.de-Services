@@ -1,6 +1,8 @@
 <?php
 // defines
 define('IRCD', 'inspircd');
+// Uncomment the following to enable debugging
+define('DEBUG', 1);
 
 // imports
 require_once(SDIR.'lib/core.functions.php');
