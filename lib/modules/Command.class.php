@@ -16,10 +16,18 @@ abstract class Command extends Module {
 	protected $bot = null;
 	
 	/**
-	 * Creates a new instance of type Command
-	 * @param	Bot	$bot
+	 * Contains the name of bound command
+	 * Note: This must be uppercase!
+	 * @var	string
 	 */
-	public function __construct(&$bot) {
+	public $commandName = '';
+	
+	/**
+	 * Creates a new instance of type Command
+	 * @param	Bot		$bot
+	 * @param	string	$name
+	 */
+	public function __construct(&$bot, $name) {
 		$this->bot = &$bot;
 	}
 	
@@ -29,6 +37,19 @@ abstract class Command extends Module {
 	 * @param	string		$message
 	 */
 	abstract public function execute($user, $message);
+	
+	/**
+	 * Returnes true if the given line matches command
+	 * @param	string	$input
+	 * @return	boolean
+	 */
+	public final function matches($command) {
+		if (!empty($this->commandName) and strtoupper($command) == $this->commandName) return true;
+		
+		// TODO: Add more match types here
+		
+		return false;
+	}
 	
 	/**
 	 * Registers the command
