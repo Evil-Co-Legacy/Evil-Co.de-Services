@@ -6,6 +6,10 @@
  * @copyright	2010 DEVel Fusion
  */
 interface Module {
-	// nothing to do here yet
+	
+	/**
+	 * Registeres events
+	 */
+	public function registerEvents();
 }
 ?>
