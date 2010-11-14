@@ -110,7 +110,23 @@ class Services {
 	 * Creates a new database connection
 	 */
 	protected function initDB() {
-		self::$dbObj = new MySQLDatabase($dbName, $dbUser, $dbPassword, $dbHost, $dbCharset = 'UTF8');
+		// get configuration
+		$db = self::getConfiguration()->get('database');
+		
+		// validate
+		if (!isset($db['driver'], $db['hostname'], $db['username'], $db['password'], $db['dbname'])) throw new Exception("Invalid Database configuration!");
+		
+		// try to find database driver
+		if (!file_exists(SDIR.'lib/system/database/'.$db['driver'].'Database.class.php')) throw new Exception("Invalid database driver: ".$db['driver']);
+		
+		// get drivers classname
+		$className = $db['driver'].'Database';
+		
+		// include driver
+		require_once(SDIR.'lib/system/database/'.$className.'.class.php');
+		
+		// create new instance
+		self::$dbObj = new $className($db['dbname'], $db['username'], $db['password'], $db['hostname'], 'UTF8');
 	}
 	
 	/**
