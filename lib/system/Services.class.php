@@ -17,6 +17,14 @@ function __autoload($className) {
 	}
 }
 
+/**
+ * @see Database::escapeString()
+ * @param	string	$str
+ */
+function escapeString($str) {
+	return Services::getDB()->escapeString($str);
+}
+
 // imports
 require_once(SDIR.'lib/system/configuration/Configuration.class.php');
 require_once(SDIR.'lib/system/irc/IRCConnection.class.php');
