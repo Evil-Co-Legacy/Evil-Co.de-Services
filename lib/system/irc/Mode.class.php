@@ -23,7 +23,7 @@ interface Mode {
 	 * Returnes true if this mode allows arguments
 	 * @return	boolean
 	 */
-	public function canHaveArgument();
+	public static function canHaveArgument();
 	
 	/**
 	 * Returnes the argument (if any) of this mode
