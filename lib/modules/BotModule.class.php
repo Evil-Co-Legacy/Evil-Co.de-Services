@@ -63,6 +63,14 @@ abstract class BotModule extends Module {
 	}
 	
 	/**
+	 * Adds a new command to bot
+	 * @param	CommandModule	$command
+	 */
+	public function registerCommand($command) {
+		$this->commands[] = $command;
+	}
+	
+	/**
 	 * Registeres a bot (Sas the module manager that this module is available)
 	 */
 	public static function registerBot() {
