@@ -84,7 +84,7 @@ class IRCConnection {
 		$input = socket_read($this->socket, 512, PHP_NORMAL_READ);
 		
 		// send debug lines
-		if (defined('DEBUG')) print("--> ".$input);
+		if (defined('DEBUG')) print("--> ".$input."\n");
 		
 		// remove \n and \r
 		$input = str_replace("\n", "", str_replace("\r", "", $input));
