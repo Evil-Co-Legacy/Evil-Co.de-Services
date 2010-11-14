@@ -164,5 +164,13 @@ class Services {
 	public static function getUserManager() {
 		return self::$userManagerObj;
 	}
+	
+	/**
+	 * Handles uncought exceptions
+	 * @param	Exception	$ex
+	 */
+	public static function handleException(Exception $ex) {
+		print($ex);
+	}
 }
 ?>
