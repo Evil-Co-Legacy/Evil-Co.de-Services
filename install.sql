@@ -24,3 +24,10 @@ CREATE TABLE `evilcode_services`.`language_item` (
 ) ENGINE = MYISAM ;
 
 -- TODO: Add item dump here
+
+-- Module database
+CREATE TABLE `evilcode_services`.`module` (
+	`moduleID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	`name` VARCHAR( 255 ) NOT NULL ,
+	`timestamp` INT NOT NULL
+) ENGINE = MYISAM ;
