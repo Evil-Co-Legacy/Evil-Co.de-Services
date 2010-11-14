@@ -74,6 +74,13 @@ class Services {
 	}
 	
 	/**
+	 * Shuts down our services
+	 */
+	public static function destruct() {
+		if (self::getConnection() !== null) self::getConnection()->shutdown();
+	}
+	
+	/**
 	 * Creates a new configuration object
 	 */
 	protected function initConfiguration() {
