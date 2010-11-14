@@ -52,6 +52,11 @@ abstract class CommandModule extends Module {
 	}
 	
 	/**
+	 * @see	Module::registerEvents()
+	 */
+	public final function registerEvents();
+	
+	/**
 	 * Registers the command
 	 */
 	public static final function registerCommand() {
