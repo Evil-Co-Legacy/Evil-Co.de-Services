@@ -87,7 +87,7 @@ class IRCConnection {
 		if (defined('DEBUG')) print("--> ".$input."\n");
 		
 		// remove \n and \r
-		$input = str_replace("\n", "", str_replace("\r", "", $input));
+		$input = str_replace("\n", "", $input);
 		
 		return $input;
 	}
@@ -105,6 +105,13 @@ class IRCConnection {
 	 */
 	public function sendServerLine($message) {
 		$this->sendLine($this->protocol->formateServerLine($message));
+	}
+	
+	/**
+	 * Shuts down the connection
+	 */
+	public function shutdown() {
+		Services::getEvent()->fire($this, 'shutdown');
 	}
 }
 ?>
