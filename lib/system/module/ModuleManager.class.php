@@ -54,7 +54,7 @@ class ModuleManager {
 		// call special module methods
 		switch(get_parent_class($this->moduleList[$index])) {
 			case 'Bot':
-				call_user_func(array($runtimeName, 'registerClient'));
+				call_user_func(array($runtimeName, 'registerBot'));
 				break;
 			case 'Command':
 				call_user_func(array($runtimeName, 'registerCommand'));
