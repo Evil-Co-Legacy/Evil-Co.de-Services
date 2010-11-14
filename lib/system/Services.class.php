@@ -178,7 +178,7 @@ class Services {
 	 * Returnes the current EventHandler object
 	 */
 	public static function getEvent() {
-		return self::$event;
+		return self::$eventObj;
 	}
 	
 	/**
