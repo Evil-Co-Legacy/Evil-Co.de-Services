@@ -16,6 +16,12 @@ abstract class AbstractModeList implements ModeList {
 	protected $modeList = array();
 	
 	/**
+	 * Contains the type of all modes that should managed by this class
+	 * @var	string
+	 */
+	protected $type = '';
+	
+	/**
 	 * @see	ModeList::__construct()
 	 */
 	public function __construct($modeString = '+') {
