@@ -22,3 +22,5 @@ CREATE TABLE `evilcode_services`.`language_item` (
 	`name` VARCHAR( 255 ) NOT NULL ,
 	`value` TEXT NOT NULL
 ) ENGINE = MYISAM ;
+
+-- TODO: Add item dump here
