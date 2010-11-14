@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config SYSTEM "http://www.evil-co.de/irc/DTDs/config.dtd">
+<config>
+	<connection>
+		<!-- 
+			[REQUIRED]] Services name
+			This will used to identify at IRCd
+		 -->
+		<name>test.antaresirc.de</name>
+		
+		<!-- 
+			[REQUIRED] Hostname
+			The hostname where the IRCd runs
+		 -->
+		<hostname>antaresirc.de</hostname>
+		
+		<!-- 
+			[REQUIRED] Port
+			The port where services should connect
+		 -->
+		<port>7000</port>
+		
+		<!-- 
+			[REQUIRED] Password
+			The password for link connection
+		 -->
+		<password>foobar</password>
+	</connection>
+	
+	<database>
+		<!-- 
+			[REQUIRED] Database Driver
+			The driver that should used
+			Available are: MySQL
+		 -->
+		<driver>MySQL</driver>
+		
+		<!-- 
+			[REQUIRED] Database Hostname
+			The hostname where Database (e.g. MySQL) runs.
+		 -->
+		<hostname>localhost</hostname>
+		
+		<!-- 
+			[REQUIRED) Database Username
+			The username that should used for database connection (e.g. root)
+		 -->
+		<username>root</username>
+		
+		<!-- 
+			[REQUIRED) Database Password
+			The password of user that should used for database connection
+		 -->
+		<password></password>
+		
+		<!-- 
+			[REQUIRED] Database Name
+			The name of database that contains service data layout
+		 -->
+		<dbname>evilcode_services</dbname>
+	</database>
+	
+	<user>
+		<!-- 
+			[REQUIRED] Default Language
+			The ID of the language that should used by default
+			All languageIDs are located in 'language'-Table in your database
+		 -->
+		<language>1</language>
+	</user>
+	
+	<!-- 
+		[OPTIONAL] NickServ
+		All options in this block are optional!
+		Note that these options are only usefull if you've loaded the NickServ-Module (Loaded by default)
+	 -->
+	<nickserv>
+		<!-- 
+			[OPTIONAL] Allow Registrations
+			If this is set to 1 the NickServ Module allows account registrations
+		 -->
+		<enableregistration>1</enableregistration>
+		
+		<!-- 
+			[OPTIONAL] Require Email
+			If this is set to 1 NickServ will require the E-Mail field for new accounts
+			Note: This is only usefull if you enable the 'enablregistration' option!
+		 -->
+		<requireemail>1</requireemail>
+		
+		<!-- 
+			[OPTIONAL] Use Emails
+			If this is set to 1 NickServ will send E-Mails to users to validate Accounts
+			Note: This REQUIRES the 'requireemail' option!
+		 -->
+		<usemail>1</usemail>
+		
+		<!-- 
+			[OPTIONAL] Allow Nickregistrations
+			If this is set to 1 NickServ will allow users to register nicknames (Protect them)
+		 -->
+		<allownickregistration>1</allownickregistration>
+		
+		<!-- 
+			[OPTIONAL] Nickregistration Maximum
+			Defines the maximum of registrated nicknames in one user account
+			Note: This will only used if the 'allownickregistration' option is set to 1
+		 -->
+		<nickregistrationmax>5</nickregistrationmax>
+		
+		<!-- 
+			[OPTIONAL] Accountname Pattern
+			Defines a regex for account name validation.
+			If you don't know what this does leave it at default!
+			Note: This will only used if the 'enableregistration' setting is set to 1
+		 -->
+		<usernamepattern><![CDATA[~([A-Z0-9_\-\.]+)~i]]></usernamepattern>
+	</nickserv>
+	
+	<!-- 
+		[OPTIONAL] NickServ
+		All options in this block are optional!
+		Note that these options are only usefull if you've loaded the ChanServ-Module (Loaded by default)
+	 -->
+	<chanserv>
+		<!-- 
+			[OPTIONAL] Require Account
+			If this is set to 1 ChanServ will deny all users access that aren't authed
+		 -->
+		<requireaccount>0</requireaccount>
+		
+		<!-- 
+			[OPTIONAL] Require Account for Channel Registrations
+			If this is set to 1 ChanServ will deny all users access to registration command that aren't authed
+		 -->
+		 <requireaccountregistration>1</requireaccountregistration>
+		 
+		 <!-- 
+		 	[OPTIONAL] Required Operator Level for Channel Registrations
+		 	The given integer defines the minimum operator level for channel registrations
+		  -->
+		  <requiredregistrationaccountlevel>200</requiredregistrationaccountlevel>
+		 
+		 <!-- 
+		 	[OPTIONAL] Channel Name Pattern
+		 	Defines a regex for channel names
+		 	If you don't know what this does leave it at default!
+		  -->
+		 <channelnamepattern><![CDATA[~(#|&)(|[A-Z0-9_\-\.]+)~i]]></channelnamepattern>
+	</chanserv>
+</config>
