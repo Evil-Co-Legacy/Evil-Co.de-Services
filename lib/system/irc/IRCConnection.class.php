@@ -1,0 +1,62 @@
+<?php
+// imports
+require_once(SDIR.'lib/system/irc/Mode.class.php');
+require_once(SDIR.'lib/system/irc/ModeList.class.php');
+require_once(SDIR.'lib/system/irc/AbstractModeList.class.php');
+require_once(SDIR.'lib/system/irc/ChannelModeList.class.php');
+require_once(SDIR.'lib/system/irc/UserModeList.class.php');
+require_once(SDIR.'lib/system/irc/'.IRCD.'/Protocol.class.php');
+
+/**
+ * Represents the connection to IRC
+ * @author		Johannes Donath
+ * @copyright	2010 DEVel Fusion
+ */
+class IRCConnection {
+	
+	/**
+	 * Contains socket to server
+	 * @var	resource
+	 */
+	protected $socket = null;
+	
+	/**
+	 * Contains the protocol object
+	 * @var	Protocol
+	 */
+	protected $protocol = null;
+	
+	/**
+	 * Creates a new instance of type IRCConnection
+	 */
+	public function __construct() {
+		// init protocol
+		$this->protocol = Protocol::getInstance();
+		
+		// start socket
+		$this->startSocket();
+		
+		// start server2server protocol
+		$this->protocol->initConnection();
+	}
+	
+	/**
+	 * Starts the socket connection
+	 */
+	public function startSocket() {
+		// get connection configuration
+		$conf = Services::getConfiguration()->get('connection');
+		
+		// validate configuration
+		if (!isset($conf['hostname'], $conf['port'])) throw new Exception("Invalid connection configuration!");
+		
+		// create socket
+		$this->socket = socket_create(AF_INET, SOCK_STREAM, 0);
+		
+		// try to connect
+		if (!@socket_connect($this->socket, $conf['hostname'], intval($conf['port']))) {
+			throw new Exception("Cannot connect to server: ".socket_strerror());
+		}
+	}
+}
+?>
