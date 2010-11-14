@@ -22,6 +22,21 @@ class ModuleManager {
 	protected $runtimeFiles = array();
 	
 	/**
+	 * Creates a new instance of ModuleManager
+	 */
+	public function __construct() {
+		$sql = "SELECT
+					*
+				FROM
+					module";
+		$result = Services::getDB()->sendQuery($sql);
+		
+		while($row = Services::getDB()->fetchArray($result)) {
+			$this->loadModule(SDIR.'lib/modules/'.$row['name'].'.class.php');
+		}
+	}
+	
+	/**
 	 * Loads a module
 	 * @param	string	$file
 	 */
