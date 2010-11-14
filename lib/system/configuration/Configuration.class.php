@@ -38,14 +38,12 @@ class Configuration {
 		// start loop
 		foreach($data['children'] as $key => $child) {
 			// handle elements with children
-			if (!isset($child['cdata'])) {
-				if (isset($child['children'])) {
-					$array[$child['name']] = array();
-					$this->readConfiguration(&$array[$child['name']]);
-				}
-				
+			if (isset($child['children']) and count($child['children'])) {
+				$this->readConfiguration(&$array[$child['name']], $child);
 				continue;
 			}
+			
+			if (!isset($child['cdata'])) continue;
 			
 			$array[$child['name']] = $child['cdata'];
 		}
