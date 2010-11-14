@@ -172,5 +172,16 @@ class Services {
 	public static function handleException(Exception $ex) {
 		print($ex);
 	}
+	
+	/**
+	 * Handles errors
+	 * @param	integer	$errNo
+	 * @param	string	$errMessage
+	 * @param	string	$errFile
+	 * @param	integer	$errLine
+	 */
+	public static function handleError($errNo, $errMessage, $errFile, $errLine) {
+		throw new Exception("Error in file ".$errFile." on line ".$errLine." (".$errNo."): ".$errMessage);
+	}
 }
 ?>
