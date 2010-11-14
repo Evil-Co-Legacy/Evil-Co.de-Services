@@ -58,5 +58,28 @@ class IRCConnection {
 			throw new Exception("Cannot connect to server: ".socket_strerror());
 		}
 	}
+	
+	/**
+	 * Sends a message to server
+	 * @param	string	$message
+	 */
+	public function send($message) {
+		return socket_write($this->socket, $message);
+	}
+	
+	/**
+	 * Sends a line to server
+	 * @param	string	$message
+	 */
+	public function sendLine($message) {
+		$this->send($message."\n");
+	}
+	
+	/**
+	 * Reads a line from socket
+	 */
+	public function readLine() {
+		return socket_read($this->socket, 512, PHP_NORMAL_READ);
+	}
 }
 ?>
