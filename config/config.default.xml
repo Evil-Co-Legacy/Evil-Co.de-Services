@@ -25,6 +25,13 @@
 			The password for link connection
 		 -->
 		<password>foobar</password>
+		
+		<!--
+			[REQUIRED] Numeric
+			The numeric for services
+			If you don't know what this is leave it at default!
+		 -->
+		 <numeric>00B</numeric>
 	</connection>
 	
 	<database>
