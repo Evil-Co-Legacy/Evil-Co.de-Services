@@ -81,5 +81,12 @@ class IRCConnection {
 	public function readLine() {
 		return socket_read($this->socket, 512, PHP_NORMAL_READ);
 	}
+	
+	/**
+	 * Returnes the protocol instance
+	 */
+	public function getProtocol() {
+		return $this->protocol;
+	}
 }
 ?>
