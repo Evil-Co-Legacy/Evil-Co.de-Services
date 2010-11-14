@@ -81,5 +81,18 @@ interface UserType {
 	 * @return	string
 	 */
 	public function getGecos();
+	
+	/**
+	 * Magic method to manage dynamic data
+	 * @param	string	$variable
+	 * @param	mixed	$value
+	 */
+	public function __set($variable, $value);
+	
+	/**
+	 * Magic method to manage dynamic data
+	 * @param	string	$variable
+	 */
+	public function __get($variable);
 }
 ?>
