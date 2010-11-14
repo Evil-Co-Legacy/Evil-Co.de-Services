@@ -5,6 +5,7 @@ define('IRCD', 'inspircd');
 // imports
 require_once(SDIR.'lib/core.functions.php');
 require_once(SDIR.'lib/system/configuration/Configuration.class.php');
+require_once(SDIR.'lib/system/event/EventHandler.class.php');
 require_once(SDIR.'lib/system/irc/IRCConnection.class.php');
 require_once(SDIR.'lib/system/language/LanguageManager.class.php');
 require_once(SDIR.'lib/system/module/ModuleManager.class.php');
@@ -23,6 +24,12 @@ class Services {
 	 * @var Configuration
 	 */
 	protected static $configObj = null;
+	
+	/**
+	 * Contains the EventHandler object
+	 * @var	EventHandler
+	 */
+	protected static $eventObj = null;
 	
 	/**
 	 * Contains the database connection
@@ -65,6 +72,7 @@ class Services {
 	 */
 	public function __construct() {
 		$this->initConfiguration();
+		$this->initEvents();
 		$this->initDB();
 		$this->initLanguage();
 		$this->initConnection();
@@ -85,6 +93,13 @@ class Services {
 	 */
 	protected function initConfiguration() {
 		self::$configObj = new Configuration();
+	}
+	
+	/**
+	 * Creates a new EventHandler object
+	 */
+	protected function initEvents() {
+		self::$eventObj = new EventHandler();
 	}
 	
 	/**
@@ -120,6 +135,13 @@ class Services {
 	 */
 	public static function getConfiguration() {
 		return self::$configObj;
+	}
+	
+	/**
+	 * Returnes the current EventHandler object
+	 */
+	public static function getEvent() {
+		return self::$event;
 	}
 	
 	/**
