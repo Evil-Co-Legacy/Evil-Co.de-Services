@@ -25,6 +25,9 @@ function escapeString($str) {
 	return Services::getDB()->escapeString($str);
 }
 
+// defines
+define('IRCD', 'inspircd');
+
 // imports
 require_once(SDIR.'lib/system/configuration/Configuration.class.php');
 require_once(SDIR.'lib/system/irc/IRCConnection.class.php');
