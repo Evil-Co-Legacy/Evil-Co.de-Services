@@ -29,7 +29,7 @@ class IRCConnection {
 	/**
 	 * Creates a new instance of type IRCConnection
 	 */
-	public function __construct() {
+	public function start() {
 		// init protocol
 		$this->protocol = Protocol::getInstance();
 		
