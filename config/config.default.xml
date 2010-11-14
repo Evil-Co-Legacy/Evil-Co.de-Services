@@ -148,4 +148,30 @@
 		  -->
 		 <channelnamepattern><![CDATA[~(#|&)(|[A-Z0-9_\-\.]+)~i]]></channelnamepattern>
 	</chanserv>
+	
+	<!-- 
+		[OPTIONAL] OpServ
+		All options in this block are optional!
+		Note that these options are only usefull if you've loaded the OpServ-Module (Loaded by default)
+	 -->
+	 <opserv>
+	 	<!-- 
+	 		[OPTIONAL] Required Level
+	 		Defines the default level that users must have to access opserv
+	 	 -->
+	 	<requiredlevel>300</requiredlevel>
+	 </opserv>
+	 
+	 <!-- 
+		[OPTIONAL] Global
+		All options in this block are optional!
+		Note that these options are only usefull if you've loaded the Global-Module (Loaded by default)
+	 -->
+	 <global>
+	 	<!-- 
+	 		[OPTIONAL] Required Level
+	 		Defines the default level that users must have to access global
+	 	 -->
+	 	<requiredlevel>600</requiredlevel>
+	 </global>
 </config>
