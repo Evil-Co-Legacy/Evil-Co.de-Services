@@ -151,6 +151,13 @@ class Services {
 	}
 	
 	/**
+	 * Creates a new BotManager instance
+	 */
+	protected function initBotManager() {
+		self::$botManagerObj = new BotManager();
+	}
+	
+	/**
 	 * Returnes the current configuration object
 	 */
 	public static function getConfiguration() {
@@ -186,10 +193,17 @@ class Services {
 	}
 	
 	/**
-	 * Returnes the current  current user manager object
+	 * Returnes the current user manager object
 	 */
 	public static function getUserManager() {
 		return self::$userManagerObj;
+	}
+	
+	/**
+	 * Returnes the current bot manager object
+	 */
+	public static function getBotManager() {
+		return self::$botManagerObj;
 	}
 	
 	/**
