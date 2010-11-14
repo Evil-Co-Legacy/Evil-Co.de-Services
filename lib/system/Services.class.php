@@ -65,7 +65,7 @@ class Services {
 	 * Contains the ModuleManager object
 	 * @var	ModuleManager
 	 */
-	protected static $moduleManager = null;
+	protected static $moduleManagerObj = null;
 	
 	/**
 	 * Creates a new instance of Services
@@ -158,6 +158,13 @@ class Services {
 	}
 	
 	/**
+	 * Creates a new ModuleManager instance
+	 */
+	protected function initModules() {
+		self::$moduleManagerObj = new ModuleManager();
+	}
+	
+	/**
 	 * Returnes the current configuration object
 	 */
 	public static function getConfiguration() {
@@ -204,6 +211,13 @@ class Services {
 	 */
 	public static function getBotManager() {
 		return self::$botManagerObj;
+	}
+	
+	/**
+	 * Returnes the current ModuleManager object
+	 */
+	public static function getModuleManager() {
+		return self::$moduleManagerObj;
 	}
 	
 	/**
