@@ -29,7 +29,7 @@ class LanguageManager {
 					language";
 		$result = Services::getDB()->sendQuery($sql);
 		
-		while($row = WCF::getDB()->fetchArray($result)) {
+		while($row = Services::getDB()->fetchArray($result)) {
 			$this->availableLanguages[] = $row;
 			$this->items[$row['languageID']] = array();
 		}
@@ -40,7 +40,7 @@ class LanguageManager {
 					language_item";
 		$result = Services::getDB()->sendQuery($sql);
 		
-		while($row = WCF::getDB()->fetchArray($result)) {
+		while($row = Services::getDB()->fetchArray($result)) {
 			$this->items[$row['languageID']][$row['name']] = $row['value'];
 		}
 	}
