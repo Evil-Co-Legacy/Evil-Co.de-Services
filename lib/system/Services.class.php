@@ -75,9 +75,9 @@ class Services {
 		$this->initEvents();
 		$this->initDB();
 		$this->initLanguage();
-		$this->initConnection();
 		$this->initUserManager();
 		$this->initBotManager();
+		$this->initConnection();
 		$this->initModules();
 	}
 	
