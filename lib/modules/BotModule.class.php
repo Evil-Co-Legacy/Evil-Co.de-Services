@@ -24,7 +24,7 @@ abstract class BotModule extends Module {
 	
 	/**
 	 * Contains all bound commands for this bot
-	 * @var	array<Command>
+	 * @var	array<CommandModule>
 	 */
 	protected $commands = array();
 	
