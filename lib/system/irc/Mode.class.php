@@ -20,6 +20,11 @@ interface Mode {
 	public function __toString();
 	
 	/**
+	 * Returnes the name of mode
+	 */
+	public function getName();
+	
+	/**
 	 * Returnes true if this mode allows arguments
 	 * @return	boolean
 	 */
