@@ -33,7 +33,7 @@ abstract class Command extends Module {
 	/**
 	 * Registers the command
 	 */
-	public final function registerCommand() {
+	public static final function registerCommand() {
 		// TODO: Implement this method ...
 	}
 }
