@@ -7,7 +7,7 @@ require_once(SDIR.'lib/modules/Module.class.php');
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
-abstract class Command extends Module {
+abstract class CommandModule extends Module {
 	
 	/**
 	 * Contains the bot instance
