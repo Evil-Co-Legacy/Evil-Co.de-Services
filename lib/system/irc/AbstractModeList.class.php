@@ -40,6 +40,8 @@ abstract class AbstractModeList implements ModeList {
 				}
 				
 				$this->modeList[] = new $className((isset($argument) ? $argument : ''));
+			} else {
+				throw new Exception("Invalid mode '".$mode."'! Maybe choosen wrong IRCd?");
 			}
 		}
 	}
