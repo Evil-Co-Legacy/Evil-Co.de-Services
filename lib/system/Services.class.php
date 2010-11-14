@@ -85,7 +85,11 @@ class Services {
 	 * Shuts down our services
 	 */
 	public static function destruct() {
+		// call connection shutdown method
 		if (self::getConnection() !== null) self::getConnection()->shutdown();
+		
+		// remove pidfile (if any)
+		if (file_exists(SDIR.'services.pid')) @unlink(SDIR.'services.pid');
 	}
 	
 	/**
