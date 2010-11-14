@@ -64,6 +64,7 @@ class IRCConnection {
 	 * @param	string	$message
 	 */
 	public function send($message) {
+		if (defined('DEBUG')) print($message);
 		return socket_write($this->socket, $message);
 	}
 	
@@ -79,7 +80,9 @@ class IRCConnection {
 	 * Reads a line from socket
 	 */
 	public function readLine() {
-		return socket_read($this->socket, 512, PHP_NORMAL_READ);
+		$input = socket_read($this->socket, 512, PHP_NORMAL_READ);
+		if (defined('DEBUG')) print($input);
+		return $input;
 	}
 	
 	/**
