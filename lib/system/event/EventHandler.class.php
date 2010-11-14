@@ -28,9 +28,9 @@ class EventHandler {
 	 * @param	object	$class
 	 * @param	string	$eventName
 	 */
-	public function fire(&$class, $eventName) {
+	public function fire(&$class, $eventName, $data = array()) {
 		foreach($this->events as $event) {
-			if (is_subclass_of($class, $event['targetClass']) and $eventName == $event['targetEvent']) call_user_func(array($event['class'], $event['method'])); 
+			if (is_subclass_of($class, $event['targetClass']) and $eventName == $event['targetEvent']) call_user_func_array(array($event['class'], $event['method']), $data); 
 		}
 	}
 }
