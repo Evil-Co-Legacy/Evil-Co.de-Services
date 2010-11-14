@@ -8,7 +8,7 @@ require_once(SDIR.'lib/language/LanguageManager.class.php');
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
-abstract class Bot extends Module {
+abstract class BotModule extends Module {
 	
 	/**
 	 * Contains the name of this bot (This must defined!)
