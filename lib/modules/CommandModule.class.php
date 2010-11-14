@@ -29,6 +29,7 @@ abstract class CommandModule extends Module {
 	 */
 	public function __construct(&$bot, $name) {
 		$this->bot = &$bot;
+		$this->registerEvents();
 	}
 	
 	/**

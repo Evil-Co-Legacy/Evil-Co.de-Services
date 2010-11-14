@@ -40,6 +40,7 @@ abstract class BotModule extends Module {
 	 */
 	public function __construct(&$bot, $trigger = '') {
 		$this->bot = &$bot;
+		$this->registerEvents();
 	}
 	
 	/**
