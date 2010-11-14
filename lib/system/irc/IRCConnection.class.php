@@ -88,5 +88,13 @@ class IRCConnection {
 	public function getProtocol() {
 		return $this->protocol;
 	}
+	
+	/**
+	 * Sends a server line to server
+	 * @param	string	$message
+	 */
+	public function sendServerLine($message) {
+		$this->sendLine($this->protocol->formateServerLine($message));
+	}
 }
 ?>
