@@ -62,10 +62,10 @@ class Channel {
 	
 	/**
 	 * Adds a user to channel
-	 * @param	UserType	$user
+	 * @param	array<UserType>	$user
 	 */
-	public function join(&$user) {
-		$this->userList[] = $user;
+	public function join($userList) {
+		$this->userList[] = array_merge($this->userList, $userList);
 	}
 	
 	/**
@@ -74,7 +74,7 @@ class Channel {
 	 */
 	public function part($uuid) {
 		foreach($this->userList as $key => $user) {
-			if ($this->userList->getUuid() == $uuid) unset($this->userList[$key]);
+			if ($this->userList[$key]['user']->getUuid() == $uuid) unset($this->userList[$key]);
 		}
 	}
 	

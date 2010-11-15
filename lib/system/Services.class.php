@@ -253,6 +253,9 @@ class Services {
 		print("\n\n\n");
 		print($ex);
 		print("\n\n");
+		
+		// call connection shutdown method
+		if (self::getConnection() !== null and self::getConnection()->getProtocol() !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage());
 	}
 	
 	/**

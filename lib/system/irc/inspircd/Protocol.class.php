@@ -124,6 +124,13 @@ class Protocol {
 			// read lines
 			$input = Services::getConnection()->readLine();
 			$inputEx = explode(" ", $input);
+			
+			// auth commands
+			switch($inputEx[0]) {
+				case 'SERVER':
+					$this->serverList[] = $inputEx[1];
+					break;
+			}
 		} while(!isset($inputEx[1]) or $inputEx[1] != "BURST");
 		
 		// handle commands
@@ -134,8 +141,6 @@ class Protocol {
 			$inputEx = explode(" ", $input);
 			
 			if (!empty($input) and count($inputEx) >= 2) {
-				$inputEx = explode(" ", $input);
-				
 				switch($inputEx[1]) {
 					case 'UID':
 						// get mode string
@@ -190,6 +195,11 @@ class Protocol {
 						// TODO: This does not work ... it's a bug ...
 						$this->connectionState = 'authed';
 						
+						if (defined('DEBUG')) print("ENDBURST\n");
+						
+						// send log message
+						Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :[".$this->name."] Burst finished");
+						
 						// send global message
 						if (isset($this->cyclemessage['startup']) and !empty($this->cyclemessage['startup'])) {
 							foreach($this->serverList as $server) {
@@ -197,13 +207,135 @@ class Protocol {
 							}
 						}
 						break;
+				}
+			}
+		} while(!isset($inputEx[1]) or $inputEx[1] != 'ENDBURST');
+		// Endburst processed!
+		
+		// Little ... er ... easteregg ... AI for services (Or automatic management for IRC networks)
+		Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :Evil-Co.de Service AI is now ready!");
+		
+		// Default runtime
+		while(Services::getConnection()->isAlive()) {
+			// read lines
+			$input = Services::getConnection()->readLine();
+			$input = substr($input, 1);
+			$inputEx = explode(" ", $input);
+			
+			if (!empty($input) and count($inputEx) >= 2) {
+				switch($inputEx[1]) {
 					case 'PING':
+						Services::getEvent()->fire($this, 'ping', array('source' => $inputEx[0]));
 						Services::getConnection()->sendServerLine("PONG ".$inputEx[3]." ".$inputEx[2]);
 						if (defined('DEBUG')) print("Ping -> Pong\n");
 						break;
+					case 'FJOIN':
+						// get mode string
+						if (($chan = Services::getChannelManager()->get($inputEx[2])) === null) {
+							$modes = '';
+							$activeIndex = 4;
+							
+							while($inputEx[$activeIndex]{0} != ':') {
+								if (!empty($modes)) $modes .= " ";
+								$modes .= $inputEx[$activeIndex];
+								$activeIndex++;
+							}
+							
+							// generate userlist
+							$userListString = substr($input, (stripos($input, ':') + 1));
+							$userListString = explode(' ', $userListString);
+							$userList = array();
+							
+							foreach($userListString as $user) {
+								$user = explode(',', $user);
+								if (count($user) == 2) {
+									$userList[] = array('mode' => $user[0], 'user' => Services::getUserManager()->getUser($user[1]));
+								}
+							}
+							
+							// call event
+							Services::getEvent()->fire($this, 'channelCreated', array('channel' => $inputEx[2], 'userList' => $userList));
+							
+							// add channel
+							Services::getChannelManager()->addChannel($inputEx[2], $inputEx[3], $modes, $userList);
+							
+							// send debug message
+							if (defined('DEBUG')) print("Added channel ".$inputEx[2]."\n");
+						} else {
+							// generate userlist
+							$userListString = substr($input, (stripos($input, ':') + 1));
+							$userListString = explode(' ', $userListString);
+							$userList = array();
+							
+							foreach($userListString as $user) {
+								$user = explode(',', $user);
+								if (count($user) == 2) {
+									$userList[] = array('mode' => $user[0], 'user' => Services::getUserManager()->getUser($user[1]));
+								}
+							}
+							
+							// call event
+							Services::getEvent()->fire($this, 'channelJoined', array('channel' => $inputEx[2], 'userList' => $userList));
+							
+							// join users to channel
+							$chan->join($userList);
+						}
+						break;
+					case 'SERVER':
+						Services::getEvent()->fire($this, 'serverCreated', array('name' => $inputEx[2]));
+						$this->serverList[] = $inputEx[2];
+						break;
+					case 'PART':
+						Services::getEvent()->fire($this, 'userParted', array('channel' => $inputEx[2], 'user' => Services::getUserManager()->getUser($inputEx[0])));
+						Services::getChannelManager()->get($inputEx[2])->part($inputEx[0]);
+						break;
+					case 'QUIT':
+						Services::getEvent()->fire($this, 'userQuit', array('user' => Services::getUserManager()->getUser($inputEx[0])));
+						Services::getUserManager()->removeUser($inputEx[0]);
+						break;
+					case 'NOTICE':
+					case 'PRIVMSG':
+						if ($inputEx[2]{0} == '#') {
+							$chan = Services::getChannelManager()->getChannel($inputEx[2]);
+							$userList = $chan->getUserList();
+							
+							foreach($userList as $user) {
+								if ($user['user']->isBot !== null) {
+									Services::getModuleManager()->handleChannelLine($user['uuid'], $inputEx[2], $user['user'], substr($input, (4 + strlen($inputEx[0]) + strlen($inputEx[1]) + strlen($inputEx[2]))));
+								}
+							}
+						} else {
+							if (Services::getBotManager()->getUser($inputEx[2]) !== null) {
+								Services::getModuleManager()->handleLine(Services::getUserManager()->getUser($inputEx[0]), substr($input, (4 + strlen($inputEx[0]) + strlen($inputEx[1]) + strlen($inputEx[2]))));
+							}
+						}
+						break;
 				}
 			}
-		} while(Services::getConnection()->isAlive());
+		}
+	}
+	
+	/**
+	 * Creates a new bot
+	 * @param	string	$nick
+	 * @param	string	$hostname
+	 * @param	string	$ident
+	 * @param	string	$ip
+	 * @param	string	$modes
+	 * @param	string	$gecos
+	 */
+	public function createBot($nick, $hostname, $ident, $ip, $modes, $gecos) {
+		// get current unix timestamp
+		$timestamp = time();
+		
+		// create user in bot manager
+		$uuid = Services::getBotManager()->introduceUser($timestamp, $nick, $hostname, $hostname, $ident, $ip, $timestamp, $modes, $gecos);
+		
+		// send uid command
+		Services::getConnection()->sendServerLine("UID ".$uuid." ".$timestamp." ".$nick." ".$hostname." ".$hostname." ".$ident." ".$ip." ".$timestamp." ".$modes." :".$gecos);
+		
+		// return bot object
+		return Services::getBotManager()->getUser($uuid);
 	}
 	
 	// NETWORK METHODS
