@@ -51,12 +51,15 @@ class IRCConnection {
 		if (!isset($conf['hostname'], $conf['port'])) throw new Exception("Invalid connection configuration!");
 		
 		// create socket
-		$this->socket = socket_create(AF_INET, SOCK_STREAM, 0);
+		// $this->socket = socket_create(AF_INET, SOCK_STREAM, 0);
+		$this->socket = fsockopen($conf['hostname'], intval($conf['port']));
+		
 		
 		// try to connect
+		/* 
 		if (!@socket_connect($this->socket, $conf['hostname'], intval($conf['port']))) {
 			throw new Exception("Cannot connect to server: ".socket_strerror());
-		}
+		} */
 	}
 	
 	/**
@@ -65,7 +68,7 @@ class IRCConnection {
 	 */
 	public function send($message) {
 		if (defined('DEBUG')) print("<-- ".$message);
-		return socket_write($this->socket, $message);
+		fputs($this->socket, $message);
 	}
 	
 	/**
@@ -81,7 +84,7 @@ class IRCConnection {
 	 */
 	public function readLine() {
 		// read line
-		$input = str_replace("\n", "", socket_read($this->socket, 512, PHP_NORMAL_READ));
+		$input = str_replace("\n", "", fread($this->socket, 512));
 		
 		// send debug lines
 		if (defined('DEBUG') and $input != "") print("--> ".$input."\n");
@@ -108,7 +111,7 @@ class IRCConnection {
 	 * Returnes true if the connection is alive
 	 */
 	public function isAlive() {
-		if ($this->socket !== false) return true;
+		if (!feof($this->socket)) return true;
 		return false;
 	}
 	
@@ -119,7 +122,7 @@ class IRCConnection {
 		Services::getEvent()->fire($this, 'shutdown');
 		
 		// Shutdown server connection if existant
-		if ($this->socket !== false) {
+		if (!feof($this->socket)) {
 			$this->protocol->shutdownConnection();
 		}
 	}
