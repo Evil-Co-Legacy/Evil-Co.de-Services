@@ -25,23 +25,46 @@ abstract class AbstractModeList implements ModeList {
 	 * @see	ModeList::__construct()
 	 */
 	public function __construct($modeString = '+') {
+		// remove '+' from mode list
 		$modeString = substr($modeString, 1);
-		$argumentList = (stripos(" ", $modeString) !== false ? substr($modeString, (stripos(" ", $modeString) + 1)) : "");
-		$argumentList = explode(" ", $argumentList);
-		$modeString = (stripos(" ", $modeString) !== false ? substr($modeString, 0, (stripos(" ", $modeString))) : $modeString);
+		$modeStr = explode(" ", $modeString);
 		
+		// get arguments
+		if (count($modeStr) > 1) {
+			$argumentList = $modeStr;
+			unset($argumentList[0]);
+			$argumentList = array_merge(array(), $argumentList);
+		}
+		
+		// remove whitespace from mode string
+		$modeString = (count($modeStr) ? $modeStr[0] : $modeString);
+		
+		// create needed variables
+		$lastArgument = 0;
+		
+		// get every item
 		for($i = 0; $i < strlen($modeString); $i++) {
+			// write char to $mode
 			$mode = $modeString{$i};
+			
+			// search for mode classfile
 			if (file_exists(SDIR.'lib/system/irc/'.IRCD.'/modes/'.$this->type.'/'.$mode.'Mode.class.php')) {
+				// include mode
 				require_once(SDIR.'lib/system/irc/'.IRCD.'/modes/'.$this->type.'/'.$mode.'Mode.class.php');
 				$className = $mode.'Mode';
 				
+				// get argument
 				if (call_user_func(array($className, 'canHaveArgument'))) {
-					if (isset($argumentList[$i])) $argument = $argumentList[$i];
+					if (isset($argumentList[($lastArgument + 1)])) {
+						$lastArgument++;
+						$argument = $argumentList[$lastArgument];
+					}
 				}
 				
+				// create new mode instance
 				$this->modeList[] = new $className((isset($argument) ? $argument : ''));
 			} else {
+				// No modefile found ...
 				throw new Exception("Invalid mode '".$mode."'! Maybe choosen wrong IRCd?");
 			}
 		}
