@@ -228,7 +228,9 @@ class Services {
 	 * @param	Exception	$ex
 	 */
 	public static function handleException(Exception $ex) {
+		print("\n\n\n");
 		print($ex);
+		print("\n\n");
 	}
 	
 	/**
