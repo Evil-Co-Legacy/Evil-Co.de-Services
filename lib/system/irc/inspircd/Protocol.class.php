@@ -171,7 +171,7 @@ class Protocol {
 						}
 						
 						// add channel
-						Services::getChannelManager()->addChannel($inputEx[2], $inputEx[3], $inputEx[4], $userList);
+						Services::getChannelManager()->addChannel($inputEx[2], $inputEx[3], $modes, $userList);
 						
 						// send debug message
 						if (defined('DEBUG')) print("Added channel ".$inputEx[2]."\n");
