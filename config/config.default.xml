@@ -32,6 +32,28 @@
 			If you don't know what this is leave it at default!
 		 -->
 		 <numeric>00B</numeric>
+		 
+		 <!-- 
+	 		[REQUIRED] Cycle Message
+	 		Defines cycle messages that should send to users if services connect to network
+	 	 -->
+	 	 <cyclemessage>
+	 	 	<!-- 
+	 	 		This message will appear on successfull startup
+	 	 	 -->
+	 	 	 <startup><![CDATA[Services are now back online! Have a nice day!]]></startup>
+	 	 	 
+	 	 	 <!-- 
+	 	 	 	This message will appear on shutdown
+	 	 	  -->
+	 	 	  <shutdown><![CDATA[Services will be back soon!]]></shutdown>
+	 	 	  
+	 	 	  <!-- 
+	 	 	  	This message will appear on errors (Leave it blank or comment out to disable)
+	 	 	  	Note: This does not work now ...
+	 	 	   -->
+	 	 	   <error><![CDATA[Sorry but an error is occoured! We have to shutdown our services!]]></error>
+	 	 </cyclemessage>
 	</connection>
 	
 	<database>
@@ -180,27 +202,5 @@
 	 		Defines the default level that users must have to access global
 	 	 -->
 	 	<requiredlevel>600</requiredlevel>
-	 	
-	 	<!-- 
-	 		[OPTIONAL] Cycle Message
-	 		Defines cycle messages that should send to users if services connect to network
-	 	 -->
-	 	 <cyclemessage>
-	 	 	<!-- 
-	 	 		This message will appear on successfull startup
-	 	 	 -->
-	 	 	 <startup><![CDATA[Services are now back online! Have a nice day!]]></startup>
-	 	 	 
-	 	 	 <!-- 
-	 	 	 	This message will appear on shutdown
-	 	 	  -->
-	 	 	  <shutdown><![CDATA[Services will be back soon!]]></shutdown>
-	 	 	  
-	 	 	  <!-- 
-	 	 	  	This message will appear on errors (Leave it blank or comment out to disable)
-	 	 	  	Note: This does not work now ...
-	 	 	   -->
-	 	 	   <error><![CDATA[Sorry but an error is occoured! We have to shutdown our services!]]></error>
-	 	 </cyclemessage>
 	 </global>
 </config>
