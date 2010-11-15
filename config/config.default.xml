@@ -54,6 +54,12 @@
 	 	 	   -->
 	 	 	   <error><![CDATA[Sorry but an error is occoured! We have to shutdown our services!]]></error>
 	 	 </cyclemessage>
+	 	 
+	 	 <!-- 
+	 	 	[REQUIRED] Logchan
+	 	 	The channel where services should announce log messages
+	 	  -->
+	 	 <servicechannel><![CDATA[#Services]]></servicechannel>
 	</connection>
 	
 	<database>
