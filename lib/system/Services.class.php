@@ -13,6 +13,7 @@ require_once(SDIR.'lib/system/language/LanguageManager.class.php');
 require_once(SDIR.'lib/system/module/ModuleManager.class.php');
 require_once(SDIR.'lib/system/user/UserManager.class.php');
 require_once(SDIR.'lib/system/user/BotManager.class.php');
+require_once(SDIR.'lib/system/irc/channel/ChannelManager.class.php');
 
 /**
  * Manages all needed core instances
@@ -64,6 +65,12 @@ class Services {
 	protected static $botManagerObj = null;
 	
 	/**
+	 * Contains the ChannelManager object
+	 * @var	ChannelManager
+	 */
+	protected static $channelManagerObj = null;
+	
+	/**
 	 * Contains the ModuleManager object
 	 * @var	ModuleManager
 	 */
@@ -79,6 +86,7 @@ class Services {
 		$this->initLanguage();
 		$this->initUserManager();
 		$this->initBotManager();
+		$this->initChannelManager();
 		$this->initConnection();
 		self::$ircObj->start();
 		$this->initModules();
@@ -161,6 +169,13 @@ class Services {
 	}
 	
 	/**
+	 * Creates an new ChannelManager instance
+	 */
+	protected function initChannelManager() {
+		self::$channelManagerObj = new ChannelManager();
+	}
+	
+	/**
 	 * Creates a new ModuleManager instance
 	 */
 	protected function initModules() {
@@ -214,6 +229,13 @@ class Services {
 	 */
 	public static function getBotManager() {
 		return self::$botManagerObj;
+	}
+	
+	/**
+	 * Returnes the current channel manager object
+	 */
+	public static function getChannelManager() {
+		return self::$channelManagerObj;
 	}
 	
 	/**
