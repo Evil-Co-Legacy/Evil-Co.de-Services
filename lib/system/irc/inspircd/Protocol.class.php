@@ -1,6 +1,6 @@
 <?php
 // defines
-define('PROTOCOL_VERSION', '1201');
+define('PROTOCOL_VERSION', '1202');
 
 /**
  * Manages server2server protocol
@@ -104,8 +104,8 @@ class Protocol {
 	 */
 	public function initConnection() {
 		// CAPAB
-		Services::getConnection()->sendLine("CAPAB START");
-		Services::getConnection()->sendLine("CAPAB CAPABILITIES :PROTOCOL=1201");
+		Services::getConnection()->sendLine("CAPAB START ".PROTOCOL_VERSION);
+		Services::getConnection()->sendLine("CAPAB CAPABILITIES :PROTOCOL=".PROTOCOL_VERSION);
 		Services::getConnection()->sendLine("CAPAB END");
 		
 		// SERVER
