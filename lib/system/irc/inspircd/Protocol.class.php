@@ -69,6 +69,12 @@ class Protocol {
 	protected $cyclemessage = array();
 	
 	/**
+	 * Contains the channel where services should announce logmessages
+	 * @var	string
+	 */
+	protected $servicechannel = '';
+	
+	/**
 	 * Returnes an instance of Protocol
 	 */
 	public static function getInstance() {
@@ -211,16 +217,19 @@ class Protocol {
 	/**
 	 * Shuts down the connection
 	 */
-	public function shutdownConnection() {
+	public function shutdownConnection($error = '') {
 		switch($this->connectionState) {
 			case 'auth':
 				Services::getConnection()->sendLine("ERROR :Connection aborted!");
 				break;
 			case 'authed':
 			case 'burst':
-				Services::getConnection()->sendServerLine("SQUIT ".$this->name." :Connection aborted!");
+				if (!empty($error)) Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :[".$this->name."] A wild error occoures: ".$error);
+				Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :[".$this->name."] Shutting down ...");
+				Services::getConnection()->sendServerLine("SQUIT ".$this->name." :Shutting down!");
 				break;
 		}
+		$this->connectionState = 'disconnected';
 	}
 }
 ?>
