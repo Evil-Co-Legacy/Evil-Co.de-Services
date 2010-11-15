@@ -1,6 +1,7 @@
 <?php
 // imports
 require_once(SDIR.'lib/system/irc/channel/Channel.class.php');
+require_once(SDIR.'lib/system/irc/ChannelModeList.class.php');
 
 /**
  * Manages all channels on network
@@ -19,11 +20,11 @@ class ChannelManager {
 	 * Adds a channel to manager
 	 * @param	string			$name
 	 * @param	integer			$timestamp
-	 * @param	ModeList		$modes
+	 * @param	string			$modes
 	 * @param	array<UserType>	$userList
 	 */
 	public function addChannel($name, $timestamp, $modes, $userList) {
-		$this->channelList[] = new Channel($name, $timestamp, $modes, $userList);
+		$this->channelList[] = new Channel($name, $timestamp, new ChannelModeList($modes), $userList);
 	}
 	
 	/**
