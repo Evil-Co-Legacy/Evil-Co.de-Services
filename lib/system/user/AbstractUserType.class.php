@@ -26,7 +26,7 @@ abstract class AbstractUserType implements UserType {
 		$this->displayedHostname = $displayedHostname;
 		$this->ident = $ident;
 		$this->ip = $ip;
-		$this->signonTimestamp = $signOnTimestamp;
+		$this->signonTimestamp = $signonTimestamp;
 		$this->modes = $modes;
 		$this->gecos = $gecos;
 	}
