@@ -48,9 +48,9 @@ abstract class AbstractModeList implements ModeList {
 			$mode = $modeString{$i};
 			
 			// search for mode classfile
-			if (file_exists(SDIR.'lib/system/irc/'.IRCD.'/modes/'.$this->type.'/'.$mode.'Mode.class.php')) {
+			if (file_exists(SDIR.'lib/system/irc/'.IRCD.'/modes/'.$this->type.'/'.$this->getModeType($mode).'/'.$mode.'Mode.class.php')) {
 				// include mode
-				require_once(SDIR.'lib/system/irc/'.IRCD.'/modes/'.$this->type.'/'.$mode.'Mode.class.php');
+				require_once(SDIR.'lib/system/irc/'.IRCD.'/modes/'.$this->type.'/'.$this->getModeType($mode).'/'.$mode.'Mode.class.php');
 				$className = $mode.'Mode';
 				
 				// get argument
@@ -100,6 +100,17 @@ abstract class AbstractModeList implements ModeList {
 			if ($mode->getName() == $modeName) return $mode->getArgument();
 		}
 		return null;
+	}
+	
+	/**
+	 * Returnes the mode type (upper or lower)
+	 * @param	string	$char
+	 */
+	public function getModeType($char) {
+		$lowerMap = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+		
+		if (in_array($char, $lowerMap)) return 'lower';
+		return 'upper';
 	}
 }
 ?>
