@@ -26,11 +26,12 @@ abstract class AbstractModeList implements ModeList {
 	 */
 	public function __construct($modeString = '+') {
 		$modeString = substr($modeString, 1);
-		$argumentList = substr($modeString, (stripos(" ") + 1));
-		$argumentList = explode($argumentList);
+		$argumentList = (stripos(" ", $modeString) !== false ? substr($modeString, (stripos(" ", $modeString) + 1)) : "");
+		$argumentList = explode(" ", $argumentList);
+		$modeString = (stripos(" ", $modeString) !== false ? substr($modeString, 0, (stripos(" ", $modeString))) : $modeString);
 		
-		for($i = 0; $i < strlen($modeString[0]); $i++) {
-			$mode = $modeString[0]{$i};
+		for($i = 0; $i < strlen($modeString); $i++) {
+			$mode = $modeString{$i};
 			if (file_exists(SDIR.'lib/system/irc/'.IRCD.'/modes/'.$this->type.'/'.$mode.'Mode.class.php')) {
 				require_once(SDIR.'lib/system/irc/'.IRCD.'/modes/'.$this->type.'/'.$mode.'Mode.class.php');
 				$className = $mode.'Mode';
