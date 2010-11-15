@@ -13,5 +13,10 @@ class ChannelModeList extends AbstractModeList {
 	 * @see	AbstractModeList::$type
 	 */
 	protected $type = 'channel';
+	
+	/**
+	 * @see AbstractModeList::$prefix
+	 */
+	protected $prefix = 'Channel';
 }
 ?>
