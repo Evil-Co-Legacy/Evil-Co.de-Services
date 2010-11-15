@@ -7,11 +7,7 @@ require_once(SDIR.'lib/system/irc/AbstractMode.class.php');
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
-class sMode extends AbstractMode {
-	
-	/**
-	 * @see	AbstractMode::$canHaveArgument
-	 */
-	protected static $canHaveArgument = true;
+class gLowerMode extends AbstractMode {
+	// Nothing to do here
 }
 ?>

@@ -7,7 +7,7 @@ require_once(SDIR.'lib/system/irc/AbstractMode.class.php');
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
-class IMode extends AbstractMode {
+class GUpperMode extends AbstractMode {
 	// Nothing to do here
 }
 ?>
