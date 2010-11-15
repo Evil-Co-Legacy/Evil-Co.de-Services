@@ -22,6 +22,12 @@ abstract class AbstractModeList implements ModeList {
 	protected $type = '';
 	
 	/**
+	 * Contaisn the prefix for mode classes
+	 * @var	string
+	 */
+	protected $prefix = '';
+	
+	/**
 	 * @see	ModeList::__construct()
 	 */
 	public function __construct($modeString = '+') {
@@ -48,10 +54,10 @@ abstract class AbstractModeList implements ModeList {
 			$mode = $modeString{$i};
 			
 			// search for mode classfile
-			if (file_exists(SDIR.'lib/system/irc/'.IRCD.'/modes/'.$this->type.'/'.$this->getModeType($mode).'/'.$mode.'Mode.class.php')) {
+			if (file_exists(SDIR.'lib/system/irc/'.IRCD.'/modes/'.$this->type.'/'.$this->getModeType($mode).'/'.$mode.$this->prefix.'Mode.class.php')) {
 				// include mode
-				require_once(SDIR.'lib/system/irc/'.IRCD.'/modes/'.$this->type.'/'.$this->getModeType($mode).'/'.$mode.'Mode.class.php');
-				$className = $mode.'Mode';
+				require_once(SDIR.'lib/system/irc/'.IRCD.'/modes/'.$this->type.'/'.$this->getModeType($mode).'/'.$mode.$this->prefix.'Mode.class.php');
+				$className = $mode.$this->prefix.'Mode';
 				
 				// get argument
 				if (call_user_func(array($className, 'canHaveArgument'))) {
