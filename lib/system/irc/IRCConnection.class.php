@@ -84,7 +84,7 @@ class IRCConnection {
 	 */
 	public function readLine() {
 		// read line
-		$input = str_replace("\n", "", fread($this->socket, 512));
+		$input = str_replace("\n", "", fgets($this->socket));
 		
 		// send debug lines
 		if (defined('DEBUG') and $input != "") print("--> ".$input."\n");
