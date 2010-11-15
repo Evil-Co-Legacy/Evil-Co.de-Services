@@ -114,6 +114,7 @@ class Protocol {
 		// BURST
 		$this->connectionState = 'burst';
 		Services::getConnection()->sendServerLine("BURST ".time());
+		Services::getConnection()->sendServerLine("VERSION :Evil-Co.de Services (Protocol Version 1.0.0)");
 		Services::getConnection()->sendServerLine("ENDBURST");
 		
 		// handle burst ...
