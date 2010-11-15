@@ -20,7 +20,7 @@ interface UserTypeManager {
 	 * @param	string	$gecos
 	 * @return	string
 	 */
-	public function introduceUser($timestamp, $nick, $hostname, $displayedHostname, $ident, $ip, $signonTimestamp, $modes, $gecos);
+	public function introduceUser($timestamp, $nick, $hostname, $displayedHostname, $ident, $ip, $signonTimestamp, $modes, $gecos, $uuid = '');
 
 	/**
 	 * Removes a user from manager

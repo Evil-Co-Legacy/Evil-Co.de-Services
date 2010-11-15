@@ -32,15 +32,20 @@ abstract class AbstractUserTypeManager implements UserTypeManager {
 	/**
 	 * @see	UserTypeManager::introduceUser()
 	 */
-	public function introduceUser($timestamp, $nick, $hostname, $displayedHostname, $ident, $ip, $signonTimestamp, $modes, $gecos) {
-		// get uuid manager instance
-		$uuid = UUID::getInstance();
+	public function introduceUser($timestamp, $nick, $hostname, $displayedHostname, $ident, $ip, $signonTimestamp, $modes, $gecos, $uuid = '') {
+		if (empty($uuid)) {
+			// get uuid manager instance
+			$uuid = UUID::getInstance();
+			
+			// generate new uuid
+			$uuid = $uuid->generate();
+		}
 		
 		// get ID
 		$ID = count($this->userList);
 		
 		// create new user
-		$this->userList[] = new $this->userType($uuid->generate(), $timestamp, $nick, $hostname, $displayedHostname, $ident, $ip, $signonTimestamp, new $this->modeList($modes), $gecos);
+		$this->userList[] = new $this->userType($uuid, $timestamp, $nick, $hostname, $displayedHostname, $ident, $ip, $signonTimestamp, new $this->modeList($modes), $gecos);
 		
 		// return uuid
 		return $this->userList[$ID]->getUuid();
