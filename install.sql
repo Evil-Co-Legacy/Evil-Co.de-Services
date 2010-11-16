@@ -3,7 +3,7 @@
 -- USE `evilcode_services`;
 
 -- Language database
-CREATE TABLE `evilcode_services`.`language` (
+CREATE TABLE `language` (
 	`languageID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 	`name` VARCHAR( 255 ) NOT NULL ,
 	`code` VARCHAR( 255 ) NOT NULL
@@ -16,7 +16,7 @@ VALUES
 	(NULL, 'Deutsch', 'de');
 	
 -- Language item database
-CREATE TABLE `evilcode_services`.`language_item` (
+CREATE TABLE `language_item` (
 	`itemID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 	`languageID` INT NOT NULL ,
 	`name` VARCHAR( 255 ) NOT NULL ,
@@ -26,7 +26,7 @@ CREATE TABLE `evilcode_services`.`language_item` (
 -- TODO: Add item dump here
 
 -- Module database
-CREATE TABLE `evilcode_services`.`module` (
+CREATE TABLE `module` (
 	`moduleID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 	`name` VARCHAR( 255 ) NOT NULL ,
 	`timestamp` INT NOT NULL
