@@ -18,7 +18,7 @@ class ModuleManager {
 	/**
 	 * Creates a new instance of ModuleManager
 	 */
-	public function __construct() {
+	public function init() {
 		// check dependencies
 		if (!extension_loaded('runkit')) 
 			throw new ModuleException("Required runtime libary not found!");
