@@ -348,6 +348,14 @@ class Protocol {
 	}
 	
 	/**
+	 * Sends a log line to service channel
+	 * @param	string	$message
+	 */
+	public function sendLogLine($message) {
+		Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :".$message);
+	}
+	
+	/**
 	 * Shuts down the connection
 	 */
 	public function shutdownConnection($error = '') {
