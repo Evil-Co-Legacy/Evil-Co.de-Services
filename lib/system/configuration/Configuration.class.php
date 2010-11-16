@@ -39,7 +39,7 @@ class Configuration {
 		foreach($data['children'] as $key => $child) {
 			// handle elements with children
 			if (isset($child['children']) and count($child['children'])) {
-				$this->readConfiguration(&$array[$child['name']], $child);
+				$this->readConfiguration($array[$child['name']], $child);
 				continue;
 			}
 			
