@@ -231,7 +231,7 @@ class Protocol {
 						break;
 					case 'FJOIN':
 						// get mode string
-						if (($chan = Services::getChannelManager()->get($inputEx[2])) === null) {
+						if (($chan = Services::getChannelManager()->getChanneö($inputEx[2])) === null) {
 							$modes = '';
 							$activeIndex = 4;
 							
@@ -301,12 +301,12 @@ class Protocol {
 							
 							foreach($userList as $user) {
 								if ($user['user']->isBot !== null) {
-									Services::getModuleManager()->handleChannelLine($user['uuid'], $inputEx[2], $user['user'], substr($input, (4 + strlen($inputEx[0]) + strlen($inputEx[1]) + strlen($inputEx[2]))));
+									Services::getModuleManager()->handleLine($user['user'], $inputEx[2], substr($input, (4 + strlen($inputEx[0]) + strlen($inputEx[1]) + strlen($inputEx[2]))));
 								}
 							}
 						} else {
 							if (Services::getBotManager()->getUser($inputEx[2]) !== null) {
-								Services::getModuleManager()->handleLine(Services::getUserManager()->getUser($inputEx[0]), substr($input, (4 + strlen($inputEx[0]) + strlen($inputEx[1]) + strlen($inputEx[2]))));
+								Services::getModuleManager()->handleLine(Services::getUserManager()->getUser($inputEx[0]), $inputEx[2], substr($input, (4 + strlen($inputEx[0]) + strlen($inputEx[1]) + strlen($inputEx[2]))));
 							}
 						}
 						break;
