@@ -31,3 +31,16 @@ CREATE TABLE `module` (
 	`name` VARCHAR( 255 ) NOT NULL ,
 	`timestamp` INT NOT NULL
 ) ENGINE = MYISAM ;
+
+-- Bot instance database
+CREATE TABLE `module_instance_bot` (
+	`instanceID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	`moduleName` VARCHAR (255) NOT NULL,
+	`trigger` VARCHAR (100) NOT NULL,
+	`nick` VARCHAR (255) NOT NULL,
+	`hostname` TEXT NOT NULL,
+	`ident` VARCHAR (255) NOT NULL,
+	`ip` VARCHAR (255) NOT NULL DEFAULT '127.0.0.1',
+	`modes` VARCHAR (255) NOT NULL DEFAULT '+Ik',
+	`gecos` TEXT NOT NULL
+) ENGINE = MYISAM ;
