@@ -26,7 +26,7 @@ class Configuration {
 		$data = $xml->getElementTree('config');
 		
 		// call loop
-		$this->readConfiguration(&$this->configuration, $data);
+		$this->readConfiguration($this->configuration, $data);
 	}
 	
 	/**
