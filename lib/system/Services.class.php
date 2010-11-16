@@ -87,9 +87,9 @@ class Services {
 		$this->initUserManager();
 		$this->initBotManager();
 		$this->initChannelManager();
+		$this->initModules();
 		$this->initConnection();
 		self::$ircObj->start();
-		$this->initModules();
 	}
 	
 	/**
