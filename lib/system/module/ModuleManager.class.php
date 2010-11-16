@@ -20,7 +20,7 @@ class ModuleManager {
 	 */
 	public function __construct() {
 		// check dependencies
-		if (!extension_loaded('runkit')) throw new ModuleException("Required runtime libary not found!");
+		if (!extension_loaded('runkit') and !@dl('runkit.so') and !@dl('php_runkit.dll')) throw new ModuleException("Required runtime libary not found!");
 		
 		// load modules from database
 		$sql = "SELECT
