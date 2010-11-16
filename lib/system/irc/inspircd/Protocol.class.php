@@ -206,6 +206,9 @@ class Protocol {
 								Services::getConnection()->sendServerLine("NOTICE $".$server." :".$this->cyclemessage['startup']);
 							}
 						}
+						
+						// init modules
+						Services::getModuleManager()->init();
 						break;
 				}
 			}
