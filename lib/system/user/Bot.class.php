@@ -8,6 +8,11 @@ require_once(SDIR.'lib/system/user/AbstractUserType.class.php');
  * @copyright	2010 DEVel Fusion
  */
 class Bot extends AbstractUserType {
-	// Nothing to do here
+	
+	/**
+	 * Markes this UserType as bot
+	 * @var	boolean
+	 */
+	public $isBot = true;
 }
 ?>
