@@ -200,13 +200,6 @@ class Protocol {
 						// send log message
 						Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :[".$this->name."] Burst finished");
 						
-						// send global message
-						if (isset($this->cyclemessage['startup']) and !empty($this->cyclemessage['startup'])) {
-							foreach($this->serverList as $server) {
-								Services::getConnection()->sendServerLine("NOTICE $".$server." :".$this->cyclemessage['startup']);
-							}
-						}
-						
 						// init modules
 						Services::getModuleManager()->init();
 						break;
@@ -356,6 +349,17 @@ class Protocol {
 	 */
 	public function sendLogLine($message) {
 		Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :".$message);
+	}
+	
+	/**
+	 * Sends a global message to all servers
+	 * @param	string	$message
+	 * @param	string	$source
+	 */
+	public function sendGlobalMessage($message, $source = '') {
+		foreach($this->serverList as $server) {
+			Services::getConnection()->sendLine(":".$this->numeric.$source." NOTICE $".$server." :".$message);
+		}
 	}
 	
 	/**
