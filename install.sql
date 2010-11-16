@@ -32,6 +32,8 @@ CREATE TABLE `module` (
 	`timestamp` INT NOT NULL
 ) ENGINE = MYISAM ;
 
+INSERT INTO `module` (`moduleID`, `name`, `timestamp`) VALUES (NULL, 'OpServModule', '1');
+
 -- Bot instance database
 CREATE TABLE `module_instance_bot` (
 	`instanceID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -44,3 +46,5 @@ CREATE TABLE `module_instance_bot` (
 	`modes` VARCHAR (255) NOT NULL DEFAULT '+Ik',
 	`gecos` TEXT NOT NULL
 ) ENGINE = MYISAM ;
+
+INSERT INTO `module_instance_bot` (`instanceID`, `moduleName`, `trigger`, `nick`, `hostname`, `ident`, `ip`, `modes`, `gecos`) VALUES (NULL, 'OpServModule', '?', 'OpServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Oper Service');
