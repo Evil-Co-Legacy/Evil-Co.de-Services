@@ -20,7 +20,7 @@ class ModuleManager {
 	 */
 	public function __construct() {
 		// check dependencies
-		if (!extension_loaded('runkit') and !@dl('runkit.so') and !@dl('php_runkit.dll')) 
+		if (!extension_loaded('runkit')) 
 			throw new ModuleException("Required runtime libary not found!");
 		elseif (defined('DEBUG')) Services::getConnection()->getProtocol()->sendLogLine("Runtime libary is ready!");
 		
