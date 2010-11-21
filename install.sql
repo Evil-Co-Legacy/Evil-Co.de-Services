@@ -29,6 +29,7 @@ CREATE TABLE `language_item` (
 CREATE TABLE `module` (
 	`moduleID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 	`name` VARCHAR( 255 ) NOT NULL ,
+	`address` VARCHAR( 255 ) NOT NULL ,
 	`timestamp` INT NOT NULL
 ) ENGINE = MYISAM ;
 
