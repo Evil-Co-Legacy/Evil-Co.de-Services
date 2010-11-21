@@ -39,7 +39,7 @@ class ModuleManager {
 		$result = Services::getDB()->sendQuery($sql);
 		
 		while($row = Services::getDB()->fetchArray($result)) {
-			$this->loadModule(SDIR.'lib/modules/'.$row['name'].'.class.php');
+			$this->loadModule(SDIR.'lib/modules/'.$row['name'].'.class.php', $row['address'], true);
 		}
 		
 		$sql = "SELECT
@@ -57,21 +57,39 @@ class ModuleManager {
 	 * Loads a module
 	 * @param	string	$file
 	 */
-	public function loadModule($file) {
+	public function loadModule($file, $moduleAddress = null, $fromDatabase = false) {
 		// validate
 		if (!file_exists($file)) throw new ModuleException("Cannot find module file '".$file."'");
 		if (!is_readable($file)) throw new ModuleException("Cannot read module file '".$file."'");
 		
 		// get class name
 		$moduleName = basename($file, '.class.php');
+		if (!$moduleAddress === null) $moduleAddress = dechex(time() + count($this->availableModules));
 		
-		// create runkit sandbox
-		$this->availableModules[$moduleName] = array('sandbox' => new Runkit_Sandbox(Services::getConfiguration()->get('modules')));
-		$this->availableModules[$moduleName]['sandbox']->eval("require_once('".$file."');");
-		$this->availableModules[$moduleName]['sandbox']->eval('$moduleType = (is_subclass_of("BotModule") ? "Bot" : (is_subclass_of("CommandModule") ? "Command" : "Extension"));');
-		if ($this->availableModules[$moduleName]['sandbox']->moduleType == 'Bot') $this->availableModules[$moduleName]['sandbox']->eval('$bot = $trigger = null;');
-		$this->availableModules[$moduleName]['type'] = $this->availableModules[$moduleName]['sandbox']->moduleType;
-		$this->availableModules[$moduleName]['sandbox']->eval('unset($moduleType);');
+		// validate module
+		if (isset($this->availableModules[$moduleName])) throw new ModuleException("Module '".$moduleName."' is already loaded!");
+		if (in_array($tempName, $this->availableModules)) throw new ModuleException("What the hell?! A module with address 0x".$moduleAddress." is already loaded! This should never happen!!!");
+		
+		// read module file
+		$module = file_get_contents($file);
+		
+		// replace module name with address
+		$module = str_replace($moduleName, $moduleAddress, $module);
+		
+		// write file
+		file_put_contents(SDIR.'cache/'.$moduleAddress.'.php', $module);
+		
+		// load module
+		require_once(SDIR.'cache/'.$moduleAddress.'.php');
+		
+		if (!$fromDatabase) {
+			// write address to database
+			$sql = "INSERT INTO
+						module (`name`, `address`, `timestamp`)
+					VALUES
+						('".$moduleName.", '".$moduleAddress."', '".time()."');";
+			Services::getDB()->sendQuery($sql);
+		}
 	}
 	
 	/**
