@@ -16,6 +16,12 @@ class ModuleManager {
 	protected $availableModules = array();
 	
 	/**
+	 * Contains the module information of each module
+	 * @var	array
+	 */
+	protected $moduleInformation = array();
+	
+	/**
 	 * Contains all running bots
 	 * @var	array<array<BotModule>>
 	 */
@@ -90,11 +96,29 @@ class ModuleManager {
 						('".$moduleName.", '".$moduleAddress."', '".time()."');";
 			Services::getDB()->sendQuery($sql);
 		}
+		
+		// get module type
+		switch(get_parent_class($moduleAddress)) {
+			case "BotModule":
+				$moduleType = 'Bot';
+				break;
+			case "CommandModule":
+				$moduleType = 'Command';
+				break;
+			default:
+				$moduleType = 'Extension';
+				break;
+		}
+		
+		// write module information
+		$this->moduleInformation[$moduleAddress] = array('type' => $moduleType);
+		
+		return $moduleAddress;
 	}
 	
 	/**
 	 * Creates a new bot instance
-	 * @param	string	$moduleName
+	 * @param	string	$moduleAddress
 	 * @param	string	$trigger
 	 * @param	string	$nick
 	 * @param	string	$hostname
@@ -103,22 +127,21 @@ class ModuleManager {
 	 * @param	string	$modes
 	 * @param	string	$gecos
 	 */
-	public function createBotInstance($moduleName, $trigger, $nick, $hostname, $ident, $ip, $modes, $gecos) {
+	public function createBotInstance($moduleAddress, $trigger, $nick, $hostname, $ident, $ip, $modes, $gecos) {
 		// validate
 		if (!isset($this->availableModules[$moduleName])) throw new ModuleException("Module '".$moduleName." isn't loaded!");
-		if ($this->availableModules[$moduleName][$type] != 'Bot') throw new ModuleException("You can only create instances of bot modules!");
+		
+		// get module address
+		$moduleAddress = $this->availableModules[$moduleName];
+		
+		// validate module information
+		if ($this->moduleInformation[$moduleAddress]['type'] != 'Bot') throw new ModuleException("You can only create instances of bot modules!");
 		
 		// create bot user
 		$user = Services::getConnection()->getProtocol()->createBot($nick, $hostname, $ident, $ip, $modes, $gecos);
 		
 		// create instance of BotModule
-		$this->availableModules[$moduleName]['sandbox']->bot = $user;
-		$this->availableModules[$moduleName]['sandbox']->trigger = $trigger;
-		$this->availableModules[$moduleName]['sandbox']->eval('$instance'.$user->getUuid().' = new '.$moduleName.'($bot, $trigger);');
-		$instanceName = 'instance'.$user->getUuid();
-		
-		// add to running bots list
-		$this->runningBots[$moduleName][] = &$$this->availableModules[$moduleName]['sandbox']->{$instanceName};
+		$this->runningBots = new $moduleAddress($user, $trigger);
 	}
 }
 ?>
