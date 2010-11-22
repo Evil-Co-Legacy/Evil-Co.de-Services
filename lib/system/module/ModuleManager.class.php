@@ -104,6 +104,9 @@ class ModuleManager {
 				break;
 		}
 		
+		// register module
+		$this->availableModules[$moduleName] = $moduleAddress;
+		
 		// write module information
 		$this->moduleInformation[$moduleAddress] = array('type' => $moduleType);
 		
