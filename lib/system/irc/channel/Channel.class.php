@@ -56,8 +56,7 @@ class Channel {
 	 * @return	array<UserType>
 	 */
 	public function getUserList() {
-		$userList = &$this->userList;
-		return $userList;
+		return $this->userList;
 	}
 	
 	/**
