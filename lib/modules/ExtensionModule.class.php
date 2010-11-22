@@ -7,7 +7,7 @@ require_once(SDIR.'lib/modules/Module.class.php');
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
-abstract class ExtensionModule extends Module {
+abstract class ExtensionModule implements Module {
 	
 	/**
 	 * Creates a new instance of type Command
