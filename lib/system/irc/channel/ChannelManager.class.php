@@ -33,10 +33,9 @@ class ChannelManager {
 	 */
 	public function getChannel($name) {
 		foreach($this->channelList as $key => $channel) {
-			if ($channel->getName() == $name) $chan = &$this->channelList[$key];
+			if ($channel->getName() == $name) return $this->channelList[$key];
 		}
 		
-		if (isset($chan)) return $chan;
 		return null;
 	}
 	
