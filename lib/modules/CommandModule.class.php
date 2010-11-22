@@ -38,7 +38,7 @@ abstract class CommandModule implements Module {
 	 * @param	UserObject	$user
 	 * @param	string		$message
 	 */
-	abstract public function execute($user, $message);
+	abstract public function execute($user, $target, $message);
 	
 	/**
 	 * Returnes true if the given line matches command
