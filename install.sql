@@ -33,7 +33,7 @@ CREATE TABLE `module` (
 	`timestamp` INT NOT NULL
 ) ENGINE = MYISAM ;
 
-INSERT INTO `module` (`moduleID`, `name`, `address`, `timestamp`) VALUES (NULL, 'OpServModule', 'bebc200', '1');
+INSERT INTO `module` (`moduleID`, `name`, `address`, `timestamp`) VALUES (NULL, 'OpServModule', 'BEBC200', '1');
 
 -- Bot instance database
 CREATE TABLE `module_instance_bot` (
@@ -48,4 +48,4 @@ CREATE TABLE `module_instance_bot` (
 	`gecos` TEXT NOT NULL
 ) ENGINE = MYISAM ;
 
-INSERT INTO `module_instance_bot` (`instanceID`, `moduleAddress`, `trigger`, `nick`, `hostname`, `ident`, `ip`, `modes`, `gecos`) VALUES (NULL, 'bebc200', '?', 'OpServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Oper Service');
+INSERT INTO `module_instance_bot` (`instanceID`, `moduleAddress`, `trigger`, `nick`, `hostname`, `ident`, `ip`, `modes`, `gecos`) VALUES (NULL, 'BEBC200', '?', 'OpServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Oper Service');
