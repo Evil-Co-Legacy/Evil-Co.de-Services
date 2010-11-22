@@ -291,18 +291,40 @@ class Protocol {
 						break;
 					case 'NOTICE':
 					case 'PRIVMSG':
-						if ($inputEx[2]{0} == '#') {
-							$chan = Services::getChannelManager()->getChannel($inputEx[2]);
-							$userList = $chan->getUserList();
-							
-							foreach($userList as $user) {
-								if ($user['user']->isBot !== null) {
-									Services::getModuleManager()->handleLine($user['user'], $inputEx[2], substr($input, (4 + strlen($inputEx[0]) + strlen($inputEx[1]) + strlen($inputEx[2]))));
+						if ($inputEx[2]{0} != '$') {
+							// get source
+							$source = Services::getUserManager()->getUser($inputEx[0]);
+
+							if ($inputEx[2]{0} == '#') {
+								// send debug message
+								if (defined('DEBUG')) $this->sendLogLine($source->getUuid()." (".$source->getNick().") sent a message to ".$inputEx[2]);
+								
+								$chan = Services::getChannelManager()->getChannel($inputEx[2]);
+								$userList = $chan->getUserList();
+								
+								foreach($userList as $user) {
+									if ($user['user']->isBot !== null) {
+										Services::getModuleManager()->handleLine($source, $inputEx[2], substr($input, (4 + strlen($inputEx[0]) + strlen($inputEx[1]) + strlen($inputEx[2]))));
+									}
 								}
-							}
-						} else {
-							if (Services::getBotManager()->getUser($inputEx[2]) !== null) {
-								Services::getModuleManager()->handleLine(Services::getUserManager()->getUser($inputEx[0]), $inputEx[2], substr($input, (4 + strlen($inputEx[0]) + strlen($inputEx[1]) + strlen($inputEx[2]))));
+							} else {
+								// send debug message
+								if (defined('DEBUG')) $this->sendLogLine($source->getUuid()." (".$source->getNick().") sent a message to ".$inputEx[2]);
+								
+								// remove numeric
+								$inputEx[2] = substr($inputEx[2], (strlen($this->numeric)));
+								
+								// try to find bot
+								if (($bot = Services::getBotManager()->getUser($inputEx[2])) !== null) {
+									// resolved uuid ... send debug message
+									if (defined('DEBUG')) $this->sendLogLine("Resolved ".$inputEx[2]." to ".$bot->getNick());
+									
+									// notify module manager
+									Services::getModuleManager()->handleLine($source, $inputEx[2], substr($input, (4 + strlen($inputEx[0]) + strlen($inputEx[1]) + strlen($inputEx[2]))));
+								} else {
+									// cannot find user ... send debug message
+									if (defined('DEBUG')) $this->sendLogLine("Cannot resolve '".$inputEx[2]."'! Type of return value: ".gettype($bot));
+								}
 							}
 						}
 						break;
@@ -378,6 +400,13 @@ class Protocol {
 				break;
 		}
 		$this->connectionState = 'disconnected';
+	}
+	
+	/**
+	 * Returnes the service channel
+	 */
+	public function getServiceChannel() {
+		return $this->servicechannel;
 	}
 }
 ?>
