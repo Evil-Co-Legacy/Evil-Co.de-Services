@@ -328,7 +328,7 @@ class Protocol {
 		$uuid = Services::getBotManager()->introduceUser($timestamp, $nick, $hostname, $hostname, $ident, $ip, $timestamp, $modes, $gecos);
 		
 		// send uid command
-		Services::getConnection()->sendServerLine("UID ".$uuid." ".$timestamp." ".$nick." ".$hostname." ".$hostname." ".$ident." ".$ip." ".$timestamp." ".$modes." :".$gecos);
+		Services::getConnection()->sendServerLine("UID ".$this->numeric.$uuid." ".$timestamp." ".$nick." ".$hostname." ".$hostname." ".$ident." ".$ip." ".$timestamp." ".$modes." :".$gecos);
 		
 		// return bot object
 		return Services::getBotManager()->getUser($uuid);
