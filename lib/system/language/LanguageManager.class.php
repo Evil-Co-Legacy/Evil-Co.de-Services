@@ -51,8 +51,20 @@ class LanguageManager {
 	 * @param	string	$variable
 	 */
 	public function get($languageID, $variable) {
-		if (isset($this->items[$languageID][$variable])) return $this->items[$languageID][$variable];
-		return $variable;
+		// handle missing vars
+		if (!isset($this->items[$languageID][$variable])) return $variable;
+		
+		// create needed vars
+		$value = $this->items[$languageID][$variable];
+		$arguments = func_get_args();
+		
+		// kick languageID and variable from argument list
+		unset($arguments[0]);
+		unset($arguments[1]);
+		$arguments = array_merge(array(), $arguments);
+		
+		// return correct value
+		return call_user_func_array('sprintf', $arguments);
 	}
 }
 ?>
