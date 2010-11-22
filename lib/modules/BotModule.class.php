@@ -75,7 +75,9 @@ abstract class BotModule extends Module {
 	/**
 	 * @see	Module::registerEvents()
 	 */
-	public function registerEvents();
+	public function registerEvents() {
+		// nothing to do here
+	}
 	
 	/**
 	 * Registeres a bot (Sas the module manager that this module is available)

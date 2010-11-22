@@ -21,6 +21,8 @@ abstract class ExtensionModule extends Module {
 	/**
 	 * @see	Module::registerEvents()
 	 */
-	public function registerEvents();
+	public function registerEvents() {
+		// nothing to do here
+	}
 }
 ?>
