@@ -14,6 +14,13 @@ class Channel {
 	protected $data = array();
 	
 	/**
+	 * Contains a list of all users
+	 * This is a little workaround
+	 * @var	array
+	 */
+	protected $userList = array();
+	
+	/**
 	 * Creates a new instance of type Channel
 	 * @param	string			$name
 	 * @param	integer			$timestamp
@@ -64,7 +71,7 @@ class Channel {
 	 * @param	array<UserType>	$user
 	 */
 	public function join($userList) {
-		$this->userList[] = array_merge($this->userList, $userList);
+		$this->userList = array_merge($this->userList, $userList);
 	}
 	
 	/**
@@ -91,7 +98,12 @@ class Channel {
 	 * @param unknown_type $variable
 	 */
 	public function __get($variable) {
-		if (isset($this->data[$variable])) return $this->data[$variable];
+		if (isset($this->data[$variable])) {
+			if (is_array($this->data[$variable])) 
+				return (array) $this->data[$variable];
+			else
+				return $this->data[$variable];
+		}
 		return null;
 	}
 }
