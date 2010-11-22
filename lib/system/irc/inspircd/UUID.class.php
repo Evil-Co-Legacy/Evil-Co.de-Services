@@ -47,10 +47,10 @@ class UUID {
 		$rest = self::$userID;
 		
 		// set active char
-		$activeChar = 6;
+		$activeChar = 5;
 		
 		// Sample UUID: AAAAAB
-		$chars = array(0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0);
+		$chars = array(0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0);
 		
 		do {
 			if ($rest > 26) {
