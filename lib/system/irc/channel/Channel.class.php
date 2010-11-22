@@ -32,6 +32,9 @@ class Channel {
 		$this->timestamp = $timestamp;
 		$this->modes = $modes;
 		$this->userList = $userList;
+		
+		// little workaround
+		$this->cleanUserlist();
 	}
 	
 	/**
@@ -72,6 +75,7 @@ class Channel {
 	 */
 	public function join($userList) {
 		$this->userList = array_merge($this->userList, $userList);
+		$this->cleanUserlist();
 	}
 	
 	/**
@@ -81,6 +85,16 @@ class Channel {
 	public function part($uuid) {
 		foreach($this->userList as $key => $user) {
 			if ($this->userList[$key]['user']->getUuid() == $uuid) unset($this->userList[$key]);
+		}
+		$this->cleanUserlist();
+	}
+	
+	/**
+	 * Removes invalid entries from userlist
+	 */
+	protected function cleanUserlist() {
+		foreach($this->userList as $key => $user) {
+			if (!($user['user'] instanceof UserType)) unset($this->userList[$key]);
 		}
 	}
 	
