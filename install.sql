@@ -33,12 +33,12 @@ CREATE TABLE `module` (
 	`timestamp` INT NOT NULL
 ) ENGINE = MYISAM ;
 
-INSERT INTO `module` (`moduleID`, `name`, `timestamp`) VALUES (NULL, 'OpServModule', '1');
+INSERT INTO `module` (`moduleID`, `name`, `address`, `timestamp`) VALUES (NULL, 'OpServModule', 'bebc200', '1');
 
 -- Bot instance database
 CREATE TABLE `module_instance_bot` (
 	`instanceID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-	`moduleName` VARCHAR (255) NOT NULL,
+	`moduleAddress` VARCHAR (255) NOT NULL,
 	`trigger` VARCHAR (100) NOT NULL,
 	`nick` VARCHAR (255) NOT NULL,
 	`hostname` TEXT NOT NULL,
@@ -48,4 +48,4 @@ CREATE TABLE `module_instance_bot` (
 	`gecos` TEXT NOT NULL
 ) ENGINE = MYISAM ;
 
-INSERT INTO `module_instance_bot` (`instanceID`, `moduleName`, `trigger`, `nick`, `hostname`, `ident`, `ip`, `modes`, `gecos`) VALUES (NULL, 'OpServModule', '?', 'OpServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Oper Service');
+INSERT INTO `module_instance_bot` (`instanceID`, `moduleAddress`, `trigger`, `nick`, `hostname`, `ident`, `ip`, `modes`, `gecos`) VALUES (NULL, 'bebc200', '?', 'OpServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Oper Service');
