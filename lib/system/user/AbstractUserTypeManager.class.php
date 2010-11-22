@@ -66,11 +66,10 @@ abstract class AbstractUserTypeManager implements UserTypeManager {
 	public function getUser($uuid) {
 		foreach($this->userList as $key => $user) {
 			if ($this->userList[$key]->getUuid() == $uuid) {
-				$user = &$this->userList[$key];
+				return $this->userList[$key];
 			}
 		}
 		
-		if (isset($user)) return $user;
 		return null;
 	}
 }
