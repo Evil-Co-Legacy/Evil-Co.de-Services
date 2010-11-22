@@ -123,10 +123,7 @@ class ModuleManager {
 	 */
 	public function createBotInstance($moduleAddress, $trigger, $nick, $hostname, $ident, $ip, $modes, $gecos) {
 		// validate
-		if (!isset($this->availableModules[$moduleName])) throw new ModuleException("Module '".$moduleName." isn't loaded!");
-		
-		// get module address
-		$moduleAddress = $this->availableModules[$moduleName];
+		if (!$this->moduleLoaded($moduleAddress)) throw new ModuleException("No module found at address 0x".$moduleAddress."!");
 		
 		// validate module information
 		if ($this->moduleInformation[$moduleAddress]['type'] != 'Bot') throw new ModuleException("You can only create instances of bot modules!");
@@ -136,6 +133,17 @@ class ModuleManager {
 		
 		// create instance of BotModule
 		$this->runningBots = new $moduleAddress($user, $trigger);
+	}
+	
+	/**
+	 * Returnes true if a module with given address exists
+	 * @param	string	$moduleAddress
+	 */
+	public function moduleLoaded($moduleAddress) {
+		foreach($this->availableModules as $module) {
+			if ($module == $moduleAddress) return true;
+		}
+		return false;
 	}
 }
 ?>
