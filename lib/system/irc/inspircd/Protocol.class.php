@@ -227,7 +227,7 @@ class Protocol {
 						break;
 					case 'FJOIN':
 						// get mode string
-						if (($chan = Services::getChannelManager()->getChanneö($inputEx[2])) === null) {
+						if (($chan = Services::getChannelManager()->getChannel($inputEx[2])) === null) {
 							$modes = '';
 							$activeIndex = 4;
 							
