@@ -135,6 +135,9 @@ class ModuleManager {
 		// write module information
 		$this->moduleInformation[$moduleAddress] = array('type' => $moduleType);
 		
+		// send debug log message
+		if (defined('DEBUG')) Services::getConnection()->getProtocol()->sendLogLine("Loaded module at address 0x".$moduleAddress);
+		
 		return $moduleAddress;
 	}
 	
