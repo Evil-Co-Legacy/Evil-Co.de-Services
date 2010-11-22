@@ -30,13 +30,7 @@ class ModuleManager {
 	/**
 	 * Creates a new instance of ModuleManager
 	 */
-	public function init() {
-		// check dependencies
-		if (!extension_loaded('runkit')) 
-			throw new ModuleException("Required runtime libary not found!");
-		elseif (defined('DEBUG')) 
-			Services::getConnection()->getProtocol()->sendLogLine("Runtime libary is ready!");
-		
+	public function init() {		
 		// load modules from database
 		$sql = "SELECT
 					*
