@@ -283,7 +283,7 @@ class Protocol {
 						break;
 					case 'PART':
 						Services::getEvent()->fire($this, 'userParted', array('channel' => $inputEx[2], 'user' => Services::getUserManager()->getUser($inputEx[0])));
-						Services::getChannelManager()->get($inputEx[2])->part($inputEx[0]);
+						Services::getChannelManager()->getChannel($inputEx[2])->part($inputEx[0]);
 						break;
 					case 'QUIT':
 						Services::getEvent()->fire($this, 'userQuit', array('user' => Services::getUserManager()->getUser($inputEx[0])));
