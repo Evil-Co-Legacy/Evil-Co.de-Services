@@ -54,6 +54,31 @@ class ModuleManager {
 	}
 	
 	/**
+	 * Notifies bots if a new messages received
+	 * @param	UserType	$user
+	 * @param	string		$target
+	 * @param	string	$message
+	 */
+	public function handleLine($user, $target, $message) {
+		if ($target{0} != '#') {
+			foreach($this->runningBots as $key => $bot) {
+				if ($this->runningBots[$key]->getBot()->getUuid() == $target)  $this->runningBots[$key]->handleLine($user, $target, $message);
+			}
+		} else {
+			$chan = Services::getChannelManager()->getChannel($inputEx[2]);
+			$userList = $chan->getUserList();
+							
+			foreach($userList as $user) {
+				if ($user['user']->isBot !== null) {
+					foreach($this->runningBots as $key => $bot) {
+						if ($this->runningBots[$key]->getBot()->getUuid() == $user['user']->getUuid())  $this->runningBots[$key]->handleLine($user, $target, $message);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Loads a module
 	 * @param	string	$file
 	 */
