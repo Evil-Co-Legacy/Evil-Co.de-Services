@@ -32,6 +32,7 @@ class UUID {
 		if (self::$instance === null) {
 			self::$instance = new UUID();
 		}
+		return self::$instance;
 	}
 	
 	/**
