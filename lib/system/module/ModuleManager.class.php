@@ -49,7 +49,7 @@ class ModuleManager {
 		$result = Services::getDB()->sendQuery($sql);
 		
 		while($row = Services::getDB()->fetchArray($result)) {
-			$this->createBotInstance($row['moduleName'], $row['trigger'], $row['nick'], $row['hostname'], $row['ident'], $row['ip'], $row['modes'], $row['gecos']);
+			$this->createBotInstance($row['moduleAddress'], $row['trigger'], $row['nick'], $row['hostname'], $row['ident'], $row['ip'], $row['modes'], $row['gecos']);
 		}
 	}
 	
@@ -68,7 +68,7 @@ class ModuleManager {
 		
 		// validate module
 		if (isset($this->availableModules[$moduleName])) throw new ModuleException("Module '".$moduleName."' is already loaded!");
-		if (in_array($tempName, $this->availableModules)) throw new ModuleException("What the hell?! A module with address 0x".$moduleAddress." is already loaded! This should never happen!!!");
+		if (in_array($moduleAddress, $this->availableModules)) throw new ModuleException("What the hell?! A module with address 0x".$moduleAddress." is already loaded! This should never happen!!!");
 		
 		// read module file
 		$module = file_get_contents($file);
