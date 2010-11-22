@@ -59,7 +59,7 @@ class UUID {
 				if ($activeChar > 0)
 					$activeChar--;
 				else
-					throw Exception("TO MANY BOTS! DONT LOAD 2 MIO MODULES!!!!!");
+					throw new Exception("TO MANY BOTS! DONT LOAD 2 MIO MODULES!!!!!");
 			} else
 				$rest = 0;
 		} while ($rest > 26);
