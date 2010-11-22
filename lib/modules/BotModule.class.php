@@ -44,6 +44,13 @@ abstract class BotModule implements Module {
 	}
 	
 	/**
+	 * Returnes the bot reference
+	 */
+	public function getBot() {
+		return $this->bot;
+	}
+	
+	/**
 	 * Handles a line
 	 * @param	string	$message
 	 * @param	string	$type (Can be 'public' (For channel messages) or 'private' (For notice, msg, etc.))
