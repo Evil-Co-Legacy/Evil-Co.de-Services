@@ -1,7 +1,6 @@
 <?php
 // imports
 require_once(SDIR.'lib/modules/Module.class.php');
-require_once(SDIR.'lib/language/LanguageManager.class.php');
 
 /**
  * Defines default methods for bots
