@@ -1,6 +1,7 @@
 <?php
 // defines
 define('IRCD', 'inspircd');
+define('SERVICES_VERSION', '1.0.0 Alpha 1');
 // Uncomment the following to enable debugging
 define('DEBUG', 1);
 
@@ -277,14 +278,24 @@ class Services {
 				if (isset($server['persistent'])) $arguments[] = (bool) intval($server['persistent']);
 				
 				// add server
-				call_user_func_array(array(self::$memcacheObj, 'addServer', $arguments));
+				call_user_func_array(array(self::$memcacheObj, 'addServer'), $arguments);
 				
 				// remove temp variables
 				unset($arguments);
 			}
 			
 			// test connection
-			self::$memcacheObj->get('testing');
+			self::$memcacheObj->add('SERVICES_VERSION', SERVICES_VERSION);
+			if (self::$memcacheObj->get('SERVICES_VERSION') !== false) {
+				// add log entry
+				self::getConnection()->getProtocol()->sendLogLine("Etablished connection to memcache server!");
+			} else {
+				// add log entry
+				self::getConnection()->getProtocol()->sendLogLine("An error occoured with memcache! I'll disable it ...");
+				
+				// disable memcache
+				self::$memcacheObj = null;
+			}
 		}
 	}
 	
