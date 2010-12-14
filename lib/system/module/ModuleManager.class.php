@@ -30,27 +30,82 @@ class ModuleManager {
 	/**
 	 * Creates a new instance of ModuleManager
 	 */
-	public function init() {		
-		// load modules from database
-		$sql = "SELECT
-					*
-				FROM
-					module";
-		$result = Services::getDB()->sendQuery($sql);
+	public function init() {
+		$this->readModuleList();	
+	}
+	
+	/**
+	 * Reads all modules from cache or database
+	 */
+	protected function readModuleList() {
+		if (!$this->readModuleListCache()) {
+			// add debug log
+			if (defined('DEBUG')) Services::getConnection()->getProtocol()->sendLogLine("Cannot read modules from memcache! Loading from database and storing data in memcache ...");
+			
+			// create needed arrays
+			$modules = array();
+			$botInstances = array();
+			
+			// load modules from database
+			$sql = "SELECT
+						*
+					FROM
+						module";
+			$result = Services::getDB()->sendQuery($sql);
+			
+			while($row = Services::getDB()->fetchArray($result)) {
+				$modules[] = $row;
+				$this->loadModule(SDIR.'lib/modules/'.$row['name'].'.class.php', $row['address'], true);
+			}
+			
+			$sql = "SELECT
+						*
+					FROM
+						module_instance_bot";
+			$result = Services::getDB()->sendQuery($sql);
+			
+			while($row = Services::getDB()->fetchArray($result)) {
+				$botInstances[] = $row;
+				$this->createBotInstance($row['moduleAddress'], $row['trigger'], $row['nick'], $row['hostname'], $row['ident'], $row['ip'], $row['modes'], $row['gecos']);
+			}
+			
+			// check for memcache support and store data
+			if (Services::memcacheLoaded()) {
+				Services::getMemcache()->add('moduleList', $modules);
+				Services::getMemcache()->add('botInstances', $botInstances);
+			}
+		}
+	}
+	
+	/**
+	 * Loads modules from memcache
+	 */
+	protected function readModuleListCache() {
+		// check for memcache extension
+		if (!Services::memcacheLoaded()) return false;
 		
-		while($row = Services::getDB()->fetchArray($result)) {
+		// check for stored data
+		if (!Services::getMemcache()->get('moduleList') or !Services::getMemcache()->get('botInstances')) return false;
+		
+		// load data
+		$modules = Services::getMemcache()->get('moduleList');
+		$botInstances = Services::getMemcache()->get('botInstances');
+		
+		// debug log
+		if (defined('DEBUG')) Services::getConnection()->getProtocol()->sendLogLine("Loading modules from cache ...");
+		
+		// start modules
+		foreach($modules as $row) {
 			$this->loadModule(SDIR.'lib/modules/'.$row['name'].'.class.php', $row['address'], true);
 		}
 		
-		$sql = "SELECT
-					*
-				FROM
-					module_instance_bot";
-		$result = Services::getDB()->sendQuery($sql);
-		
-		while($row = Services::getDB()->fetchArray($result)) {
+		// start bot instances
+		foreach($botInstances as $row) {
 			$this->createBotInstance($row['moduleAddress'], $row['trigger'], $row['nick'], $row['hostname'], $row['ident'], $row['ip'], $row['modes'], $row['gecos']);
 		}
+		
+		// ok all done
+		return true;
 	}
 	
 	/**

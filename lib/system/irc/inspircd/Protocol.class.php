@@ -200,6 +200,12 @@ class Protocol {
 						// send log message
 						Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :[".$this->name."] Burst finished");
 						
+						// memcache
+						if (extension_loaded('memcache')) {
+							$this->sendLogLine("Memcache extension is available! Trying to find configuration for memcache ...");
+							Services::loadMemcache();
+						}
+						
 						// init modules
 						Services::getModuleManager()->init();
 						break;
@@ -210,12 +216,6 @@ class Protocol {
 		
 		// Little ... er ... easteregg ... AI for services (Or automatic management for IRC networks)
 		//Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :Evil-Co.de Service AI is now ready!");
-		
-		// memcache
-		if (extension_loaded('memcache')) {
-			$this->sendLogLine("Memcache extension is available! Trying to find configuration for memcache ...");
-			Services::loadMemcache();
-		}
 		
 		// Default runtime
 		while(Services::getConnection()->isAlive()) {

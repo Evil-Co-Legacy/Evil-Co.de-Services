@@ -55,7 +55,7 @@ abstract class BotModule implements Module {
 	 * @param	string	$message
 	 * @param	string	$type (Can be 'public' (For channel messages) or 'private' (For notice, msg, etc.))
 	 */
-	public final function handleLine(&$user, $target, $message) {
+	public final function handleLine($user, $target, $message) {
 		$found = false;
 		
 		foreach($this->commands as $key => $command) {
