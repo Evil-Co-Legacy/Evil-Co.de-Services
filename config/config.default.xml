@@ -62,6 +62,32 @@
 	 	 <servicechannel><![CDATA[#Services]]></servicechannel>
 	</connection>
 	
+	<!-- 
+		[OPTIONAL] Memcache
+		If you've installed the memcache extension you can use it for service caching. 
+		Note: Some service bots require memcache!
+	 -->
+	<memcache>
+		<servers>
+			<!-- 
+				Defines one server
+				Note: You can have more than one server argument
+			-->
+			<server>
+				<!--
+					Address for server (Default: 127.0.0.1)
+				-->
+				<address>127.0.0.1</address>
+				
+				<!-- 
+					Port of memcached (Default: 11211)
+					Note: You can leave this empty.
+				 -->
+				<!-- <port>11211</port> -->
+			</server>
+		</servers>
+	</memcache>
+	
 	<modules>
 		<!-- 
 			[REQUIRED] Safe Mode
