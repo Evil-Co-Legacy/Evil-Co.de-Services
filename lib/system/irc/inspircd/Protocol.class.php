@@ -209,7 +209,13 @@ class Protocol {
 		// Endburst processed!
 		
 		// Little ... er ... easteregg ... AI for services (Or automatic management for IRC networks)
-		Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :Evil-Co.de Service AI is now ready!");
+		//Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :Evil-Co.de Service AI is now ready!");
+		
+		// memcache
+		if (extension_loaded('memcache')) {
+			$this->sendLogLine("Memcache extension is available! Trying to find configuration for memcache ...");
+			Services::loadMemcache();
+		}
 		
 		// Default runtime
 		while(Services::getConnection()->isAlive()) {
@@ -370,7 +376,7 @@ class Protocol {
 	 * @param	string	$message
 	 */
 	public function sendLogLine($message) {
-		Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :".$message);
+		Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :[".$this->name."] ".$message);
 	}
 	
 	/**
@@ -394,7 +400,7 @@ class Protocol {
 				break;
 			case 'authed':
 			case 'burst':
-				if (!empty($error)) Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :[".$this->name."] A wild error occoures: ".$error);
+				if (!empty($error)) Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :[".$this->name.":Fatal Error] ".$error);
 				Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :[".$this->name."] Shutting down ...");
 				Services::getConnection()->sendServerLine("SQUIT ".$this->name." :Shutting down!");
 				break;

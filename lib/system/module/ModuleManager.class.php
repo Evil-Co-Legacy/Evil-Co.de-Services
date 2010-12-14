@@ -60,6 +60,7 @@ class ModuleManager {
 	 * @param	string	$message
 	 */
 	public function handleLine($user, $target, $message) {
+		var_dump($user); var_dump($target); var_dump($message);
 		if ($target{0} != '#') {
 			foreach($this->runningBots as $key => $bot) {
 				if ($this->runningBots[$key]->getBot()->getUuid() == $target)  $this->runningBots[$key]->handleLine($user, $target, $message);
@@ -89,7 +90,7 @@ class ModuleManager {
 		
 		// get class name
 		$moduleName = basename($file, '.class.php');
-		if (!$moduleAddress === null) $moduleAddress = dechex(time() + count($this->availableModules));
+		if (!$moduleAddress === null) $moduleAddress = strtoupper(dechex(time() + count($this->availableModules)));
 		
 		// validate module
 		if (isset($this->availableModules[$moduleName])) throw new ModuleException("Module '".$moduleName."' is already loaded!");
