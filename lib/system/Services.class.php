@@ -77,6 +77,12 @@ class Services {
 	protected static $moduleManagerObj = null;
 	
 	/**
+	 * Contains the current connection to Memcache
+	 * @var	Memcache
+	 */
+	protected static $memcacheObj = null;
+	
+	/**
 	 * Creates a new instance of Services
 	 */
 	public function __construct() {
@@ -243,6 +249,57 @@ class Services {
 	 */
 	public static function getModuleManager() {
 		return self::$moduleManagerObj;
+	}
+	
+	/**
+	 * Loads the memcache extension
+	 */
+	public static function loadMemcache() {
+		$memcache = Services::getConfiguration()->get('memcache');
+		if ($memcache === null or !extension_loaded('memcache')) {
+			self::getConnection()->getProtocol()->sendLogLine("Cannot use memcache! No configuration found!");
+		} else {
+			self::$memcacheObj = new Memcache();
+			
+			// add server
+			foreach($memcache['servers'] as $server) {
+				// create needed array
+				$arguments = array();
+				
+				// get server address
+				if (!isset($server['address'])) throw new Exception("Invalid memcache configuration: address tag is missing!");
+				$arguments[] = $server['address'];
+				
+				// get port
+				if (isset($server['port'])) $arguments[] = $server['port'];
+				
+				// get persistent option
+				if (isset($server['persistent'])) $arguments[] = (bool) intval($server['persistent']);
+				
+				// add server
+				call_user_func_array(array(self::$memcacheObj, 'addServer', $arguments));
+				
+				// remove temp variables
+				unset($arguments);
+			}
+			
+			// test connection
+			self::$memcacheObj->get('testing');
+		}
+	}
+	
+	/**
+	 * Returnes true if memcache is available
+	 */
+	public static function memcacheLoaded() {
+		return (self::$memcacheObj instanceof Memcache);
+	}
+	
+	/**
+	 * Returnes the current memcache instance
+	 */
+	public static function getMemcache() {
+		return self::$memcacheObj;
 	}
 	
 	/**
