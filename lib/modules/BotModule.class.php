@@ -60,13 +60,13 @@ abstract class BotModule implements Module {
 		
 		foreach($this->commands as $key => $command) {
 			if ($this->commands[$key]->matches($message)) {
-				$this->commands[$key]->execute(&$user, $target, $message);
+				$this->commands[$key]->execute($user, $target, $message);
 				$found = true;
 			}
 		}
 		
 		if (!$found) {
-			$this->sendMessage(&$user, LanguageManager::get($user->languageID, 'bot.global.noSuchCommand'));
+			$this->sendMessage($user, LanguageManager::get($user->languageID, 'bot.global.noSuchCommand'));
 		}
 	}
 	
