@@ -33,6 +33,12 @@ class CacheSource extends Memcache {
 	const STATUS_CACHETIME = 10;
 	
 	/**
+	 * Contains the maximum age of cache cache (Senseless name). This wrapper will cache values of memcache to fix some problems with connection
+	 * @var	integer
+	 */
+	const CACHE_VARTIMEOUT = 1;
+	
+	/**
 	 * Contains the timestamp of the last status check
 	 * @var	integer
 	 */
@@ -47,10 +53,16 @@ class CacheSource extends Memcache {
 	 */
 	public function add($key, $var, $expire = self::CACHE_TIMEOUT) {
 		// add to log
-		$this->cacheList[] = $key;
+		$this->cacheList[$key] = array('timestamp' => time(), 'value' => $var);
 		
 		// add to cache
-		return parent::set($key, $var, MEMCACHE_COMPRESSED, $expire);
+		if (self::get($key) !== false)
+			parent::set($key, $var, MEMCACHE_COMPRESSED, $expire);
+		else
+			parent::add($key, $var, MEMCACHE_COMPRESSED, $expire);
+		
+		// log 
+		if (defined('DEBUG')) Services::getConnection()->getProtocol()->sendLogLine("Stored key '".$key."' with hash '".sha1((is_array(self::get($key)) ? serialize(self::get($key)) : self::get($key)))."'");
 	}
 	
 	/**
@@ -59,6 +71,13 @@ class CacheSource extends Memcache {
 	 * @param	string	$key
 	 */
 	public function get($key) {
+		if (isset($this->cacheList[$key])) {
+			if (($this->cacheList[$key]['timestamp'] + self::CACHE_VARTIMEOUT) > time())
+				return $this->cacheList[$key]['value'];
+			else
+				unset($this->cacheList[$key]);
+		}
+		
 		// read value
 		$val = parent::get($key, MEMCACHE_COMPRESSED);
 		
@@ -80,7 +99,7 @@ class CacheSource extends Memcache {
 	 * @param	integer	$timeout 
 	 */
 	public function delete($key, $timeout = self::DELETE_TIMEOUT) {
-		if(array_search($key, $this->cacheList)) unset($this->cacheList[$key]);
+		if(isset($this->cacheList[$key])) unset($this->cacheList[$key]);
 		return parent::delete($key, $timeput);
 	}
 	
