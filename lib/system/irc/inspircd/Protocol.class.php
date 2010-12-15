@@ -364,6 +364,15 @@ class Protocol {
 		return Services::getBotManager()->getUser($uuid);
 	}
 	
+	/**
+	 * Joins a user to channel
+	 * @param	string	$uuid
+	 * @param	string	$channel
+	 */
+	public function join($uuid, $channel) {
+		return Services::getConnection()->sendLine($this->formateUserLine($uuid, "JOIN ".$channel." ".time()));
+	}
+	
 	// NETWORK METHODS
 	/**
 	 * Formates a line for server syntax
@@ -371,6 +380,15 @@ class Protocol {
 	 */
 	public function formateServerLine($message) {
 		return ":".$this->numeric." ".$message;
+	}
+	
+	/**
+	 * Formates a line for user syntax
+	 * @param	string	$uuid
+	 * @param	string	$message
+	 */
+	public function formateUserLine($uuid, $message) {
+		return ":".$uuid." ".$message;
 	}
 	
 	/**
