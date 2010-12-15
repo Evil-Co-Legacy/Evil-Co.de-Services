@@ -27,6 +27,18 @@ class CacheSource extends Memcache {
 	const DELETE_TIMEOUT = 0;
 	
 	/**
+	 * Contains the time interval wich should used to check connection
+	 * @var	integer
+	 */
+	const STATUS_CACHETIME = 10;
+	
+	/**
+	 * Contains the timestamp of the last status check
+	 * @var	integer
+	 */
+	protected $lastStatusCheck = null;
+	
+	/**
 	 * Add an item to the server
 	 * Note: Stores variable var with key only if such key doesn't exist at the server yet
 	 * @param	string	$key
@@ -38,7 +50,7 @@ class CacheSource extends Memcache {
 		$this->cacheList[] = $key;
 		
 		// add to cache
-		return parent::add($key, $var, MEMCACHE_COMPRESSED, $expire);
+		return parent::set($key, $var, MEMCACHE_COMPRESSED, $expire);
 	}
 	
 	/**
@@ -87,11 +99,20 @@ class CacheSource extends Memcache {
 	 * Tries to write and read cache from memcache source and returnes true if connection is still alive
 	 */
 	public function checkConnection() {
+		// read cached return value
+		if ($this->lastStatusCheck !== null) if (($this->lastStatusCheck + self::STATUS_CACHETIME) > time()) return true;
+		
+		// update timestamp
+		$this->lastStatusCheck = time();
+		
+		// load data
 		try {
 			$this->add('SERVICES_VERSION', SERVICES_VERSION);
-			if ($this->get('SERVICES_VERSION') !== false)
+			if ($this->get('SERVICES_VERSION') !== false) {
+				// to much debug
+				// if (defined('DEBUG')) Services::getConnection()->getProtocol()->sendLogLine("[Memcache] Ping -> Pong");
 				return true;
-			else
+			} else
 				return false;
 		} Catch (Exception $ex) {
 			return false;
