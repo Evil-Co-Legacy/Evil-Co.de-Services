@@ -82,5 +82,20 @@ class CacheSource extends Memcache {
 		// call parent method
 		return parent::flush();
 	}
+	
+	/**
+	 * Tries to write and read cache from memcache source and returnes true if connection is still alive
+	 */
+	public function checkConnection() {
+		try {
+			$this->add('SERVICES_VERSION', SERVICES_VERSION);
+			if ($this->get('SERVICES_VERSION') !== false)
+				return true;
+			else
+				return false;
+		} Catch (Exception $ex) {
+			return false;
+		}
+	}
 }
 ?>
