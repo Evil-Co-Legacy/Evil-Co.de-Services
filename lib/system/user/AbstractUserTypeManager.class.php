@@ -45,30 +45,40 @@ abstract class AbstractUserTypeManager implements UserTypeManager {
 		$ID = count($this->userList);
 		
 		// create new user
-		$this->userList[] = new $this->userType($uuid, $timestamp, $nick, $hostname, $displayedHostname, $ident, $ip, $signonTimestamp, new $this->modeList($modes), $gecos);
-		
+		if (!Services::memcacheLoaded())
+			$this->userList[] = new $this->userType($uuid, $timestamp, $nick, $hostname, $displayedHostname, $ident, $ip, $signonTimestamp, new $this->modeList($modes), $gecos);
+		else
+			Services::getMemcache()->add('UserType_'.get_class($this).'_'.$this->userType.'_'.$uuid, (new $this->userType($uuid, $timestamp, $nick, $hostname, $displayedHostname, $ident, $ip, $signonTimestamp, new $this->modeList($modes), $gecos)));
+			
 		// return uuid
-		return $this->userList[$ID]->getUuid();
+		return $uuid;
 	}
 
 	/**
 	 * @see	UserTypeManager::removeUser()
 	 */
 	public function removeUser($uuid) {
-		foreach($this->userList as $key => $user) {
-			if ($this->userList[$key]->getUuid() == $uuid) unset($this->userList[$key]);
-		}
+		if (!Services::memcacheLoaded()) {
+			foreach($this->userList as $key => $user) {
+				if ($this->userList[$key]->getUuid() == $uuid) unset($this->userList[$key]);
+			}
+		} else
+			Services::getMemcache()->delete('UserType_'.get_class($this).'_'.$this->userType.'_'.$uuid);
 	}
 	
 	/**
 	 * @see	UserTypeManager::getUser()
 	 */
 	public function getUser($uuid) {
-		foreach($this->userList as $key => $user) {
-			if ($this->userList[$key]->getUuid() == $uuid) {
-				return $this->userList[$key];
+		if (!Services::memcacheLoaded()) {
+			foreach($this->userList as $key => $user) {
+				if ($this->userList[$key]->getUuid() == $uuid) {
+					return $this->userList[$key];
+				}
 			}
-		}
+		} elseif(Services::getMemcache()->get('UserType_'.get_class($this).'_'.$this->userType.'_'.$uuid))
+			return Services::getMemcache()->get('UserType_'.get_class($this).'_'.$this->userType.'_'.$uuid);
+		
 		
 		return null;
 	}
