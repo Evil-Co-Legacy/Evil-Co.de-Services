@@ -337,7 +337,7 @@ class Protocol {
 			}
 			
 			// check memcache connection
-			Services::getMemcache()->checkConnection();
+			if (Services::memcacheLoaded() and !Services::getMemcache()->checkConnection()) throw new Exception("Memcache is gone away!");
 		}
 	}
 	
