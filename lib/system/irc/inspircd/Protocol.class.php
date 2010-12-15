@@ -237,7 +237,7 @@ class Protocol {
 							$modes = '';
 							$activeIndex = 4;
 							
-							while($inputEx[$activeIndex]{0} != ':') {
+							while($inputEx[$activeIndex]{0} != ':' and !stripos($inputEx[$activeIndex], ',')) {
 								if (!empty($modes)) $modes .= " ";
 								$modes .= $inputEx[$activeIndex];
 								$activeIndex++;
@@ -313,12 +313,9 @@ class Protocol {
 										Services::getModuleManager()->handleLine($source, $inputEx[2], substr($input, (4 + strlen($inputEx[0]) + strlen($inputEx[1]) + strlen($inputEx[2]))));
 									}
 								}
-							} else {
+							} elseif ($source) {
 								// send debug message
 								if (defined('DEBUG')) $this->sendLogLine($source->getUuid()." (".$source->getNick().") sent a message to ".$inputEx[2]);
-								
-								// remove numeric
-								$inputEx[2] = substr($inputEx[2], (strlen($this->numeric)));
 								
 								// try to find bot
 								if (($bot = Services::getBotManager()->getUser($inputEx[2])) !== null) {
@@ -331,6 +328,8 @@ class Protocol {
 									// cannot find user ... send debug message
 									if (defined('DEBUG')) $this->sendLogLine("Cannot resolve '".$inputEx[2]."'! Type of return value: ".gettype($bot));
 								}
+							} else {
+								$this->sendLogLine("Received invalid UUID '".$inputEx[2]."'! Maybe choosen wrong IRCd?");
 							}
 						}
 						break;
