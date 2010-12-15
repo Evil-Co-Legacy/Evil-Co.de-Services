@@ -219,7 +219,7 @@ class ModuleManager {
 		$user = Services::getConnection()->getProtocol()->createBot($nick, $hostname, $ident, $ip, $modes, $gecos);
 		
 		// create instance of BotModule
-		$this->runningBots = new $moduleAddress($user, $trigger);
+		$this->runningBots[] = new $moduleAddress($user, $trigger);
 	}
 	
 	/**
