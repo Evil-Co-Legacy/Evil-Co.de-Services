@@ -107,6 +107,9 @@ class Services {
 		// call connection shutdown method
 		if (self::getConnection() !== null) self::getConnection()->shutdown();
 		
+		// flsuh cache
+		if (self::memcacheLoaded()) self::getMemcache()->flush();
+		
 		// remove pidfile (if any)
 		if (file_exists(SDIR.'services.pid')) @unlink(SDIR.'services.pid');
 	}
