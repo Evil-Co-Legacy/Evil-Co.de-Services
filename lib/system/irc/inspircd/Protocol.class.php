@@ -237,7 +237,7 @@ class Protocol {
 							$modes = '';
 							$activeIndex = 4;
 							
-							while($inputEx[$activeIndex]{0} != ':' and !stripos($inputEx[$activeIndex], ',')) {
+							while($inputEx[$activeIndex]{0} != ':' and stripos($inputEx[$activeIndex], ',') === false) {
 								if (!empty($modes)) $modes .= " ";
 								$modes .= $inputEx[$activeIndex];
 								$activeIndex++;
@@ -329,7 +329,7 @@ class Protocol {
 									if (defined('DEBUG')) $this->sendLogLine("Cannot resolve '".$inputEx[2]."'! Type of return value: ".gettype($bot));
 								}
 							} else {
-								$this->sendLogLine("Received invalid UUID '".$inputEx[2]."'! Maybe choosen wrong IRCd?");
+								$this->sendLogLine("Received invalid UUID '".$inputEx[0]."'! Maybe choosen wrong IRCd?");
 							}
 						}
 						break;
