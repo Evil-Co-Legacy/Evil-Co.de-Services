@@ -288,6 +288,9 @@ class Services {
 				unset($arguments);
 			}
 			
+			// flush old cache (we'll have old resources if the applications was cilled)
+			self::$memcacheObj->flush();
+			
 			// test connection
 			self::$memcacheObj->add('SERVICES_VERSION', SERVICES_VERSION);
 			if (self::$memcacheObj->get('SERVICES_VERSION') !== false) {
