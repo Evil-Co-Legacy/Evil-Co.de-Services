@@ -37,10 +37,13 @@ abstract class BotModule implements Module {
 	 * Creates a new instance of type Bot
 	 * @param	UserType	$bot
 	 */
-	public function __construct(&$bot, $trigger = '') {
-		$this->bot = &$bot;
+	public function __construct($bot, $trigger = '') {
+		$this->bot = $bot;
 		$this->trigger = $trigger;
 		$this->registerEvents();
+		
+		// join channel
+		Services::getConnection()->getProtocol()->join($bot->getUuid(), Services::getConnection()->getProtocol()->getServiceChannel());
 	}
 	
 	/**
