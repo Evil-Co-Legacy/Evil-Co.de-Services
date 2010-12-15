@@ -108,6 +108,15 @@ class IRCConnection {
 	}
 	
 	/**
+	 * Sends a user line to server
+	 * @param	string	$uuid
+	 * @param	string	$message
+	 */
+	public function sendUserLine($uuid, $message) {
+		$this->sendLine($this->protocol->formateUserLine($uuid, $message));
+	}
+	
+	/**
 	 * Returnes true if the connection is alive
 	 */
 	public function isAlive() {
