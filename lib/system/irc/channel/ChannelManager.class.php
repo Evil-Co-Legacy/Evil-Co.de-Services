@@ -24,7 +24,10 @@ class ChannelManager {
 	 * @param	array<UserType>	$userList
 	 */
 	public function addChannel($name, $timestamp, $modes, $userList) {
-		$this->channelList[] = new Channel($name, $timestamp, new ChannelModeList($modes), $userList);
+		if (!Services::memcacheLoaded())
+			$this->channelList[] = new Channel($name, $timestamp, new ChannelModeList($modes), $userList);
+		else
+			Services::getMemcache()->add('channel_'.$name, (new Channel($name, $timestamp, new ChannelModeList($modes), $userList)));
 	}
 	
 	/**
@@ -32,9 +35,12 @@ class ChannelManager {
 	 * @param	string	$name
 	 */
 	public function getChannel($name) {
-		foreach($this->channelList as $key => $channel) {
-			if ($channel->getName() == $name) return $this->channelList[$key];
-		}
+		if (!Services::memcacheLoaded()) {
+			foreach($this->channelList as $key => $channel) {
+				if ($channel->getName() == $name) return $this->channelList[$key];
+			}
+		} elseif (Services::getMemcache()->get('channel_'.$name))
+			return Services::getMemcache()->get('channel_'.$name);
 		
 		return null;
 	}
@@ -44,9 +50,12 @@ class ChannelManager {
 	 * @param	string	$name
 	 */
 	public function removeChannel($name) {
-		foreach($this->channelList as $key => $channel) {
-			if ($channel->getName() == $name) unset($this->channelList[$key]);
-		}
+		if (!Services::memcacheLoaded()) {
+			foreach($this->channelList as $key => $channel) {
+				if ($channel->getName() == $name) unset($this->channelList[$key]);
+			}
+		} else
+			Services::getMemcache()->delete('channel_'.$name);
 	}
 }
 ?>
