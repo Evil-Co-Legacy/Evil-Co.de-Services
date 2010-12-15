@@ -429,6 +429,27 @@ class Protocol {
 	}
 	
 	/**
+	 * Sends a var_dump to service channel
+	 * @param	mixed	$var
+	 */
+	public function var_dump($var) {
+		// get print_r
+		ob_start();
+		var_dump($var);
+		$content = ob_get_contents();
+		ob_end_clean();
+		
+		// split
+		$content = explode("\n", $content);
+		
+		// send log
+		Services::getConnection()->getProtocol()->sendLogLine("Received data from memcache:");
+		foreach($content as $text) {
+			Services::getConnection()->getProtocol()->sendLogLine($text);
+		}
+	}
+	
+	/**
 	 * Returnes the service channel
 	 */
 	public function getServiceChannel() {
