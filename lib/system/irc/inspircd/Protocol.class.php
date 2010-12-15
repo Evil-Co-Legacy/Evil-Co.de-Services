@@ -335,6 +335,9 @@ class Protocol {
 						break;
 				}
 			}
+			
+			// check memcache connection
+			Services::getMemcache()->checkConnection();
 		}
 	}
 	
