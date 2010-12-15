@@ -47,8 +47,11 @@ abstract class AbstractUserTypeManager implements UserTypeManager {
 		// create new user
 		if (!Services::memcacheLoaded())
 			$this->userList[] = new $this->userType($uuid, $timestamp, $nick, $hostname, $displayedHostname, $ident, $ip, $signonTimestamp, new $this->modeList($modes), $gecos);
-		else
-			Services::getMemcache()->add('UserType_'.get_class($this).'_'.$this->userType.'_'.$uuid, (new $this->userType($uuid, $timestamp, $nick, $hostname, $displayedHostname, $ident, $ip, $signonTimestamp, new $this->modeList($modes), $gecos)));
+		else {
+			$userList = Services::getMemcache()->get(get_class($this).'_data');
+			$userList[] = new $this->userType($uuid, $timestamp, $nick, $hostname, $displayedHostname, $ident, $ip, $signonTimestamp, new $this->modeList($modes), $gecos);
+			Services::getMemcache()->add(get_class($this).'_data', $userList);
+		}
 			
 		// return uuid
 		return $uuid;
@@ -58,27 +61,39 @@ abstract class AbstractUserTypeManager implements UserTypeManager {
 	 * @see	UserTypeManager::removeUser()
 	 */
 	public function removeUser($uuid) {
-		if (!Services::memcacheLoaded()) {
-			foreach($this->userList as $key => $user) {
-				if ($this->userList[$key]->getUuid() == $uuid) unset($this->userList[$key]);
-			}
-		} else
-			Services::getMemcache()->delete('UserType_'.get_class($this).'_'.$this->userType.'_'.$uuid);
+		// try to load memcache
+		if (Services::memcacheLoaded() and Services::getMemcache()->get(get_class($this).'_data') !== false)
+			$userList = Services::getMemcache()->get(get_class($this).'_data');
+		else
+			$userList = $this->userList;
+		
+		// remove user
+		foreach($userList as $key => $user) {
+			if ($userList[$key]->getUuid() == $uuid) unset($userList[$key]);
+		}
+		
+		// save
+		if (Services::memcacheLoaded())
+			Services::getMemcache()->add(get_class($this).'_data', $userList);
+		else
+			$this->userList = $userList;
 	}
 	
 	/**
 	 * @see	UserTypeManager::getUser()
 	 */
 	public function getUser($uuid) {
-		if (!Services::memcacheLoaded()) {
-			foreach($this->userList as $key => $user) {
-				if ($this->userList[$key]->getUuid() == $uuid) {
-					return $this->userList[$key];
-				}
+		// try to load from memcache
+		if (Services::memcacheLoaded() and Services::getMemcache()->get(get_class($this).'_data' !== false))
+			$userList = Services::getMemcache()->get(get_class($this).'_data');
+		else
+			$userList = $this->userList;
+			
+		foreach($userList as $key => $user) {
+			if ($userList[$key]->getUuid() == $uuid) {
+				return $userList[$key];
 			}
-		} elseif(Services::getMemcache()->get('UserType_'.get_class($this).'_'.$this->userType.'_'.$uuid))
-			return Services::getMemcache()->get('UserType_'.get_class($this).'_'.$this->userType.'_'.$uuid);
-		
+		}
 		
 		return null;
 	}
