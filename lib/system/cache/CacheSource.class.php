@@ -42,6 +42,26 @@ class CacheSource extends Memcache {
 	}
 	
 	/**
+	 * Retrieve item from the server.
+	 * Returns previously stored data if an item with such key exists on the server at this moment.
+	 * @param	string	$key
+	 */
+	public function get($key) {
+		// read value
+		$val = parent::get($key, MEMCACHE_COMPRESSED);
+		
+		// try to unserialize
+		try {
+			if (unserialize($val) !== false) $val = unserialize($val);
+		} Catch (Exception $ex) {
+			// ignore
+		}
+		
+		// return value
+		return $val;
+	}
+	
+	/**
 	 * Delete item from the server
 	 * Note: Deletes item with the key. If parameter timeout is specified, the item will expire after timeout seconds. Also you can use memcache_delete() function.
 	 * @param	string	$key
