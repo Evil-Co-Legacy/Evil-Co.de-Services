@@ -32,7 +32,7 @@ class AbstractMode implements Mode {
 	 * @see	Mode::__toString()
 	 */
 	public function __toString() {
-		return str_replace('Mode', '', get_class($this));
+		return $this->getName();
 	}
 	
 	/**
