@@ -476,7 +476,7 @@ class Protocol {
 	 * @param	string	$message
 	 */
 	public function sendNotice($source, $target, $message) {
-		Services::getConnection()->sendLine($this->formateServerLine(source, "NOTICE ".$target." :".$message));
+		Services::getConnection()->sendLine($this->formateUserLine($source, "NOTICE ".$target." :".$message));
 	}
 }
 ?>
