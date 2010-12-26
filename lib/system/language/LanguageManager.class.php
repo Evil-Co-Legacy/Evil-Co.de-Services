@@ -31,7 +31,7 @@ class LanguageManager {
 
 		while($row = Services::getDB()->fetchArray($result)) {
 			$this->availableLanguages[] = $row;
-			$this->items[$row['languageID']] = array();
+			$this->items[intval($row['languageID'])] = array();
 		}
 
 		$sql = "SELECT
@@ -41,7 +41,7 @@ class LanguageManager {
 		$result = Services::getDB()->sendQuery($sql);
 
 		while($row = Services::getDB()->fetchArray($result)) {
-			$this->items[$row['languageID']][$row['name']] = $row['value'];
+			$this->items[intval($row['languageID'])][$row['name']] = $row['value'];
 		}
 	}
 
@@ -52,7 +52,10 @@ class LanguageManager {
 	 */
 	public function get($languageID, $variable) {
 		// whohoo hardcoded shit
-		if (!$languageID == null) $languageID = 1;
+		if ($languageID == null)
+			$languageID = 1;
+		else
+			$languageID = intval($languageID);
 
 		// handle missing vars
 		if (!isset($this->items[$languageID][$variable])) return $variable;
@@ -62,9 +65,7 @@ class LanguageManager {
 		$arguments = func_get_args();
 
 		// kick languageID and variable from argument list
-		unset($arguments[0]);
-		unset($arguments[1]);
-		$arguments = array_merge(array(), $arguments);
+		$arguments[0] = $value;
 
 		// return correct value
 		return call_user_func_array('sprintf', $arguments);
