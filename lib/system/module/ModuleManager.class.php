@@ -119,17 +119,6 @@ class ModuleManager {
 			foreach($this->runningBots as $key => $bot) {
 				if ($this->runningBots[$key]->getBot()->getUuid() == $target)  $this->runningBots[$key]->handleLine($user, $target, $message);
 			}
-		} else {
-			$chan = Services::getChannelManager()->getChannel($inputEx[2]);
-			$userList = $chan->getUserList();
-
-			foreach($userList as $user) {
-				if ($user['user']->isBot !== null) {
-					foreach($this->runningBots as $key => $bot) {
-						if ($this->runningBots[$key]->getBot()->getUuid() == $user['user']->getUuid())  $this->runningBots[$key]->handleLine($user, $target, $message);
-					}
-				}
-			}
 		}
 	}
 
