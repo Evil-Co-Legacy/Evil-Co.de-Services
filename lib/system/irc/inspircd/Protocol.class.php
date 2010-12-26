@@ -314,6 +314,9 @@ class Protocol {
 									}
 								}
 							} elseif ($source) {
+								// kick numeric
+								$inputEx[2] = substr($inputEx[2], strlen($this->numeric));
+
 								// send debug message
 								if (defined('DEBUG')) $this->sendLogLine($source->getUuid()." (".$source->getNick().") sent a message to ".$inputEx[2]);
 
