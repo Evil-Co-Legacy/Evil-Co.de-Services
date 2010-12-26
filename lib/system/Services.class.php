@@ -288,7 +288,7 @@ class Services {
 				unset($arguments);
 			}
 
-			// flush old cache (we'll have old resources if the applications was cilled)
+			// flush old cache (we'll have old resources if the applications was killed)
 			self::$memcacheObj->flush();
 
 			// test connection
