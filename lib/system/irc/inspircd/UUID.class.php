@@ -40,37 +40,14 @@ class UUID {
 	 * @return	string
 	 */
 	public function generate() {
-		// update userID
-		self::$userID++;
-		
 		// get rest
-		$rest = self::$userID;
-		
-		// set active char
-		$activeChar = 5;
-		
-		// Sample UUID: AAAAAB
-		$chars = array(0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0);
-		
+		$rest = self::$userID++;
+		$uuid = '';
 		do {
-			if ($rest > 26) {
-				$rest = self::$userID % 26;
-				$chars[$activeChar] = 25;
-				if ($activeChar > 0)
-					$activeChar--;
-				else
-					throw new Exception("TO MANY BOTS! DONT LOAD 2 MIO MODULES!!!!!");
-			} else
-				$rest = 0;
-		} while ($rest > 26);
-		$activeChar = $rest;
-		
-		$uuid = "";
-		
-		foreach($chars as $mapID) {
-			$uuid .= self::$charmap{$mapID};
-		}
-		
+			$uuid = substr(self::$charmap, $rest % 26, 1).$uuid;
+			$rest = floor($rest / 26);
+		} while ($rest > 0);
+		$uuid = str_pad($uuid, 6, 'A', STR_PAD_LEFT);
 		return $uuid;
 	}
 }
