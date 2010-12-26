@@ -205,11 +205,11 @@ class Protocol {
 						if (defined('DEBUG')) print("ENDBURST\n");
 
 						// send log message
-						Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :[".$this->name."] Burst finished");
+						if (defined('DEBUG')) Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :[".$this->name."] Burst finished");
 
 						// memcache
 						if (extension_loaded('memcache')) {
-							$this->sendLogLine("Memcache extension is available! Trying to find configuration for memcache ...");
+							if(defined('DEBUG')) $this->sendLogLine("Memcache extension is available! Trying to find configuration for memcache ...");
 							Services::loadMemcache();
 						}
 
