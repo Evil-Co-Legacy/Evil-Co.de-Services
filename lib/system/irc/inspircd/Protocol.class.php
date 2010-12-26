@@ -389,8 +389,8 @@ class Protocol {
 	 * @param	string	$uuid
 	 * @param	string	$channel
 	 */
-	public function join($uuid, $channel, $mode = '') {
-		return Services::getConnection()->sendUserLine($uuid, "JOIN ".$channel." ".time() /*." +nt ".$mode.",".$this->numeric.$uuid */);
+	public function join($uuid, $channel, $channelModes = '+nt', $userMode = '') {
+		return Services::getConnection()->sendServerLine("FJOIN ".$channel." ".time()." ".$channelModes." ".$userMode.",".$this->numeric.$uuid);
 	}
 
 	// NETWORK METHODS
