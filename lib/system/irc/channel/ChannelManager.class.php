@@ -37,7 +37,7 @@ class ChannelManager {
 	public function getChannel($name) {
 		if (!Services::memcacheLoaded()) {
 			foreach($this->channelList as $key => $channel) {
-				if ($channel->getName() == $name) return $this->channelList[$key];
+				if (strtolower($channel->getName()) == strtolower($name)) return $this->channelList[$key];
 			}
 		} elseif (Services::getMemcache()->get('channel_'.$name))
 			return Services::getMemcache()->get('channel_'.$name);
@@ -52,7 +52,7 @@ class ChannelManager {
 	public function removeChannel($name) {
 		if (!Services::memcacheLoaded()) {
 			foreach($this->channelList as $key => $channel) {
-				if ($channel->getName() == $name) unset($this->channelList[$key]);
+				if (strtolower($channel->getName()) == strtolower($name)) unset($this->channelList[$key]);
 			}
 		} else
 			Services::getMemcache()->delete('channel_'.$name);
