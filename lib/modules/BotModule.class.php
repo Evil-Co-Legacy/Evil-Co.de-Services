@@ -69,7 +69,7 @@ abstract class BotModule implements Module {
 		}
 
 		if (!$found) {
-			$this->sendMessage($user, LanguageManager::get($user->languageID, 'bot.global.noSuchCommand'));
+			$this->sendMessage($user->getUuid(), LanguageManager::get($user->languageID, 'bot.global.noSuchCommand'));
 		}
 	}
 
