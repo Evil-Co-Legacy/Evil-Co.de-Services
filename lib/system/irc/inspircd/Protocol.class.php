@@ -457,5 +457,16 @@ class Protocol {
 	public function getServiceChannel() {
 		return $this->servicechannel;
 	}
+
+	// COMMAND METHODS
+	/**
+	 * Sends a PRIVMSG from source to target
+	 * @param	string	$source
+	 * @param	string	$target
+	 * @param	string	$message
+	 */
+	public function sendPrivmsg($source, $target, $message) {
+		Services::getConnection()->sendLine($this->formateUserLine($source, "PRIVMSG ".$target." :".$message));
+	}
 }
 ?>
