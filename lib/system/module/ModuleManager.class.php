@@ -119,6 +119,13 @@ class ModuleManager {
 			foreach($this->runningBots as $key => $bot) {
 				if ($this->runningBots[$key]->getBot()->getUuid() == $target)  $this->runningBots[$key]->handleLine($user, $target, $message);
 			}
+		} else {
+			$trigger = $message{0};
+			$message = substr($message, 1);
+
+			foreach($this->runningBots as $key => $bot) {
+				if (strtolower($this->runningBots[$key]->getTrigger()) == strtolower($trigger)) $this->runningBots[$key]->handleLine($user, $target, $message);
+			}
 		}
 	}
 
