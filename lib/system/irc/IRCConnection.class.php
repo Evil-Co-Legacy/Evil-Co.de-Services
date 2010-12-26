@@ -120,8 +120,7 @@ class IRCConnection {
 	 * Returnes true if the connection is alive
 	 */
 	public function isAlive() {
-		if (!feof($this->socket)) return true;
-		return false;
+		return !feof($this->socket);
 	}
 	
 	/**
