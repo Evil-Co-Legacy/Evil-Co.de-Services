@@ -199,8 +199,9 @@ class Protocol {
 						$this->serverList[] = $inputEx[2];
 						break;
 					case 'ENDBURST':
-						// TODO: This does not work ... it's a bug ...
 						$this->connectionState = 'authed';
+
+						if (defined('DEBUG')) $this->sendLogLine("WARNING! DEBUGMODE IS ENABLED!");
 
 						if (defined('DEBUG')) print("ENDBURST\n");
 
