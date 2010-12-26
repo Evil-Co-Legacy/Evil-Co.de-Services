@@ -9,13 +9,13 @@ require_once(SDIR.'lib/system/irc/ChannelModeList.class.php');
  * @copyright	2010 DEVel Fusion
  */
 class ChannelManager {
-	
+
 	/**
 	 * Contains all channels on network
 	 * @var	array<Channel>
 	 */
 	protected $channelList = array();
-	
+
 	/**
 	 * Adds a channel to manager
 	 * @param	string			$name
@@ -29,7 +29,7 @@ class ChannelManager {
 		else
 			Services::getMemcache()->add('channel_'.$name, (new Channel($name, $timestamp, new ChannelModeList($modes), $userList)));
 	}
-	
+
 	/**
 	 * Returnes the channel object for the given channel
 	 * @param	string	$name
@@ -41,10 +41,10 @@ class ChannelManager {
 			}
 		} elseif (Services::getMemcache()->get('channel_'.$name))
 			return Services::getMemcache()->get('channel_'.$name);
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * Removes a channel from list
 	 * @param	string	$name
@@ -56,6 +56,13 @@ class ChannelManager {
 			}
 		} else
 			Services::getMemcache()->delete('channel_'.$name);
+	}
+
+	/**
+	 * Returnes the whole channel list
+	 */
+	public function getChannelList() {
+		return $this->channelList;
 	}
 }
 ?>
