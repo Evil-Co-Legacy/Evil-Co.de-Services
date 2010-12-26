@@ -6,20 +6,20 @@
  * @copyright	2010 DEVel Fusion
  */
 class Channel {
-	
+
 	/**
 	 * Contains channel's data
 	 * @var	array<mixed>
 	 */
 	protected $data = array();
-	
+
 	/**
 	 * Contains a list of all users
 	 * This is a little workaround
 	 * @var	array
 	 */
 	protected $userList = array();
-	
+
 	/**
 	 * Creates a new instance of type Channel
 	 * @param	string			$name
@@ -32,11 +32,8 @@ class Channel {
 		$this->timestamp = $timestamp;
 		$this->modes = $modes;
 		$this->userList = $userList;
-		
-		// little workaround
-		$this->cleanUserlist();
 	}
-	
+
 	/**
 	 * Returnes the name of this channel
 	 * @return	string
@@ -44,7 +41,7 @@ class Channel {
 	public function getName() {
 		return $this->name;
 	}
-	
+
 	/**
 	 * Returnes the timestamp of this channel
 	 * @return	integer
@@ -52,7 +49,7 @@ class Channel {
 	public function getTimestamp() {
 		return $this->timestamp;
 	}
-	
+
 	/**
 	 * Returnes the modes of this channel
 	 * @return	ModeList
@@ -60,7 +57,7 @@ class Channel {
 	public function getModes() {
 		return $this->modes;
 	}
-	
+
 	/**
 	 * Returnes the current userlist
 	 * @return	array<UserType>
@@ -68,16 +65,15 @@ class Channel {
 	public function getUserList() {
 		return $this->userList;
 	}
-	
+
 	/**
 	 * Adds a user to channel
 	 * @param	array<UserType>	$user
 	 */
 	public function join($userList) {
 		$this->userList = array_merge($this->userList, $userList);
-		$this->cleanUserlist();
 	}
-	
+
 	/**
 	 * Removes a user from database
 	 * @param	string	$uuid
@@ -86,18 +82,18 @@ class Channel {
 		foreach($this->userList as $key => $user) {
 			if ($this->userList[$key]['user']->getUuid() == $uuid) unset($this->userList[$key]);
 		}
-		$this->cleanUserlist();
 	}
-	
+
 	/**
 	 * Removes invalid entries from userlist
+	 * @deprecated
 	 */
 	protected function cleanUserlist() {
 		foreach($this->userList as $key => $user) {
 			if (!($user['user'] instanceof UserType)) unset($this->userList[$key]);
 		}
 	}
-	
+
 	/**
 	 * Magic method to support channel metadata
 	 * @param	string	$variable
@@ -106,14 +102,14 @@ class Channel {
 	public function __set($variable, $value) {
 		$this->data[$variable] = $value;
 	}
-	
+
 	/**
 	 * Magic method to support channel metadata
 	 * @param unknown_type $variable
 	 */
 	public function __get($variable) {
 		if (isset($this->data[$variable])) {
-			if (is_array($this->data[$variable])) 
+			if (is_array($this->data[$variable]))
 				return (array) $this->data[$variable];
 			else
 				return $this->data[$variable];
