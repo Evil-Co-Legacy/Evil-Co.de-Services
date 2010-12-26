@@ -468,5 +468,15 @@ class Protocol {
 	public function sendPrivmsg($source, $target, $message) {
 		Services::getConnection()->sendLine($this->formateUserLine($source, "PRIVMSG ".$target." :".$message));
 	}
+
+	/**
+	 * Sends a NOTICE from $source to $target
+	 * @param	string	$source
+	 * @param	string	$target
+	 * @param	string	$message
+	 */
+	public function sendNotice($source, $target, $message) {
+		Services::getConnection()->sendLine($this->formateServerLine(source, "NOTICE ".$target." :".$message));
+	}
 }
 ?>
