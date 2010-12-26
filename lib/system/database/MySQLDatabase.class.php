@@ -180,7 +180,7 @@ class MySQLDatabase extends Database {
 	public function getVersion() {
 		$result = $this->getFirstRow('SELECT VERSION() AS version');
 		if (isset($result['version'])) {
-		    return $result['version'];
+			return $result['version'];
 		}
 	}
 }
