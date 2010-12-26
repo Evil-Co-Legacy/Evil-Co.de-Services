@@ -337,9 +337,8 @@ class Protocol {
 								$userList = $chan->getUserList();
 
 								foreach($userList as $user) {
-									if ($user['user']->isBot !== null) {
+									if ($user['user']->isBot)
 										Services::getModuleManager()->handleLine($source, $inputEx[2], substr($input, (stripos($input, ':') + 1)));
-									}
 								}
 							} elseif ($source) {
 								// kick numeric
