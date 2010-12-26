@@ -69,6 +69,11 @@ abstract class BotModule implements Module {
 		}
 
 		if (!$found) {
+			// handle help command
+			$inputEx = explode(' ', $message);
+			if (strtoupper($inputEx[0]) == 'HELP') return $this->generateHelp();
+
+			// send noSuchCommand message
 			$this->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'bot.global.noSuchCommand'));
 		}
 	}
