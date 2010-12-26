@@ -107,7 +107,7 @@ class Services {
 		// call connection shutdown method
 		if (self::getConnection() !== null) self::getConnection()->shutdown();
 
-		// flsuh cache
+		// flush cache
 		if (self::memcacheLoaded()) self::getMemcache()->flush();
 
 		// remove pidfile (if any)
@@ -288,7 +288,7 @@ class Services {
 				unset($arguments);
 			}
 
-			// flush old cache (we'll have old resources if the applications was cilled)
+			// flush old cache (we'll have old resources if the applications was killed)
 			self::$memcacheObj->flush();
 
 			// test connection
