@@ -30,7 +30,7 @@ class Bot extends AbstractUserType {
 	 * @param	string	$modes
 	 * @param	string	$userModes
 	 */
-	public function join($channel, $modes = "+nt", $userModes = "+oa") {
+	public function join($channel, $modes = "+nt", $userModes = "+a") {
 		// remove + from string
 		// if (stripos($userModes, '+') !== false) $userModes = substr($userModes, 1);
 
