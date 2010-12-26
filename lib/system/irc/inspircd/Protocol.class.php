@@ -161,7 +161,7 @@ class Protocol {
 						}
 
 						// add user to manager
-						Services::getUserManager()->introduceUser($inputEx[3], $inputEx[4], $inputEx[5], $inputEx[6], $inputEx[7], $inputEx[8], $inputEx[9], $modes, substr($input, (stripos(':', $input) + 1)), $inputEx[2]);
+						Services::getUserManager()->introduceUser($inputEx[3], $inputEx[4], $inputEx[5], $inputEx[6], $inputEx[7], $inputEx[8], $inputEx[9], $modes, substr($input, (stripos($input, ':') + 1)), $inputEx[2]);
 
 						// send debug message
 						if (defined('DEBUG')) print("Added user ".$inputEx[2]."\n");
@@ -183,9 +183,12 @@ class Protocol {
 						$userList = array();
 
 						foreach($userListString as $user) {
-							$user = explode(',', $user);
-							if (count($user) == 2) {
-								$userList[] = array('mode' => $user[0], 'user' => Services::getUserManager()->getUser($user[1]));
+							$user = trim($user);
+							if (!empty($user)) {
+								$user = explode(',', $user);
+								if (count($user) == 2) {
+									$userList[] = array('mode' => $user[0], 'user' => Services::getUserManager()->getUser($user[1]));
+								}
 							}
 						}
 
