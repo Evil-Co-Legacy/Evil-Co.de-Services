@@ -390,7 +390,7 @@ class Protocol {
 	 * @param	string	$channel
 	 */
 	public function join($uuid, $channel, $channelModes = '+nt', $userMode = '') {
-		return Services::getConnection()->sendServerLine("FJOIN ".$channel." ".time()." ".$channelModes." ".$userMode.",".$this->numeric.$uuid);
+		return Services::getConnection()->sendServerLine("FJOIN ".$channel." ".time()." ".$channelModes." :".$userMode.",".$this->numeric.$uuid);
 	}
 
 	// NETWORK METHODS
@@ -494,6 +494,16 @@ class Protocol {
 	 */
 	public function sendNotice($source, $target, $message) {
 		Services::getConnection()->sendLine($this->formateUserLine($source, "NOTICE ".$target." :".$message));
+	}
+
+	/**
+	 * Sends a MODE from $source to $target with $modes
+	 * @param	string	$source
+	 * @param	string	$target
+	 * @param	string	$modes
+	 */
+	public function sendMode($source, $target, $modes) {
+		Services::getConnection()->sendLine($this->formateUserLine($source, "MODE ".$target." ".time()." ".$modes));
 	}
 }
 ?>
