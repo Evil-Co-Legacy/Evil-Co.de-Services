@@ -86,6 +86,13 @@ class Protocol {
 	}
 
 	/**
+	 * Returnes server's numeric
+	 */
+	public function getNumeric() {
+		return $this->numeric;
+	}
+
+	/**
 	 * Creates a new instance of type Protocol
 	 */
 	public function __construct() {
@@ -503,7 +510,7 @@ class Protocol {
 	 * @param	string	$modes
 	 */
 	public function sendMode($source, $target, $modes) {
-		Services::getConnection()->sendLine($this->formateUserLine($source, "FMODE ".$target." ".time()." ".$modes));
+		Services::getConnection()->sendLine($this->formateUserLine($source, "MODE ".$target." ".$modes));
 	}
 }
 ?>
