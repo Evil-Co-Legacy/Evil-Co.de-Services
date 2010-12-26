@@ -503,7 +503,7 @@ class Protocol {
 	 * @param	string	$modes
 	 */
 	public function sendMode($source, $target, $modes) {
-		Services::getConnection()->sendLine($this->formateUserLine($source, "MODE ".$target." ".time()." ".$modes));
+		Services::getConnection()->sendLine($this->formateUserLine($source, "FMODE ".$target." ".time()." ".$modes));
 	}
 }
 ?>
