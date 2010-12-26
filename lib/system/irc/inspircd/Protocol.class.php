@@ -334,7 +334,7 @@ class Protocol {
 
 								foreach($userList as $user) {
 									if ($user['user']->isBot !== null) {
-										Services::getModuleManager()->handleLine($source, $inputEx[2], substr($input, (4 + strlen($inputEx[0]) + strlen($inputEx[1]) + strlen($inputEx[2]))));
+										Services::getModuleManager()->handleLine($source, $inputEx[2], substr($input, (stripos($input, ':') + 1)));
 									}
 								}
 							} elseif ($source) {
@@ -350,7 +350,7 @@ class Protocol {
 									if (defined('DEBUG')) $this->sendLogLine("Resolved ".$inputEx[2]." to ".$bot->getNick());
 
 									// notify module manager
-									Services::getModuleManager()->handleLine($source, $inputEx[2], substr($input, (4 + strlen($inputEx[0]) + strlen($inputEx[1]) + strlen($inputEx[2]))));
+									Services::getModuleManager()->handleLine($source, $inputEx[2], substr($input, (stripos($input, ':') + 1)));
 								} else {
 									// cannot find user ... send debug message
 									if (defined('DEBUG')) $this->sendLogLine("Cannot resolve '".$inputEx[2]."'! Type of return value: ".gettype($bot));
