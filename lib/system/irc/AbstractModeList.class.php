@@ -117,10 +117,9 @@ abstract class AbstractModeList implements ModeList {
 	 * @param	string	$char
 	 */
 	public function getModeType($char) {
-		$lowerMap = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
-
-		if (in_array($char, $lowerMap)) return 'lower';
-		return 'upper';
+		if (preg_match('/[a-z]/', $char)) return 'lower';
+		else if (preg_match('/[A-Z]/', $char)) return 'upper';
+		throw new Exception("Invalid mode type '".$char."');
 	}
 }
 ?>
