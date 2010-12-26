@@ -30,12 +30,13 @@ class Bot extends AbstractUserType {
 	 * @param	string	$modes
 	 * @param	string	$userModes
 	 */
-	public function join($channel, $modes = "+nt", $userModes = "+oaq") {
+	public function join($channel, $modes = "+nt", $userModes = "+oa") {
 		// remove + from string
-		if (stripos($userModes, '+') !== false) $userModes = substr($userModes, 1);
+		// if (stripos($userModes, '+') !== false) $userModes = substr($userModes, 1);
 
 		// join channel
-		Services::getConnection()->getProtocol()->join($this->getUuid(), $channel, $modes, $userModes);
+		Services::getConnection()->getProtocol()->join($this->getUuid(), $channel, $modes);
+		Services::getConnection()->getProtocol()->sendMode($this->getUuid(), $channel, $userModes." ".Services::getConnection()->getProtocol()->getNumeric().$this->getUuid());
 
 		// notify channel manager
 		if (($chan = Services::getChannelManager()->getChannel($channel)) === null) {
