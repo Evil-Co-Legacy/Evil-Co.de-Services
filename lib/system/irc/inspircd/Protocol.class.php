@@ -287,6 +287,23 @@ class Protocol {
 						Services::getEvent()->fire($this, 'serverCreated', array('name' => $inputEx[2]));
 						$this->serverList[] = $inputEx[2];
 						break;
+					case 'UID':
+						// get mode string
+						$modes = '';
+						$activeIndex = 10;
+
+						while($inputEx[$activeIndex]{0} != ':') {
+							if (!empty($modes)) $modes .= " ";
+							$modes .= $inputEx[$activeIndex];
+							$activeIndex++;
+						}
+
+						// add user to manager
+						Services::getUserManager()->introduceUser($inputEx[3], $inputEx[4], $inputEx[5], $inputEx[6], $inputEx[7], $inputEx[8], $inputEx[9], $modes, substr($input, (stripos(':', $input) + 1)), $inputEx[2]);
+
+						// send debug message
+						if (defined('DEBUG')) print("Added user ".$inputEx[2]."\n");
+						break;
 					case 'PART':
 						Services::getEvent()->fire($this, 'userParted', array('channel' => $inputEx[2], 'user' => Services::getUserManager()->getUser($inputEx[0])));
 						Services::getChannelManager()->getChannel($inputEx[2])->part($inputEx[0]);
