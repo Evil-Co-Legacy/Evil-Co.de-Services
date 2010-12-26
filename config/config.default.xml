@@ -227,7 +227,7 @@
 		 	Defines a regex for channel names
 		 	If you don't know what this does leave it at default!
 		  -->
-		 <channelnamepattern><![CDATA[~(#|&)(|[A-Z0-9_\-\.]+)~i]]></channelnamepattern>
+		 <channelnamepattern><![CDATA[~(#|&)([#&A-Z0-9_\-\.]*)~i]]></channelnamepattern>
 	</chanserv>
 	
 	<!-- 
