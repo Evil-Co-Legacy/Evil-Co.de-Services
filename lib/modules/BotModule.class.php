@@ -99,12 +99,19 @@ abstract class BotModule implements Module {
 	public static function registerBot() {
 		// TODO: Implement this function
 	}
-	
+
 	/**
 	 * Spits out the help
 	 */
 	public function generateHelp($user, $target, $message) {
 		$this->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'bot.global.help'));
+	}
+
+	/**
+	 * Returnes bot's trigger
+	 */
+	public final function getTrigger() {
+		return $this->trigger;
 	}
 
 	/**
