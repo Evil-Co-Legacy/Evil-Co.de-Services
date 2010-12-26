@@ -43,7 +43,7 @@ abstract class BotModule implements Module {
 		$this->registerEvents();
 
 		// join channel
-		Services::getConnection()->getProtocol()->join($bot->getUuid(), Services::getConnection()->getProtocol()->getServiceChannel());
+		$this->join(Services::getConnection()->getProtocol()->getServiceChannel());
 	}
 
 	/**
