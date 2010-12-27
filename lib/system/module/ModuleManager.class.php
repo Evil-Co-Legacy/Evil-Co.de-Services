@@ -231,6 +231,17 @@ class ModuleManager {
 	}
 
 	/**
+	 * Looks up a module and returnes its address
+	 * @param	string	$moduleName
+	 */
+	public function lookupModule($moduleName) {
+		foreach($this->availableModules as $name => $address) {
+			if ($name == $moduleName) return $address;
+		}
+		return false;
+	}
+
+	/**
 	 * Returnes true if a module with given address exists
 	 * @param	string	$moduleAddress
 	 */
