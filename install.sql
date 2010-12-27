@@ -1,54 +1,122 @@
--- Uncomment the following lines to create a default database
--- CREATE DATABASE `evilcode_services` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
--- USE `evilcode_services`;
+-- phpMyAdmin SQL Dump
+-- version 3.2.4
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Erstellungszeit: 27. Dezember 2010 um 11:21
+-- Server Version: 5.1.41
+-- PHP-Version: 5.3.1
 
--- Language database
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+--
+-- Datenbank: 'evilcode_services'
+--
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle 'language'
+--
+
 CREATE TABLE `language` (
-	`languageID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-	`name` VARCHAR( 255 ) NOT NULL ,
-	`code` VARCHAR( 255 ) NOT NULL
-) ENGINE = MYISAM ;
+  languageID int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_bin NOT NULL,
+  `code` varchar(255) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (languageID)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO 
-	`language` (`languageID`, `name`, `code`) 
-VALUES 
-	(NULL, 'English', 'en'),
-	(NULL, 'Deutsch', 'de');
-	
--- Language item database
-CREATE TABLE `language_item` (
-	`itemID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-	`languageID` INT NOT NULL ,
-	`name` VARCHAR( 255 ) NOT NULL ,
-	`value` TEXT NOT NULL
-) ENGINE = MYISAM ;
+--
+-- Daten für Tabelle 'language'
+--
 
--- TODO: Add item dump here
+INSERT INTO language (languageID, name, code) VALUES(1, 'English', 'en');
+INSERT INTO language (languageID, name, code) VALUES(2, 'Deutsch', 'de');
 
--- Module database
-CREATE TABLE `module` (
-	`moduleID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-	`name` VARCHAR( 255 ) NOT NULL ,
-	`address` VARCHAR( 255 ) NOT NULL ,
-	`timestamp` INT NOT NULL
-) ENGINE = MYISAM ;
+-- --------------------------------------------------------
 
-INSERT INTO `module` (`moduleID`, `name`, `address`, `timestamp`) VALUES (NULL, 'OpServModule', 'BEBC200', '1');
+--
+-- Tabellenstruktur für Tabelle 'language_item'
+--
 
--- Bot instance database
-CREATE TABLE `module_instance_bot` (
-	`instanceID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-	`moduleAddress` VARCHAR (255) NOT NULL,
-	`trigger` VARCHAR (100) NOT NULL,
-	`nick` VARCHAR (255) NOT NULL,
-	`hostname` TEXT NOT NULL,
-	`ident` VARCHAR (255) NOT NULL,
-	`ip` VARCHAR (255) NOT NULL DEFAULT '127.0.0.1',
-	`modes` VARCHAR (255) NOT NULL DEFAULT '+Ik',
-	`gecos` TEXT NOT NULL
-) ENGINE = MYISAM ;
+CREATE TABLE language_item (
+  itemID int(10) unsigned NOT NULL AUTO_INCREMENT,
+  languageID int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8_bin NOT NULL,
+  `value` text COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (itemID)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO `module_instance_bot` (`instanceID`, `moduleAddress`, `trigger`, `nick`, `hostname`, `ident`, `ip`, `modes`, `gecos`) VALUES (NULL, 'BEBC200', '?', 'OpServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Oper Service');
+--
+-- Daten für Tabelle 'language_item'
+--
 
--- Command instance database
-CREATE TABLE `evilcode_services`.`module_instance_command` (`instanceID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, `address` VARCHAR(255) NOT NULL, `commandName` VARCHAR(255) NOT NULL, `appearInHelp` TINYINT(1) NOT NULL DEFAULT '1', `parentAddress` VARCHAR(255) NOT NULL) ENGINE = MyISAM;
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(1, 1, 'bot.global.noSuchCommand', 'There is no such command.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(2, 2, 'bot.global.noSuchCommand', 'Unbekanntes Kommando.');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle 'module'
+--
+
+CREATE TABLE module (
+  moduleID int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_bin NOT NULL,
+  address varchar(255) COLLATE utf8_bin NOT NULL,
+  `timestamp` int(11) NOT NULL,
+  PRIMARY KEY (moduleID)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Daten für Tabelle 'module'
+--
+
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(1, 'OpServ', 'F02D', 1);
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(2, 'CommandLoadModule', 'Cache52D96D20', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle 'module_instance_bot'
+--
+
+CREATE TABLE module_instance_bot (
+  instanceID int(10) unsigned NOT NULL AUTO_INCREMENT,
+  moduleAddress varchar(255) COLLATE utf8_bin NOT NULL,
+  `trigger` varchar(100) COLLATE utf8_bin NOT NULL,
+  nick varchar(255) COLLATE utf8_bin NOT NULL,
+  hostname text COLLATE utf8_bin NOT NULL,
+  ident varchar(255) COLLATE utf8_bin NOT NULL,
+  ip varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '127.0.0.1',
+  modes varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '+Ik',
+  gecos text COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (instanceID)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Daten für Tabelle 'module_instance_bot'
+--
+
+INSERT INTO module_instance_bot (instanceID, moduleAddress, trigger, nick, hostname, ident, ip, modes, gecos) VALUES(1, 'F02D', '?', 'OpServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Oper Service');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle 'module_instance_command'
+--
+
+CREATE TABLE module_instance_command (
+  instanceID int(10) unsigned NOT NULL AUTO_INCREMENT,
+  address varchar(255) COLLATE utf8_bin NOT NULL,
+  commandName varchar(255) COLLATE utf8_bin NOT NULL,
+  appearInHelp tinyint(1) NOT NULL DEFAULT '1',
+  parentAddress varchar(255) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (instanceID)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Daten für Tabelle 'module_instance_command'
+--
+
+INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(1, 'Cache52D96D20', 'LOADMODULE', 1, 'F02D');
