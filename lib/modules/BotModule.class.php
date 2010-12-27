@@ -120,6 +120,15 @@ abstract class BotModule implements Module {
 	}
 
 	/**
+	 * Checks for needed permissions and returnes true if correct permissions are set
+	 * @param 	UserType	$user
+	 * @param	integer		$neededPermissions
+	 */
+	public function getPermissions($user, $neededPermissions) {
+		return true;
+	}
+
+	/**
 	 * Returnes bot's trigger
 	 */
 	public final function getTrigger() {
