@@ -63,6 +63,8 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(9, 1, 'comman
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(10, 2, 'command.part.syntaxHint', 'part <channelname>');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(11, 1, 'command.auth.success', 'Successfully authed to "%s".');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(12, 2, 'command.auth.success', 'Erfolgreich als "%s" angemeldet.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(13, 1, 'command.auth.invalidCredentials', 'The provided credentials were not correct');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(14, 2, 'command.auth.invalidCredentials', 'Fehlerhafte Daten.');
 
 
 
