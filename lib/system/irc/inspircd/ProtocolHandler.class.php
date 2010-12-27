@@ -54,12 +54,18 @@ class ProtocolHandler {
 
 			// generate userlist
 			$userListString = substr($input, (stripos($input, ':') + 1));
-			$userListString = explode(' ', $userListString);
+			$userListString = trim($userListString);
 			$userList = array();
 
-			foreach($userListString as $user) {
-				$user = explode(',', $user);
-				if (count($user) == 2) $userList[] = array('mode' => $user[0], 'user' => Services::getUserManager()->getUser($user[1]));
+			// handle permanent channels
+			if (!empty($userListString)) {
+				$userListString = explode(' ', $userListString);
+
+				foreach($userListString as $user) {
+					$user = explode(',', $user);
+					print_r(Services::getUserManager()->getUser($user[1]));
+					$userList[] = array('mode' => $user[0], 'user' => Services::getUserManager()->getUser($user[1]));
+				}
 			}
 
 			// call event
