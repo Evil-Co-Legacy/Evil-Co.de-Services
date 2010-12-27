@@ -107,17 +107,29 @@ abstract class BotModule implements Module {
 	 * Spits out the help
 	 */
 	public function generateHelp($user, $target, $message) {
-		$this->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'bot.global.help'));
-		$longestCommandName = 0;
+		$inputEx = explode(' ', $message);
 
-		foreach($this->commands as $key => $command) {
-			if ($command->appearInHelp and strlen($command->commandName) > $longestCommandName) $longestCommandName = strlen($command->commandName);
-		}
+		if (!isset($inputEx[1])) {
+			$this->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'bot.global.help'));
+			$longestCommandName = 0;
 
-		foreach($this->commands as $key => $command) {
-			if ($command->appearInHelp and $this->getPermissions($user, $command->neededPermissions)) {
-				$this->sendMessage($user->getUuid(), str_pad($command->commandName, ($longestCommandName + 3)).Services::getLanguage()->get($user->languageID, 'command.'.$command->originalName));
+			foreach($this->commands as $key => $command) {
+				if ($command->appearInHelp and strlen($command->commandName) > $longestCommandName) $longestCommandName = strlen($command->commandName);
 			}
+
+			foreach($this->commands as $key => $command) {
+				if ($command->appearInHelp and $this->getPermissions($user, $command->neededPermissions)) {
+					$this->sendMessage($user->getUuid(), str_pad($command->commandName, ($longestCommandName + 3)).Services::getLanguage()->get($user->languageID, 'command.'.$command->originalName));
+				}
+			}
+		} else {
+			foreach($this->commands as $key => $command) {
+				if ($command->commandName == $inputEx[1]) {
+
+				}
+			}
+
+			$this->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'bot.global.noSuchCommand'));
 		}
 	}
 
