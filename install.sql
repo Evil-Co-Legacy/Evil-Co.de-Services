@@ -185,6 +185,7 @@ INSERT INTO module_instance_command (instanceID, address, commandName, appearInH
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(13, 'Ox477B6E', 'PART', 1, 'Ox1337');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(14, 'Ox477B6E', 'PART', 1, 'Ox21A7E885');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(15, 'Ox25067B81', 'ACCESS', 1, 'Ox1337');
+INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(16, 'OxAD47D1AF9', 'REGISTER', 1, 'Ox1337');
 
 CREATE TABLE authserv_users (
 	userID int(10) unsigned NOT NULL AUTO_INCREMENT,
