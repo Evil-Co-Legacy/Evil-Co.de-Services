@@ -54,12 +54,9 @@ class Bot extends AbstractUserType {
 		// join channel
 		Services::getConnection()->getProtocol()->part($this->getUuid(), $channel);
 
-		/*// notify channel manager
-		if (($chan = Services::getChannelManager()->getChannel($channel)) === null) {
-			Services::getChannelManager()->addChannel($channel, time(), $modes, array(array('mode' => $userModes, 'user' => $this)));
-		} else {
-			$chan->join(array(array('mode' => $userModes, 'user' => $this)));
-		}*/
+		// notify channel manager
+		$chan = Services::getChannelManager()->getChannel($channel);
+		$chan->part($this->getUuid());
 	}
 }
 ?>
