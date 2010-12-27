@@ -39,7 +39,7 @@ class CommandKick extends CommandModule {
 			unset($messageEx[0]);
 			$username = $messageEx[1];
 			unset($messageEx[1]);
-			Services::getConnection()->getProtocol()->sendMode($this->bot->getUuid(), $target, $messageEx[1], $user->getNick().': '.implode(' ', $messageEx));
+			Services::getConnection()->getProtocol()->sendMode($this->bot->getUuid(), $target, $username, $user->getNick().': '.implode(' ', $messageEx));
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
 		}
 	}
