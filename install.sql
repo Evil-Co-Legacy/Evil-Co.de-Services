@@ -115,12 +115,13 @@ INSERT INTO module (moduleID, name, address, timestamp) VALUES(5, 'AuthServ', 'O
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(6, 'CommandAuth', 'Ox439D030291B', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(7, 'CommandShutdown', 'Ox1BAFEA1F', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(8, 'ChanServ', 'Ox1337', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(9, 'CommandCRegister', 'OxAD47D1AF9', 1);
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(9, 'CommandRegister', 'OxAD47D1AF9', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(10, 'CommandPass', 'Ox18D46C95', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(11, 'CommandEmail', 'Ox11571D3EE', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(12, 'CommandMode', 'Ox23DD5B189BBAB2E', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(13, 'CommandBind', 'OxED6A84A0', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(14, 'CommandAccess', 'Ox25067B81', 1);
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(15, 'CommandCregister', 'OxB494EC43B6AA', 1);
 
 -- --------------------------------------------------------
 
@@ -185,7 +186,8 @@ INSERT INTO module_instance_command (instanceID, address, commandName, appearInH
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(13, 'Ox477B6E', 'PART', 1, 'Ox1337');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(14, 'Ox477B6E', 'PART', 1, 'Ox21A7E885');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(15, 'Ox25067B81', 'ACCESS', 1, 'Ox1337');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(16, 'OxAD47D1AF9', 'REGISTER', 1, 'Ox1337');
+INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(16, 'OxB494EC43B6AA', 'CREGISTER', 1, 'Ox1337');
+
 
 CREATE TABLE authserv_users (
 	userID int(10) unsigned NOT NULL AUTO_INCREMENT,
