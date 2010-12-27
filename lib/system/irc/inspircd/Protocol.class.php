@@ -575,5 +575,16 @@ class Protocol {
 	public function sendMetadata($target, $key, $value) {
 		Services::getConnection()->sendServerLine("METADATA ".$target." ".$key." :".(is_string($value) ? $value : serialize($value)));
 	}
+
+	/**
+	 * Sends a KICK from $source in channel $target for user $user with reason $reason
+	 * @param	string	$source
+	 * @param	string	$target
+	 * @param	string	$user
+	 * @param	string	$reason
+	 */
+	public function sendKick($source, $target, $user, $reason) {
+		Services::getConnection()->sendLine($this->formateUserLine($source, "KICK ".$target." ".$user." :".$reason));
+	}
 }
 ?>
