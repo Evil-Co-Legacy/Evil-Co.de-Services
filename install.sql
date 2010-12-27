@@ -57,6 +57,10 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(3, 1, 'comman
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(4, 2, 'command.join.success', 'Channel erfolgreich betreten.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(5, 1, 'command.join.syntaxHint', 'join <channelname>');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(6, 2, 'command.join.syntaxHint', 'join <channelname>');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(7, 1, 'command.part.success', 'Successfully parted the channel.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(8, 2, 'command.part.success', 'Channel erfolgreich verlassen.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(9, 1, 'command.part.syntaxHint', 'part <channelname>');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(10, 2, 'command.part.syntaxHint', 'part <channelname>');
 
 
 -- --------------------------------------------------------
@@ -80,6 +84,8 @@ CREATE TABLE module (
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(1, 'OpServ', 'OxF02D', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(2, 'CommandLoadModule', 'Ox52D96D20', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(3, 'CommandJoin', 'Ox45B196', 1);
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(3, 'CommandPart', 'Ox477B6E', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -125,5 +131,5 @@ CREATE TABLE module_instance_command (
 --
 
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(1, 'Ox52D96D20', 'LOADMODULE', 1, 'OxF02D');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(1, 'Ox45B196', 'JOIN', 1, 'OxF02D');
-
+INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(1, 'Ox45B196', 'JOIN', 1, 'OxF02D')
+INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(1, 'Ox477B6E', 'PART', 1, 'OxF02D');
