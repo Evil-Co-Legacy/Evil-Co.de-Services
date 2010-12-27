@@ -63,12 +63,10 @@ abstract class BotModule implements Module {
 
 		foreach($this->commands as $key => $command) {
 			if ($this->commands[$key]->matches($message) and $this->getPermissions($user, $command->neededPermissions)) {
-				if ($this->getPermissions($user, $command->neededPermissions)) {
-					$this->commands[$key]->execute($user, $target, $message);
-				}
-				else {
-					$this->sendMessage($user->getUuid(), Services::getLanguage()->get($user->language, 'bot.global.permissionDenied'));
-				}
+				$this->commands[$key]->execute($user, $target, $message);
+				$found = true;
+			} elseif ($this->commands[$key]->matches($message) and !$this->getPermissions($user, $command->neededPermissions)) {
+				$this->sendMessage($user->getUuid(), Services::getLanguage()->get($user->language, 'bot.global.permissionDenied'));
 				$found = true;
 			}
 		}
@@ -147,6 +145,7 @@ abstract class BotModule implements Module {
 	public function getPermissions($user, $neededPermissions) {
 		// when 0 always is okay
 		if ($neededPermissions == 0) return true;
+
 		// handle empty account names
 		if ($user->accountname === null or empty($user->accountname)) return false;
 
