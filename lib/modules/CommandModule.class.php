@@ -66,7 +66,10 @@ abstract class CommandModule implements Module {
 	 * @return	boolean
 	 */
 	public final function matches($command) {
-		if (!empty($this->commandName) and strtoupper($command) == $this->commandName) return true;
+		// split string
+		$commandEx = explode(' ', $command);
+
+		if (!empty($this->commandName) and strtoupper($commandEx[0]) == $this->commandName) return true;
 
 		// TODO: Add more match types here
 
