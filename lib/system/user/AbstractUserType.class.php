@@ -8,13 +8,73 @@ require_once(SDIR.'lib/system/user/UserType.class.php');
  * @copyright	2010 DEVel Fusion
  */
 abstract class AbstractUserType implements UserType {
-	
+
 	/**
 	 * Contains dynamic (magic) variables
 	 * @var	array<mixed>
 	 */
 	protected $data = array();
-	
+
+	/**
+	 * Contains user's uuid
+	 * @var string
+	 */
+	public $uuid = '';
+
+	/**
+	 * Contains the connection timestamp
+	 * @var integer
+	 */
+	public $timestamp = 0;
+
+	/**
+	 * Contains user's nickname
+	 * @var string
+	 */
+	public $nick = '';
+
+	/**
+	 * Contains user's nickname
+	 * @var string
+	 */
+	public $hostname = '';
+
+	/**
+	 * Contains user's hostname
+	 * @var string
+	 */
+	public $displayedHostname = '';
+
+	/**
+	 * Contains user's ident
+	 * @var string
+	 */
+	public $ident = '';
+
+	/**
+	 * Contains user's ip
+	 * @var string
+	 */
+	public $ip = '';
+
+	/**
+	 * Contains user's signon timestamp
+	 * @var integer
+	 */
+	public $signonTimestamp = 0;
+
+	/**
+	 * Contains user's modes
+	 * @var ModeList
+	 */
+	public $modes = null;
+
+	/**
+	 * Contains user's gecos (Realname)
+	 * @var string
+	 */
+	public $gecos = '';
+
 	/**
 	 * @see	UserType::__construct()
 	 */
@@ -30,84 +90,84 @@ abstract class AbstractUserType implements UserType {
 		$this->modes = $modes;
 		$this->gecos = $gecos;
 	}
-	
+
 	/**
 	 * @see	UserType::getUuid()
 	 */
 	public function getUuid() {
 		return $this->uuid;
 	}
-	
+
 	/**
 	 * @see	UserType::getTimestamp()
 	 */
 	public function getTimestamp() {
 		return $this->timestamp;
 	}
-	
+
 	/**
 	 * @see	UserType::getNick()
 	 */
 	public function getNick() {
 		return $this->nick;
 	}
-	
+
 	/**
 	 * @see	UserType::getHostname()
 	 */
 	public function getHostname() {
 		return $this->hostname;
 	}
-	
+
 	/**
 	 * @see	UserType::getDisplayedHostname()
 	 */
 	public function getDisplayedHostname() {
 		return $this->displayedHostname;
 	}
-	
+
 	/**
 	 * @see	UserType::getIdent()
 	 */
 	public function getIdent() {
 		return $this->ident;
 	}
-	
+
 	/**
 	 * @see	UserType::getIP()
 	 */
 	public function getIP() {
 		return $this->ip;
 	}
-	
+
 	/**
 	 * @see	UserType::getSignonTimestamp()
 	 */
 	public function getSignonTimestamp() {
 		return $this->signonTimestamp;
 	}
-	
+
 	/**
 	 * @see	UserType::getModes()
 	 */
 	public function getModes() {
 		return $this->modes;
 	}
-	
+
 	/**
 	 * @see	UserType::getGecos()
 	 */
 	public function getGecos() {
 		return $this->gecos;
 	}
-	
+
 	/**
 	 * @see	UserType::__set()
 	 */
 	public function __set($variable, $value) {
 		$this->data[$variable] = $value;
 	}
-	
+
 	/**
 	 * @see	UserType::__get()
 	 */
