@@ -143,7 +143,13 @@ abstract class BotModule implements Module {
 	 * @param	integer		$neededPermissions
 	 */
 	public function getPermissions($user, $neededPermissions) {
-		return true;
+		// handle empty account names
+		if ($user->accountname === null or empty($user->accountname)) return false;
+
+		// check for correct level
+		if (call_user_func(array(Services::getModuleManager()->lookupModule('AuthServ'), 'getAccessLevel'), $user->accountname) >= $neededPermissions) return true;
+
+		return false;
 	}
 
 	/**
