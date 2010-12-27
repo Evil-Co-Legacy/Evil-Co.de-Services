@@ -170,3 +170,5 @@ CREATE TABLE chanserv_channels (
 	modes varchar(255) NOT NULL,
 	PRIMARY KEY (channel)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+INSERT INTO chanserv_channels (channel, modes) VALUES ('#Server', '+AOPpnt');
