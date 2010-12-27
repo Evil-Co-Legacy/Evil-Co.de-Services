@@ -242,7 +242,7 @@ class ModuleManager {
 		// validate
 		if (!$this->moduleLoaded($moduleAddress)) throw new ModuleException("Unknown module at address '".$moduleAddress."'");
 		if (!$this->moduleLoaded($botAddress)) throw new ModuleException("Unknown module at address '".$botAddress."'");
-		if (!($moduleAddress instanceof BotModule)) throw new ModuleException("Commands can only bound to bots");
+		if ($this->moduleInformation[$botAddress]['type'] != 'Bot') throw new ModuleException("Commands can only bound to bots");
 
 		// bind
 		$this->runningBots[$botAddress]->registerCommand(new $moduleAddress($this->runningBots[$botAddress], $commandName, $appearInHelp));
