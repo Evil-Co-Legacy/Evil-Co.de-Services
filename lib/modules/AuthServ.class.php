@@ -38,7 +38,7 @@ class AuthServ extends BotModule {
 	/**
 	 * Checks the credentials
 	 * @param	string	$accountname
-	 * @param	strign	$password
+	 * @param	string	$password
 	 */
 	public function checkCredentials($accountname, $password) {
 		$sql = "SELECT 
