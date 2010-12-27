@@ -71,6 +71,16 @@ class AuthServ extends BotModule {
 		Services::getDB()->sendQuery($sql);
 	}
 	
+	public function email($accountname, $email) {
+		$sql = "UPDATE
+				authserv_users
+			SET
+				email = '".escapeString($email)."'
+			WHERE
+				accountname = '".escapeString($accountname)."'";
+		Services::getDB()->sendQuery($sql);
+	}
+	
 	public function accountExists($accountname) {
 		$sql = "SELECT 
 				count(*) as count
