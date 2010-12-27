@@ -53,14 +53,19 @@ CREATE TABLE language_item (
 
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(1, 1, 'bot.global.noSuchCommand', 'There is no such command.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(2, 2, 'bot.global.noSuchCommand', 'Unbekanntes Kommando.');
-INSERT INTO language_item (itemID, languageID, name, value) VALUES(3, 1, 'command.join.success', 'Successfully joined the channel.');
-INSERT INTO language_item (itemID, languageID, name, value) VALUES(4, 2, 'command.join.success', 'Channel erfolgreich betreten.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(3, 1, 'command.join.success', 'Successfully joined the channel "%s".');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(4, 2, 'command.join.success', 'Channel "%s" erfolgreich betreten.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(5, 1, 'command.join.syntaxHint', 'join <channelname>');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(6, 2, 'command.join.syntaxHint', 'join <channelname>');
-INSERT INTO language_item (itemID, languageID, name, value) VALUES(7, 1, 'command.part.success', 'Successfully parted the channel.');
-INSERT INTO language_item (itemID, languageID, name, value) VALUES(8, 2, 'command.part.success', 'Channel erfolgreich verlassen.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(7, 1, 'command.part.success', 'Successfully parted the channel "%s".');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(8, 2, 'command.part.success', 'Channel "%s" erfolgreich verlassen.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(9, 1, 'command.part.syntaxHint', 'part <channelname>');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(10, 2, 'command.part.syntaxHint', 'part <channelname>');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(11, 1, 'command.auth.success', 'Successfully authed to "%s".');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(12, 2, 'command.auth.success', 'Erfolgreich als "%s" angemeldet.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(13, 1, 'command.auth.invalidCredentials', 'The provided credentials were not correct');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(14, 2, 'command.auth.invalidCredentials', 'Fehlerhafte Daten.');
+
 
 
 -- --------------------------------------------------------
@@ -89,6 +94,8 @@ INSERT INTO module (moduleID, name, address, timestamp) VALUES(4, 'CommandPart',
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(5, 'AuthServ', 'Ox21A7E885', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(6, 'CommandAuth', 'Ox439D030291B', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(7, 'CommandShutdown', 'Ox1BAFEA1F', 1);
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(8, 'ChanServ', 'Ox1337', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -115,6 +122,9 @@ CREATE TABLE module_instance_bot (
 
 INSERT INTO module_instance_bot (instanceID, moduleAddress, `trigger`, nick, hostname, ident, ip, modes, gecos) VALUES(1, 'OxF02D', '?', 'OpServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Oper Service');
 INSERT INTO module_instance_bot (instanceID, moduleAddress, `trigger`, nick, hostname, ident, ip, modes, gecos) VALUES(2, 'Ox21A7E885', '=', 'AuthServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Auth Service');
+INSERT INTO module_instance_bot (instanceID, moduleAddress, `trigger`, nick, hostname, ident, ip, modes, gecos) VALUES(3, 'Ox1337', '!', 'ChanServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Channel Service');
+
+
 -- --------------------------------------------------------
 
 --
@@ -155,3 +165,10 @@ CREATE TABLE authserv_users (
 INSERT INTO authserv_users (userID, accountname, password, salt, email, accessLevel) VALUES (1, 'TimWolla', '9ebc2a357640ec74025a7f5ee4259a6060a6daf5', '9415c250e2bcf1670819cf6e0063f2d4c768973a', 'timwolla@***', 1000);
 INSERT INTO authserv_users (userID, accountname, password, salt, email, accessLevel) VALUES (2, 'Akkarin', 'd0caabc3b9c1b57c181f6b1955abd2827e6b7e18', '9415c250e2bcf1670819cf6e0063f2d4c768973a', 'akkarin@***', 1000);
 
+CREATE TABLE chanserv_channels (
+	channel varchar(255) NOT NULL,
+	modes varchar(255) NOT NULL,
+	PRIMARY KEY (channel)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+INSERT INTO chanserv_channels (channel, modes) VALUES ('#Server', '+AOPpnt');
