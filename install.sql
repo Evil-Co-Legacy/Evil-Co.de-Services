@@ -228,11 +228,13 @@ CREATE TABLE chanserv_channel_accessLevel (
 INSERT INTO chanserv_channel_accessLevel (channel, userID, accessLevel) VALUES ('#Server', 'mode', 300);
 INSERT INTO chanserv_channel_accessLevel (channel, userID, accessLevel) VALUES ('#Server', 'nonStrictMode', 400);
 INSERT INTO chanserv_channel_accessLevel (channel, userID, accessLevel) VALUES ('#Server', 'access', 500);
+
 CREATE TABLE chanserv_default_accessLevel (
 	function varchar(255) unsigned NOT NULL,
 	accessLevel int(10) NOT NULL,
 	PRIMARY KEY (function)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
 INSERT INTO chanserv_channel_accessLevel (channel, userID, accessLevel) VALUES ('mode', 300);
 INSERT INTO chanserv_channel_accessLevel (channel, userID, accessLevel) VALUES ('nonStrictMode', 400);
 INSERT INTO chanserv_channel_accessLevel (channel, userID, accessLevel) VALUES ('access', 500);

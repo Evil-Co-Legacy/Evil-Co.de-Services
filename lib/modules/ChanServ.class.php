@@ -67,7 +67,7 @@ class ChanServ extends BotModule {
 		Services::getConnection()->getProtocol()->sendMode($this->getUuid(), $channel, $modes);
 	}
 	
-	public function cleanup($channel) {
+	public function unregister($channel) {
 		$sql = "DELETE FROM 
 				chanserv_channels
 			WHERE
@@ -84,6 +84,31 @@ class ChanServ extends BotModule {
 				chanserv_channel_accessLevel
 			WHERE
 				channel = '".escapeString($channel)."'";
+		Services::getDB()->sendQuery($sql)
+	}
+	
+	public function register($channel, $accountname) {
+		$sql = "INSERT INTO chanserv_channels (channel, modes) VALUES ('".escapeString($channel."', '+tn')";
+		Services::getDB()->sendQuery($sql);
+		
+		$authServ = Services::getModuleManager()->lookupModule('AuthServ');
+		$userID = call_user_func(array($authServ, 'getUserID'), $accountname);
+		
+		$sql = "INSERT INTO chanserv_channels_to_users (channel, userID, accessLevel) VALUES ('".escapeString($channel)."', ".$userID.", 500)";
+		Services::getDB()->sendQuery($sql);
+		
+		$values = '';
+		$sql = "SELECT
+				*
+			FROM
+				chanserv_default_accessLevel";
+		$result = Services::getDB()->sendQuery($sql);
+		while ($row = Services::getDB()->fetchArray($result)) {
+			if ($values != '') $values .= ',';
+			$values .= "('".escapeString($channel)."', '".$row['function']."', ".$row['accessLevel'].")";
+		}
+		
+		$sql = "INSERT INTO chanserv_channel_accessLevel (channel, function, accessLevel) VALUES ".$values;
 		Services::getDB()->sendQuery($sql)
 	}
 }
