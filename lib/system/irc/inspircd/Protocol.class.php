@@ -528,5 +528,15 @@ class Protocol {
 	public function sendMode($source, $target, $modes) {
 		Services::getConnection()->sendLine($this->formateUserLine($source, "MODE ".$target." ".$modes));
 	}
+
+	/**
+	 * Stores metadata on server
+	 * @param	string	$target
+	 * @param	string	$key
+	 * @param	mixed	$value
+	 */
+	public function sendMetadata($target, $key, $value) {
+		Services::getConnection()->sendServerLine("METADATA ".$target." ".$key." :".(is_string($value) ? $value : serialize($data)));
+	}
 }
 ?>
