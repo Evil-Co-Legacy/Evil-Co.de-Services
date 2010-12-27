@@ -126,6 +126,9 @@ class AuthServ extends BotModule {
 					accountname = '".escapeString($accountname)."'";
 		$row = Services::getDB()->getFirstRow($sql);
 
+		// workaround ...
+		if (!Services::getDB()->getNumRows()) return 0;
+
 		return intval($row['accessLevel']);
 	}
 }
