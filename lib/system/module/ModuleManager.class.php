@@ -69,6 +69,17 @@ class ModuleManager {
 				$this->createBotInstance($row['moduleAddress'], $row['trigger'], $row['nick'], $row['hostname'], $row['ident'], $row['ip'], $row['modes'], $row['gecos']);
 			}
 
+			// bind commands
+			$sql = "SELECT
+						*
+					FROM
+						module_instance_command";
+			$result = Services::getDB()->sendQuery($sql);
+
+			while($row = Services::getDB()->fetchArray($result)) {
+				$this->runningBots[$row['parentAddress']]->registerCommand(new $row['address']($this->runningBots[$row['parentAddress']], $row['commandName'], ($row['appearInHelp'] ? true : false)));
+			}
+
 			// check for memcache support and store data
 			if (Services::memcacheLoaded()) {
 				Services::getMemcache()->add('moduleList', $modules);
@@ -214,7 +225,7 @@ class ModuleManager {
 		$user = Services::getConnection()->getProtocol()->createBot($nick, $hostname, $ident, $ip, $modes, $gecos);
 
 		// create instance of BotModule
-		$this->runningBots[] = new $moduleAddress($user, $trigger);
+		$this->runningBots[$moduleAddress] = new $moduleAddress($user, $trigger);
 	}
 
 	/**
