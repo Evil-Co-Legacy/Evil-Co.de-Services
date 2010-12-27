@@ -12,7 +12,7 @@ class CommandBind extends CommandModule {
 	/**
 	 * @see CommandModule::$originalName
 	 */
-	public $originalName = 'join';
+	public $originalName = 'bind';
 
 	/**
 	 * @see CommandModule::$neededPermissions
