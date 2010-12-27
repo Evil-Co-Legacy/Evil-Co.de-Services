@@ -1,4 +1,7 @@
 <?php
+// imports
+require_once(SDIR.'lib/system/irc/inspircd/ProtocolHandler.class.php');
+
 // defines
 define('PROTOCOL_VERSION', '1202');
 
@@ -18,61 +21,61 @@ class Protocol {
 	 * Contains name of server
 	 * @var	string
 	 */
-	protected $name = '';
+	public $name = '';
 
 	/**
 	 * Contains the numeric of server
 	 * @var	string
 	 */
-	protected $numeric = '';
+	public $numeric = '';
 
 	/**
 	 * Contains port
 	 * @var	integer
 	 */
-	protected $port = 0;
+	public $port = 0;
 
 	/**
 	 * Contains the password
 	 * @var	string
 	 */
-	protected $password = '';
+	public $password = '';
 
 	/**
 	 * A little variable that allows users to change hop count
 	 * @var	integer
 	 */
-	protected $hops = 0;
+	public $hops = 0;
 
 	/**
 	 * Contains the description of server
 	 * @var	string
 	 */
-	protected $description = 'Evil-Co.de Services';
+	public $description = 'Evil-Co.de Services';
 
 	/**
 	 * Contains the current connection state
 	 * @var	string
 	 */
-	protected $connectionState = 'auth';
+	public $connectionState = 'auth';
 
 	/**
 	 * Contains a list of all servers
 	 * @var	array<string>
 	 */
-	protected $serverList = array();
+	public $serverList = array();
 
 	/**
 	 * Contains the cyclemessage configuration
 	 * @var	array<string>
 	 */
-	protected $cyclemessage = array();
+	public $cyclemessage = array();
 
 	/**
 	 * Contains the channel where services should announce logmessages
 	 * @var	string
 	 */
-	protected $servicechannel = '';
+	public $servicechannel = '';
 
 	/**
 	 * Returnes an instance of Protocol
@@ -148,100 +151,7 @@ class Protocol {
 			$inputEx = explode(" ", $input);
 
 			if (!empty($input) and count($inputEx) >= 2) {
-				switch($inputEx[1]) {
-					case 'UID':
-						// get mode string
-						$modes = '';
-						$activeIndex = 10;
-
-						while($inputEx[$activeIndex]{0} != ':') {
-							if (!empty($modes)) $modes .= " ";
-							$modes .= $inputEx[$activeIndex];
-							$activeIndex++;
-						}
-
-						// add user to manager
-						Services::getUserManager()->introduceUser($inputEx[3], $inputEx[4], $inputEx[5], $inputEx[6], $inputEx[7], $inputEx[8], $inputEx[9], $modes, substr($input, (stripos($input, ':') + 1)), $inputEx[2]);
-
-						// send debug message
-						if (defined('DEBUG')) print("Added user ".$inputEx[2]."\n");
-						break;
-					case 'FJOIN':
-						// get mode string
-						$modes = '';
-						$activeIndex = 4;
-
-						while($inputEx[$activeIndex]{0} != ':') {
-							if (!empty($modes)) $modes .= " ";
-							$modes .= $inputEx[$activeIndex];
-							$activeIndex++;
-						}
-
-						// generate userlist
-						$userListString = substr($input, (stripos($input, ':') + 1));
-						$userListString = explode(' ', $userListString);
-						$userList = array();
-
-						foreach($userListString as $user) {
-							$user = trim($user);
-							if (!empty($user)) {
-								$user = explode(',', $user);
-								if (count($user) == 2) {
-									$userList[] = array('mode' => $user[0], 'user' => Services::getUserManager()->getUser($user[1]));
-								}
-							}
-						}
-
-						// add channel
-						Services::getChannelManager()->addChannel($inputEx[2], $inputEx[3], $modes, $userList);
-
-						// send debug message
-						if (defined('DEBUG')) print("Added channel ".$inputEx[2]."\n");
-						break;
-					case 'METADATA':
-						if ($inputEx[2]{0} == '#' and Services::getChannelManager()->getChannel($inputEx[2]) !== null) {
-							Services::getChannelManager()->getChannel($inputEx[2])->{$inputEx[3]} = substr($input, (stripos($input, ':') + 1));
-
-							try {
-								$data = unserialize(Services::getChannelManager()->getChannel($inputEx[2])->{$inputEx[3]});
-								Services::getChannelManager()->getChannel($inputEx[2])->{$inputEx[3]} = $data;
-							} catch (Exception $ex) {
-								// ignore
-							}
-						} elseif ($inputEx[2]{0} != '#' and Services::getUserManager()->getUser($inputEx[2]) !== null) {
-							Services::getUserManager()->getUser($inputEx[2])->{$inputEx[3]} = substr($input, (stripos($input, ':') + 1));
-
-							try {
-								$data = unserialize(Services::getUserManager()->getUser($inputEx[2])->{$inputEx[3]});
-								Services::getUserManager()->getUser($inputEx[2])->{$inputEx[3]} = $data;
-							} catch (Exception $ex) {
-								// ignore
-							}
-						}
-						break;
-					case 'SERVER':
-						$this->serverList[] = $inputEx[2];
-						break;
-					case 'ENDBURST':
-						$this->connectionState = 'authed';
-
-						if (defined('DEBUG')) $this->sendLogLine("WARNING! DEBUGMODE IS ENABLED!");
-
-						if (defined('DEBUG')) print("ENDBURST\n");
-
-						// send log message
-						if (defined('DEBUG')) Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :[".$this->name."] Burst finished");
-
-						// memcache
-						if (extension_loaded('memcache')) {
-							if(defined('DEBUG')) $this->sendLogLine("Memcache extension is available! Trying to find configuration for memcache ...");
-							Services::loadMemcache();
-						}
-
-						// init modules
-						Services::getModuleManager()->init();
-						break;
-				}
+				if (method_exists('ProtocolHandler', $inputEx[1])) call_user_func(array('ProtocolHandler', strtoupper($inputEx[1])), $input, $inputEx);
 			}
 		} while(!isset($inputEx[1]) or $inputEx[1] != 'ENDBURST');
 		// Endburst processed!
@@ -257,150 +167,7 @@ class Protocol {
 			$inputEx = explode(" ", $input);
 
 			if (!empty($input) and count($inputEx) >= 2) {
-				switch($inputEx[1]) {
-					case 'PING':
-						Services::getEvent()->fire($this, 'ping', array('source' => $inputEx[0]));
-						Services::getConnection()->sendServerLine("PONG ".$inputEx[3]." ".$inputEx[2]);
-						if (defined('DEBUG')) print("Ping -> Pong\n");
-						break;
-					case 'FJOIN':
-						// get mode string
-						if (($chan = Services::getChannelManager()->getChannel($inputEx[2])) === null) {
-							$modes = '';
-							$activeIndex = 4;
-
-							while($inputEx[$activeIndex]{0} != ':' and stripos($inputEx[$activeIndex], ',') === false) {
-								if (!empty($modes)) $modes .= " ";
-								$modes .= $inputEx[$activeIndex];
-								$activeIndex++;
-							}
-
-							// generate userlist
-							$userListString = substr($input, (stripos($input, ':') + 1));
-							$userListString = explode(' ', $userListString);
-							$userList = array();
-
-							foreach($userListString as $user) {
-								$user = explode(',', $user);
-								if (count($user) == 2) {
-									$userList[] = array('mode' => $user[0], 'user' => Services::getUserManager()->getUser($user[1]));
-								}
-							}
-
-							// call event
-							Services::getEvent()->fire($this, 'channelCreated', array('channel' => $inputEx[2], 'userList' => $userList));
-
-							// add channel
-							Services::getChannelManager()->addChannel($inputEx[2], $inputEx[3], $modes, $userList);
-
-							// send debug message
-							if (defined('DEBUG')) print("Added channel ".$inputEx[2]."\n");
-						} else {
-							// generate userlist
-							$userListString = substr($input, (stripos($input, ':') + 1));
-							$userListString = explode(' ', $userListString);
-							$userList = array();
-
-							foreach($userListString as $user) {
-								$user = explode(',', $user);
-								if (count($user) == 2) {
-									$userList[] = array('mode' => $user[0], 'user' => Services::getUserManager()->getUser($user[1]));
-								}
-							}
-
-							// call event
-							Services::getEvent()->fire($this, 'channelJoined', array('channel' => $inputEx[2], 'userList' => $userList));
-
-							// join users to channel
-							$chan->join($userList);
-						}
-						break;
-					case 'SERVER':
-						Services::getEvent()->fire($this, 'serverCreated', array('name' => $inputEx[2]));
-						$this->serverList[] = $inputEx[2];
-						break;
-					case 'UID':
-						// get mode string
-						$modes = '';
-						$activeIndex = 10;
-
-						while($inputEx[$activeIndex]{0} != ':') {
-							if (!empty($modes)) $modes .= " ";
-							$modes .= $inputEx[$activeIndex];
-							$activeIndex++;
-						}
-
-						// add user to manager
-						Services::getUserManager()->introduceUser($inputEx[3], $inputEx[4], $inputEx[5], $inputEx[6], $inputEx[7], $inputEx[8], $inputEx[9], $modes, substr($input, (stripos(':', $input) + 1)), $inputEx[2]);
-
-						// send debug message
-						if (defined('DEBUG')) print("Added user ".$inputEx[2]."\n");
-						break;
-					case 'PART':
-						Services::getEvent()->fire($this, 'userParted', array('channel' => $inputEx[2], 'user' => Services::getUserManager()->getUser($inputEx[0])));
-						Services::getChannelManager()->getChannel($inputEx[2])->part($inputEx[0]);
-						break;
-					case 'QUIT':
-						Services::getEvent()->fire($this, 'userQuit', array('user' => Services::getUserManager()->getUser($inputEx[0])));
-						Services::getUserManager()->removeUser($inputEx[0]);
-						break;
-					case 'NOTICE':
-					case 'PRIVMSG':
-						if ($inputEx[2]{0} != '$') {
-							// get source
-							$source = Services::getUserManager()->getUser($inputEx[0]);
-
-							if ($inputEx[2]{0} == '#' and $source !== null) {
-								// send debug message
-								if (defined('DEBUG')) $this->sendLogLine($source->getUuid()." (".$source->getNick().") sent a message to ".$inputEx[2]);
-
-								// notify module manager
-								Services::getModuleManager()->handleLine($source, $inputEx[2], substr($input, (stripos($input, ':') + 1)));
-							} elseif ($source) {
-								// kick numeric
-								$inputEx[2] = substr($inputEx[2], strlen($this->numeric));
-
-								// send debug message
-								if (defined('DEBUG')) $this->sendLogLine($source->getUuid()." (".$source->getNick().") sent a message to ".$inputEx[2]);
-
-								// try to find bot
-								if (($bot = Services::getBotManager()->getUser($inputEx[2])) !== null) {
-									// resolved uuid ... send debug message
-									if (defined('DEBUG')) $this->sendLogLine("Resolved ".$inputEx[2]." to ".$bot->getNick());
-
-									// notify module manager
-									Services::getModuleManager()->handleLine($source, $inputEx[2], substr($input, (stripos($input, ':') + 1)));
-								} else {
-									// cannot find user ... send debug message
-									if (defined('DEBUG')) $this->sendLogLine("Cannot resolve '".$inputEx[2]."'! Type of return value: ".gettype($bot));
-								}
-							} else {
-								$this->sendLogLine("Received invalid UUID '".$inputEx[0]."'! Maybe choosen wrong IRCd?");
-							}
-						}
-						break;
-						case 'METADATA':
-						if ($inputEx[2]{0} == '#' and Services::getChannelManager()->getChannel($inputEx[2]) !== null) {
-							Services::getChannelManager()->getChannel($inputEx[2])->{$inputEx[3]} = substr($input, (stripos($input, ':') + 1));
-
-							try {
-								$data = unserialize(Services::getChannelManager()->getChannel($inputEx[2])->{$inputEx[3]});
-								Services::getChannelManager()->getChannel($inputEx[2])->{$inputEx[3]} = $data;
-							} catch (Exception $ex) {
-								// ignore
-							}
-						} elseif ($inputEx[2]{0} != '#' and Services::getUserManager()->getUser($inputEx[2]) !== null) {
-							Services::getUserManager()->getUser($inputEx[2])->{$inputEx[3]} = substr($input, (stripos($input, ':') + 1));
-
-							try {
-								$data = unserialize(Services::getUserManager()->getUser($inputEx[2])->{$inputEx[3]});
-								Services::getUserManager()->getUser($inputEx[2])->{$inputEx[3]} = $data;
-							} catch (Exception $ex) {
-								// ignore
-							}
-						}
-						break;
-				}
+				if (method_exists('ProtocolHandler', $inputEx[1])) call_user_func(array('ProtocolHandler', strtoupper($inputEx[1])), $input, $inputEx);
 			}
 
 			// check memcache connection
