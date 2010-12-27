@@ -45,7 +45,7 @@ class Bot extends AbstractUserType {
 			$chan->join(array(array('mode' => $userModes, 'user' => $this)));
 		}
 	}
-	
+
 	/**
 	 * Joins the bot to given channel
 	 * @param	string	$channel
@@ -54,7 +54,7 @@ class Bot extends AbstractUserType {
 	 */
 	public function part($channel) {
 		// join channel
-		Services::getConnection()->getProtocol()->part($this->getUuid(), $channel, $modes);
+		Services::getConnection()->getProtocol()->part($this->getUuid(), $channel);
 
 		/*// notify channel manager
 		if (($chan = Services::getChannelManager()->getChannel($channel)) === null) {
