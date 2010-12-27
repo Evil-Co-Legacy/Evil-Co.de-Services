@@ -557,7 +557,7 @@ class Protocol {
 	 * @param	mixed	$value
 	 */
 	public function sendMetadata($target, $key, $value) {
-		Services::getConnection()->sendServerLine("METADATA ".$target." ".$key." :".(is_string($value) ? $value : serialize($data)));
+		Services::getConnection()->sendServerLine("METADATA ".$target." ".$key." :".(is_string($value) ? $value : serialize($value)));
 	}
 }
 ?>
