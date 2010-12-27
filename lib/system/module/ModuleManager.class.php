@@ -245,14 +245,14 @@ class ModuleManager {
 		if ($this->moduleInformation[$botAddress]['type'] != 'Bot') throw new ModuleException("Commands can only bound to bots");
 
 		// bind
-		$this->runningBots[$botAddress]->registerCommand(new $moduleAddress($this->runningBots[$botAddress], $commandName, $appearInHelp));
+		$this->runningBots[$botAddress]->registerCommand(new $moduleAddress($this->runningBots[$botAddress], strtoupper($commandName), $appearInHelp));
 
 		// write to db
 		if (!$fromDatabase) {
 			$sql = "INSERT INTO
 						module_instance_command (address, commandName, appearInHelp, parentAddress)
 					VALUES
-						('".escapeString($moduleAddress)."', '".escapeString($commandName)."', ".($appearInHelp ? 1 : 0).", '".escapeString($botAddress)."')";
+						('".escapeString($moduleAddress)."', '".escapeString(strtoupper($commandName))."', ".($appearInHelp ? 1 : 0).", '".escapeString($botAddress)."')";
 			Services::getDB()->sendQuery($sql);
 		}
 	}
