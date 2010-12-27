@@ -7,12 +7,12 @@ require_once(SDIR.'lib/modules/CommandModule.class.php');
  * @author		Tim Düsterhus
  * @copyright	2010 DEVel Fusion
  */
-class CommandAccess extends CommandModule {
+class CommandAdduser extends CommandModule {
 
 	/**
 	 * @see CommandModule::$originalName
 	 */
-	public $originalName = 'access';
+	public $originalName = 'adduser';
 
 	/**
 	 * @see lib/modules/CommandModule::execute()
@@ -25,12 +25,12 @@ class CommandAccess extends CommandModule {
 			unset($messageEx[1]);
 			$messageEx = array_values($messageEx);
 		}
-		
+
 		$access = $this->bot->getAccess($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
 		if ($access < $this->bot->getNeededAccess($target, 'access')) {
 			return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
 		}
-		
+
 		if (count($messageEx) == 3) {
 			$authServ = Services::getModuleManager()->lookupModule('AuthServ');
 			$userID = call_user_func(array($authServ, 'getUserID'), $messageEx[1]);
