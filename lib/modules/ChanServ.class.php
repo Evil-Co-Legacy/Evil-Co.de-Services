@@ -12,13 +12,14 @@ class ChanServ extends BotModule {
 		parent::__construct($bot, $trigger);
 		
 		$sql = "SELECT
-				channel
+				channel, modes
 			FROM
 				chanserv_channels";
 		$result = Services::getDB()->sendQuery($sql);
 		
 		while ($row = Services::getDB()->fetchArray($result)) {
 			$this->join($row['channel']);
+			$this->setStandardModes($row['channel'], $row['modes']);
 		}
 	}
 	
@@ -36,15 +37,19 @@ class ChanServ extends BotModule {
 		return 0;
 	}
 	
-	public function setStandardModes($channel) {
-		$sql = "SELECT
-				modes
-			FROM
-				chanserv_channels
-			WHERE
-				channel = '".escapeString($channel)."'";
-		$row = Services::getDB()->getFirstRow($sql);
+	public function setStandardModes($channel, $modes = null) {
+		if ($modes !== null) {
+			$sql = "SELECT
+					modes
+				FROM
+					chanserv_channels
+				WHERE
+					channel = '".escapeString($channel)."'";
+			$row = Services::getDB()->getFirstRow($sql);
+			$modes = $row['modes'];
+		}
 		// set the modes
+		Services::getConnection()->getProtocol()->sendMode($this->getUuid(), $channel, $modes);
 	}
 }
 ?>
