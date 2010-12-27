@@ -145,6 +145,7 @@ abstract class BotModule implements Module {
 	public function getPermissions($user, $neededPermissions) {
 		// when 0 always is okay
 		if ($neededPermissions == 0) return true;
+
 		// handle empty account names
 		if ($user->accountname === null or empty($user->accountname)) return false;
 
