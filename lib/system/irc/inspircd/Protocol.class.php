@@ -350,7 +350,7 @@ class Protocol {
 							// get source
 							$source = Services::getUserManager()->getUser($inputEx[0]);
 
-							if ($inputEx[2]{0} == '#') {
+							if ($inputEx[2]{0} == '#' and $source !== null) {
 								// send debug message
 								if (defined('DEBUG')) $this->sendLogLine($source->getUuid()." (".$source->getNick().") sent a message to ".$inputEx[2]);
 
