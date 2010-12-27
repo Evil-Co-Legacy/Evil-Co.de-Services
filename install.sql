@@ -65,6 +65,8 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(11, 1, 'comma
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(12, 2, 'command.auth.success', 'Erfolgreich als "%s" angemeldet.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(13, 1, 'command.auth.invalidCredentials', 'The provided credentials were not correct');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(14, 2, 'command.auth.invalidCredentials', 'Fehlerhafte Daten.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(15, 1, 'command.permissionDenied', 'You lack access to use this command.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(16, 2, 'command.permissionDenied', 'Zugriff verweigert.');
 
 
 
