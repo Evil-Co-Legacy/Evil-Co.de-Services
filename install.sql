@@ -75,7 +75,7 @@ CREATE TABLE module (
   address varchar(255) NOT NULL,
   `timestamp` int(11) NOT NULL,
   PRIMARY KEY (moduleID),
-  UNIQUE KEYS (address)
+  UNIQUE KEY (address)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --

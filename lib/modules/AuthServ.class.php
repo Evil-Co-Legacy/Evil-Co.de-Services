@@ -48,7 +48,7 @@ class AuthServ extends BotModule {
 			WHERE
 					accountname = '".escapeString($accountname)."'
 				AND	password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, '".escapeString($password)."'))))";
-		$row = WCF::getDB()->getFirstRow($sql);
+		$row = Services::getDB()->getFirstRow($sql);
 		
 		return $row['count'] > 0;
 	}
