@@ -151,11 +151,11 @@ class ModuleManager {
 
 		// get class name
 		$moduleName = basename($file, '.class.php');
-		if (!$moduleAddress === null) $moduleAddress = "Cache".strtoupper(dechex((time() + count($this->availableModules)) * 100000));
+		if (!$moduleAddress === null) $moduleAddress = "Ox".strtoupper(dechex((time() + count($this->availableModules)) * 100000));
 
 		// validate module
 		if (isset($this->availableModules[$moduleName])) throw new ModuleException("Module '".$moduleName."' is already loaded!");
-		if (in_array($moduleAddress, $this->availableModules)) throw new ModuleException("What the hell?! A module with address 0x".$moduleAddress." is already loaded! This should never happen!!!");
+		if (in_array($moduleAddress, $this->availableModules)) throw new ModuleException("What the hell?! A module with address ".$moduleAddress." is already loaded! This should never happen!!!");
 
 		// read module file
 		$module = file_get_contents($file);
@@ -198,7 +198,7 @@ class ModuleManager {
 		$this->moduleInformation[$moduleAddress] = array('type' => $moduleType);
 
 		// send debug log message
-		if (defined('DEBUG')) Services::getConnection()->getProtocol()->sendLogLine("Loaded module at address 0x".$moduleAddress);
+		if (defined('DEBUG')) Services::getConnection()->getProtocol()->sendLogLine("Loaded module at address ".$moduleAddress);
 
 		return $moduleAddress;
 	}
@@ -216,7 +216,7 @@ class ModuleManager {
 	 */
 	public function createBotInstance($moduleAddress, $trigger, $nick, $hostname, $ident, $ip, $modes, $gecos) {
 		// validate
-		if (!$this->moduleLoaded($moduleAddress)) throw new ModuleException("No module found at address 0x".$moduleAddress."!");
+		if (!$this->moduleLoaded($moduleAddress)) throw new ModuleException("No module found at address ".$moduleAddress."!");
 
 		// validate module information
 		if ($this->moduleInformation[$moduleAddress]['type'] != 'Bot') throw new ModuleException("You can only create instances of bot modules!");
