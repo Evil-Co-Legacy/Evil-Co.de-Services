@@ -63,7 +63,6 @@ class ProtocolHandler {
 
 				foreach($userListString as $user) {
 					$user = explode(',', $user);
-					print_r(Services::getUserManager()->getUser($user[1]));
 					$userList[] = array('mode' => $user[0], 'user' => Services::getUserManager()->getUser($user[1]));
 				}
 			}
