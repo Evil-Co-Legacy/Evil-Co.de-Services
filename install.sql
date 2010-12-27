@@ -72,8 +72,8 @@ CREATE TABLE module (
 -- Daten für Tabelle 'module'
 --
 
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(1, 'OpServ', 'F02D', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(2, 'CommandLoadModule', 'Cache52D96D20', 1);
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(1, 'OpServ', 'OxF02D', 1);
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(2, 'CommandLoadModule', 'Ox52D96D20', 1);
 
 -- --------------------------------------------------------
 
@@ -98,7 +98,7 @@ CREATE TABLE module_instance_bot (
 -- Daten für Tabelle 'module_instance_bot'
 --
 
-INSERT INTO module_instance_bot (instanceID, moduleAddress, trigger, nick, hostname, ident, ip, modes, gecos) VALUES(1, 'F02D', '?', 'OpServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Oper Service');
+INSERT INTO module_instance_bot (instanceID, moduleAddress, trigger, nick, hostname, ident, ip, modes, gecos) VALUES(1, 'OxF02D', '?', 'OpServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Oper Service');
 
 -- --------------------------------------------------------
 
@@ -119,4 +119,4 @@ CREATE TABLE module_instance_command (
 -- Daten für Tabelle 'module_instance_command'
 --
 
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(1, 'Cache52D96D20', 'LOADMODULE', 1, 'F02D');
+INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(1, 'Ox52D96D20', 'LOADMODULE', 1, 'OxF02D');
