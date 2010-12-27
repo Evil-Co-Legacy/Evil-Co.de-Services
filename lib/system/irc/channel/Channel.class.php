@@ -85,6 +85,17 @@ class Channel {
 	}
 
 	/**
+	 * Returnes true if $uuid joined this channel
+	 * @param	string	$uuid
+	 */
+	public function isJoined($uuid) {
+		foreach($this->userList as $key => $user) {
+			if ($this->userList[$key]['user']->getUuid() == $uuid) return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Removes invalid entries from userlist
 	 * @deprecated
 	 */
