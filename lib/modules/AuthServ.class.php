@@ -30,6 +30,10 @@ class AuthServ extends BotModule {
 		else $this->accountToUser[$accountname] = array($uuid);
 	}
 
+	/**
+	 * Get authed users for $accountname
+	 * @param	string	$accountname
+	 */
 	public function getUsers($accountname) {
 		if (isset($this->accountToUser[$accountname])) return $this->accountToUser[$accountname];
 		return array();
@@ -54,6 +58,12 @@ class AuthServ extends BotModule {
 		return $row['count'] > 0;
 	}
 
+	/**
+	 * Creates a new account
+	 * @param	string	$accountname
+	 * @param	string	$password
+	 * @param	string	$email
+	 */
 	public function create($accountname, $password, $email) {
 		$salt = sha1(uniqid().sha1(microtime()).rand());
 		$password = sha1($salt.sha1($salt.$password));
@@ -61,6 +71,11 @@ class AuthServ extends BotModule {
 		Services::getDB()->sendQuery($sql);
 	}
 
+	/**
+	 * Modifies the password of $accountname
+	 * @param	string	$accountname
+	 * @param	string	$password
+	 */
 	public function pass($accountname, $password) {
 		$sql = "UPDATE
 				authserv_users
@@ -71,6 +86,11 @@ class AuthServ extends BotModule {
 		Services::getDB()->sendQuery($sql);
 	}
 
+	/**
+	 * Modifies the email address of $accountname
+	 * @param	string	$accountname
+	 * @param	string	$email
+	 */
 	public function email($accountname, $email) {
 		$sql = "UPDATE
 				authserv_users
@@ -81,6 +101,10 @@ class AuthServ extends BotModule {
 		Services::getDB()->sendQuery($sql);
 	}
 
+	/**
+	 * Returnes true if the given accountname exists
+	 * @param	string	$accountname
+	 */
 	public function accountExists($accountname) {
 		$sql = "SELECT
 				count(*) as count
@@ -93,6 +117,10 @@ class AuthServ extends BotModule {
 		return $row['count'] > 0;
 	}
 
+	/**
+	 * Returnes true if the given email address already exists
+	 * @param unknown_type $email
+	 */
 	public function emailExists($email) {
 		$sql = "SELECT
 				count(*) as count
@@ -105,6 +133,10 @@ class AuthServ extends BotModule {
 		return $row['count'] > 0;
 	}
 
+	/**
+	 * Returnes the userID of the account with name $accountname
+	 * @param	string	$accountname
+	 */
 	public static function getUserID($accountname) {
 		$sql = "SELECT
 				userID
@@ -117,6 +149,10 @@ class AuthServ extends BotModule {
 		return $row['userID'];
 	}
 
+	/**
+	 * Returnes the access level of $accountname
+	 * @param	string	$accountname
+	 */
 	public static function getAccessLevel($accountname) {
 		$sql = "SELECT
 					accessLevel
