@@ -38,6 +38,7 @@ class CommandAccess extends CommandModule {
 				VALUES ('".escapeString($target)."', ".$userID.", ".intval($messageEx[2]).")
 				ON DUPLICATE KEY UPDATE accessLevel = VALUES(accessLevel)";
 			Services::getDB()->sendQuery($sql);
+			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
 		}
 		else {
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.syntaxHint'));

@@ -31,9 +31,10 @@ class CommandBind extends CommandModule {
 			$botAddress = Services::getModuleManager()->lookupModule($messageEx[1]);
 			$moduleAddress = Services::getModuleManager()->lookupModule($messageEx[2]);
 			$commandName = $messageEx[3];
-			$appearInHelp = (isset($messageEx[4]) ? (intval($messageEx[4]) ? true : false) : true);
+			$appearInHelp = (boolean) (isset($messageEx[4]) ? $messageEx[4] : true);
 
 			Services::getModuleManager()->bindCommand($botAddress, $moduleAddress, $commandName, $appearInHelp);
+			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
 		} else {
 			// send syntax hint
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.syntaxHint'));
