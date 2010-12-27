@@ -40,7 +40,7 @@ class ModuleManager {
 	protected function readModuleList() {
 		if (!$this->readModuleListCache()) {
 			// add debug log
-			if (defined('DEBUG')) Services::getConnection()->getProtocol()->sendLogLine("Cannot read modules from memcache! Loading from database and storing data in memcache ...");
+			if (defined('DEBUG') and Services::memcacheLoaded()) Services::getConnection()->getProtocol()->sendLogLine("Cannot read modules from memcache! Loading from database and storing data in memcache ...");
 
 			// create needed arrays
 			$modules = array();
