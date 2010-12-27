@@ -21,10 +21,10 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 CREATE TABLE `language` (
   languageID int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_bin NOT NULL,
-  `code` varchar(255) COLLATE utf8_bin NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `code` varchar(255) NOT NULL,
   PRIMARY KEY (languageID)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Daten für Tabelle 'language'
@@ -42,10 +42,10 @@ INSERT INTO language (languageID, name, code) VALUES(2, 'Deutsch', 'de');
 CREATE TABLE language_item (
   itemID int(10) unsigned NOT NULL AUTO_INCREMENT,
   languageID int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_bin NOT NULL,
-  `value` text COLLATE utf8_bin NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `value` text NOT NULL,
   PRIMARY KEY (itemID)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Daten für Tabelle 'language_item'
@@ -71,11 +71,12 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(10, 2, 'comma
 
 CREATE TABLE module (
   moduleID int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_bin NOT NULL,
-  address varchar(255) COLLATE utf8_bin NOT NULL,
+  `name` varchar(255) NOT NULL,
+  address varchar(255) NOT NULL,
   `timestamp` int(11) NOT NULL,
-  PRIMARY KEY (moduleID)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  PRIMARY KEY (moduleID),
+  UNIQUE KEYS (address)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Daten für Tabelle 'module'
@@ -96,16 +97,17 @@ INSERT INTO module (moduleID, name, address, timestamp) VALUES(7, 'CommandShutdo
 
 CREATE TABLE module_instance_bot (
   instanceID int(10) unsigned NOT NULL AUTO_INCREMENT,
-  moduleAddress varchar(255) COLLATE utf8_bin NOT NULL,
-  `trigger` varchar(100) COLLATE utf8_bin NOT NULL,
-  nick varchar(255) COLLATE utf8_bin NOT NULL,
-  hostname text COLLATE utf8_bin NOT NULL,
-  ident varchar(255) COLLATE utf8_bin NOT NULL,
-  ip varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '127.0.0.1',
-  modes varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '+Ik',
-  gecos text COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (instanceID)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  moduleAddress varchar(255) NOT NULL,
+  `trigger` varchar(100) NOT NULL,
+  nick varchar(255) NOT NULL,
+  hostname text NOT NULL,
+  ident varchar(255) NOT NULL,
+  ip varchar(255) NOT NULL DEFAULT '127.0.0.1',
+  modes varchar(255) NOT NULL DEFAULT '+Ik',
+  gecos text NOT NULL,
+  PRIMARY KEY (instanceID),
+  UNIQUE KEY (moduleAddress)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Daten für Tabelle 'module_instance_bot'
@@ -121,12 +123,13 @@ INSERT INTO module_instance_bot (instanceID, moduleAddress, `trigger`, nick, hos
 
 CREATE TABLE module_instance_command (
   instanceID int(10) unsigned NOT NULL AUTO_INCREMENT,
-  address varchar(255) COLLATE utf8_bin NOT NULL,
-  commandName varchar(255) COLLATE utf8_bin NOT NULL,
+  address varchar(255) NOT NULL,
+  commandName varchar(255) NOT NULL,
   appearInHelp tinyint(1) NOT NULL DEFAULT '1',
-  parentAddress varchar(255) COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (instanceID)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  parentAddress varchar(255) NOT NULL,
+  PRIMARY KEY (instanceID),
+  UNIQUE KEY (address)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Daten für Tabelle 'module_instance_command'
@@ -137,5 +140,16 @@ INSERT INTO module_instance_command (instanceID, address, commandName, appearInH
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(3, 'Ox477B6E', 'PART', 1, 'OxF02D');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(4, 'Ox439D030291B', 'AUTH', 1, 'Ox21A7E885');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(5, 'Ox1BAFEA1F', 'SHUTDOWN', 1, 'OxF02D');
+
+CREATE TABLE authserv_users (
+	userID int(10) unsigned NOT NULL AUTO_INCREMENT,
+	accountname varchar(255) NOT NULL,
+	password char(40) NOT NULL,
+	salt char(40) NOT NULL,
+	email varchar(255) NOT NULL,
+	accessLevel int(10) NOT NULL
+	PRIMARY KEY (userID),
+	UNIQUE KEY (accountname)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
