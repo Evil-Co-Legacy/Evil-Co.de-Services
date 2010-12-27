@@ -142,8 +142,7 @@ CREATE TABLE module_instance_command (
   commandName varchar(255) NOT NULL,
   appearInHelp tinyint(1) NOT NULL DEFAULT '1',
   parentAddress varchar(255) NOT NULL,
-  PRIMARY KEY (instanceID),
-  UNIQUE KEY (address)
+  PRIMARY KEY (instanceID)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
