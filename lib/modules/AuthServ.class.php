@@ -24,5 +24,11 @@ class AuthServ extends BotModule {
 	public function setAccount($uuid, $account) {
 		Services::getUserManager()->getUser($uuid)->accountname = $account;
 	}
+	
+	public function checkCredentials($username, $password) {
+		if ($username == 'Akkarin' and $password == '1234') return true;
+		if ($username == 'TimWolla' and $password == '4321') return true;
+		return false;
+	}
 }
 ?>
