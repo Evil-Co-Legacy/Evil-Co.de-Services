@@ -148,6 +148,10 @@ class Protocol {
 			$inputEx = explode(" ", $input);
 
 			if (!empty($input) and count($inputEx) >= 2) {
+				if (method_exists('ProtocolHandler', $inputEx[1]))
+					call_user_func(array('ProtocolHandler', strtoupper($inputEx[1])), $input, $inputEx);
+
+				/**
 				switch($inputEx[1]) {
 					case 'UID':
 						// get mode string
@@ -241,7 +245,7 @@ class Protocol {
 						// init modules
 						Services::getModuleManager()->init();
 						break;
-				}
+				} **/
 			}
 		} while(!isset($inputEx[1]) or $inputEx[1] != 'ENDBURST');
 		// Endburst processed!
