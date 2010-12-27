@@ -8,6 +8,15 @@ require_once(SDIR.'lib/system/user/AbstractUserType.class.php');
  * @copyright	2010 DEVel Fusion
  */
 class User extends AbstractUserType {
-	// Nothing to do here
+
+	/**
+	 * @see lib/system/user/AbstractUserType::__set()
+	 */
+	public function __set($variable, $value) {
+		parent::__set($variable, $value);
+
+		// send metadata
+		Services::getConnection()->getProtocol()->sendMetadata($this->getUuid(), $variable, $value);
+	}
 }
 ?>
