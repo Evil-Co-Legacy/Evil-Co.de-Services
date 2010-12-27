@@ -84,7 +84,8 @@ class ChanServ extends BotModule {
 				chanserv_channel_accessLevel
 			WHERE
 				channel = '".escapeString($channel)."'";
-		Services::getDB()->sendQuery($sql)
+		Services::getDB()->sendQuery($sql);
+		$this->part($channel);
 	}
 	
 	public function register($channel, $accountname) {
