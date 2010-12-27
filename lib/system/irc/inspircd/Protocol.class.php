@@ -1,4 +1,7 @@
 <?php
+// imports
+require_once(SDIR.'lib/system/irc/inspircd/ProtocolHandler.class.php');
+
 // defines
 define('PROTOCOL_VERSION', '1202');
 
