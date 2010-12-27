@@ -25,7 +25,7 @@ class ChanServ extends BotModule {
 
 	public function getAccess($channel, $accountname) {
 		$authServ = Services::getModuleManager()->lookupModule('AuthServ');
-		$userID =	call_user_func(array($authServ, 'getUserID'), $accountname);
+		$userID = call_user_func(array($authServ, 'getUserID'), $accountname);
 		if (!$userID) return 0;
 		$sql = "SELECT
 				accessLevel
@@ -65,6 +65,26 @@ class ChanServ extends BotModule {
 		}
 		// set the modes
 		Services::getConnection()->getProtocol()->sendMode($this->getUuid(), $channel, $modes);
+	}
+	
+	public function cleanup($channel) {
+		$sql = "DELETE FROM 
+				chanserv_channels
+			WHERE
+				channel = '".escapeString($channel)."'";
+		Services::getDB()->sendQuery($sql);
+		
+		$sql = "DELETE FROM 
+				chanserv_channels_to_users
+			WHERE
+				channel = '".escapeString($channel)."'";
+		Services::getDB()->sendQuery($sql);
+		
+		$sql = "DELETE FROM 
+				chanserv_channel_accessLevel
+			WHERE
+				channel = '".escapeString($channel)."'";
+		Services::getDB()->sendQuery($sql)
 	}
 }
 ?>
