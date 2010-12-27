@@ -26,13 +26,19 @@ class CommandPart extends CommandModule {
 		// split message
 		$messageEx = explode(' ', $message);
 
-		if (count($messageEx) == 2) {
+		if (count($messageEx) >= 2) {
 			// get channel name
 			$channel = $messageEx[1];
+			// avoid empty strings
 			if (empty($channel)) $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.syntaxHint'));
+			// add the #
 			if ($channel{0} != '#') $channel = '#'.$channel;
 			
-			$this->bot->part($channel);
+			unset($messageEx[0]);
+			unset($messageEx[1]);
+			$message = implode(' ', $messageEx);
+			
+			$this->bot->part($channel, $message);
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
 		} else {
 			// send syntax hint
