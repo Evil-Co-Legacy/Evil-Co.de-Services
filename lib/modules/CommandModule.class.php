@@ -36,6 +36,12 @@ abstract class CommandModule implements Module {
 	public $appearInHelp = true;
 
 	/**
+	 * Contains the needed level
+	 * @var integer
+	 */
+	public $neededPermissions = 0;
+
+	/**
 	 * Creates a new instance of type Command
 	 * @param	BotModule	$bot
 	 * @param	string		$name
