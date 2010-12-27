@@ -51,7 +51,7 @@ CREATE TABLE module_instance_bot (
 INSERT INTO module_instance_bot (instanceID, moduleAddress, trigger, nick, hostname, ident, ip, modes, gecos) VALUES (NULL, 'BEBC200', '?', 'OpServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Oper Service');
 
 -- Command instance database
-CREATE TABLE evilcode_services.module_instance_command (
+CREATE TABLE module_instance_command (
 	instanceID 	INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
 	address 	VARCHAR(255) NOT NULL, 
 	commandName 	VARCHAR(255) NOT NULL, 
