@@ -384,6 +384,27 @@ class Protocol {
 							}
 						}
 						break;
+						case 'METADATA':
+						if ($inputEx[2]{0} == '#' and Services::getChannelManager()->getChannel($inputEx[2]) !== null) {
+							Services::getChannelManager()->getChannel($inputEx[2])->{$inputEx[3]} = substr($input, (stripos($input, ':') + 1));
+
+							try {
+								$data = unserialize(Services::getChannelManager()->getChannel($inputEx[2])->{$inputEx[3]});
+								Services::getChannelManager()->getChannel($inputEx[2])->{$inputEx[3]} = $data;
+							} catch (Exception $ex) {
+								// ignore
+							}
+						} elseif ($inputEx[2]{0} != '#' and Services::getUserManager()->getUser($inputEx[2]) !== null) {
+							Services::getUserManager()->getUser($inputEx[2])->{$inputEx[3]} = substr($input, (stripos($input, ':') + 1));
+
+							try {
+								$data = unserialize(Services::getUserManager()->getUser($inputEx[2])->{$inputEx[3]});
+								Services::getUserManager()->getUser($inputEx[2])->{$inputEx[3]} = $data;
+							} catch (Exception $ex) {
+								// ignore
+							}
+						}
+						break;
 				}
 			}
 
