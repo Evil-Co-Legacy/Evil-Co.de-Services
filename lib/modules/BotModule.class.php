@@ -127,6 +127,7 @@ abstract class BotModule implements Module {
 				if ($command->commandName == strtoupper($inputEx[1])) {
 					$this->sendMessage($user->getUuid(), $command->commandName);
 					$this->sendMessage($user->getUuid(), COLOR_BOLD.COLOR_UNDERLINE."Syntax:".COLOR_UNDERLINE.COLOR_BOLD." ".Services::getLanguage()->get($user->languageID, 'command.'.$command->originalName.'.syntaxHint'));
+					if ($command->neededPermissions > 0) $this->sendMessage($user->getUuid(), COLOR_BOLD.Services::getLanguage()->get($user->languageID, 'bot.global.neededPermissions').COLOR_BOLD." ".$command->neededPermissions);
 					if (Services::getLanguage()->get($user->languageID, 'command.'.$command->originalName.'.description') != 'command.'.$command->originalName.'.description') $this->sendMessage($user->getUuid(), 'command.'.$command->originalName.'.description');
 					return;
 				}
