@@ -6,7 +6,7 @@
  * @copyright	2010 DEVel Fusion
  */
 interface UserTypeManager {
-	
+
 	/**
 	 * Introduces a new user
 	 * @param	integer	$timestamp
@@ -27,12 +27,19 @@ interface UserTypeManager {
 	 * @param	string	$uuid
 	 */
 	public function removeUser($uuid);
-	
+
 	/**
 	 * Returnes the user object with given uuid
 	 * @param	string	$uuid
 	 * @return	UserType
 	 */
 	public function getUser($uuid);
+
+	/**
+	 * Returnes the user object with given nickname
+	 * @param	string	$nickname
+	 * @return UserType
+	 */
+	public function getUserByNick($nickname);
 }
 ?>
