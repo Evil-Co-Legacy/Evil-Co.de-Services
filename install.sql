@@ -53,12 +53,12 @@ CREATE TABLE language_item (
 
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(1, 1, 'bot.global.noSuchCommand', 'There is no such command.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(2, 2, 'bot.global.noSuchCommand', 'Unbekanntes Kommando.');
-INSERT INTO language_item (itemID, languageID, name, value) VALUES(3, 1, 'command.join.success', 'Successfully joined the channel.');
-INSERT INTO language_item (itemID, languageID, name, value) VALUES(4, 2, 'command.join.success', 'Channel erfolgreich betreten.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(3, 1, 'command.join.success', 'Successfully joined the channel "%s".');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(4, 2, 'command.join.success', 'Channel "%s" erfolgreich betreten.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(5, 1, 'command.join.syntaxHint', 'join <channelname>');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(6, 2, 'command.join.syntaxHint', 'join <channelname>');
-INSERT INTO language_item (itemID, languageID, name, value) VALUES(7, 1, 'command.part.success', 'Successfully parted the channel.');
-INSERT INTO language_item (itemID, languageID, name, value) VALUES(8, 2, 'command.part.success', 'Channel erfolgreich verlassen.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(7, 1, 'command.part.success', 'Successfully parted the channel "%s".');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(8, 2, 'command.part.success', 'Channel "%s" erfolgreich verlassen.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(9, 1, 'command.part.syntaxHint', 'part <channelname>');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(10, 2, 'command.part.syntaxHint', 'part <channelname>');
 
