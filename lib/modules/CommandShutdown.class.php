@@ -7,7 +7,7 @@ require_once(SDIR.'lib/modules/CommandModule.class.php');
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
-class CommandLoadModule extends CommandModule {
+class CommandShutdown extends CommandModule {
 
 	/**
 	 * @see CommandModule::$originalName
