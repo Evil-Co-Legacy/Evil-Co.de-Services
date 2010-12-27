@@ -29,17 +29,20 @@ class CommandMode extends CommandModule {
 			$target = $messageEx[1];
 			unset($messageEx[1]);
 		}
+		
 		$access = $this->bot->getAccess($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
-		if ($access < $this->neededPermissions) {
+		if ($access < $this->bot->getNeededAccess($target, $this->originalName)) {
 			return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
 		}
 		
 		if (count($messageEx) == 1) {
 			$this->bot->setStandardModes($target);
+			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
 		}
 		else {
 			unset($messageEx[0]);
 			Services::getConnection()->getProtocol()->sendMode($this->bot->getUuid(), $target, implode(' ', $messageEx));
+			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
 		}
 	}
 }

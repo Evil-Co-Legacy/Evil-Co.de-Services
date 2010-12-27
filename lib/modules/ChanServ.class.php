@@ -39,6 +39,18 @@ class ChanServ extends BotModule {
 		return 0;
 	}
 	
+	public function getNeededAccess($channel, $function) {
+		$sql = "SELECT
+				accessLevel
+			FROM
+				chanserv_channel_accessLevel
+			WHERE
+					channel = '".escapeString($channel)."'
+				AND	function = '".escapeString($function."'";
+		$row = Services::getDB()->getFirstRow($sql);
+		return $row['accessLevel'];
+	}
+	
 	public function setStandardModes($channel, $modes = null) {
 		if ($modes !== null) {
 			$sql = "SELECT
