@@ -78,9 +78,9 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(24, 2, 'comma
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(25, 1, 'command.email', 'Changes your e-mail.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(26, 2, 'command.email', 'Ändert deine E-Mail.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(27, 1, 'command.pass', 'Changes your password.');
-INSERT INTO language_item (itemID, languageID, name, value) VALUES(28, 2, 'command.pass', 'Ändert deine Passwort.');
-INSERT INTO language_item (itemID, languageID, name, value) VALUES(29, 1, 'command.pass', 'Registers a AuthServ-user.');
-INSERT INTO language_item (itemID, languageID, name, value) VALUES(30, 2, 'command.pass', 'Registriert dir einen AuthServ-Account.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(28, 2, 'command.pass', 'Ändert dein Passwort.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(29, 1, 'command.register', 'Registers a AuthServ-user.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(30, 2, 'command.register', 'Registriert dir einen AuthServ-Account.');
 
 -- --------------------------------------------------------
 
