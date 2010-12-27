@@ -31,11 +31,11 @@ class CommandMode extends CommandModule {
 		}
 		$access = $this->bot->getAccess($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
 		if ($access < $this->neededPermissions) {
-			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
+			return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
 		}
 		
 		if (count($messageEx) == 1) {
-			$this->setStandardModes($target);
+			$this->bot->setStandardModes($target);
 		}
 		else {
 			unset($messageEx[0]);
