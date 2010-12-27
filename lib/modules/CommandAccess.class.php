@@ -38,7 +38,9 @@ class CommandAccess extends CommandModule {
 				FROM
 					chanserv_channel_accessLevel
 				WHERE
-					channel = '".escapeString($target)."'";
+					channel = '".escapeString($target)."'
+				ORDER BY 
+					accessLevel DESC";
 			$result = Services::getDB()->sendQuery($sql);
 			while ($row = Services::getDB()->fetchArray($result)) {
 				$this->bot->sendMessage($user->getUuid(), $row['function'].': '.$row['accessLevel']);
