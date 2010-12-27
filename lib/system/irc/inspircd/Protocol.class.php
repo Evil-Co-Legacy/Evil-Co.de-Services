@@ -387,6 +387,9 @@ class Protocol {
 		// create user in bot manager
 		$uuid = Services::getBotManager()->introduceUser($timestamp, $nick, $hostname, $hostname, $ident, $ip, $timestamp, $modes, $gecos);
 
+		// send SVSHOLD command
+		Services::getConnection()->sendServerLine("SVSHOLD ".$nick." :Reserved for services");
+
 		// send uid command
 		Services::getConnection()->sendServerLine("UID ".$this->numeric.$uuid." ".$timestamp." ".$nick." ".$hostname." ".$hostname." ".$ident." ".$ip." ".$timestamp." ".$modes." :".$gecos);
 
