@@ -17,7 +17,7 @@ class CommandMode extends CommandModule {
 	/**
 	 * @see CommandModule::$neededPermissions
 	 */
-	public $neededPermissions = 700;
+	public $neededPermissions = 200;
 
 	/**
 	 * @see lib/modules/CommandModule::execute()
