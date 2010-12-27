@@ -81,6 +81,9 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(27, 1, 'comma
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(28, 2, 'command.pass', 'Ändert dein Passwort.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(29, 1, 'command.register', 'Registers a AuthServ-user.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(30, 2, 'command.register', 'Registriert dir einen AuthServ-Account.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(31, 1, 'command.access', 'Changes the accesslevels.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(32, 2, 'command.access', 'Ändert die Zugriffs-Level.');
+
 
 -- --------------------------------------------------------
 
