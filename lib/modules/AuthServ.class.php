@@ -8,7 +8,7 @@ require_once(SDIR.'lib/modules/BotModule.class.php');
  */
 class AuthServ extends BotModule {
 
-	public $accountToUser = array();
+	protected $accountToUser = array();
 
 	/**
 	 * Returnes true if a user is authed
@@ -25,10 +25,21 @@ class AuthServ extends BotModule {
 	 */
 	public function setAccount($uuid, $account) {
 		Services::getUserManager()->getUser($uuid)->accountname = $account;
+		
 		if (isset($this->accountToUser[$account])) $this->accountToUser[$account][] = $uuid;
 		else $this->accountToUser[$account] = array($uuid);
 	}
 	
+	public function getUsers($account) {
+		if (isset($this->accountToUser[$account])) return $this->accountToUser[$account];
+		return array();
+	}
+	
+	/**
+	 * Checks the credentials
+	 * @param	string	$username
+	 * @param	strign	$password
+	 */
 	public function checkCredentials($username, $password) {
 		if ($username == 'Akkarin' and $password == '1234') return true;
 		if ($username == 'TimWolla' and $password == '4321') return true;
