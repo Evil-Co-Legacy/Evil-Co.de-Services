@@ -354,13 +354,8 @@ class Protocol {
 								// send debug message
 								if (defined('DEBUG')) $this->sendLogLine($source->getUuid()." (".$source->getNick().") sent a message to ".$inputEx[2]);
 
-								$chan = Services::getChannelManager()->getChannel($inputEx[2]);
-								$userList = $chan->getUserList();
-
-								foreach($userList as $user) {
-									if ($user['user']->isBot)
-										Services::getModuleManager()->handleLine($source, $inputEx[2], substr($input, (stripos($input, ':') + 1)));
-								}
+								// notify module manager
+								Services::getModuleManager()->handleLine($source, $inputEx[2], substr($input, (stripos($input, ':') + 1)));
 							} elseif ($source) {
 								// kick numeric
 								$inputEx[2] = substr($inputEx[2], strlen($this->numeric));
