@@ -15,11 +15,6 @@ class CommandMode extends CommandModule {
 	public $originalName = 'mode';
 
 	/**
-	 * @see CommandModule::$neededPermissions
-	 */
-	public $neededPermissions = 200;
-
-	/**
 	 * @see lib/modules/CommandModule::execute()
 	 */
 	public function execute($user, $target, $message) {

@@ -48,6 +48,7 @@ class ChanServ extends BotModule {
 					channel = '".escapeString($channel)."'
 				AND	function = '".escapeString($function."'";
 		$row = Services::getDB()->getFirstRow($sql);
+		if (!$row) return false;
 		return $row['accessLevel'];
 	}
 	
