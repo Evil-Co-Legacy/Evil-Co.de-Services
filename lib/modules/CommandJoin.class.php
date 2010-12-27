@@ -4,10 +4,10 @@ require_once(SDIR.'lib/modules/CommandModule.class.php');
 
 /**
  * Loads modules via IRC
- * @author		Tim Düsterhus
+ * @author		Tim Dï¿½sterhus
  * @copyright	2010 DEVel Fusion
  */
-class CommandJoinModule extends CommandModule {
+class CommandJoin extends CommandModule {
 
 	/**
 	 * @see CommandModule::$originalName
