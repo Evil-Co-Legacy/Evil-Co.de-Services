@@ -221,3 +221,4 @@ CREATE TABLE chanserv_channel_accessLevel (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 INSERT INTO chanserv_channel_accessLevel (channel, userID, accessLevel) VALUES ('#Server', 'mode', 300);
+INSERT INTO chanserv_channel_accessLevel (channel, userID, accessLevel) VALUES ('#Server', 'access', 500);
