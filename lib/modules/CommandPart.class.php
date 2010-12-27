@@ -29,6 +29,7 @@ class CommandPart extends CommandModule {
 		if (count($messageEx) == 2) {
 			// get channel name
 			$channel = $messageEx[1];
+			if (empty($channel)) $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.syntaxHint'));
 			if ($channel{0} != '#') $channel = '#'.$channel;
 			
 			$this->bot->part($channel);
