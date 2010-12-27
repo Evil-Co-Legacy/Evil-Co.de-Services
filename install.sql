@@ -181,3 +181,13 @@ CREATE TABLE chanserv_channels (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 INSERT INTO chanserv_channels (channel, modes) VALUES ('#Server', '+AOPpnt');
+
+CREATE TABLE chanserv_channels_to_users (
+	channel varchar(255) NOT NULL,
+	userID int(10) unsigned NOT NULL,
+	accessLevel int(10) NOT NULL,
+	PRIMARY KEY (channel, userID),
+	KEY (userID)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+INSERT INTO chanserv_channels (channel, userID, accessLevel) VALUES ('#Server', 1, 500);
+INSERT INTO chanserv_channels (channel, userID, accessLevel) VALUES ('#Server', 2, 499);

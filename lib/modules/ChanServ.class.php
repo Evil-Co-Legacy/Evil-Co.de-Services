@@ -21,5 +21,19 @@ class ChanServ extends BotModule {
 			$this->join($row['channel']);
 		}
 	}
+	
+	public function getAccess($channel, $accountname) {
+		$userID = AuthServ::getUserID($accountname);
+		$sql = "SELECT
+				*
+			FROM
+				chanserv_channels_to_users
+			WHERE
+					channel = '".escapeString($channel)."'
+				AND	userID = ".$userID;
+		$row = Services::getDB()->getFirstRow($sql);
+		if ($row) return $row['accessLevel'];
+		return 0;
+	}
 }
 ?>
