@@ -21,29 +21,36 @@ class AuthServ extends BotModule {
 	/**
 	 * Sets the accountname for the given uuid
 	 * @param	string	$uuid
-	 * @param	string	$account
+	 * @param	string	$accountname
 	 */
-	public function setAccount($uuid, $account) {
+	public function setAccount($uuid, $accountname) {
 		Services::getUserManager()->getUser($uuid)->accountname = $account;
 		
-		if (isset($this->accountToUser[$account])) $this->accountToUser[$account][] = $uuid;
-		else $this->accountToUser[$account] = array($uuid);
+		if (isset($this->accountToUser[$accountname])) $this->accountToUser[$accountname][] = $uuid;
+		else $this->accountToUser[$accountname] = array($uuid);
 	}
 	
-	public function getUsers($account) {
-		if (isset($this->accountToUser[$account])) return $this->accountToUser[$account];
+	public function getUsers($accountname) {
+		if (isset($this->accountToUser[$accountname])) return $this->accountToUser[$accountname];
 		return array();
 	}
 	
 	/**
 	 * Checks the credentials
-	 * @param	string	$username
+	 * @param	string	$accountname
 	 * @param	strign	$password
 	 */
-	public function checkCredentials($username, $password) {
-		if ($username == 'Akkarin' and $password == '1234') return true;
-		if ($username == 'TimWolla' and $password == '4321') return true;
-		return false;
+	public function checkCredentials($accountname, $password) {
+		$sql = "SELECT 
+				count(*) as count
+			FROM
+				authserv_users
+			WHERE
+					accountname = '".escapeString($accountname)."'
+				AND	password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, '".escapeString($password)."'))))";
+		$row = WCF::getDB()->getFirstRow($sql);
+		
+		return $row['count'] > 0;
 	}
 }
 ?>
