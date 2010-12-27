@@ -220,7 +220,7 @@ INSERT INTO chanserv_channels_to_users (channel, userID, accessLevel) VALUES ('#
 
 CREATE TABLE chanserv_channel_accessLevel (
 	channel varchar(255) NOT NULL,
-	function varchar(255) unsigned NOT NULL,
+	function varchar(255) NOT NULL,
 	accessLevel int(10) NOT NULL,
 	PRIMARY KEY (channel, function),
 	KEY (function)
@@ -230,7 +230,7 @@ INSERT INTO chanserv_channel_accessLevel (channel, userID, accessLevel) VALUES (
 INSERT INTO chanserv_channel_accessLevel (channel, userID, accessLevel) VALUES ('#Server', 'access', 500);
 
 CREATE TABLE chanserv_default_accessLevel (
-	function varchar(255) unsigned NOT NULL,
+	function varchar(255) NOT NULL,
 	accessLevel int(10) NOT NULL,
 	PRIMARY KEY (function)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
