@@ -26,7 +26,7 @@ class CommandJoin extends CommandModule {
 		// split message
 		$messageEx = explode(' ', $message);
 
-		if (count($messageEx) == 2) {
+		if (count($messageEx) >= 2) {
 			// get channel name
 			$channel = $messageEx[1];
 			// avoid empty strings
