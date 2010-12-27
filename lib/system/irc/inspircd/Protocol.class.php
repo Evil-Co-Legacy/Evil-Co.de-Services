@@ -405,6 +405,16 @@ class Protocol {
 	public function join($uuid, $channel, $channelModes = '+nt', $userMode = '') {
 		return Services::getConnection()->sendServerLine("FJOIN ".$channel." ".time()." ".$channelModes." :".$userMode.",".$this->numeric.$uuid);
 	}
+	
+	/**
+	 * Parts a user of channel
+	 * @param	string	$uuid
+	 * @param	string	$channel
+	 */
+	public function part($uuid, $channel, $message) {
+		return Services::getConnection()->sendServerLine(':'.$uuid.' PART '.$channel.' :"'.$message.'"');
+	}
+	
 
 	// NETWORK METHODS
 	/**
