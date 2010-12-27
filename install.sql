@@ -67,7 +67,12 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(13, 1, 'comma
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(14, 2, 'command.auth.invalidCredentials', 'Fehlerhafte Daten.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(15, 1, 'command.permissionDenied', 'You lack access to use this command.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(16, 2, 'command.permissionDenied', 'Zugriff verweigert.');
-
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(17, 1, 'command.join', 'The service joins the specified channel.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(18, 2, 'command.join', 'Der Service betritt den angegebenen Channel.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(19, 1, 'command.mode', 'Sets channel-modes.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(20, 2, 'command.mode', 'Setzt Channel-Modi.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(21, 1, 'command.part', 'The service parts the specified channel.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(22, 2, 'command.part', 'Der Service verl‰ﬂt den angegebenen Channel.');
 
 
 -- --------------------------------------------------------
