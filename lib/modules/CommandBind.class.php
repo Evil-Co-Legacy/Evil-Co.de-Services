@@ -7,7 +7,7 @@ require_once(SDIR.'lib/modules/CommandModule.class.php');
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
-class CommandJoin extends CommandModule {
+class CommandBind extends CommandModule {
 
 	/**
 	 * @see CommandModule::$originalName
