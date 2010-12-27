@@ -79,7 +79,7 @@ class ModuleManager {
 			$result = Services::getDB()->sendQuery($sql);
 
 			while($row = Services::getDB()->fetchArray($result)) {
-				$this->runningBots[$row['parentAddress']]->registerCommand(new $row['address']($this->runningBots[$row['parentAddress']], $row['commandName'], ($row['appearInHelp'] ? true : false)));
+				$this->bindCommand($row['parentAddress'], $row['address'], $row['commandName'], ($row['appearInHelp'] ? true : false), true);
 			}
 
 			// check for memcache support and store data
