@@ -47,10 +47,8 @@ class Bot extends AbstractUserType {
 	}
 
 	/**
-	 * Joins the bot to given channel
+	 * Removes the bot from given channel
 	 * @param	string	$channel
-	 * @param	string	$modes
-	 * @param	string	$userModes
 	 */
 	public function part($channel) {
 		// join channel
