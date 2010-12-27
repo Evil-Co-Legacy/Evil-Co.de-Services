@@ -165,3 +165,8 @@ CREATE TABLE authserv_users (
 INSERT INTO authserv_users (userID, accountname, password, salt, email, accessLevel) VALUES (1, 'TimWolla', '9ebc2a357640ec74025a7f5ee4259a6060a6daf5', '9415c250e2bcf1670819cf6e0063f2d4c768973a', 'timwolla@***', 1000);
 INSERT INTO authserv_users (userID, accountname, password, salt, email, accessLevel) VALUES (2, 'Akkarin', 'd0caabc3b9c1b57c181f6b1955abd2827e6b7e18', '9415c250e2bcf1670819cf6e0063f2d4c768973a', 'akkarin@***', 1000);
 
+CREATE TABLE chanserv_channels (
+	channel varchar(255) NOT NULL,
+	modes varchar(255) NOT NULL,
+	PRIMARY KEY (channel)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
