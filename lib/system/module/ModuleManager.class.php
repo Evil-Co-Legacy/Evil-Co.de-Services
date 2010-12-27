@@ -137,7 +137,7 @@ class ModuleManager {
 			$message = substr($message, 1);
 
 			foreach($this->runningBots as $key => $bot) {
-				if (strtolower($this->runningBots[$key]->getTrigger()) == strtolower($trigger)) $this->runningBots[$key]->handleLine($user, $target, $message);
+				if (strtolower($this->runningBots[$key]->getTrigger()) == strtolower($trigger) and Services::getChannelManager()->getChannel($target)->isJoined($this->runningBots[$key]->getUuid())) $this->runningBots[$key]->handleLine($user, $target, $message);
 			}
 		}
 	}
