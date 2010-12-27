@@ -38,7 +38,7 @@ class CommandMode extends CommandModule {
 			$this->setStandardModes($target);
 		}
 		else {
-			unset($messageEx[0];
+			unset($messageEx[0]);
 			Services::getConnection()->getProtocol()->sendMode($this->bot->getUuid(), $target, implode(' ', $messageEx));
 		}
 	}
