@@ -104,5 +104,17 @@ class AuthServ extends BotModule {
 		
 		return $row['count'] > 0;
 	}
+	
+	public static function getUserID($accountname) {
+		$sql = "SELECT
+				userID
+			FROM
+				authserv_users
+			WHERE
+					accountname = '".escapeString($accountname)."'";
+		$row = Services::getDB()->getFirstRow($sql);
+		
+		return $row['userID'];
+	}
 }
 ?>
