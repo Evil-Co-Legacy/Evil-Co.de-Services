@@ -30,7 +30,7 @@ class CommandAuth extends CommandModule {
 			$accountname = $messageEx[1];
 			$password = $messageEx[2];
 			if ($this->bot->isAuthed($user->getUuid())) {
-				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.alreadyAuthed'));
+				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.alreadyAuthed'));
 			}
 			if (!$this->bot->checkCredentials($accountname, $password)) {
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.invalidCredentials'));

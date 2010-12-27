@@ -32,7 +32,7 @@ class CommandRegister extends CommandModule {
 			$email = $messageEx[3];
 			
 			if ($this->bot->isAuthed($user->getUuid())) {
-				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.auth.alreadyAuthed'));
+				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.alreadyAuthed'));
 			}
 			if ($this->bot->accountExists($accountname)) {
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.accountExists'));

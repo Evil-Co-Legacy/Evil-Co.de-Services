@@ -30,7 +30,7 @@ class CommandPass extends CommandModule {
 			$password = $messageEx[1];
 			
 			if (!$this->bot->isAuthed($user->getUuid())) {
-				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.notAuthed'));
+				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.notAuthed'));
 			}
 			$this->bot->pass(Services::getUserManager()->getUser($user->getUuid())->accountname, $password);
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
