@@ -73,7 +73,12 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(19, 1, 'comma
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(20, 2, 'command.mode', 'Setzt Channel-Modi.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(21, 1, 'command.part', 'The service parts the specified channel.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(22, 2, 'command.part', 'Der Service verläßt den angegebenen Channel.');
-
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(23, 1, 'command.auth', 'Lets you login into AuthServ.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(24, 2, 'command.auth', 'Loggt dich bei AuthServ ein.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(25, 1, 'command.email', 'Changes your e-mail.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(26, 2, 'command.email', 'Ändert deine E-Mail.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(27, 1, 'command.pass', 'Changes your password.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(28, 2, 'command.pass', 'Ändert deine Passwort.');
 
 -- --------------------------------------------------------
 
