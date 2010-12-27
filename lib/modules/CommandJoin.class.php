@@ -29,7 +29,8 @@ class CommandJoin extends CommandModule {
 		if (count($messageEx) == 2) {
 			// get channel name
 			$channel = $messageEx[1];
-
+			if ($channel{0} != '#') $channel = '#'.$channel;
+			
 			$this->bot->join($channel);
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
 		} else {
