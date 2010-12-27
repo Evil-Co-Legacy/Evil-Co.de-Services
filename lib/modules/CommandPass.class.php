@@ -12,7 +12,7 @@ class CommandPass extends CommandModule {
 	/**
 	 * @see CommandModule::$originalName
 	 */
-	public $originalName = 'register';
+	public $originalName = 'pass';
 
 	/**
 	 * @see CommandModule::$neededPermissions
