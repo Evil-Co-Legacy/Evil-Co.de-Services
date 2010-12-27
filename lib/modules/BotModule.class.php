@@ -65,7 +65,7 @@ abstract class BotModule implements Module {
 			if ($this->commands[$key]->matches($message) and $this->getPermissions($user, $command->neededPermissions)) {
 				$this->commands[$key]->execute($user, $target, $message);
 				$found = true;
-			} elseif (!$this->getPermissions($user, $command->neededPermissions)) {
+			} elseif ($this->commands[$key]->matches($message) and !$this->getPermissions($user, $command->neededPermissions)) {
 				$this->sendMessage($user->getUuid(), Services::getLanguage()->get($user->language, 'bot.global.permissionDenied'));
 				$found = true;
 			}
