@@ -25,7 +25,7 @@ class ChanServ extends BotModule {
 	
 	public function getAccess($channel, $accountname) {
 		$authServ = ModuleManager::lookupModule('AuthServ');
-		$userID = $authServ::getUserID($accountname);
+		$userID =	call_user_func(array($authServ, 'getUserID'), $accountname);
 		$sql = "SELECT
 				accessLevel
 			FROM
