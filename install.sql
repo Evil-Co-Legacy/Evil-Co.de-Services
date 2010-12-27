@@ -211,8 +211,6 @@ CREATE TABLE chanserv_channels (
 	PRIMARY KEY (channel)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-INSERT INTO chanserv_channels (channel, modes) VALUES ('#Server', '+AOPpnt');
-
 CREATE TABLE chanserv_channels_to_users (
 	channel varchar(255) NOT NULL,
 	userID int(10) unsigned NOT NULL,
@@ -220,8 +218,6 @@ CREATE TABLE chanserv_channels_to_users (
 	PRIMARY KEY (channel, userID),
 	KEY (userID)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-INSERT INTO chanserv_channels_to_users (channel, userID, accessLevel) VALUES ('#Server', 1, 500);
-INSERT INTO chanserv_channels_to_users (channel, userID, accessLevel) VALUES ('#Server', 2, 499);
 
 CREATE TABLE chanserv_channel_accessLevel (
 	channel varchar(255) NOT NULL,
@@ -229,10 +225,7 @@ CREATE TABLE chanserv_channel_accessLevel (
 	accessLevel int(10) NOT NULL,
 	PRIMARY KEY (channel, function),
 	KEY (function)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-INSERT INTO chanserv_channel_accessLevel (channel, function, accessLevel) VALUES ('#Server', 'mode', 300);
-INSERT INTO chanserv_channel_accessLevel (channel, function, accessLevel) VALUES ('#Server', 'nonStrictMode', 400);
-INSERT INTO chanserv_channel_accessLevel (channel, function, accessLevel) VALUES ('#Server', 'access', 500);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
 
 CREATE TABLE chanserv_default_accessLevel (
 	function varchar(255) NOT NULL,
@@ -243,3 +236,11 @@ CREATE TABLE chanserv_default_accessLevel (
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('mode', 300);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('nonStrictMode', 400);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('access', 500);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('op', 100);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('topic', 100);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('kick', 100);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('ban', 150);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('permban', 200);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('voice', 10);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('invite', 50);
+
