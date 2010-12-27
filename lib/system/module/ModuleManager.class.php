@@ -262,10 +262,7 @@ class ModuleManager {
 	 * @param	string	$moduleName
 	 */
 	public function lookupModule($moduleName) {
-		foreach($this->availableModules as $name => $address) {
-			if ($name == $moduleName) return $address;
-		}
-		return false;
+		return (isset($this->availableModules[$moduleName]) ? $this->availableModules[$moduleName] : false);
 	}
 
 	/**
