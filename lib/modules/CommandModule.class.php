@@ -23,6 +23,13 @@ abstract class CommandModule implements Module {
 	public $commandName = '';
 
 	/**
+	 * Contains the original command name
+	 * Note: This will used in language system
+	 * @var string
+	 */
+	public $originalName = 'Command';
+
+	/**
 	 * If this is set to false we'll hide the command in HELP command
 	 * @var boolean
 	 */
