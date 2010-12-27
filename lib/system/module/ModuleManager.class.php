@@ -153,7 +153,7 @@ class ModuleManager {
 
 		// get class name
 		$moduleName = basename($file, '.class.php');
-		if (!$moduleAddress === null) $moduleAddress = "Ox".strtoupper(dechex((time() + count($this->availableModules)) * 100000));
+		if ($moduleAddress === null) $moduleAddress = "Ox".strtoupper(dechex((time() + count($this->availableModules)) * 100000));
 
 		// validate module
 		if (isset($this->availableModules[$moduleName])) throw new ModuleException("Module '".$moduleName."' is already loaded!");
@@ -174,9 +174,9 @@ class ModuleManager {
 		if (!$fromDatabase) {
 			// write address to database
 			$sql = "INSERT INTO
-						module (`name`, `address`, `timestamp`)
+						module (name, address, timestamp)
 					VALUES
-						('".$moduleName.", '".$moduleAddress."', '".time()."');";
+						('".escapeString($moduleName)."', '".escapeString($moduleAddress)."', '".time()."');";
 			Services::getDB()->sendQuery($sql);
 		}
 
