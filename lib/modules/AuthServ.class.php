@@ -116,5 +116,17 @@ class AuthServ extends BotModule {
 		
 		return $row['userID'];
 	}
+	
+	public static function getAccessLevel($accountname) {
+		$sql = "SELECT
+				accessLevel
+			FROM
+				authserv_users
+			WHERE
+					accountname = '".escapeString($accountname)."'";
+		$row = Services::getDB()->getFirstRow($sql);
+		
+		return $row['accessLevel'];
+	}
 }
 ?>
