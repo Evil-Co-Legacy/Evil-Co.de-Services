@@ -58,7 +58,7 @@ class AuthServ extends BotModule {
 		$salt = sha1(uniqid().sha1(microtime()).rand());
 		$password = sha1($salt.sha1($salt.$password));
 		$sql = "INSERT INTO authserv_users (accountname, password, email, salt) VALUES ('".escapeString($accountname)."', '".$password."', '".escapeString($email)."', '".$salt."')";
-		WCF::getDB()->sendQuery($sql);
+		Services::getDB()->sendQuery($sql);
 	}
 	
 	public function accountExists($accountname) {
