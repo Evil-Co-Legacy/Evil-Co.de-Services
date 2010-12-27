@@ -28,6 +28,9 @@ class AuthServ extends BotModule {
 
 		if (isset($this->accountToUser[$accountname])) $this->accountToUser[$accountname][] = $uuid;
 		else $this->accountToUser[$accountname] = array($uuid);
+
+		// set umode +r
+		Services::getConnection()->getProtocol()->sendMode($this->getUuid(), $uuid, '+r');
 	}
 
 	/**
