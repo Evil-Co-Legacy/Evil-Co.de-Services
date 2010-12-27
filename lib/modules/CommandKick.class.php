@@ -32,7 +32,7 @@ class CommandKick extends CommandModule {
 		}
 
 		if (count($messageEx) == 2) {
-			if ($access < $this->bot->getAccess($target, Services::getUserManager()->getUser($messageEx[1])->accountname))
+			if ($access < $this->bot->getAccess($target, Services::getUserManager()->getUserByNick($messageEx[1])->accountname))
 				Services::getConnection()->getProtocol()->sendKick($this->bot->getUuid(), $target, $user->getUuid(), $user->getNick()); // selfkick
 			else
 				Services::getConnection()->getProtocol()->sendKick($this->bot->getUuid(), $target, $messageEx[1], $user->getNick());
@@ -42,7 +42,7 @@ class CommandKick extends CommandModule {
 			unset($messageEx[0]);
 			$username = $messageEx[1];
 			unset($messageEx[1]);
-			if ($access < $this->bot->getAccess($target, Services::getUserManager()->getUser($username)->accountname))
+			if ($access < $this->bot->getAccess($target, Services::getUserManager()->getUserByNick($username)->accountname))
 				Services::getConnection()->getProtocol()->sendKick($this->bot->getUuid(), $target, $user->getUuid(), $user->getNick().': '.implode(' ', $messageEx)); // selfkick
 			else
 				Services::getConnection()->getProtocol()->sendKick($this->bot->getUuid(), $target, $username, $user->getNick().': '.implode(' ', $messageEx));
