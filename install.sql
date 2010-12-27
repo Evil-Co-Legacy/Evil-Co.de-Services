@@ -97,6 +97,7 @@ INSERT INTO module (moduleID, name, address, timestamp) VALUES(7, 'CommandShutdo
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(8, 'ChanServ', 'Ox1337', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(9, 'CommandRegister', 'OxAD47D1AF9', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(10, 'CommandPass', 'Ox18D46C95', 1);
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(11, 'CommandEmail', 'Ox11571D3EE', 1);
 
 -- --------------------------------------------------------
 
@@ -154,6 +155,7 @@ INSERT INTO module_instance_command (instanceID, address, commandName, appearInH
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(5, 'Ox1BAFEA1F', 'SHUTDOWN', 1, 'OxF02D');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(6, 'OxAD47D1AF9', 'REGISTER', 1, 'Ox21A7E885');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(7, 'Ox18D46C95', 'PASS', 1, 'Ox21A7E885');
+INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(8, 'Ox11571D3EE', 'EMAIL', 1, 'Ox21A7E885');
 
 
 CREATE TABLE authserv_users (
