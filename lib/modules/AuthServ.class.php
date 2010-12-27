@@ -3,14 +3,17 @@ require_once(SDIR.'lib/modules/BotModule.class.php');
 
 /**
  * Implements the AuthServ bot
- * @author		Tim Düsterhus
+ * @author		Tim Dï¿½sterhus
  * @copyright	2010 DEVel Fusion
  */
 class AuthServ extends BotModule {
-	
-	public $authedUsers = array();
+
+	/**
+	 * Returnes true if a user is authed
+	 * @param	string	$uuid
+	 */
 	public function isAuthed($uuid) {
-		return isset($this->authedUsers[$uuid]);
+		return (Services::getUserManager()->getUser($uuid)->accountname !== null ? true : false);
 	}
 }
 ?>
