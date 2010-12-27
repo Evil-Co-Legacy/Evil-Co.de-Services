@@ -109,7 +109,9 @@ class ChanServ extends BotModule {
 		}
 		
 		$sql = "INSERT INTO chanserv_channel_accessLevel (channel, function, accessLevel) VALUES ".$values;
-		Services::getDB()->sendQuery($sql)
+		Services::getDB()->sendQuery($sql);
+		$this->join($channel);
+		$this->setStandardModes($channel, '+tn');
 	}
 }
 ?>
