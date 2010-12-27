@@ -12,7 +12,7 @@ class ChanServ extends BotModule {
 		parent::__construct($bot, $trigger);
 		
 		$sql = "SELECT
-				*
+				channel
 			FROM
 				chanserv_channels";
 		$result = Services::getDB()->sendQuery($sql);
@@ -25,7 +25,7 @@ class ChanServ extends BotModule {
 	public function getAccess($channel, $accountname) {
 		$userID = AuthServ::getUserID($accountname);
 		$sql = "SELECT
-				*
+				accessLevel
 			FROM
 				chanserv_channels_to_users
 			WHERE
@@ -34,6 +34,17 @@ class ChanServ extends BotModule {
 		$row = Services::getDB()->getFirstRow($sql);
 		if ($row) return $row['accessLevel'];
 		return 0;
+	}
+	
+	public function setStandardModes($channel) {
+		$sql = "SELECT
+				modes
+			FROM
+				chanserv_channels
+			WHERE
+				channel = '".escapeString($channel)."'";
+		$row = Services::getDB()->getFirstRow($sql);
+		// set the modes
 	}
 }
 ?>
