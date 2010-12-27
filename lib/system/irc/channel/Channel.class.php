@@ -96,6 +96,13 @@ class Channel {
 	}
 
 	/**
+	 * Returnes true ... Channels ARE senseless
+	 */
+	public function isSenseless() {
+		return true;
+	}
+
+	/**
 	 * Removes invalid entries from userlist
 	 * @deprecated
 	 */
