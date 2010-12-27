@@ -23,10 +23,7 @@ class CommandAccess extends CommandModule {
 		if ($target{0} != '#') {
 			$target = $messageEx[1];
 			unset($messageEx[1]);
-			if (isset($messageEx[3])) {
-				$messageEx[1] = $messageEx[2];
-				$messageEx[2] = $messageEx[3];
-			}
+			$messageEx = array_values($messageEx);
 		}
 		
 		$access = $this->bot->getAccess($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
