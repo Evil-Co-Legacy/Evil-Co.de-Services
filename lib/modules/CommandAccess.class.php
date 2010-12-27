@@ -47,19 +47,24 @@ class CommandAccess extends CommandModule {
 			}
 		}
 		else {
-			if ($access < $messageEx[2]) {
-				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.tooHigh'));
+			if (count($messageEx) == 3) {
+				if ($access < $messageEx[2]) {
+					return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.tooHigh'));
+				}
+				if (!$this->bot->getNeededAccess($target, $messageEx[1])) {
+					return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.unknown'));
+				}
+				$sql = "UPDATE
+						chanserv_channel_accessLevel
+					SET
+						accessLevel = ".$messageEx[2]."
+					WHERE
+						function = '".escapeString($messageEx[1])."'";
+				Services::getDB()->sendQuery($sql);
 			}
-			if (!$this->bot->getNeededAccess($target, $messageEx[1])) {
-				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.unknown'));
+			else {
+				$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.syntaxHint'));
 			}
-			$sql = "UPDATE
-					chanserv_channel_accessLevel
-				SET
-					accessLevel = ".$messageEx[2]."
-				WHERE
-					function = '".escapeString($messageEx[1])."'";
-			Services::getDB()->sendQuery($sql);
 		}
 	}
 }
