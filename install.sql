@@ -136,6 +136,6 @@ INSERT INTO module_instance_command (instanceID, address, commandName, appearInH
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(2, 'Ox45B196', 'JOIN', 1, 'OxF02D');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(3, 'Ox477B6E', 'PART', 1, 'OxF02D');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(4, 'Ox439D030291B', 'AUTH', 1, 'Ox21A7E885');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(5, 'Ox1BAFEA1F', 'SHUTDOWN', 1, 'Ox21A7E885');
+INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(5, 'Ox1BAFEA1F', 'SHUTDOWN', 1, 'OxF02D');
 
 
