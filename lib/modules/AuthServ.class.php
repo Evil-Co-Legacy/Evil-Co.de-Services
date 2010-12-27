@@ -24,7 +24,7 @@ class AuthServ extends BotModule {
 	 * @param	string	$accountname
 	 */
 	public function setAccount($uuid, $accountname) {
-		Services::getUserManager()->getUser($uuid)->accountname = $account;
+		Services::getUserManager()->getUser($uuid)->accountname = $accountname;
 		
 		if (isset($this->accountToUser[$accountname])) $this->accountToUser[$accountname][] = $uuid;
 		else $this->accountToUser[$accountname] = array($uuid);
