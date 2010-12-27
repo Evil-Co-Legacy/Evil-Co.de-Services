@@ -140,7 +140,7 @@ class ModuleManager {
 
 		// get class name
 		$moduleName = basename($file, '.class.php');
-		if (!$moduleAddress === null) $moduleAddress = strtoupper(dechex((time() + count($this->availableModules)) * 100000));
+		if (!$moduleAddress === null) $moduleAddress = "Cache".strtoupper(dechex((time() + count($this->availableModules)) * 100000));
 
 		// validate module
 		if (isset($this->availableModules[$moduleName])) throw new ModuleException("Module '".$moduleName."' is already loaded!");
