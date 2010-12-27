@@ -3,10 +3,11 @@
 define('IRCD', 'inspircd');
 define('SERVICES_VERSION', '1.0.0 Alpha 1');
 // Uncomment the following to enable debugging
-define('DEBUG', true);
+// define('DEBUG', true);
 
 // imports
 require_once(SDIR.'lib/core.functions.php');
+require_once(SDIR.'lib/color.inc.php');
 require_once(SDIR.'lib/system/configuration/Configuration.class.php');
 require_once(SDIR.'lib/system/event/EventHandler.class.php');
 require_once(SDIR.'lib/system/irc/IRCConnection.class.php');
