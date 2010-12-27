@@ -238,6 +238,6 @@ CREATE TABLE chanserv_default_accessLevel (
 	PRIMARY KEY (function)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-INSERT INTO chanserv_default_accessLevel (channel, accessLevel) VALUES ('mode', 300);
-INSERT INTO chanserv_default_accessLevel (channel, accessLevel) VALUES ('nonStrictMode', 400);
-INSERT INTO chanserv_default_accessLevel (channel, accessLevel) VALUES ('access', 500);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('mode', 300);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('nonStrictMode', 400);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('access', 500);
