@@ -124,10 +124,11 @@ abstract class BotModule implements Module {
 			}
 		} else {
 			foreach($this->commands as $key => $command) {
-				if ($command->commandName == $inputEx[1]) {
+				if ($command->commandName == strtoupper($inputEx[1])) {
 					$this->sendMessage($user->getUuid(), $command->commandName);
 					$this->sendMessage($user->getUuid(), COLOR_BOLD.COLOR_UNDERLINE."Syntax:".COLOR_UNDERLINE.COLOR_BOLD." ".Services::getLanguage()->get($user->languageID, 'command.'.$command->originalName.'.syntaxHint'));
 					if (Services::getLanguage()->get($user->languageID, 'command.'.$command->originalName.'.description') != 'command.'.$command->originalName.'.description') $this->sendMessage($user->getUuid(), 'command.'.$command->originalName.'.description');
+					return;
 				}
 			}
 
