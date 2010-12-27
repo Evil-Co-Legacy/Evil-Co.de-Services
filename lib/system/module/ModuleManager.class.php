@@ -38,7 +38,7 @@ class ModuleManager {
 	 * Reads all modules from cache or database
 	 */
 	protected function readModuleList() {
-		if (!$this->readModuleListCache()) {
+		if (!Services::memcacheLoaded() or !$this->readModuleListCache()) {
 			// add debug log
 			if (defined('DEBUG') and Services::memcacheLoaded()) Services::getConnection()->getProtocol()->sendLogLine("Cannot read modules from memcache! Loading from database and storing data in memcache ...");
 
@@ -73,7 +73,9 @@ class ModuleManager {
 			$sql = "SELECT
 						*
 					FROM
-						module_instance_command";
+						module_instance_command
+					ORDER BY
+						commandName ASC";
 			$result = Services::getDB()->sendQuery($sql);
 
 			while($row = Services::getDB()->fetchArray($result)) {
