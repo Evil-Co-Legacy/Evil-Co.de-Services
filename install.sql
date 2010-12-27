@@ -61,6 +61,9 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(7, 1, 'comman
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(8, 2, 'command.part.success', 'Channel "%s" erfolgreich verlassen.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(9, 1, 'command.part.syntaxHint', 'part <channelname>');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(10, 2, 'command.part.syntaxHint', 'part <channelname>');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(11, 1, 'command.auth.success', 'Successfully authed to "%s".');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(12, 2, 'command.auth.success', 'Erfolgreich als "%s" angemeldet.');
+
 
 
 -- --------------------------------------------------------
