@@ -147,7 +147,7 @@ CREATE TABLE authserv_users (
 	password char(40) NOT NULL,
 	salt char(40) NOT NULL,
 	email varchar(255) NOT NULL,
-	accessLevel int(10) NOT NULL
+	accessLevel int(10) NOT NULL,
 	PRIMARY KEY (userID),
 	UNIQUE KEY (accountname)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
