@@ -66,6 +66,10 @@ class LanguageManager {
 
 		// kick languageID and variable from argument list
 		$arguments[0] = $value;
+		unset($arguments[1]);
+
+		// resort array
+		$arguments = array_merge(array(), $arguments);
 
 		// return correct value
 		return call_user_func_array('sprintf', $arguments);
