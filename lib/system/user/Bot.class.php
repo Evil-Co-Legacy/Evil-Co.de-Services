@@ -50,9 +50,9 @@ class Bot extends AbstractUserType {
 	 * Removes the bot from given channel
 	 * @param	string	$channel
 	 */
-	public function part($channel) {
+	public function part($channel, $message = "Leaving") {
 		// join channel
-		Services::getConnection()->getProtocol()->part($this->getUuid(), $channel);
+		Services::getConnection()->getProtocol()->part($this->getUuid(), $channel, $message);
 
 		// notify channel manager
 		$chan = Services::getChannelManager()->getChannel($channel);
