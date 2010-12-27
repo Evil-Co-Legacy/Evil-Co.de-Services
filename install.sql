@@ -120,6 +120,7 @@ INSERT INTO module (moduleID, name, address, timestamp) VALUES(10, 'CommandPass'
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(11, 'CommandEmail', 'Ox11571D3EE', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(12, 'CommandMode', 'Ox23DD5B189BBAB2E', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(13, 'CommandBind', 'OxED6A84A0', 1);
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(14, 'CommandAccess', 'Ox25067B81', 1);
 
 -- --------------------------------------------------------
 
@@ -183,6 +184,7 @@ INSERT INTO module_instance_command (instanceID, address, commandName, appearInH
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(12, 'OxED6A84A0', 'BIND', 1, 'OxF02D');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(13, 'Ox477B6E', 'PART', 1, 'Ox1337');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(14, 'Ox477B6E', 'PART', 1, 'Ox21A7E885');
+INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(15, 'Ox25067B81', 'ACCESS', 1, 'Ox1337');
 
 CREATE TABLE authserv_users (
 	userID int(10) unsigned NOT NULL AUTO_INCREMENT,

@@ -85,7 +85,7 @@ class ChanServ extends BotModule {
 			WHERE
 				channel = '".escapeString($channel)."'";
 		Services::getDB()->sendQuery($sql);
-		$this->part($channel);
+		$this->part($channel, 'Unregistered');
 	}
 	
 	public function register($channel, $accountname) {
