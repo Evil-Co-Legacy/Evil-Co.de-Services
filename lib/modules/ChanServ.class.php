@@ -7,22 +7,22 @@ require_once(SDIR.'lib/modules/BotModule.class.php');
  * @copyright	2010 DEVel Fusion
  */
 class ChanServ extends BotModule {
-	
+
 	public function __construct($bot, $trigger = '') {
 		parent::__construct($bot, $trigger);
-		
+
 		$sql = "SELECT
 				channel, modes
 			FROM
 				chanserv_channels";
 		$result = Services::getDB()->sendQuery($sql);
-		
+
 		while ($row = Services::getDB()->fetchArray($result)) {
 			$this->join($row['channel']);
 			$this->setStandardModes($row['channel'], $row['modes']);
 		}
 	}
-	
+
 	public function getAccess($channel, $accountname) {
 		$authServ = Services::getModuleManager()->lookupModule('AuthServ');
 		$userID =	call_user_func(array($authServ, 'getUserID'), $accountname);
@@ -38,7 +38,7 @@ class ChanServ extends BotModule {
 		if ($row) return $row['accessLevel'];
 		return 0;
 	}
-	
+
 	public function getNeededAccess($channel, $function) {
 		$sql = "SELECT
 				accessLevel
@@ -46,11 +46,11 @@ class ChanServ extends BotModule {
 				chanserv_channel_accessLevel
 			WHERE
 					channel = '".escapeString($channel)."'
-				AND	function = '".escapeString($function."'";
+				AND	function = '".escapeString($function)."'";
 		$row = Services::getDB()->getFirstRow($sql);
 		return $row['accessLevel'];
 	}
-	
+
 	public function setStandardModes($channel, $modes = null) {
 		if ($modes !== null) {
 			$sql = "SELECT
