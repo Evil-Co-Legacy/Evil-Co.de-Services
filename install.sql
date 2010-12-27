@@ -84,7 +84,8 @@ CREATE TABLE module (
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(1, 'OpServ', 'OxF02D', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(2, 'CommandLoadModule', 'Ox52D96D20', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(3, 'CommandJoin', 'Ox45B196', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(3, 'CommandPart', 'Ox477B6E', 1);
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(4, 'CommandPart', 'Ox477B6E', 1);
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(5, 'AuthServ', 'Ox21A7E885', 1);
 
 -- --------------------------------------------------------
 
@@ -110,7 +111,7 @@ CREATE TABLE module_instance_bot (
 --
 
 INSERT INTO module_instance_bot (instanceID, moduleAddress, `trigger`, nick, hostname, ident, ip, modes, gecos) VALUES(1, 'OxF02D', '?', 'OpServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Oper Service');
-
+INSERT INTO module_instance_bot (instanceID, moduleAddress, `trigger`, nick, hostname, ident, ip, modes, gecos) VALUES(2, 'Ox21A7E885', '', 'AuthServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Auth Service');
 -- --------------------------------------------------------
 
 --
