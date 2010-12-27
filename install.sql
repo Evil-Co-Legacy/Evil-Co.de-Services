@@ -123,6 +123,7 @@ INSERT INTO module (moduleID, name, address, timestamp) VALUES(13, 'CommandBind'
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(14, 'CommandAccess', 'Ox25067B81', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(15, 'CommandCregister', 'OxB494EC43B6AA', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(16, 'CommandKick', 'Ox24AA79F6', 1);
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(17, 'CommandAdduser', 'OxAD663DBFC', 1);
 
 
 -- --------------------------------------------------------
@@ -190,6 +191,7 @@ INSERT INTO module_instance_command (instanceID, address, commandName, appearInH
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(15, 'Ox25067B81', 'ACCESS', 1, 'Ox1337');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(16, 'OxB494EC43B6AA', 'CREGISTER', 1, 'Ox1337');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(17, 'Ox24AA79F6', 'KICK', 1, 'Ox1337');
+INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(18, 'OxAD663DBFC', 'ADDUSER', 1, 'Ox1337');
 
 
 
@@ -247,4 +249,3 @@ INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('ban', 
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('permban', 200);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('voice', 10);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('invite', 50);
-
