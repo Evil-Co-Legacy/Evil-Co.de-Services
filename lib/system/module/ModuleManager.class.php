@@ -231,6 +231,33 @@ class ModuleManager {
 	}
 
 	/**
+	 * Binds a command to $botAddress
+	 * @param	string	$botAddress
+	 * @param	string	$moduleAddress
+	 * @param	string	$commandName
+	 * @param	boolean	$appearInHelp
+	 * @param	boolean	$fromDatabase
+	 */
+	public function bindCommand($botAddress, $moduleAddress, $commandName, $appearInHelp = true, $fromDatabase = false) {
+		// validate
+		if (!$this->moduleLoaded($moduleAddress)) throw new ModuleException("Unknown module at address '".$moduleAddress."'");
+		if (!$this->moduleLoaded($botAddress)) throw new ModuleException("Unknown module at address '".$botAddress."'");
+		if (!($moduleAddress instanceof BotModule)) throw new ModuleException("Commands can only bound to bots");
+
+		// bind
+		$this->runningBots[$botAddress]->registerCommand(new $moduleAddress($this->runningBots[$botAddress], $commandName, $appearInHelp));
+
+		// write to db
+		if (!$fromDatabase) {
+			$sql = "INSERT INTO
+						module_instance_command (address, commandName, appearInHelp, parentAddress)
+					VALUES
+						('".escapeString($moduleAddress)."', '".escapeString($commandName)."', ".($appearInHelp ? 1 : 0).", '".escapeString($botAddress)."')";
+			Services::getDB()->sendQuery($sql);
+		}
+	}
+
+	/**
 	 * Looks up a module and returnes its address
 	 * @param	string	$moduleName
 	 */
