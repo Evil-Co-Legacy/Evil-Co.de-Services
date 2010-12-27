@@ -411,7 +411,7 @@ class Protocol {
 	 * @param	string	$uuid
 	 * @param	string	$channel
 	 */
-	public function part($uuid, $channel, $message) {
+	public function part($uuid, $channel, $message = "Leaving") {
 		return Services::getConnection()->sendLine($this->formateUserLine($uuid, 'PART '.$channel.' :'.$message));
 	}
 
