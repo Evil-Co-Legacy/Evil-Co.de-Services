@@ -48,7 +48,7 @@ class AuthServ extends BotModule {
 			WHERE
 					accountname = '".escapeString($accountname)."'
 				AND	password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, '".escapeString($password)."'))))
-				AND active = 1";
+				AND	active = 1";
 		$row = Services::getDB()->getFirstRow($sql);
 		
 		return $row['count'] > 0;
@@ -57,7 +57,17 @@ class AuthServ extends BotModule {
 	public function create($accountname, $password, $email) {
 		$salt = sha1(uniqid().sha1(microtime()).rand());
 		$password = sha1($salt.sha1($salt.$password));
-		$sql = "INSERT INTO authserv_users (accountname, password, email, salt) VALUES ('".escapeString($accountname)."', '".$password."', '".escapeString($email)."', '".$salt."')";
+		$sql = "INSERT INTO authserv_users (accountname, password, email, salt, time) VALUES ('".escapeString($accountname)."', '".$password."', '".escapeString($email)."', '".$salt."', ".time().")";
+		Services::getDB()->sendQuery($sql);
+	}
+	
+	public function pass($accountname, $password) {
+		$sql = "UPDATE
+				authserv_users
+			SET
+				password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, '".escapeString($password)."'))))
+			WHERE
+				accountname = '".escapeString($accountname)."'";
 		Services::getDB()->sendQuery($sql);
 	}
 	
