@@ -175,5 +175,12 @@ abstract class AbstractUserType implements UserType {
 		if (isset($this->data[$variable])) return $this->data[$variable];
 		return null;
 	}
+
+	/**
+	 * @see UserType::__isset()
+	 */
+	public function __isset($variable) {
+		return (isset($this->data[$variable]));
+	}
 }
 ?>
