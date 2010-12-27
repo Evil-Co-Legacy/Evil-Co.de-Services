@@ -3,7 +3,7 @@ require_once(SDIR.'lib/modules/BotModule.class.php');
 
 /**
  * Implements the AuthServ bot
- * @author		Tim Düsterhus
+ * @author		Tim DÃ¼sterhus
  * @copyright	2010 DEVel Fusion
  */
 class AuthServ extends BotModule {
