@@ -23,23 +23,6 @@ class CommandRegister extends CommandModule {
 	 * @see lib/modules/CommandModule::execute()
 	 */
 	public function execute($user, $target, $message) {
-		$authServ = Services::getModuleManager()->lookupModule('AuthServ');
-		if ($this->bot instanceof $authServ) $this->handleAS($user, $target, $message);
-		else $this->handleCS($user, $target, $message);
-	}
-	
-	public function handleCS($user, $target, $message) {
-		// split message
-		$messageEx = explode(' ', $message);
-		if ($target{0} != '#') {
-			$target = $messageEx[1];
-			unset($messageEx[1]);
-		}
-		
-		$this->bot->register($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
-	}
-	
-	public function handleAS($user, $target, $message) {
 		// split message
 		$messageEx = explode(' ', $message);
 
