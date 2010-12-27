@@ -47,7 +47,39 @@ class AuthServ extends BotModule {
 				authserv_users
 			WHERE
 					accountname = '".escapeString($accountname)."'
-				AND	password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, '".escapeString($password)."'))))";
+				AND	password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, '".escapeString($password)."'))))
+				AND active = 1";
+		$row = Services::getDB()->getFirstRow($sql);
+		
+		return $row['count'] > 0;
+	}
+	
+	public function create($accountname, $password, $email) {
+		$salt = sha1(uniqid().sha1(microtime()).rand());
+		$password = sha1($salt.sha1($salt.$password));
+		$sql = "INSERT INTO authserv_users (accountname, password, email, salt) VALUES ('".escapeString($accountname)."', '".$password."', '".escapeString($email."', '".$salt."')";
+		WCF::getDB()->sendQuery($sql);
+	}
+	
+	public function accountExists($accountname) {
+		$sql = "SELECT 
+				count(*) as count
+			FROM
+				authserv_users
+			WHERE
+					accountname = '".escapeString($accountname)."'";
+		$row = Services::getDB()->getFirstRow($sql);
+		
+		return $row['count'] > 0;
+	}
+	
+	public function emailExists($email) {
+		$sql = "SELECT 
+				count(*) as count
+			FROM
+				authserv_users
+			WHERE
+					email = '".escapeString($email)."'";
 		$row = Services::getDB()->getFirstRow($sql);
 		
 		return $row['count'] > 0;
