@@ -12,7 +12,7 @@ class CommandShutdown extends CommandModule {
 	/**
 	 * @see CommandModule::$originalName
 	 */
-	public $originalName = 'loadModule';
+	public $originalName = 'shutdown';
 
 	/**
 	 * @see CommandModule::$neededPermissions
