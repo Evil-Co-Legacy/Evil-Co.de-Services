@@ -17,7 +17,7 @@ class AuthServ extends BotModule {
 	public function isAuthed($uuid) {
 		return (Services::getUserManager()->getUser($uuid)->accountname !== null);
 	}
-	
+
 	/**
 	 * Sets the accountname for the given uuid
 	 * @param	string	$uuid
@@ -25,23 +25,23 @@ class AuthServ extends BotModule {
 	 */
 	public function setAccount($uuid, $accountname) {
 		Services::getUserManager()->getUser($uuid)->accountname = $accountname;
-		
+
 		if (isset($this->accountToUser[$accountname])) $this->accountToUser[$accountname][] = $uuid;
 		else $this->accountToUser[$accountname] = array($uuid);
 	}
-	
+
 	public function getUsers($accountname) {
 		if (isset($this->accountToUser[$accountname])) return $this->accountToUser[$accountname];
 		return array();
 	}
-	
+
 	/**
 	 * Checks the credentials
 	 * @param	string	$accountname
 	 * @param	string	$password
 	 */
 	public function checkCredentials($accountname, $password) {
-		$sql = "SELECT 
+		$sql = "SELECT
 				count(*) as count
 			FROM
 				authserv_users
@@ -50,17 +50,17 @@ class AuthServ extends BotModule {
 				AND	password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, '".escapeString($password)."'))))
 				AND	active = 1";
 		$row = Services::getDB()->getFirstRow($sql);
-		
+
 		return $row['count'] > 0;
 	}
-	
+
 	public function create($accountname, $password, $email) {
 		$salt = sha1(uniqid().sha1(microtime()).rand());
 		$password = sha1($salt.sha1($salt.$password));
 		$sql = "INSERT INTO authserv_users (accountname, password, email, salt, time) VALUES ('".escapeString($accountname)."', '".$password."', '".escapeString($email)."', '".$salt."', ".time().")";
 		Services::getDB()->sendQuery($sql);
 	}
-	
+
 	public function pass($accountname, $password) {
 		$sql = "UPDATE
 				authserv_users
@@ -70,7 +70,7 @@ class AuthServ extends BotModule {
 				accountname = '".escapeString($accountname)."'";
 		Services::getDB()->sendQuery($sql);
 	}
-	
+
 	public function email($accountname, $email) {
 		$sql = "UPDATE
 				authserv_users
@@ -80,31 +80,31 @@ class AuthServ extends BotModule {
 				accountname = '".escapeString($accountname)."'";
 		Services::getDB()->sendQuery($sql);
 	}
-	
+
 	public function accountExists($accountname) {
-		$sql = "SELECT 
+		$sql = "SELECT
 				count(*) as count
 			FROM
 				authserv_users
 			WHERE
 					accountname = '".escapeString($accountname)."'";
 		$row = Services::getDB()->getFirstRow($sql);
-		
+
 		return $row['count'] > 0;
 	}
-	
+
 	public function emailExists($email) {
-		$sql = "SELECT 
+		$sql = "SELECT
 				count(*) as count
 			FROM
 				authserv_users
 			WHERE
 					email = '".escapeString($email)."'";
 		$row = Services::getDB()->getFirstRow($sql);
-		
+
 		return $row['count'] > 0;
 	}
-	
+
 	public static function getUserID($accountname) {
 		$sql = "SELECT
 				userID
@@ -113,20 +113,20 @@ class AuthServ extends BotModule {
 			WHERE
 					accountname = '".escapeString($accountname)."'";
 		$row = Services::getDB()->getFirstRow($sql);
-		
+
 		return $row['userID'];
 	}
-	
+
 	public static function getAccessLevel($accountname) {
 		$sql = "SELECT
-				accessLevel
-			FROM
-				authserv_users
-			WHERE
+					accessLevel
+				FROM
+					authserv_users
+				WHERE
 					accountname = '".escapeString($accountname)."'";
 		$row = Services::getDB()->getFirstRow($sql);
-		
-		return $row['accessLevel'];
+
+		return intval($row['accessLevel']);
 	}
 }
 ?>
