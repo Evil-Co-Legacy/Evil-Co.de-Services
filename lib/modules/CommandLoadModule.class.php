@@ -26,7 +26,7 @@ class CommandLoadModule extends CommandModule {
 		// split message
 		$messageEx = explode(' ', $message);
 
-		if (count($messageEx) == 2) {
+		if (count($messageEx) == 2 and !empty($messageEx[1])) {
 			// get module name
 			$moduleName = $messageEx[1];
 
