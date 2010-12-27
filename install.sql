@@ -229,7 +229,7 @@ CREATE TABLE chanserv_channel_accessLevel (
 	accessLevel int(10) NOT NULL,
 	PRIMARY KEY (channel, function),
 	KEY (function)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE chanserv_default_accessLevel (
 	function varchar(255) NOT NULL,
