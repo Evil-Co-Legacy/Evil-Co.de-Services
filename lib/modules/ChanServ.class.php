@@ -53,7 +53,7 @@ class ChanServ extends BotModule {
 	}
 
 	public function setStandardModes($channel, $modes = null) {
-		if ($modes !== null) {
+		if ($modes === null) {
 			$sql = "SELECT
 					modes
 				FROM
