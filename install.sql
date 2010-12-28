@@ -95,6 +95,9 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(41, 1, 'comma
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(42, 2, 'command.cregister', 'Registriert einen Channel.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(43, 1, 'command.cregister.success', 'The channel "%s" was successfully registered.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(44, 2, 'command.cregister.success', 'Der Channel "%s" wurde erfolgreich registriert.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(45, 1, 'command.invalidUser', 'The user is invalid.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(46, 2, 'command.invalidUser', 'Der Benutzer ist ungültig.');
+
 
 -- --------------------------------------------------------
 

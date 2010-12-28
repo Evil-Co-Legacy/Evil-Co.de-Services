@@ -40,6 +40,9 @@ class CommandAdduser extends CommandModule {
 			}
 			$authServ = Services::getModuleManager()->lookupModule('AuthServ');
 			$userID = call_user_func(array($authServ, 'getUserID'), $messageEx[1]);
+			if (!$userID) {
+				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.invalidUser'));
+			}
 			$sql = "INSERT INTO chanserv_channels_to_users (channel, userID, accessLevel)
 				VALUES ('".escapeString($target)."', ".$userID.", ".intval($messageEx[2]).")
 				ON DUPLICATE KEY UPDATE accessLevel = VALUES(accessLevel)";
