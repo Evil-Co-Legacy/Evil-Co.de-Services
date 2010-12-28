@@ -238,6 +238,7 @@ CREATE TABLE chanserv_channels (
 	time int(10) NOT NULL DEFAULT 0,
 	registrar int(10) NOT NULL DEFAULT 0,
 	unregistercode char(40) NOT NULL DEFAULT '',
+	defaultTopic text NOT NULL,
 	PRIMARY KEY (channel)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -246,7 +247,6 @@ CREATE TABLE chanserv_channels_to_users (
 	userID int(10) unsigned NOT NULL,
 	accessLevel int(10) NOT NULL,
 	PRIMARY KEY (channel, userID),
-
 	KEY (userID)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
