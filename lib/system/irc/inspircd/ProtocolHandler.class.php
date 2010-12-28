@@ -57,7 +57,7 @@ class ProtocolHandler {
 			}
 
 			// generate userlist
-			$userListString = substr($input, (stripos($input, ':') + 1));
+			$userListString = substr($input, (stripos($input, ',') - 1));
 			$userListString = trim($userListString);
 			$userList = array();
 
