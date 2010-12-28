@@ -3,6 +3,7 @@ require_once(SDIR.'lib/modules/BotModule.class.php');
 
 /**
  * Implements the ChanServ bot
+ *
  * @author		Tim Düsterhus
  * @copyright	2010 DEVel Fusion
  */
@@ -12,6 +13,7 @@ class ChanServ extends BotModule {
 	public function __construct($bot, $trigger = '') {
 		parent::__construct($bot, $trigger);
 
+		// join all registered channels
 		$sql = "SELECT
 				channel, modes
 			FROM
@@ -26,8 +28,10 @@ class ChanServ extends BotModule {
 
 	/**
 	 * Returns the access of the given account in the given channel
+	 *
 	 * @param	string	$channel
 	 * @param	string	$accountname
+	 * @return	integer
 	 */
 	public function getAccess($channel, $accountname) {
 		$authServ = Services::getModuleManager()->lookupModule('AuthServ');
@@ -47,8 +51,10 @@ class ChanServ extends BotModule {
 
 	/**
 	 * Returns the needed access for the given function in the given channel
+	 *
 	 * @param	string	$channel
 	 * @param	string	$function
+	 * @return	mixed
 	 */
 	public function getNeededAccess($channel, $function) {
 		$sql = "SELECT
@@ -65,8 +71,10 @@ class ChanServ extends BotModule {
 	
 	/**
 	 * Sets the default modes in the given channel
+	 *
 	 * @param	string	$channel
 	 * @param	string	$modes
+	 * @return	void
 	 */
 	public function setStandardModes($channel, $modes = null) {
 		if ($modes === null) {
@@ -85,7 +93,9 @@ class ChanServ extends BotModule {
 
 	/**
 	 * Unregisters the channel
+	 *
 	 * @param	string	$channel
+	 * @return	void
 	 */
 	public function unregister($channel) {
 		// remove +r
@@ -115,8 +125,10 @@ class ChanServ extends BotModule {
 	
 	/**
 	 * Registers the channel with chanserv
+	 *
 	 * @param	string	$channel
 	 * @param	string	$accountname
+	 * @return	void
 	 */
 	public function register($channel, $accountname) {
 		$authServ = Services::getModuleManager()->lookupModule('AuthServ');
@@ -150,7 +162,9 @@ class ChanServ extends BotModule {
 	
 	/**
 	 * Checks whether the given channel is registered
+	 *
 	 * @param	string	$channel
+	 * @return	boolean
 	 */
 	public function isRegistered($channel) {
 		$sql = "SELECT
