@@ -32,6 +32,12 @@ class CommandAdduser extends CommandModule {
 		}
 
 		if (count($messageEx) == 3) {
+			if ($messageEx[2] > $access) {
+				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.tooHigh'));
+			}
+			else if ($messageEx[2] > 500) {
+				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.tooHigh'));
+			}
 			$authServ = Services::getModuleManager()->lookupModule('AuthServ');
 			$userID = call_user_func(array($authServ, 'getUserID'), $messageEx[1]);
 			$sql = "INSERT INTO chanserv_channels_to_users (channel, userID, accessLevel)
