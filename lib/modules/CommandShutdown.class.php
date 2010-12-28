@@ -27,7 +27,12 @@ class CommandShutdown extends CommandModule {
 		unset($messageEx[0]);
 		
 		// quit with a nice message
-		Services::getModuleManager()->shutdown(implode(' ', $messageEx));
+		if (count($messageEx)) {
+			Services::getModuleManager()->shutdown(implode(' ', $messageEx));
+		}
+		else {
+			Services::getModuleManager()->shutdown();
+		}
 		exit;
 	}
 }
