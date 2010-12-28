@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Manages events
  * @author		Johannes Donath
@@ -9,15 +8,18 @@ class EventHandler {
 	
 	/**
 	 * Contains all events
-	 * @var	array
+	 *
+	 * @var	array<arra>
 	 */
 	protected $events = array();
 	
 	/**
-	 * Registeres a new event
+	 * Registers a new event
+	 *
 	 * @param	object	$class
 	 * @param	string	$targetClass
 	 * @param	string	$targetEvent
+	 * @return	void
 	 */
 	public function registerEvent($class, $method, $targetClass, $targetEvent) {
 		// create arrays
@@ -30,8 +32,10 @@ class EventHandler {
 	
 	/**
 	 * Fires an event
+	 *
 	 * @param	object	$class
 	 * @param	string	$eventName
+	 * @return	void
 	 */
 	public function fire($eventObj, $eventName, $data = array()) {
 		// get parent classes
