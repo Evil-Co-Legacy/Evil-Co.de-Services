@@ -137,10 +137,7 @@ INSERT INTO module (moduleID, name, address, timestamp) VALUES(16, 'CommandKick'
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(17, 'CommandAdduser', 'OxAD663DBFC', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(18, 'CommandListuser', 'Ox63D0FC', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(19, 'CommandCinfo', 'Ox71A35', 1);
-<<<<<<< HEAD
-=======
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(20, 'KickRevengeExtension', 'Ox75A57AFDB160', 1);
->>>>>>> da9c834c139720116438049fc61353b1a9d0276a
 
 -- --------------------------------------------------------
 
