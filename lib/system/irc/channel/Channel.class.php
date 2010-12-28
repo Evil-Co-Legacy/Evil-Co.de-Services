@@ -1,7 +1,7 @@
 <?php
-
 /**
  * Represents a channel
+ *
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
@@ -9,6 +9,7 @@ class Channel {
 
 	/**
 	 * Contains channel's data
+	 *
 	 * @var	array<mixed>
 	 */
 	protected $data = array();
@@ -16,16 +17,18 @@ class Channel {
 	/**
 	 * Contains a list of all users
 	 * This is a little workaround
-	 * @var	array
+	 *
+	 * @var	array<UserType>
 	 */
 	protected $userList = array();
 
 	/**
 	 * Creates a new instance of type Channel
+	 *
 	 * @param	string			$name
 	 * @param	integer			$timestamp
 	 * @param	ModeList		$modes
-	 * @param	array<UserType>	$userList
+	 * @param	array<UserType>		$userList
 	 */
 	public function __construct($name, $timestamp, $modes, $userList) {
 		$this->name = $name;
@@ -36,6 +39,7 @@ class Channel {
 
 	/**
 	 * Returnes the name of this channel
+	 *
 	 * @return	string
 	 */
 	public function getName() {
@@ -44,6 +48,7 @@ class Channel {
 
 	/**
 	 * Returnes the timestamp of this channel
+	 *
 	 * @return	integer
 	 */
 	public function getTimestamp() {
@@ -52,6 +57,7 @@ class Channel {
 
 	/**
 	 * Returnes the modes of this channel
+	 *
 	 * @return	ModeList
 	 */
 	public function getModes() {
@@ -59,9 +65,11 @@ class Channel {
 	}
 	
 	/**
-	 * Returnes modes such as o, q or a for given UUID
+	 * Returns modes such as o, q or a for given UUID
 	 * Note: The string can be empty
+	 *
 	 * @param	string	$uuid
+	 * @return	string
 	 */
 	public function getUserModes($uuid) {
 		foreach($this->userList as $key => $user) {
@@ -71,7 +79,8 @@ class Channel {
 	}
 
 	/**
-	 * Returnes the current userlist
+	 * Returns the current userlist
+	 *
 	 * @return	array<UserType>
 	 */
 	public function getUserList() {
@@ -80,7 +89,9 @@ class Channel {
 
 	/**
 	 * Adds a user to channel
-	 * @param	array<UserType>	$user
+	 *
+	 * @param	array<UserType>		$userList
+	 * @return	void
 	 */
 	public function join($userList) {
 		$this->userList = array_merge($this->userList, $userList);
@@ -88,7 +99,9 @@ class Channel {
 
 	/**
 	 * Removes a user from database
+	 *
 	 * @param	string	$uuid
+	 * @return	void
 	 */
 	public function part($uuid) {
 		foreach($this->userList as $key => $user) {
@@ -97,8 +110,10 @@ class Channel {
 	}
 
 	/**
-	 * Returnes true if $uuid joined this channel
+	 * Returnes whether the $uuid joined this channel
+	 *
 	 * @param	string	$uuid
+	 * @return	boolean
 	 */
 	public function isJoined($uuid) {
 		foreach($this->userList as $key => $user) {
@@ -108,14 +123,8 @@ class Channel {
 	}
 
 	/**
-	 * Returnes true ... Channels ARE senseless
-	 */
-	public function isSenseless() {
-		return true;
-	}
-
-	/**
 	 * Removes invalid entries from userlist
+	 *
 	 * @deprecated
 	 */
 	protected function cleanUserlist() {
@@ -126,8 +135,10 @@ class Channel {
 
 	/**
 	 * Magic method to support channel metadata
+	 *
 	 * @param	string	$variable
 	 * @param	mixed	$value
+	 * @return	void
 	 */
 	public function __set($variable, $value) {
 		$this->data[$variable] = $value;
@@ -135,7 +146,9 @@ class Channel {
 
 	/**
 	 * Magic method to support channel metadata
-	 * @param unknown_type $variable
+	 *
+	 * @param 	string	$variable
+	 * @return	mixed
 	 */
 	public function __get($variable) {
 		if (isset($this->data[$variable])) {
