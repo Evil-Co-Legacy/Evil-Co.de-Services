@@ -108,7 +108,9 @@ abstract class AbstractUserTypeManager implements UserTypeManager {
 			$userList = $this->userList;
 
 		foreach($userList as $key => $user) {
-			if ($userList[$key]->getNick() == $nickname) return $userList[$key];
+			if ($userList[$key]->getNick() == $nickname) {
+				return $userList[$key];
+			}
 		}
 
 		return null;
