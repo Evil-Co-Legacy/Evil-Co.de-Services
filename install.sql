@@ -91,6 +91,10 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(37, 1, 'comma
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(38, 2, 'command.listuser', 'Listet die Benutzer mit Zugriff auf den Channel.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(39, 1, 'command.adduser', 'Gives a user access to the given channel.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(40, 2, 'command.adduser', 'Gibt einem Benutzer Zugriff auf den Channel.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(41, 1, 'command.cregister', 'Registers a channel.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(42, 2, 'command.cregister', 'Registriert einen Channel.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(43, 1, 'command.cregister.success', 'The channel "%s" was successfully registered.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(44, 2, 'command.cregister.success', 'Der Channel "%s" wurde erfolgreich registriert.');
 
 -- --------------------------------------------------------
 

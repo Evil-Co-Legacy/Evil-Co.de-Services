@@ -33,7 +33,7 @@ class CommandCregister extends CommandModule {
 			return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.alreadyRegistered'));
 		}
 		$this->bot->register($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
-		$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
+		$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success', $target));
 	}
 }
 ?>
