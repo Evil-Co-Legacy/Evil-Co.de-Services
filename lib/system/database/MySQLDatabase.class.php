@@ -4,6 +4,7 @@ require_once(SDIR.'lib/system/database/Database.class.php');
 
 /**
  * This class implements a database connection for mysql servers
+ *
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
@@ -11,11 +12,13 @@ class MySQLDatabase extends Database {
 
 	/**
 	 * Connects to a MySQL Database
-	 * @param	    string	$dbName
-	 * @param	    string	$dbUser
-	 * @param	    string	$dbPassword
-	 * @param	    string	$dbHost
-	 * @param	    string	$dbCharset
+	 *
+	 * @param	string	$dbName
+	 * @param	string	$dbUser
+	 * @param	string	$dbPassword
+	 * @param	string	$dbHost
+	 * @param	string	$dbCharset
+	 * @throws	Exception
 	 */
 	public function __construct($dbName, $dbUser, $dbPassword, $dbHost, $dbCharset = 'UTF8') {
 		$this->connect($dbHost, $dbUser, $dbPassword);
@@ -25,21 +28,27 @@ class MySQLDatabase extends Database {
 
 	/**
 	 * Connects to the database
-	 * @param	    string	$dbHost
-	 * @param	    string	$dbUser
-	 * @param	    string	$dbPassword
+	 *
+	 * @param	string	$dbHost
+	 * @param	string	$dbUser
+	 * @param	string	$dbPassword
+	 * @return	void
+	 * @throws	Exception
 	 */
 	public function connect($dbHost, $dbUser, $dbPassword) {
 		$this->linkID = mysql_connect($dbHost, $dbUser, $dbPassword, true);
 
 		if ($this->linkID === false) {
-		    throw new Exception("Connecting to MySQL server '".$dbHost."' failed.");
+			throw new Exception("Connecting to MySQL server '".$dbHost."' failed.");
 		}
 	}
 
 	/**
 	 * Selects the Database
-	 * @param	    string	$dbName
+	 *
+	 * @param	string	$dbName
+	 * @return	void
+	 * @throws	Exception
 	 */
 	public function selectDatabase($dbName) {
 		if (@mysql_select_db($dbName, $this->linkID) === false) {
@@ -49,7 +58,9 @@ class MySQLDatabase extends Database {
 
 	/**
 	 * Sets the database charset
-	 * @param	    string	$dbCharset
+	 *
+	 * @param	string	$dbCharset
+	 * @return	void
 	 */
 	public function setCharset($charset) {
 		try {
@@ -62,6 +73,8 @@ class MySQLDatabase extends Database {
 
 	/**
 	 * Closes the connection
+	 *
+	 * @return	void
 	 */
 	public function shutdown() {
 		mysql_close($this->linkID);
@@ -69,6 +82,7 @@ class MySQLDatabase extends Database {
 
 	/**
 	 * Escapes the given string
+	 *
 	 * @param	    string	$str
 	 * @return	    string
 	 */
@@ -78,8 +92,10 @@ class MySQLDatabase extends Database {
 
 	/**
 	 * Sends a query to the database
-	 * @param	    string	$sql
-	 * @return	    object
+	 *
+	 * @param	string	$sql
+	 * @return	resource
+	 * @throws	Exception
 	 */
 	public function sendQuery($sql) {
 		$result = mysql_query($sql);
@@ -92,8 +108,9 @@ class MySQLDatabase extends Database {
 
 	/**
 	 * Returns an array
-	 * @param	    object	$result
-	 * @return	    array
+	 *
+	 * @param	resource	$result
+	 * @return	array<mixed>
 	 */
 	public function fetchArray($result = null) {
 		if (!is_resource($result)) {
@@ -104,10 +121,11 @@ class MySQLDatabase extends Database {
 
 	/**
 	 * Returns a query with limit and offset
-	 * @param	    string	$query
-	 * @param	    integer	$limit
-	 * @param	    integer	$offset
-	 * @return	    string
+	 *
+	 * @param	string	$query
+	 * @param	integer	$limit
+	 * @param	integer	$offset
+	 * @return	string
 	*/
 	public function handleLimitParameter($query = '', $limit = 0, $offset = 0) {
 		if ($limit != 0) {
@@ -120,7 +138,8 @@ class MySQLDatabase extends Database {
 
 	/**
 	 * Returns the insert id
-	 * @return	    integer
+	 *
+	 * @return	integer
 	 */
 	public function getInsertID() {
 		return mysql_insert_id();
@@ -128,8 +147,9 @@ class MySQLDatabase extends Database {
 
 	/**
 	 * Returns the number of rows
-	 * @param	    resource	    $result
-	 * @return	    integer
+	 *
+	 * @param	resource	    $result
+	 * @return	integer
 	 */
 	public function getNumRows($result = null) {
 		if (!is_object($result)) $result = $this->lastResult;
@@ -143,9 +163,8 @@ class MySQLDatabase extends Database {
 	/**
 	 * Returns MySQL error number for last error.
 	 *
-	 * @return	    integer	MySQL error number
+	 * @return	    integer
 	 */
-
 	public function getErrorNumber() {
 		if (!($errorNumber = @mysql_errno($this->linkID))) {
 			$errorNumber = @mysql_errno();
@@ -156,7 +175,7 @@ class MySQLDatabase extends Database {
 	/**
 	 * Returns MySQL error description for last error.
 	 *
-	 * @return	    string	MySQL error description
+	 * @return	string
 	 */
 	public function getErrorDesc() {
 		if (!($errorDesc = @mysql_error($this->linkID))) {
@@ -166,16 +185,18 @@ class MySQLDatabase extends Database {
 	}
 
 	/**
-	 * Returnes the Database type
-	 * @return	    string
+	 * Returns the Database type
+	 *
+	 * @return	string
 	 */
 	public function getDBType() {
 		return 'MySQL';
 	}
 
 	/**
-	 * Returnes the MySQL-Server version
-	 * @return	    string
+	 * Returns the MySQL-Server version
+	 *
+	 * @return	string
 	 */
 	public function getVersion() {
 		$result = $this->getFirstRow('SELECT VERSION() AS version');
