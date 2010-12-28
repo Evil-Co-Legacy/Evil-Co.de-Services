@@ -42,7 +42,7 @@ class CommandAccess extends CommandModule {
 					accessLevel DESC";
 			$result = Services::getDB()->sendQuery($sql);
 			while ($row = Services::getDB()->fetchArray($result)) {
-				$this->bot->sendMessage($user->getUuid(), $row['function'].': '.$row['accessLevel']);
+				$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.'.$row['function']).': '.$row['accessLevel']);
 			}
 		}
 		else {
