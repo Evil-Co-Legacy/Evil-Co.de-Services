@@ -32,6 +32,7 @@ class CommandKick extends CommandModule {
 		}
 
 		if (count($messageEx) == 2) {
+			// check target access
 			if ($access < $this->bot->getAccess($target, Services::getUserManager()->getUserByNick($messageEx[1])->accountname))
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
 			else
@@ -42,6 +43,7 @@ class CommandKick extends CommandModule {
 			unset($messageEx[0]);
 			$username = $messageEx[1];
 			unset($messageEx[1]);
+			// check target access
 			if ($access < $this->bot->getAccess($target, Services::getUserManager()->getUserByNick($username)->accountname))
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
 			else
