@@ -87,6 +87,10 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(33, 1, 'comma
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(34, 2, 'command.notAuthed', 'Du bist nicht eingeloggt.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(35, 1, 'command.alreadyAuthed', 'You are already authed.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(36, 2, 'command.alreadyAuthed', 'Du bist bereits eingeloggt.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(37, 1, 'command.listuser', 'Lists the user with access in the given channel.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(38, 2, 'command.listuser', 'Listet die Benutzer mit Zugriff auf den Channel.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(39, 1, 'command.adduser', 'Gives a user access to the given channel.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(40, 2, 'command.adduser', 'Gibt einem Benutzer Zugriff auf den Channel.');
 
 -- --------------------------------------------------------
 
