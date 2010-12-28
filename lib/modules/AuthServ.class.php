@@ -3,6 +3,7 @@ require_once(SDIR.'lib/modules/BotModule.class.php');
 
 /**
  * Implements the AuthServ bot
+ *
  * @author		Tim Düsterhus
  * @copyright	2010 DEVel Fusion
  */
@@ -12,6 +13,7 @@ class AuthServ extends BotModule {
 
 	/**
 	 * Returnes true if a user is authed
+	 *
 	 * @param	string	$uuid
 	 */
 	public function isAuthed($uuid) {
@@ -20,6 +22,7 @@ class AuthServ extends BotModule {
 
 	/**
 	 * Sets the accountname for the given uuid
+	 *
 	 * @param	string	$uuid
 	 * @param	string	$accountname
 	 */
@@ -35,6 +38,7 @@ class AuthServ extends BotModule {
 
 	/**
 	 * Get authed users for $accountname
+	 *
 	 * @param	string	$accountname
 	 */
 	public function getUsers($accountname) {
@@ -44,6 +48,7 @@ class AuthServ extends BotModule {
 
 	/**
 	 * Checks the credentials
+	 *
 	 * @param	string	$accountname
 	 * @param	string	$password
 	 */
@@ -63,6 +68,7 @@ class AuthServ extends BotModule {
 
 	/**
 	 * Creates a new account
+	 *
 	 * @param	string	$accountname
 	 * @param	string	$password
 	 * @param	string	$email
@@ -73,9 +79,20 @@ class AuthServ extends BotModule {
 		$sql = "INSERT INTO authserv_users (accountname, password, email, salt, time) VALUES ('".escapeString($accountname)."', '".$password."', '".escapeString($email)."', '".$salt."', ".time().")";
 		Services::getDB()->sendQuery($sql);
 	}
+	
+	/**
+	 * Deletes an account
+	 *
+	 * @param	string	$accountname
+	 */
+	public function delete($accountname) {
+		$sql = "DELETE authserv_users WHERE accountname = '".escapeString($accountname)."'";
+		Services::getDB()->sendQuery($sql);
+	}
 
 	/**
 	 * Modifies the password of $accountname
+	 *
 	 * @param	string	$accountname
 	 * @param	string	$password
 	 */
@@ -91,6 +108,7 @@ class AuthServ extends BotModule {
 
 	/**
 	 * Modifies the email address of $accountname
+	 *
 	 * @param	string	$accountname
 	 * @param	string	$email
 	 */
@@ -106,6 +124,7 @@ class AuthServ extends BotModule {
 
 	/**
 	 * Returnes true if the given accountname exists
+	 *
 	 * @param	string	$accountname
 	 */
 	public function accountExists($accountname) {
@@ -122,7 +141,8 @@ class AuthServ extends BotModule {
 
 	/**
 	 * Returnes true if the given email address already exists
-	 * @param unknown_type $email
+	 *
+	 * @param	string	$email
 	 */
 	public function emailExists($email) {
 		$sql = "SELECT
@@ -138,6 +158,7 @@ class AuthServ extends BotModule {
 
 	/**
 	 * Returnes the userID of the account with name $accountname
+	 *
 	 * @param	string	$accountname
 	 */
 	public static function getUserID($accountname) {
@@ -154,6 +175,7 @@ class AuthServ extends BotModule {
 
 	/**
 	 * Returnes the access level of $accountname
+	 *
 	 * @param	string	$accountname
 	 */
 	public static function getAccessLevel($accountname) {

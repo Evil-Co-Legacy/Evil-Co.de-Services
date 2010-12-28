@@ -7,12 +7,12 @@ require_once(SDIR.'lib/modules/CommandModule.class.php');
  * @author		Tim Düsterhus
  * @copyright	2010 DEVel Fusion
  */
-class CommandPass extends CommandModule {
+class CommandUnregister extends CommandModule {
 
 	/**
 	 * @see CommandModule::$originalName
 	 */
-	public $originalName = 'pass';
+	public $originalName = 'unregister';
 
 	/**
 	 * @see CommandModule::$neededPermissions
@@ -26,18 +26,21 @@ class CommandPass extends CommandModule {
 		// split message
 		$messageEx = explode(' ', $message);
 
-		if (count($messageEx) == 3) {
-			$oldPassword = $messageEx[1];
-			$newPassword = $messageEx[2];
-			
+		if (count($messageEx) == 2) {
+			$password = $messageEx[1];
 			if (!$this->bot->isAuthed($user->getUuid())) {
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.notAuthed'));
 			}
-			if (!$this->bot->checkCredentials($accountname, $oldPassword)) {
+			
+			$accountname = Services::getUserManager()->getUser($user->getUuid())->accountname;
+			
+			if (!$this->bot->checkCredentials($accountname, $password)) {
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.auth.invalidCredentials'));
 			}
-			$this->bot->pass(Services::getUserManager()->getUser($user->getUuid())->accountname, $newPassword);
-			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
+			$userID = $this->bot->getUserID($accountname);
+			$this->bot->delete($accountname);
+			$sql = "DELETE FROM chanserv_channels_to_users WHERE userID = ".$userID;
+			Services::getDB()->sendQuery($sql);
 		} else {
 			// send syntax hint
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.syntaxHint'));
