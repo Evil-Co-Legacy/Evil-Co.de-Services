@@ -86,7 +86,7 @@ class AuthServ extends BotModule {
 	 * @param	string	$accountname
 	 */
 	public function delete($accountname) {
-		$sql = "DELETE authserv_users WHERE accountname = '".escapeString($accountname)."'";
+		$sql = "DELETE FROM authserv_users WHERE accountname = '".escapeString($accountname)."'";
 		Services::getDB()->sendQuery($sql);
 	}
 
