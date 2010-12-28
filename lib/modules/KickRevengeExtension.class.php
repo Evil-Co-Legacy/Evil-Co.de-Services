@@ -31,9 +31,6 @@ class KickRevengeExtension extends ExtensionModule {
 			// check permissions
 			if (call_user_func(array($chanserv, 'getAccess'), $data['target'], Services::getUserManager()->getUser($data['issuer'])->accountname) < call_user_func(array($chanserv, 'getAccess'), $data['target'], Services::getUserManager()->getUser($data['victim'])->accountname)
 			|| call_user_func(array($chanserv, 'getAccess'), $data['target'], Services::getUserManager()->getUser($data['issuer'])->accountname) < call_user_func(array($chanserv, 'kick'), $data['target'])) {
-				// ok lets kick the issuer
-				Services::getConnection()->getProtocol()->sendKick(Services::getModuleManager()->getBot($chanserv)->getUuid(), $data['target'], $data['issuer'], Services::getLanguage()->get(Services::getUserManager()->getUser($data['issuer'])->languageID, 'chanserv.kickedUserIsProtected'));
-				
 				// rejoin victim if needed
 				Services::getConnection()->getProtocol()->sendSvsjoin($data['victim'], $data['target']);
 			}
