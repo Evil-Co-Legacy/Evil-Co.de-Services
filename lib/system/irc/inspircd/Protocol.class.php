@@ -7,78 +7,92 @@ define('PROTOCOL_VERSION', '1202');
 
 /**
  * Manages server2server protocol
+ *
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
 class Protocol {
-
 	/**
 	 * Contains the current Protocol instance
+	 *
+	 * @var Protocol
 	 */
 	protected static $instance = null;
 
 	/**
 	 * Contains name of server
+	 *
 	 * @var	string
 	 */
 	public $name = '';
 
 	/**
 	 * Contains the numeric of server
+	 *
 	 * @var	string
 	 */
 	public $numeric = '';
 
 	/**
 	 * Contains port
+	 *
 	 * @var	integer
 	 */
 	public $port = 0;
 
 	/**
 	 * Contains the password
+	 *
 	 * @var	string
 	 */
 	public $password = '';
 
 	/**
 	 * A little variable that allows users to change hop count
+	 *
 	 * @var	integer
 	 */
 	public $hops = 0;
 
 	/**
 	 * Contains the description of server
+	 *
 	 * @var	string
 	 */
 	public $description = 'Evil-Co.de Services';
 
 	/**
 	 * Contains the current connection state
+	 *
 	 * @var	string
 	 */
 	public $connectionState = 'auth';
 
 	/**
 	 * Contains a list of all servers
+	 *
 	 * @var	array<string>
 	 */
 	public $serverList = array();
 
 	/**
 	 * Contains the cyclemessage configuration
+	 *
 	 * @var	array<string>
 	 */
 	public $cyclemessage = array();
 
 	/**
 	 * Contains the channel where services should announce logmessages
+	 *
 	 * @var	string
 	 */
 	public $servicechannel = '';
 
 	/**
 	 * Returnes an instance of Protocol
+	 *
+	 * @return	Protocol
 	 */
 	public static function getInstance() {
 		if (self::$instance === null) {
@@ -90,6 +104,8 @@ class Protocol {
 
 	/**
 	 * Returnes server's numeric
+	 *
+	 * @return	int
 	 */
 	public function getNumeric() {
 		return $this->numeric;
@@ -98,7 +114,7 @@ class Protocol {
 	/**
 	 * Creates a new instance of type Protocol
 	 */
-	public function __construct() {
+	protected function __construct() {
 		// get configuration
 		$conf = Services::getConfiguration()->get('connection');
 
@@ -111,6 +127,8 @@ class Protocol {
 
 	/**
 	 * Starts network burst
+	 * 
+	 * @return	void
 	 */
 	public function initConnection() {
 		// CAPAB
@@ -177,12 +195,14 @@ class Protocol {
 
 	/**
 	 * Creates a new bot
-	 * @param	string	$nick
-	 * @param	string	$hostname
-	 * @param	string	$ident
-	 * @param	string	$ip
-	 * @param	string	$modes
-	 * @param	string	$gecos
+	 *
+	 * @param	string			$nick
+	 * @param	string			$hostname
+	 * @param	string			$ident
+	 * @param	string			$ip
+	 * @param	string			$modes
+	 * @param	string			$gecos
+	 * @return	AbstractUserType
 	 */
 	public function createBot($nick, $hostname, $ident, $ip, $modes, $gecos) {
 		// get current unix timestamp
@@ -203,17 +223,21 @@ class Protocol {
 
 	/**
 	 * Joins a user to channel
+	 *
 	 * @param	string	$uuid
 	 * @param	string	$channel
+	 * @return	void
 	 */
 	public function join($uuid, $channel, $channelModes = '+nt', $userMode = '') {
-		return Services::getConnection()->sendServerLine("FJOIN ".$channel." ".time()." ".$channelModes." :".$userMode.",".$this->numeric.$uuid);
+		Services::getConnection()->sendServerLine("FJOIN ".$channel." ".time()." ".$channelModes." :".$userMode.",".$this->numeric.$uuid);
 	}
 
 	/**
 	 * Parts a user of channel
+	 *
 	 * @param	string	$uuid
 	 * @param	string	$channel
+	 * @return	void
 	 */
 	public function part($uuid, $channel, $message = "Leaving") {
 		return Services::getConnection()->sendLine($this->formateUserLine($uuid, 'PART '.$channel.' :'.$message));
@@ -223,7 +247,9 @@ class Protocol {
 	// NETWORK METHODS
 	/**
 	 * Formates a line for server syntax
+	 *
 	 * @param	string	$message
+	 * @return	string
 	 */
 	public function formateServerLine($message) {
 		return ":".$this->numeric." ".$message;
