@@ -7,12 +7,12 @@ require_once(SDIR.'lib/modules/CommandModule.class.php');
  * @author		Tim Düsterhus
  * @copyright	2010 DEVel Fusion
  */
-class CommandAdduser extends CommandModule {
+class CommandChangeuser extends CommandModule {
 
 	/**
 	 * @see CommandModule::$originalName
 	 */
-	public $originalName = 'adduser';
+	public $originalName = 'changeuser';
 
 	/**
 	 * @see lib/modules/CommandModule::execute()
@@ -32,13 +32,13 @@ class CommandAdduser extends CommandModule {
 		}
 
 		if (count($messageEx) == 3) {
-			if ($messageEx[2] > $access) {
+			if ($messageEx[2] >= $access) {
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.tooHigh'));
 			}
 			else if ($messageEx[2] > 500) {
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.tooHigh'));
 			}
-			if ($access < $this->bot->getAccess($target, Services::getUserManager()->getUserByNick($messageEx[1])->accountname)) {
+			if ($access <= $this->bot->getAccess($target, Services::getUserManager()->getUserByNick($messageEx[1])->accountname)) {
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
 			}
 			$authServ = Services::getModuleManager()->lookupModule('AuthServ');
@@ -46,9 +46,14 @@ class CommandAdduser extends CommandModule {
 			if (!$userID) {
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.invalidUser'));
 			}
-			$sql = "INSERT INTO chanserv_channels_to_users (channel, userID, accessLevel)
-				VALUES ('".escapeString($target)."', ".$userID.", ".intval($messageEx[2]).")
-				ON DUPLICATE KEY UPDATE accessLevel = VALUES(accessLevel)";
+			if ($messageEx[0]) {
+				$sql = "DELETE FROM chanserv_channels_to_users WHERE channel = '".escapeString($target)."' AND userID = ".$userID;
+			}
+			else {
+				$sql = "INSERT INTO chanserv_channels_to_users (channel, userID, accessLevel)
+					VALUES ('".escapeString($target)."', ".$userID.", ".intval($messageEx[2]).")
+					ON DUPLICATE KEY UPDATE accessLevel = VALUES(accessLevel)";
+			}
 			Services::getDB()->sendQuery($sql);
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
 		}
