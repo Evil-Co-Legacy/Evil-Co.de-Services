@@ -34,7 +34,7 @@ class CommandCinfo extends CommandModule {
 					LEFT JOIN
 						authserv_users a
 						ON
-							c.userID = a.userID
+							c.registrar = a.userID
 				WHERE
 					channel = '".escapeString($target)."'";
 			$row = Services::getDB()->getFirstRow($sql);

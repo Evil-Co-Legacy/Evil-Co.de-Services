@@ -7,7 +7,8 @@ require_once(SDIR.'lib/modules/BotModule.class.php');
  * @copyright	2010 DEVel Fusion
  */
 class ChanServ extends BotModule {
-
+	
+	
 	public function __construct($bot, $trigger = '') {
 		parent::__construct($bot, $trigger);
 
@@ -23,6 +24,11 @@ class ChanServ extends BotModule {
 		}
 	}
 
+	/**
+	 * Returns the access of the given account in the given channel
+	 * @param	string	$channel
+	 * @param	string	$accountname
+	 */
 	public function getAccess($channel, $accountname) {
 		$authServ = Services::getModuleManager()->lookupModule('AuthServ');
 		$userID = call_user_func(array($authServ, 'getUserID'), $accountname);
@@ -39,6 +45,11 @@ class ChanServ extends BotModule {
 		return 0;
 	}
 
+	/**
+	 * Returns the needed access for the given function in the given channel
+	 * @param	string	$channel
+	 * @param	string	$function
+	 */
 	public function getNeededAccess($channel, $function) {
 		$sql = "SELECT
 				accessLevel
@@ -51,7 +62,12 @@ class ChanServ extends BotModule {
 		if (!$row) return false;
 		return $row['accessLevel'];
 	}
-
+	
+	/**
+	 * Sets the default modes in the given channel
+	 * @param	string	$channel
+	 * @param	string	$modes
+	 */
 	public function setStandardModes($channel, $modes = null) {
 		if ($modes === null) {
 			$sql = "SELECT
@@ -67,8 +83,14 @@ class ChanServ extends BotModule {
 		Services::getConnection()->getProtocol()->sendMode($this->getUuid(), $channel, $modes);
 	}
 
+	/**
+	 * Unregisters the channel
+	 * @param	string	$channel
+	 */
 	public function unregister($channel) {
+		// remove +r
 		Services::getConnection()->getProtocol()->sendMode($this->getUuid(), $channel, '-r');
+		
 		$sql = "DELETE FROM
 				chanserv_channels
 			WHERE
@@ -86,9 +108,16 @@ class ChanServ extends BotModule {
 			WHERE
 				channel = '".escapeString($channel)."'";
 		Services::getDB()->sendQuery($sql);
+		
+		// part the channel
 		$this->part($channel, 'Unregistered');
 	}
-
+	
+	/**
+	 * Registers the channel with chanserv
+	 * @param	string	$channel
+	 * @param	string	$accountname
+	 */
 	public function register($channel, $accountname) {
 		$authServ = Services::getModuleManager()->lookupModule('AuthServ');
 		$userID = call_user_func(array($authServ, 'getUserID'), $accountname);
@@ -112,10 +141,17 @@ class ChanServ extends BotModule {
 
 		$sql = "INSERT INTO chanserv_channel_accessLevel (channel, function, accessLevel) VALUES ".$values;
 		Services::getDB()->sendQuery($sql);
+		
+		// join the channel
 		$this->join($channel);
+		// set modes
 		$this->setStandardModes($channel, '+tnr');
 	}
 	
+	/**
+	 * Checks whether the given channel is registered
+	 * @param	string	$channel
+	 */
 	public function isRegistered($channel) {
 		$sql = "SELECT
 				count(*) as count
