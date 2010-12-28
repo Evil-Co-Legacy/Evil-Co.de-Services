@@ -1,7 +1,7 @@
 <?php
-
 /**
  * Handles commands from server
+ *
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
@@ -9,8 +9,10 @@ class ProtocolHandler {
 
 	/**
 	 * Handles the ENDBURST command
-	 * @param	string			$input
+	 *
+	 * @param	string		$input
 	 * @param	array<string>	$inputEx
+	 * @return	void
 	 */
 	public static function ENDBURST($input, $inputEx) {
 		// set new connection state
@@ -37,8 +39,10 @@ class ProtocolHandler {
 
 	/**
 	 * Handles the FJOIN command
+	 *
 	 * @param	string			$input
 	 * @param	array<string>	$inputEx
+	 * @return	void
 	 */
 	public static function FJOIN($input, $inputEx) {
 		// get mode string
@@ -98,8 +102,10 @@ class ProtocolHandler {
 
 	/**
 	 * Handles the METADATA command
-	 * @param	string			$input
+	 *
+	 * @param	string		$input
 	 * @param	array<string>	$inputEx
+	 * @return	void
 	 */
 	public static function METADATA($input, $inputEx) {
 		if ($inputEx[2]{0} == '#' and Services::getChannelManager()->getChannel($inputEx[2]) !== null) {
@@ -129,8 +135,10 @@ class ProtocolHandler {
 
 	/**
 	 * Handles the NOTICE command
-	 * @param	string			$input
+	 *
+	 * @param	string		$input
 	 * @param	array<string>	$inputEx
+	 * @return	void
 	 */
 	public static function NOTICE($input, $inputEx) {
 		self::PRIVMSG($input, $inputEx);
@@ -138,8 +146,10 @@ class ProtocolHandler {
 
 	/**
 	 * Handles PART command
-	 * @param	string			$input
+	 *
+	 * @param	string		$input
 	 * @param	array<string>	$inputEx
+	 * @return	void
 	 */
 	public static function PART($input, $inputEx) {
 		Services::getEvent()->fire(Services::getConnection()->getProtocol(), 'userParted', array('channel' => $inputEx[2], 'user' => Services::getUserManager()->getUser($inputEx[0])));
@@ -148,8 +158,10 @@ class ProtocolHandler {
 
 	/**
 	 * Handles PING command
-	 * @param	string			$input
+	 *
+	 * @param	string		$input
 	 * @param	array<string>	$inputEx
+	 * @return	void
 	 */
 	public static function PING($input, $inputEx) {
 		// fire event
@@ -164,8 +176,10 @@ class ProtocolHandler {
 
 	/**
 	 * Handles the PRIVMSG command
-	 * @param	string			$input
+	 *
+	 * @param	string		$input
 	 * @param	array<string>	$inputEx
+	 * @return	void
 	 */
 	public static function PRIVMSG($input, $inputEx) {
 		if ($inputEx[2]{0} != '$') {
@@ -204,8 +218,10 @@ class ProtocolHandler {
 
 	/**
 	 * Handles the QUIT command
-	 * @param	string			$input
+	 *
+	 * @param	string		$input
 	 * @param	array<string>	$inputEx
+	 * @return	void
 	 */
 	public static function QUIT($input, $inputEx) {
 		Services::getEvent()->fire(Services::getConnection()->getProtocol(), 'userQuit', array('user' => Services::getUserManager()->getUser($inputEx[0])));
@@ -214,8 +230,10 @@ class ProtocolHandler {
 
 	/**
 	 * Handles the SERVER command
-	 * @param	string			$input
+	 *
+	 * @param	string		$input
 	 * @param	array<string>	$inputEx
+	 * @return	void
 	 */
 	public static function SERVER($input, $inputEx) {
 		Services::getEvent()->fire(Services::getConnection()->getProtocol(), 'serverCreated', array('name' => $inputEx[2]));
@@ -224,8 +242,10 @@ class ProtocolHandler {
 
 	/**
 	 * Handles an UID line from server
-	 * @param	string			$input
+	 *
+	 * @param	string		$input
 	 * @param	array<string>	$inputEx
+	 * @return	void
 	 */
 	public static function UID($input, $inputEx) {
 		// get mode string
