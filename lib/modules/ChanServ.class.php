@@ -68,6 +68,7 @@ class ChanServ extends BotModule {
 	}
 
 	public function unregister($channel) {
+		Services::getConnection()->getProtocol()->sendMode($this->getUuid(), $channel, '-r');
 		$sql = "DELETE FROM
 				chanserv_channels
 			WHERE
