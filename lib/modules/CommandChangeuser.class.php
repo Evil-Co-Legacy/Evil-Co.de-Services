@@ -46,7 +46,7 @@ class CommandChangeuser extends CommandModule {
 			if (!$userID) {
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.invalidUser'));
 			}
-			if ($messageEx[0]) {
+			if ($messageEx[0] < 1) {
 				$sql = "DELETE FROM chanserv_channels_to_users WHERE channel = '".escapeString($target)."' AND userID = ".$userID;
 			}
 			else {
