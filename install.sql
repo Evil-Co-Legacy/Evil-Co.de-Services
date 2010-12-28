@@ -101,6 +101,8 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(47, 1, 'comma
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(48, 2, 'command.changeuser.success', 'Das Zugriffslevel wurde erfolgreich verändert.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(49, 1, 'command.changeuser.tooHigh', 'The accesslevel is too high.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(50, 2, 'command.changeuser.tooHigh', 'Das Zugriffslevel ist zu hoch.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(51, 1, 'command.cunregister.code', 'Use that command to unregister the channel: !unregister %s');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(52, 2, 'command.cunregister.code', 'Benutze folgenden Befehl um den Channel zu löschen: !unregister %s');
 
 
 -- --------------------------------------------------------
