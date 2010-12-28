@@ -227,6 +227,14 @@ class Services {
 	public static function getConnection() {
 		return self::$ircObj;
 	}
+	
+	/**
+	 * Alias for IRCConnection::getProtocol()
+	 * @return Protocol
+	 */
+	public static function getProtocol() {
+		return self::$ircObj->getProtocol();
+	}
 
 	/**
 	 * Returnes the current user manager object
