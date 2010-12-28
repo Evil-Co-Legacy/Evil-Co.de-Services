@@ -435,5 +435,15 @@ class Protocol {
 	public function sendSvsjoin($uuid, $channel) {
 		Services::getConnection()->sendServerLine("SVSJOIN ".$uuid." ".$channel);
 	}
+	
+	/**
+	 * Sends a SVSPART to server
+	 * @param	string	$uuid
+	 * @param	string	$channel
+	 * @return void
+	 */
+	public function sendSvspart($uuid, $channel) {
+		Services::getConnection()->sendServerLine("SVSPART ".$uuid." ".$channel);
+	}
 }
 ?>
