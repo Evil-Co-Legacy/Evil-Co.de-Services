@@ -16,7 +16,6 @@ require_once(SDIR.'lib/system/module/ModuleManager.class.php');
 require_once(SDIR.'lib/system/user/UserManager.class.php');
 require_once(SDIR.'lib/system/user/BotManager.class.php');
 require_once(SDIR.'lib/system/irc/channel/ChannelManager.class.php');
-require_once(SDIR.'lib/system/cache/CacheSource.class.php');
 
 /**
  * Manages all needed core instances
@@ -265,6 +264,8 @@ class Services {
 		if ($memcache === null or !extension_loaded('memcache')) {
 			self::getConnection()->getProtocol()->sendLogLine("Cannot use memcache! No configuration found!");
 		} elseif (is_array($memcache['servers'])) {
+			require_once(SDIR.'lib/system/cache/CacheSource.class.php');
+			
 			self::$memcacheObj = new CacheSource();
 
 			// add server

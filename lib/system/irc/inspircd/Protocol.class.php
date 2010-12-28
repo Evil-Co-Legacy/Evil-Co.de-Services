@@ -267,7 +267,12 @@ class Protocol {
 				break;
 			case 'authed':
 			case 'burst':
-				if (!empty($error)) Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :[".$this->name.":Fatal Error] ".$error);
+				if (!empty($error)) {
+					$errorArray = explode("\n", str_replace("\r", "", $error));
+					foreach($errorArray as $error) {
+						Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :[".$this->name.":Fatal Error] ".$error);
+					}
+				}
 				Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :[".$this->name."] Shutting down ...");
 				Services::getConnection()->sendServerLine("SQUIT ".$this->name." :Shutting down!");
 				break;
