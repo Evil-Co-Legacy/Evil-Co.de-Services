@@ -42,6 +42,7 @@ class CommandUnregister extends CommandModule {
 			// TODO: Kill user to log him out
 			$sql = "DELETE FROM chanserv_channels_to_users WHERE userID = ".$userID;
 			Services::getDB()->sendQuery($sql);
+			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
 		} else {
 			// send syntax hint
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.syntaxHint'));
