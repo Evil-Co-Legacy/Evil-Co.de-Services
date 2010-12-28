@@ -138,7 +138,6 @@ INSERT INTO module (moduleID, name, address, timestamp) VALUES(17, 'CommandAddus
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(18, 'CommandListuser', 'Ox63D0FC', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(19, 'CommandCinfo', 'Ox71A35', 1);
 
-
 -- --------------------------------------------------------
 
 --
@@ -166,7 +165,6 @@ CREATE TABLE module_instance_bot (
 INSERT INTO module_instance_bot (instanceID, moduleAddress, `trigger`, nick, hostname, ident, ip, modes, gecos) VALUES(1, 'OxF02D', '?', 'OpServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Oper Service');
 INSERT INTO module_instance_bot (instanceID, moduleAddress, `trigger`, nick, hostname, ident, ip, modes, gecos) VALUES(2, 'Ox21A7E885', '=', 'AuthServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Auth Service');
 INSERT INTO module_instance_bot (instanceID, moduleAddress, `trigger`, nick, hostname, ident, ip, modes, gecos) VALUES(3, 'Ox1337', '!', 'ChanServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Channel Service');
-
 
 -- --------------------------------------------------------
 
@@ -207,8 +205,6 @@ INSERT INTO module_instance_command (instanceID, address, commandName, appearInH
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(18, 'OxAD663DBFC', 'ADDUSER', 1, 'Ox1337');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(19, 'Ox63D0FC', 'LISTUSER', 1, 'Ox1337');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(20, 'Ox71A35', 'CINFO', 1, 'Ox1337');
-
-
 
 CREATE TABLE authserv_users (
 	userID int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -268,5 +264,5 @@ INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('getOp'
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('topic', 	100);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('kick', 	100);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('giveVoice', 	100);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('invite', 	50);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('getVoice', 	10);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('invite', 	 50);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('getVoice', 	 10);
