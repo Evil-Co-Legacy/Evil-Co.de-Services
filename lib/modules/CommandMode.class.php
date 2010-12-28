@@ -36,7 +36,8 @@ class CommandMode extends CommandModule {
 		}
 		else {
 			unset($messageEx[0]);
-			Services::getConnection()->getProtocol()->sendMode($this->bot->getUuid(), $target, implode(' ', $messageEx));
+			$modeString = implode(' ', $messageEx);
+			Services::getConnection()->getProtocol()->sendMode($this->bot->getUuid(), $target, str_replace(array('q', 'r', 'a', 'v', 'o', 'b', 'h', 'A', 'O', 'e', 'P'), '', $modeString));
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
 		}
 	}
