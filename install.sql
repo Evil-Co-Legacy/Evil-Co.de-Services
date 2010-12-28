@@ -267,7 +267,7 @@ CREATE TABLE chanserv_default_accessLevel (
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('access', 	500); -- Completely done, you can add / delete users and change needed access
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('forceMode', 	400);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('giveOp', 	300);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('mode', 	300); -- Half done, !mode works, but he can not check /kick
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('mode', 	300); -- Half done, !mode works, but he can not check /mode
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('permban', 	200);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('ban', 	150);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('getOp', 	100);
