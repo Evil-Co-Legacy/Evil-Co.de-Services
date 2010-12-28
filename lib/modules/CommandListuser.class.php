@@ -7,7 +7,7 @@ require_once(SDIR.'lib/modules/CommandModule.class.php');
  * @author		Tim Düsterhus
  * @copyright	2010 DEVel Fusion
  */
-class CommandAdduser extends CommandModule {
+class CommandListuser extends CommandModule {
 
 	/**
 	 * @see CommandModule::$originalName
