@@ -253,17 +253,17 @@ CREATE TABLE chanserv_default_accessLevel (
 	PRIMARY KEY (function)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('mode', 300);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('forceMode', 400);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('access', 500);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('getOp', 100);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('giveOp', 300);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('forceOp', 00);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('topic', 100);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('kick', 100);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('ban', 150);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('permban', 200);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('getVoice', 10);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('giveVoice', 100);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('forceVoice', 300);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('invite', 50);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('access', 	500);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('forceMode', 	400);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('forceOp', 	400);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('forceVoice', 	300);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('giveOp', 	300);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('mode', 	300);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('permban', 	200);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('ban', 	150);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('getOp', 	100);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('topic', 	100);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('kick', 	100);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('giveVoice', 	100);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('invite', 	50);
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('getVoice', 	10);
