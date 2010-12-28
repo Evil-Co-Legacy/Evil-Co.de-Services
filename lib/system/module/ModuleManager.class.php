@@ -264,6 +264,15 @@ class ModuleManager {
 	public function lookupModule($moduleName) {
 		return (isset($this->availableModules[$moduleName]) ? $this->availableModules[$moduleName] : false);
 	}
+	
+	/**
+	 * Returnes a running bot instance
+	 * @param	string	$moduleAddress
+	 */
+	public function getBot($moduleAddress) {
+		if (isset($this->runningBots[$address])) return $this->runningBots[$address];
+		return null;
+	}
 
 	/**
 	 * Returnes true if a module with given address exists
