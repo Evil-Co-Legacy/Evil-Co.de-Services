@@ -90,11 +90,11 @@ class ChanServ extends BotModule {
 	}
 
 	public function register($channel, $accountname) {
-		$sql = "INSERT INTO chanserv_channels (channel, modes) VALUES ('".escapeString($channel)."', '+tn')";
-		Services::getDB()->sendQuery($sql);
-
 		$authServ = Services::getModuleManager()->lookupModule('AuthServ');
 		$userID = call_user_func(array($authServ, 'getUserID'), $accountname);
+		
+		$sql = "INSERT INTO chanserv_channels (channel, modes, time, userID) VALUES ('".escapeString($channel)."', '+tn', ".time().", ".$userID.")";
+		Services::getDB()->sendQuery($sql);
 
 		$sql = "INSERT INTO chanserv_channels_to_users (channel, userID, accessLevel) VALUES ('".escapeString($channel)."', ".$userID.", 500)";
 		Services::getDB()->sendQuery($sql);

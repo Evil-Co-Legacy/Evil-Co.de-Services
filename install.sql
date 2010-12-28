@@ -133,6 +133,7 @@ INSERT INTO module (moduleID, name, address, timestamp) VALUES(15, 'CommandCregi
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(16, 'CommandKick', 'Ox24AA79F6', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(17, 'CommandAdduser', 'OxAD663DBFC', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(18, 'CommandListuser', 'Ox63D0FC', 1);
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(19, 'CommandCinfo', 'Ox71A35', 1);
 
 
 -- --------------------------------------------------------
@@ -202,6 +203,7 @@ INSERT INTO module_instance_command (instanceID, address, commandName, appearInH
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(17, 'Ox24AA79F6', 'KICK', 1, 'Ox1337');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(18, 'OxAD663DBFC', 'ADDUSER', 1, 'Ox1337');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(19, 'Ox63D0FC', 'LISTUSER', 1, 'Ox1337');
+INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(20, 'Ox71A35', 'CINFO', 1, 'Ox1337');
 
 
 
@@ -224,6 +226,8 @@ INSERT INTO authserv_users (userID, accountname, password, salt, email, accessLe
 CREATE TABLE chanserv_channels (
 	channel varchar(255) NOT NULL,
 	modes varchar(255) NOT NULL,
+	time int(10) NOT NULL DEFAULT 0,
+	registrar int(10) NOT NULL DEFAULT 0,
 	PRIMARY KEY (channel)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
