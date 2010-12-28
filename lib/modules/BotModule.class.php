@@ -4,6 +4,7 @@ require_once(SDIR.'lib/modules/Module.class.php');
 
 /**
  * Defines default methods for bots
+ *
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
@@ -11,33 +12,38 @@ abstract class BotModule implements Module {
 
 	/**
 	 * Contains the name of this bot (This must defined!)
+	 *
 	 * @var	string
 	 */
 	protected $botName = 'Bot';
 
 	/**
 	 * Contains the user type object of this bot
+	 *
 	 * @var	UserType
 	 */
 	protected $bot = null;
 
 	/**
 	 * Contains all bound commands for this bot
+	 *
 	 * @var	array<CommandModule>
 	 */
 	protected $commands = array();
 
 	/**
 	 * Contains the trigger of this bot (The trigger is used for public channel commands)
-	 * @var unknown_type
+	 *
+	 * @var	string
 	 */
 	protected $trigger = '';
 
 	/**
 	 * Creates a new instance of type Bot
+	 *
 	 * @param	UserType	$bot
 	 */
-	public function __construct($bot, $trigger = '') {
+	public function __construct(UserType $bot, $trigger = '') {
 		$this->bot = $bot;
 		$this->trigger = $trigger;
 		$this->registerEvents();
@@ -48,6 +54,8 @@ abstract class BotModule implements Module {
 
 	/**
 	 * Returnes the bot reference
+	 *
+	 * @return	UserType
 	 */
 	public function getBot() {
 		return $this->bot;
@@ -55,9 +63,11 @@ abstract class BotModule implements Module {
 
 	/**
 	 * Handles a line
+	 *
 	 * @param	string	$user
 	 * @param	string	$target
 	 * @param	string	$message
+	 * @return	void
 	 */
 	public final function handleLine($user, $target, $message) {
 		$found = false;
@@ -84,7 +94,9 @@ abstract class BotModule implements Module {
 
 	/**
 	 * Adds a new command to bot
+	 *
 	 * @param	CommandModule	$command
+	 * @return	void
 	 */
 	public function registerCommand($command) {
 		$this->commands[] = $command;
@@ -98,7 +110,9 @@ abstract class BotModule implements Module {
 	}
 
 	/**
-	 * Registeres a bot (Sas the module manager that this module is available)
+	 * Registers a bot (Sas the module manager that this module is available)
+	 *
+	 * @return	void
 	 */
 	public static function registerBot() {
 		// TODO: Implement this function
@@ -106,8 +120,13 @@ abstract class BotModule implements Module {
 
 	/**
 	 * Spits out the help
+	 *
+	 * @param	UserType	$user
+	 * @param	string		$target
+	 * @param	string		$message
+	 * @return	void
 	 */
-	public function generateHelp($user, $target, $message) {
+	public function generateHelp(UserType $user, $target, $message) {
 		$inputEx = explode(' ', $message);
 
 		if (!isset($inputEx[1])) {
@@ -140,10 +159,12 @@ abstract class BotModule implements Module {
 
 	/**
 	 * Checks for needed permissions and returnes true if correct permissions are set
+	 *
 	 * @param 	UserType	$user
 	 * @param	integer		$neededPermissions
+	 * @return	boolean
 	 */
-	public function getPermissions($user, $neededPermissions) {
+	public function getPermissions(UserType $user, $neededPermissions) {
 		// when 0 always is okay
 		if ($neededPermissions == 0) return true;
 
@@ -158,6 +179,8 @@ abstract class BotModule implements Module {
 
 	/**
 	 * Returnes bot's trigger
+	 *
+	 * @return	string
 	 */
 	public final function getTrigger() {
 		return $this->trigger;
@@ -165,8 +188,10 @@ abstract class BotModule implements Module {
 
 	/**
 	 * Redirects all unknown method calls to user object
+	 *
 	 * @param	string	$method
-	 * @throws Exception
+	 * @return	void
+	 * @throws 	Exception
 	 */
 	public final function __call($method, $arguments) {
 		if (method_exists($this->bot, $method))
