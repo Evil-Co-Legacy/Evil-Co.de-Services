@@ -23,6 +23,7 @@ class ChanServ extends BotModule {
 		while ($row = Services::getDB()->fetchArray($result)) {
 			$this->join($row['channel']);
 			$this->setStandardModes($row['channel'], $row['modes']);
+			$this->setAccess($row['channel']);
 		}
 	}
 
@@ -47,6 +48,17 @@ class ChanServ extends BotModule {
 		$row = Services::getDB()->getFirstRow($sql);
 		if ($row) return $row['accessLevel'];
 		return 0;
+	}
+	
+	/**
+	 * Sets access in the given channel
+	 *
+	 * @param	string	$channel
+	 * @param	string	$uuid
+	 */
+	public function setAccess($channel) {
+		// todo remove usermodes for all that have no access
+		// set usermodes for all that have access
 	}
 
 	/**
