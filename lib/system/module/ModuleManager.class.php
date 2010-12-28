@@ -26,6 +26,12 @@ class ModuleManager {
 	 * @var	array<array<BotModule>>
 	 */
 	protected $runningBots = array();
+	
+	/**
+	 * Contains all running extensions
+	 * @var	array<ExtensionModule>
+	 */
+	protected $runningExtensions = array();
 
 	/**
 	 * Creates a new instance of ModuleManager
@@ -80,6 +86,12 @@ class ModuleManager {
 
 			while($row = Services::getDB()->fetchArray($result)) {
 				$this->bindCommand($row['parentAddress'], $row['address'], $row['commandName'], ($row['appearInHelp'] ? true : false), true);
+			}
+			
+			foreach($this->moduleInformation as $address => $information) {
+				if ($information['type'] == 'Extension') {
+					$this->runningExtensions[$address] = new $address();
+				}
 			}
 
 			// check for memcache support and store data
@@ -270,7 +282,7 @@ class ModuleManager {
 	 * @param	string	$moduleAddress
 	 */
 	public function getBot($moduleAddress) {
-		if (isset($this->runningBots[$address])) return $this->runningBots[$address];
+		if (isset($this->runningBots[$moduleAddress])) return $this->runningBots[$moduleAddress];
 		return null;
 	}
 
