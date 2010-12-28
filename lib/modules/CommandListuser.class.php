@@ -35,14 +35,17 @@ class CommandAdduser extends CommandModule {
 			$sql = "SELECT
 					*
 				FROM
-					chanserv_channels_to_users
+					chanserv_channels_to_users c
+					LEFT JOIN
+						authserv_users a
+						ON c.userID = a.userID
 				WHERE
 					channel = '".escapeString($target)."'
 				ORDER BY 
 					accessLevel DESC";
 			$result = Services::getDB()->sendQuery($sql);
 			while ($row = Services::getDB()->fetchArray($result)) {
-				$this->bot->sendMessage($user->getUuid(), $row['function'].': '.$row['accessLevel']);
+				$this->bot->sendMessage($user->getUuid(), $row['accountname'].': '.$row['accessLevel']);
 			}
 		}
 		else {
