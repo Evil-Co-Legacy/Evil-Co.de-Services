@@ -29,7 +29,8 @@ class KickRevengeExtension extends ExtensionModule {
 		// ignore unregistered channels
 		if (call_user_func(array($chanserv, 'isRegistered'), $data['target'])) {
 			// check permissions
-			if (call_user_func(array($chanserv, 'getAccess'), $data['target'], Services::getUserManager()->getUser($data['issuer'])->accountname) < call_user_func(array($chanserv, 'getAccess'), $data['target'], Services::getUserManager()->getUser($data['victim'])->accountname)) {
+			if (call_user_func(array($chanserv, 'getAccess'), $data['target'], Services::getUserManager()->getUser($data['issuer'])->accountname) < call_user_func(array($chanserv, 'getAccess'), $data['target'], Services::getUserManager()->getUser($data['victim'])->accountname)
+			|| call_user_func(array($chanserv, 'getAccess'), $data['target'], Services::getUserManager()->getUser($data['issuer'])->accountname) < call_user_func(array($chanserv, 'kick'), $data['target'])) {
 				// ok lets kick the issuer
 				Services::getConnection()->getProtocol()->sendKick(Services::getModuleManager()->getBot($chanserv)->getUuid(), $data['target'], $data['issuer'], Services::getLanguage()->get(Services::getUserManager()->getUser($data['issuer'])->languageID, 'chanserv.kickedUserIsProtected'));
 				
