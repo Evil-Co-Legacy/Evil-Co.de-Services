@@ -99,6 +99,21 @@ class ProtocolHandler {
 			$chan->join($userList);
 		}
 	}
+	
+	/**
+	 * Handles the KICK command
+	 *
+	 * @param	string		$input
+	 * @param	array<string>	$inputEx
+	 * @return	void
+	 */
+	public static function KICK($input, $inputEx) {
+		// fire event
+		Services::getEvent()->fire(Services::getConnection()->getProtocol(), 'userKicked', array('target' => $inputEx[2], 'issuer' => $inputEx[0], 'victim' => $inputEx[3], 'reason' => substr($input, (stripos($input, ':') + 1))));
+		
+		// remove user
+		Services::getChannelManager()->getChannel($inputEx[2])->part($inputEx[3]);
+	}
 
 	/**
 	 * Handles the METADATA command
