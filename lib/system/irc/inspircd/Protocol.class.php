@@ -445,5 +445,15 @@ class Protocol {
 	public function sendSvspart($uuid, $channel) {
 		Services::getConnection()->sendServerLine("SVSPART ".$uuid." ".$channel);
 	}
+	
+	/**
+	 * Sends a SVSNICK to server
+	 * @param	string	$uuid
+	 * @param	string	$nick
+	 * @return void
+	 */
+	public function sendSvsnick($uuid, $nick) {
+		Services::getConnection()->sendServerLine("SVSNICK ".$uuid." ".$nick." ".time());
+	}
 }
 ?>
