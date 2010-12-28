@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Manages the XML configuration
  * @author		Johannes Donath
@@ -9,7 +8,8 @@ class Configuration {
 	
 	/**
 	 * Contains all configuration variables
-	 * @var	array
+	 *
+	 * @var	array<mixed>
 	 */
 	protected $configuration = array();
 	
@@ -31,8 +31,10 @@ class Configuration {
 	
 	/**
 	 * Loops through array
+	 *
 	 * @param	array	$array
 	 * @param	array	$data
+	 * @return	void
 	 */
 	protected function readConfiguration(&$array, $data) {
 		// start loop
@@ -51,7 +53,9 @@ class Configuration {
 	
 	/**
 	 * Returnes a configuration variable
+	 *
 	 * @param	string	$name
+	 * @return	mixed
 	 */
 	public function get($name) {
 		if (isset($this->configuration[$name])) return $this->configuration[$name];
