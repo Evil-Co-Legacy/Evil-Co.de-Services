@@ -28,6 +28,7 @@ class CommandCregister extends CommandModule {
 		if ($target{0} != '#') {
 			$target = $messageEx[1];
 			unset($messageEx[1]);
+			$messageEx = array_values($messageEx);
 		}
 		if ($this->bot->isRegistered($target)) {
 			return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.alreadyRegistered'));

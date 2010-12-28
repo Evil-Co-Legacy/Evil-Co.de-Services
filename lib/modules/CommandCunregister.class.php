@@ -28,6 +28,7 @@ class CommandCunregister extends CommandModule {
 		if ($target{0} != '#') {
 			$target = $messageEx[1];
 			unset($messageEx[1]);
+			$messageEx = array_values($messageEx);
 		}
 		if (!$this->bot->isRegistered($target)) {
 			return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.notRegistered'));
@@ -36,9 +37,25 @@ class CommandCunregister extends CommandModule {
 		if ($access < 500) {
 			return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
 		}
-		// TODO: Validate unregistercode
-		$this->bot->unregister($target);
-		$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success', $target));
+		$sql = "SELECT
+				unregistercode
+			FROM
+				chanserv_channels
+			WHERE
+				channel = '".escapeString($target)."'";
+		$row = Services::getDB()->getFirstRow($sql);
+		$code = $row['unregistercode'];
+		if (isset($messageEx[1])) {
+			if ($code != trim($messageEx[1])) {
+				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.codeWrong', $target));
+			}
+			// TODO: Validate unregistercode
+			$this->bot->unregister($target);
+			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success', $target));
+		}
+		else {
+			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.code', $code));
+		}
 	}
 }
 ?>

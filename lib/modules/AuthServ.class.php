@@ -8,13 +8,19 @@ require_once(SDIR.'lib/modules/BotModule.class.php');
  * @copyright	2010 DEVel Fusion
  */
 class AuthServ extends BotModule {
-
+	
+	/**
+	 * Binds the account to uuids
+	 *
+	 * @var	array<string>
+	 */
 	protected $accountToUser = array();
 
 	/**
 	 * Returnes true if a user is authed
 	 *
 	 * @param	string	$uuid
+	 * @return	boolean
 	 */
 	public function isAuthed($uuid) {
 		return (Services::getUserManager()->getUser($uuid)->accountname !== null);
@@ -25,6 +31,7 @@ class AuthServ extends BotModule {
 	 *
 	 * @param	string	$uuid
 	 * @param	string	$accountname
+	 * @retuen	void
 	 */
 	public function setAccount($uuid, $accountname) {
 		Services::getUserManager()->getUser($uuid)->accountname = $accountname;
@@ -40,6 +47,7 @@ class AuthServ extends BotModule {
 	 * Get authed users for $accountname
 	 *
 	 * @param	string	$accountname
+	 * @return	array<string>
 	 */
 	public function getUsers($accountname) {
 		if (isset($this->accountToUser[$accountname])) return $this->accountToUser[$accountname];
@@ -51,6 +59,7 @@ class AuthServ extends BotModule {
 	 *
 	 * @param	string	$accountname
 	 * @param	string	$password
+	 * @return	boolean
 	 */
 	public function checkCredentials($accountname, $password) {
 		$sql = "SELECT
@@ -72,6 +81,7 @@ class AuthServ extends BotModule {
 	 * @param	string	$accountname
 	 * @param	string	$password
 	 * @param	string	$email
+	 * @return	void
 	 */
 	public function create($accountname, $password, $email) {
 		$salt = StringUtil::getRandomID();
@@ -84,6 +94,7 @@ class AuthServ extends BotModule {
 	 * Deletes an account
 	 *
 	 * @param	string	$accountname
+	 * @return	void
 	 */
 	public function delete($accountname) {
 		$sql = "DELETE FROM authserv_users WHERE accountname = '".escapeString($accountname)."'";
@@ -111,6 +122,7 @@ class AuthServ extends BotModule {
 	 *
 	 * @param	string	$accountname
 	 * @param	string	$email
+	 * @return	void
 	 */
 	public function email($accountname, $email) {
 		$sql = "UPDATE
@@ -126,6 +138,7 @@ class AuthServ extends BotModule {
 	 * Returnes true if the given accountname exists
 	 *
 	 * @param	string	$accountname
+	 * @return	boolean
 	 */
 	public function accountExists($accountname) {
 		$sql = "SELECT
@@ -143,6 +156,7 @@ class AuthServ extends BotModule {
 	 * Returnes true if the given email address already exists
 	 *
 	 * @param	string	$email
+	 * @return	boolean
 	 */
 	public function emailExists($email) {
 		$sql = "SELECT
@@ -160,6 +174,7 @@ class AuthServ extends BotModule {
 	 * Returnes the userID of the account with name $accountname
 	 *
 	 * @param	string	$accountname
+	 * @return	integer
 	 */
 	public static function getUserID($accountname) {
 		$sql = "SELECT
@@ -177,6 +192,7 @@ class AuthServ extends BotModule {
 	 * Returnes the access level of $accountname
 	 *
 	 * @param	string	$accountname
+	 * @return	integer
 	 */
 	public static function getAccessLevel($accountname) {
 		$sql = "SELECT
