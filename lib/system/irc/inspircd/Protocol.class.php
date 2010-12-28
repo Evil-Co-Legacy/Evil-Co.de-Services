@@ -257,8 +257,10 @@ class Protocol {
 
 	/**
 	 * Formates a line for user syntax
+	 *
 	 * @param	string	$uuid
 	 * @param	string	$message
+	 * @return	string
 	 */
 	public function formateUserLine($uuid, $message) {
 		return ":".$this->numeric.$uuid." ".$message;
@@ -266,7 +268,9 @@ class Protocol {
 
 	/**
 	 * Sends a log line to service channel
+	 *
 	 * @param	string	$message
+	 * @return	void
 	 */
 	public function sendLogLine($message) {
 		Services::getConnection()->sendServerLine("NOTICE ".$this->servicechannel." :[".$this->name."] ".$message);
@@ -274,8 +278,10 @@ class Protocol {
 
 	/**
 	 * Sends a global message to all servers
+	 *
 	 * @param	string	$message
 	 * @param	string	$source
+	 * @return	void
 	 */
 	public function sendGlobalMessage($message, $source = '') {
 		foreach($this->serverList as $server) {
@@ -284,7 +290,10 @@ class Protocol {
 	}
 
 	/**
-	 * Shuts down the connection
+	 * Shuts the connection down
+	 * 
+	 * @param	string	$error
+	 * @return	void
 	 */
 	public function shutdownConnection($error = '') {
 		switch($this->connectionState) {
@@ -308,7 +317,9 @@ class Protocol {
 
 	/**
 	 * Sends a var_dump to service channel
+	 *
 	 * @param	mixed	$var
+	 * @return	void
 	 */
 	public function var_dump($var) {
 		// get print_r
@@ -328,6 +339,8 @@ class Protocol {
 
 	/**
 	 * Returnes the service channel
+	 *
+	 * @return string
 	 */
 	public function getServiceChannel() {
 		return $this->servicechannel;
@@ -336,9 +349,11 @@ class Protocol {
 	// COMMAND METHODS
 	/**
 	 * Sends a PRIVMSG from source to target
+	 *
 	 * @param	string	$source
 	 * @param	string	$target
 	 * @param	string	$message
+	 * @return	void
 	 */
 	public function sendPrivmsg($source, $target, $message) {
 		Services::getConnection()->sendLine($this->formateUserLine($source, "PRIVMSG ".$target." :".$message));
@@ -346,9 +361,11 @@ class Protocol {
 
 	/**
 	 * Sends a NOTICE from $source to $target
+	 *
 	 * @param	string	$source
 	 * @param	string	$target
 	 * @param	string	$message
+	 * @return	void
 	 */
 	public function sendNotice($source, $target, $message) {
 		Services::getConnection()->sendLine($this->formateUserLine($source, "NOTICE ".$target." :".$message));
@@ -356,9 +373,11 @@ class Protocol {
 
 	/**
 	 * Sends a MODE from $source to $target with $modes
+	 *
 	 * @param	string	$source
 	 * @param	string	$target
 	 * @param	string	$modes
+	 * @return	void
 	 */
 	public function sendMode($source, $target, $modes) {
 		Services::getConnection()->sendLine($this->formateUserLine($source, "MODE ".$target." ".$modes));
@@ -366,9 +385,11 @@ class Protocol {
 
 	/**
 	 * Stores metadata on server
+	 *
 	 * @param	string	$target
 	 * @param	string	$key
 	 * @param	mixed	$value
+	 * @return	void
 	 */
 	public function sendMetadata($target, $key, $value) {
 		Services::getConnection()->sendServerLine("METADATA ".$target." ".$key." :".(is_string($value) ? $value : serialize($value)));
@@ -376,10 +397,12 @@ class Protocol {
 
 	/**
 	 * Sends a KICK from $source in channel $target for user $user with reason $reason
+	 *
 	 * @param	string	$source
 	 * @param	string	$target
 	 * @param	string	$user
 	 * @param	string	$reason
+	 * @return	void
 	 */
 	public function sendKick($source, $target, $user, $reason) {
 		Services::getConnection()->sendLine($this->formateUserLine($source, "KICK ".$target." ".$user." :".$reason));
