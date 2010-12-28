@@ -455,5 +455,14 @@ class Protocol {
 	public function sendSvsnick($uuid, $nick) {
 		Services::getConnection()->sendServerLine("SVSNICK ".$uuid." ".$nick." ".time());
 	}
+	
+	/**
+	 * Sends a QUIT to server
+	 * @param	string	$uuid
+	 * @param	string	$message
+	 */
+	public function sendQuit($uuid, $message) {
+		Serivces::getConnection()->sendLine($this->formateUserLine($uuid, "QUIT :".$message));
+	}
 }
 ?>

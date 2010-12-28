@@ -58,5 +58,13 @@ class Bot extends AbstractUserType {
 		$chan = Services::getChannelManager()->getChannel($channel);
 		$chan->part($this->getUuid());
 	}
+	
+	/**
+	 * Sends a QUIT to server
+	 * @param	string	$message
+	 */
+	public function quit($message = "Shutting down ...") {
+		Services::getConnection()->getProtocol()->sendQuit($this->getUuid(), $message);
+	}
 }
 ?>

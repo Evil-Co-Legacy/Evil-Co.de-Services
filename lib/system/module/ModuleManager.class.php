@@ -291,5 +291,15 @@ class ModuleManager {
 		}
 		return false;
 	}
+	
+	/**
+	 * Shuts down all bots
+	 * @param	string	$message
+	 */
+	public function shutdown($message = "Shutting down ...") {
+		foreach($this->runningBots as $key => $bot) {
+			$this->runningBots[$key]->quit($message);
+		}
+	}
 }
 ?>
