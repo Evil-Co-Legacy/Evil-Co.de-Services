@@ -42,7 +42,7 @@ class CommandListuser extends CommandModule {
 				WHERE
 					channel = '".escapeString($target)."'
 				ORDER BY 
-					accessLevel DESC";
+					c.accessLevel DESC";
 			$result = Services::getDB()->sendQuery($sql);
 			while ($row = Services::getDB()->fetchArray($result)) {
 				$this->bot->sendMessage($user->getUuid(), $row['accountname'].': '.$row['accessLevel']);
