@@ -143,6 +143,7 @@ INSERT INTO module (moduleID, name, address, timestamp) VALUES(18, 'CommandListu
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(19, 'CommandCinfo', 'Ox71A35', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(20, 'KickRevengeExtension', 'Ox75A57AFDB160', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(21, 'CommandCunregister', 'Ox221D0E2529', 1);
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(22, 'CommandUnregister', 'Ox75A615CEDF20', 1293561888);
 
 -- --------------------------------------------------------
 
@@ -212,6 +213,7 @@ INSERT INTO module_instance_command (instanceID, address, commandName, appearInH
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(19, 'Ox63D0FC', 'LISTUSER', 1, 'Ox1337');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(20, 'Ox71A35', 'CINFO', 1, 'Ox1337');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(21, 'Ox221D0E2529', 'CUNREGISTER', 1, 'Ox1337');
+INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(22, 'Ox75A615CEDF20', 'UNREGISTER', 1, 'Ox21A7E885');
 
 
 CREATE TABLE authserv_users (
