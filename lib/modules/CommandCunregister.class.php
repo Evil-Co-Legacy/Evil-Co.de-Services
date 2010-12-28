@@ -12,7 +12,7 @@ class CommandCunregister extends CommandModule {
 	/**
 	 * @see CommandModule::$originalName
 	 */
-	public $originalName = 'curegister';
+	public $originalName = 'cunregister';
 
 	/**
 	 * @see CommandModule::$neededPermissions
