@@ -19,8 +19,13 @@ class EventHandler {
 	 * @param	string	$targetClass
 	 * @param	string	$targetEvent
 	 */
-	public function registerEvent(&$class, $method, $targetClass, $targetEvent) {
-		$this->events[] = array('class' => $class, 'method' => $method, 'targetClass' => $targetClass, 'targetEvent' => $targetEvent);
+	public function registerEvent($class, $method, $targetClass, $targetEvent) {
+		// create arrays
+		if (!isset($this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))])) $this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))] = array();
+		if (!isset($this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))][$targetEvent])) $this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))][$targetEvent] = array();
+		
+		// ad event
+		$this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))][$targetEvent][] = array('class' => $class, 'method' => $method);
 	}
 	
 	/**
@@ -28,9 +33,26 @@ class EventHandler {
 	 * @param	object	$class
 	 * @param	string	$eventName
 	 */
-	public function fire(&$class, $eventName, $data = array()) {
-		foreach($this->events as $event) {
-			if (is_subclass_of($class, $event['targetClass']) and $eventName == $event['targetEvent']) call_user_func_array(array($event['class'], $event['method']), $data); 
+	public function fire($eventObj, $eventName, $data = array()) {
+		// get parent classes
+		$familyTree = array();
+		$member = (is_object($eventObj) ? get_class($eventObj) : $eventObj);
+		while ($member != false) {
+			$familyTree[] = $member;
+			$member = get_parent_class($member);
+		}
+
+		foreach ($familyTree as $member) {
+			if (isset($this->events[$member])) {
+				$actions = $this->events[$member];
+				Services::getConnection()->getProtocol()->var_dump($actions);
+				if (isset($actions[$eventName]) and count($actions[$eventName]) > 0) {                        
+					foreach ($actions[$eventName] as $action) {
+						Services::getConnection()->getProtocol()->var_dump($action);
+						$action[$class]->{$action[$method]}($data);
+					}
+				}
+			}
 		}
 	}
 }

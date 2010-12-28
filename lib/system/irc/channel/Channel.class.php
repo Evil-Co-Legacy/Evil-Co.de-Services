@@ -57,6 +57,18 @@ class Channel {
 	public function getModes() {
 		return $this->modes;
 	}
+	
+	/**
+	 * Returnes modes such as o, q or a for given UUID
+	 * Note: The string can be empty
+	 * @param	string	$uuid
+	 */
+	public function getUserModes($uuid) {
+		foreach($this->userList as $key => $user) {
+			if ($user['user']->getUuid() == $uuid) return $user['modes'];
+		}
+		return null;
+	}
 
 	/**
 	 * Returnes the current userlist
