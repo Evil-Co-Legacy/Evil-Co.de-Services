@@ -34,10 +34,16 @@ class CommandCregister extends CommandModule {
 			return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.alreadyRegistered'));
 		}
 		$users = Services::getChannelManager()->getChannel($target)->getUserList();
-		Services::getProtocol()->var_dump($users);
-		$this->bot->register($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
-		Services::getConnection()->getProtocol()->sendMode($this->bot->getUuid(), $target, '+q '.$user->getNick());
-		$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success', $target));
+		foreach ($users as $channelUser) {
+			if ($channelUser['user']->getUuid() == $user->getUuid()) {
+				if (stripos($channelUser['mode'], 'o')) {
+					$this->bot->register($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
+					Services::getConnection()->getProtocol()->sendMode($this->bot->getUuid(), $target, '+q '.$user->getNick());
+					return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success', $target));
+				}
+			}
+		}
+		return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.noOp'));
 	}
 }
 ?>
