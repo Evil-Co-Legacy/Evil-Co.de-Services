@@ -115,5 +115,17 @@ class ChanServ extends BotModule {
 		$this->join($channel);
 		$this->setStandardModes($channel, '+tnr');
 	}
+	
+	public function isRegistered($channel) {
+		$sql = "SELECT
+				count(*) as count
+			FROM
+				chanserv_channels
+			WHERE
+				channel = '".escapeString($channel)."'";
+		$row = Services::getDB()->getFirstRow($sql);
+		
+		return $row['count'] > 0;
+	}
 }
 ?>
