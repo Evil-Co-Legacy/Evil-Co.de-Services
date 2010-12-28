@@ -33,7 +33,8 @@ class CommandListuser extends CommandModule {
 
 		if (count($messageEx) == 1) {
 			$sql = "SELECT
-					*
+					c.*,
+					a.accountname
 				FROM
 					chanserv_channels_to_users c
 					LEFT JOIN
