@@ -124,6 +124,7 @@ INSERT INTO module (moduleID, name, address, timestamp) VALUES(14, 'CommandAcces
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(15, 'CommandCregister', 'OxB494EC43B6AA', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(16, 'CommandKick', 'Ox24AA79F6', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(17, 'CommandAdduser', 'OxAD663DBFC', 1);
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(18, 'CommandListuser', 'Ox63D0FC', 1);
 
 
 -- --------------------------------------------------------
@@ -192,6 +193,7 @@ INSERT INTO module_instance_command (instanceID, address, commandName, appearInH
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(16, 'OxB494EC43B6AA', 'CREGISTER', 1, 'Ox1337');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(17, 'Ox24AA79F6', 'KICK', 1, 'Ox1337');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(18, 'OxAD663DBFC', 'ADDUSER', 1, 'Ox1337');
+INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(19, 'Ox63D0FC', 'LISTUSER', 1, 'Ox1337');
 
 
 
