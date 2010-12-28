@@ -23,6 +23,11 @@ class CommandShutdown extends CommandModule {
 	 * @see lib/modules/CommandModule::execute()
 	 */
 	public function execute($user, $target, $message) {
+		$messageEx = explode(' ', $message);
+		unset($messageEx[0];
+		
+		// quit with a nice message
+		Services::getModuleManager()->shutdown(implode(' ', $messageEx));
 		exit;
 	}
 }
