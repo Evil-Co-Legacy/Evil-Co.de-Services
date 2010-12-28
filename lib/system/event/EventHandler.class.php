@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Manages events
  * @author		Johannes Donath
@@ -49,11 +50,9 @@ class EventHandler {
 		foreach ($familyTree as $member) {
 			if (isset($this->events[$member])) {
 				$actions = $this->events[$member];
-				Services::getConnection()->getProtocol()->var_dump($actions);
 				if (isset($actions[$eventName]) and count($actions[$eventName]) > 0) {                        
 					foreach ($actions[$eventName] as $action) {
-						Services::getConnection()->getProtocol()->var_dump($action);
-						$action[$class]->{$action[$method]}($data);
+						$action['class']->{$action['method']}($data);
 					}
 				}
 			}

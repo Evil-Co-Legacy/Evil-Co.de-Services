@@ -221,28 +221,6 @@ class Protocol {
 		return Services::getBotManager()->getUser($uuid);
 	}
 
-	/**
-	 * Joins a user to channel
-	 *
-	 * @param	string	$uuid
-	 * @param	string	$channel
-	 * @return	void
-	 */
-	public function join($uuid, $channel, $channelModes = '+nt', $userMode = '') {
-		Services::getConnection()->sendServerLine("FJOIN ".$channel." ".time()." ".$channelModes." :".$userMode.",".$this->numeric.$uuid);
-	}
-
-	/**
-	 * Parts a user of channel
-	 *
-	 * @param	string	$uuid
-	 * @param	string	$channel
-	 * @return	void
-	 */
-	public function part($uuid, $channel, $message = "Leaving") {
-		return Services::getConnection()->sendLine($this->formateUserLine($uuid, 'PART '.$channel.' :'.$message));
-	}
-
 
 	// NETWORK METHODS
 	/**
@@ -406,6 +384,76 @@ class Protocol {
 	 */
 	public function sendKick($source, $target, $user, $reason) {
 		Services::getConnection()->sendLine($this->formateUserLine($source, "KICK ".$target." ".$user." :".$reason));
+	}
+	
+	/**
+	 * Alias for sendJoin()
+	 * @see Protocol::sendJoin()
+	 * @deprecated
+	 */
+	public function join($uuid, $channel, $channelModes = '+nt', $userMode = '') {
+		return $this->sendJoin($uuid, $channel, $channelModes = '+nt', $userMode = '');
+	}
+	
+	/**
+	 * Joins a user to channel
+	 *
+	 * @param	string	$uuid
+	 * @param	string	$channel
+	 * @return	void
+	 */
+	public function sendJoin($uuid, $channel, $channelModes = '+nt', $userMode = '') {
+		return Services::getConnection()->sendServerLine("FJOIN ".$channel." ".time()." ".$channelModes." :".$userMode.",".$this->numeric.$uuid);
+	}
+	
+	/**
+	 * Alias for sendPart()
+	 * @see Protocol::sendPart()
+	 * @deprecated
+	 */
+	public function part($uuid, $channel, $message = "Leaving") {
+		return $this->sendPart($uuid, $channel, $message = "Leaving");
+	}
+
+	/**
+	 * Parts a user of channel
+	 *
+	 * @param	string	$uuid
+	 * @param	string	$channel
+	 * @return	void
+	 */
+	public function sendPart($uuid, $channel, $message = "Leaving") {
+		return Services::getConnection()->sendLine($this->formateUserLine($uuid, 'PART '.$channel.' :'.$message));
+	}
+	
+	/**
+	 * Sends a SVSJOIN to server
+	 * @param 	string	$uuid
+	 * @param	string	$channel
+	 * @return void
+	 */
+	public function sendSvsjoin($uuid, $channel) {
+		Services::getConnection()->sendServerLine("SVSJOIN ".$uuid." ".$channel);
+	}
+	
+	/**
+	 * Sends a SVSPART to server
+	 * @param	string	$uuid
+	 * @param	string	$channel
+	 * @return void
+	 */
+	public function sendSvspart($uuid, $channel) {
+		Services::getConnection()->sendServerLine("SVSPART ".$uuid." ".$channel);
+	}
+	
+	/**
+	 * Sends a SVSNICK to server
+	 * @param	string	$uuid
+	 * @param	string	$nick
+	 * @return void
+	 */
+	public function sendSvsnick($uuid, $nick) {
+		Services::getConnection()->sendServerLine("SVSNICK ".$uuid." ".$nick." ".time());
 	}
 }
 ?>
