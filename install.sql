@@ -97,6 +97,10 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(43, 1, 'comma
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(44, 2, 'command.cregister.success', 'Der Channel "%s" wurde erfolgreich registriert.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(45, 1, 'command.invalidUser', 'The user is invalid.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(46, 2, 'command.invalidUser', 'Der Benutzer ist ungültig.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(47, 1, 'command.changeuser.success', 'The accesslevel was successfully changed');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(48, 2, 'command.changeuser.success', 'Das Zugriffslevel wurde erfolgreich verändert.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(49, 1, 'command.changeuser.tooHigh', 'The accesslevel is too high.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(50, 2, 'command.changeuser.tooHigh', 'Das Zugriffslevel ist zu hoch.');
 
 
 -- --------------------------------------------------------
@@ -240,6 +244,7 @@ CREATE TABLE chanserv_channels_to_users (
 	userID int(10) unsigned NOT NULL,
 	accessLevel int(10) NOT NULL,
 	PRIMARY KEY (channel, userID),
+
 	KEY (userID)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
