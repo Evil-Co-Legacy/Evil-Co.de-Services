@@ -38,6 +38,9 @@ class CommandAdduser extends CommandModule {
 			else if ($messageEx[2] > 500) {
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.tooHigh'));
 			}
+			if ($access < $this->bot->getAccess($target, Services::getUserManager()->getUserByNick($messageEx[1])->accountname)) {
+				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
+			}
 			$authServ = Services::getModuleManager()->lookupModule('AuthServ');
 			$userID = call_user_func(array($authServ, 'getUserID'), $messageEx[1]);
 			if (!$userID) {

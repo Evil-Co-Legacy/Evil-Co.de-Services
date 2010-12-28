@@ -138,6 +138,7 @@ INSERT INTO module (moduleID, name, address, timestamp) VALUES(17, 'CommandAddus
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(18, 'CommandListuser', 'Ox63D0FC', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(19, 'CommandCinfo', 'Ox71A35', 1);
 INSERT INTO module (moduleID, name, address, timestamp) VALUES(20, 'KickRevengeExtension', 'Ox75A57AFDB160', 1);
+INSERT INTO module (moduleID, name, address, timestamp) VALUES(21, 'CommandCunregister', 'Ox221D0E2529', 1);
 
 -- --------------------------------------------------------
 
@@ -206,6 +207,8 @@ INSERT INTO module_instance_command (instanceID, address, commandName, appearInH
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(18, 'OxAD663DBFC', 'ADDUSER', 1, 'Ox1337');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(19, 'Ox63D0FC', 'LISTUSER', 1, 'Ox1337');
 INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(20, 'Ox71A35', 'CINFO', 1, 'Ox1337');
+INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(21, 'Ox221D0E2529', 'CUNREGISTER', 1, 'Ox1337');
+
 
 CREATE TABLE authserv_users (
 	userID int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -228,6 +231,7 @@ CREATE TABLE chanserv_channels (
 	modes varchar(255) NOT NULL,
 	time int(10) NOT NULL DEFAULT 0,
 	registrar int(10) NOT NULL DEFAULT 0,
+	unregistercode char(40) NOT NULL DEFAULT '',
 	PRIMARY KEY (channel)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
