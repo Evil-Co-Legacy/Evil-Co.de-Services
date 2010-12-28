@@ -1,18 +1,42 @@
 <?php
-
 /**
  * This class implements ground database features
+ *
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
 abstract class Database {
+	/**
+	 * The database link
+	 *
+	 * @var	resource
+	 */
 	protected $linkID = 0;
+	
+	/**
+	 * Counts the sent queries
+	 * 
+	 * @var	integer
+	 */
 	protected $queryCount = 0;
+	
+	/**
+	 * Holds the last query result
+	 *
+	 * @var	resource
+	 */
 	protected $lastResult = null;
+	
+	/**
+	 * Holds the last query
+	 *
+	 * @var	string
+	 */
 	protected $lastQuery = "";
 
 	/**
 	 * Returnes the first row
+	 *
 	 * @param	    string	$query
 	 * @param	    integer	$limit
 	 * @param	    integer	$offset
@@ -38,6 +62,7 @@ abstract class Database {
 
 	/**
 	 * Returns a query with limit and offset
+	 *
 	 * @param string $query
 	 * @param integer $limit
 	 * @param integer $offset
