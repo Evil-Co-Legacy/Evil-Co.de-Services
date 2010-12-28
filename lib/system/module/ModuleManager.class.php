@@ -87,12 +87,6 @@ class ModuleManager {
 			while($row = Services::getDB()->fetchArray($result)) {
 				$this->bindCommand($row['parentAddress'], $row['address'], $row['commandName'], ($row['appearInHelp'] ? true : false), true);
 			}
-			
-			foreach($this->moduleInformation as $address => $information) {
-				if ($information['type'] == 'Extension') {
-					$this->runningExtensions[$address] = new $address();
-				}
-			}
 
 			// check for memcache support and store data
 			if (Services::memcacheLoaded()) {
@@ -202,6 +196,7 @@ class ModuleManager {
 				break;
 			default:
 				$moduleType = 'Extension';
+				$this->runningExtensions[$moduleAddress] = new $moduleAddress();
 				break;
 		}
 
