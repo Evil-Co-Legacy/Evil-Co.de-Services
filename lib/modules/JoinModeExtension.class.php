@@ -35,12 +35,14 @@ class JoinModeExtension extends ExtensionModule {
 				// get channel access
 				$access = Services::getModuleManager()->getBot($chanserv)->getAccess($data['channel'], $user->accountname);
 				
-				if ($access >=  Services::getModuleManager()->getBot($chanserv)->getNeededAccess($data['channel'], 'getVoice')) {
-					Services::getConnection()->getProtocol()->sendMode(Services::getModuleManager()->getBot($chanserv)->getUuid(), $data['channel'], '+v '.$user->getNick());
+				if ($access >= 500) {
+					Services::getConnection()->getProtocol()->sendMode(Services::getModuleManager()->getBot($chanserv)->getUuid(), $data['channel'], '+q '.$user->getNick());
 				}
-				
-				if ($access >=  Services::getModuleManager()->getBot($chanserv)->getNeededAccess($data['channel'], 'getOp')) {
+				else if ($access >=  Services::getModuleManager()->getBot($chanserv)->getNeededAccess($data['channel'], 'getOp')) {
 					Services::getConnection()->getProtocol()->sendMode(Services::getModuleManager()->getBot($chanserv)->getUuid(), $data['channel'], '+o '.$user->getNick());
+				}
+				else if ($access >=  Services::getModuleManager()->getBot($chanserv)->getNeededAccess($data['channel'], 'getVoice')) {
+					Services::getConnection()->getProtocol()->sendMode(Services::getModuleManager()->getBot($chanserv)->getUuid(), $data['channel'], '+v '.$user->getNick());
 				}
 			}
 		}
