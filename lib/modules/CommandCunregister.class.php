@@ -7,7 +7,7 @@ require_once(SDIR.'lib/modules/CommandModule.class.php');
  * @author		Tim Düsterhus
  * @copyright	2010 DEVel Fusion
  */
-class CommandCregister extends CommandModule {
+class CommandCunregister extends CommandModule {
 
 	/**
 	 * @see CommandModule::$originalName
