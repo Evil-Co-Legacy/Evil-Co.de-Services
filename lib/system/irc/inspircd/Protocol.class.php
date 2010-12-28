@@ -462,7 +462,7 @@ class Protocol {
 	 * @param	string	$message
 	 */
 	public function sendQuit($uuid, $message) {
-		Serivces::getConnection()->sendLine($this->formateUserLine($uuid, "QUIT :".$message));
+		Services::getConnection()->sendLine($this->formateUserLine($uuid, "QUIT :".$message));
 	}
 }
 ?>
