@@ -425,5 +425,15 @@ class Protocol {
 	public function sendPart($uuid, $channel, $message = "Leaving") {
 		return Services::getConnection()->sendLine($this->formateUserLine($uuid, 'PART '.$channel.' :'.$message));
 	}
+	
+	/**
+	 * Sends a SVSJOIN to server
+	 * @param 	string	$uuid
+	 * @param	string	$channel
+	 * @return void
+	 */
+	public function sendSvsjoin($uuid, $channel) {
+		Services::getConnection()->sendServerLine("SVSJOIN ".$uuid." ".$channel);
+	}
 }
 ?>
