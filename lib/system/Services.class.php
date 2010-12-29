@@ -1,16 +1,15 @@
 <?php
 // defines
 define('IRCD', 'inspircd');
-define('SERVICES_VERSION', '1.0.0 Alpha 1');
+define('SERVICES_VERSION', '2.0.0 Alpha 1');
 // Uncomment the following to enable debugging
-// define('DEBUG', true);
+define('DEBUG', true);
 
 // imports
 require_once(SDIR.'lib/core.functions.php');
-require_once(SDIR.'lib/color.inc.php');
 require_once(SDIR.'lib/system/configuration/Configuration.class.php');
 require_once(SDIR.'lib/system/event/EventHandler.class.php');
-require_once(SDIR.'lib/system/irc/IRCConnection.class.php');
+require_once(SDIR.'lib/system/irc/Connection.class.php');
 require_once(SDIR.'lib/system/language/LanguageManager.class.php');
 require_once(SDIR.'lib/system/module/ModuleManager.class.php');
 require_once(SDIR.'lib/system/user/UserManager.class.php');
@@ -23,43 +22,7 @@ require_once(SDIR.'lib/system/irc/channel/ChannelManager.class.php');
  * @copyright	2010 DEVel Fusion
  */
 class Services {
-
-	/**
-	 * Contains the Configuration object
-	 * @var Configuration
-	 */
-	protected static $configObj = null;
-
-	/**
-	 * Contains the EventHandler object
-	 * @var	EventHandler
-	 */
-	protected static $eventObj = null;
-
-	/**
-	 * Contains the database connection
-	 * @var	Database
-	 */
-	protected static $dbObj = null;
-
-	/**
-	 * Contains the LanguageManager object
-	 * @var	LanguageManager
-	 */
-	protected static $languageObj = null;
-
-	/**
-	 * Contains the IRCConnection object
-	 * @var	IRCConnection
-	 */
-	protected static $ircObj = null;
-
-	/**
-	 * Contains the UserManager object
-	 * @var UserManager
-	 */
-	protected static $userManagerObj = null;
-
+	
 	/**
 	 * Contains the BotManager object
 	 * @var	BotManager
@@ -71,18 +34,48 @@ class Services {
 	 * @var	ChannelManager
 	 */
 	protected static $channelManagerObj = null;
+	
+	/**
+	 * Contains the Configuration object
+	 * @var Configuration
+	 */
+	protected static $configObj = null;
+
+	/**
+	 * Contains the database connection
+	 * @var	Database
+	 */
+	protected static $dbObj = null;
+	
+	/**
+	 * Contains the EventHandler object
+	 * @var	EventHandler
+	 */
+	protected static $eventObj = null;
+
+	/**
+	 * Contains the IRCConnection object
+	 * @var	IRCConnection
+	 */
+	protected static $ircObj = null;
+	
+	/**
+	 * Contains the LanguageManager object
+	 * @var	LanguageManager
+	 */
+	protected static $languageObj = null;
 
 	/**
 	 * Contains the ModuleManager object
 	 * @var	ModuleManager
 	 */
 	protected static $moduleManagerObj = null;
-
+	
 	/**
-	 * Contains the current connection to Memcache
-	 * @var	Memcache
+	 * Contains the UserManager object
+	 * @var UserManager
 	 */
-	protected static $memcacheObj = null;
+	protected static $userManagerObj = null;
 
 	/**
 	 * Creates a new instance of Services
@@ -97,7 +90,7 @@ class Services {
 		$this->initChannelManager();
 		$this->initModules();
 		$this->initConnection();
-		self::$ircObj->start();
+		$this->initProtocol();
 	}
 
 	/**
@@ -107,11 +100,22 @@ class Services {
 		// call connection shutdown method
 		if (self::getConnection() !== null) self::getConnection()->shutdown();
 
-		// flush cache
-		if (self::memcacheLoaded()) self::getMemcache()->flush();
-
 		// remove pidfile (if any)
 		if (file_exists(SDIR.'services.pid')) @unlink(SDIR.'services.pid');
+	}
+	
+	/**
+	 * Creates a new BotManager instance
+	 */
+	protected function initBotManager() {
+		self::$botManagerObj = new BotManager();
+	}
+	
+	/**
+	 * Creates an new ChannelManager instance
+	 */
+	protected function initChannelManager() {
+		self::$channelManagerObj = new ChannelManager();
 	}
 
 	/**
@@ -120,14 +124,14 @@ class Services {
 	protected function initConfiguration() {
 		self::$configObj = new Configuration();
 	}
-
+	
 	/**
-	 * Creates a new EventHandler object
+	 * Creates a new IRCConnection instance
 	 */
-	protected function initEvents() {
-		self::$eventObj = new EventHandler();
+	protected function initConnection() {
+		self::$ircObj = new IRCConnection();
 	}
-
+	
 	/**
 	 * Creates a new database connection
 	 */
@@ -152,17 +156,28 @@ class Services {
 	}
 
 	/**
+	 * Creates a new EventHandler object
+	 */
+	protected function initEvents() {
+		self::$eventObj = new EventHandler();
+	}
+
+	/**
 	 * Creates a new LanguageManager instance
 	 */
 	protected function initLanguage() {
 		self::$languageObj = new LanguageManager();
 	}
-
+	
 	/**
-	 * Creates a new IRCConnection instance
+	 * Creates a new ModuleManager instance
 	 */
-	protected function initConnection() {
-		self::$ircObj = new IRCConnection();
+	protected function initModules() {
+		self::$moduleManagerObj = new ModuleManager();
+	}
+	
+	protected function initProtocol() {
+		self::$protocolObj = new Protocol();
 	}
 
 	/**
@@ -171,85 +186,14 @@ class Services {
 	protected function initUserManager() {
 		self::$userManagerObj = new UserManager();
 	}
-
-	/**
-	 * Creates a new BotManager instance
-	 */
-	protected function initBotManager() {
-		self::$botManagerObj = new BotManager();
-	}
-
-	/**
-	 * Creates an new ChannelManager instance
-	 */
-	protected function initChannelManager() {
-		self::$channelManagerObj = new ChannelManager();
-	}
-
-	/**
-	 * Creates a new ModuleManager instance
-	 */
-	protected function initModules() {
-		self::$moduleManagerObj = new ModuleManager();
-	}
-
-	/**
-	 * Returnes the current configuration object
-	 */
-	public static function getConfiguration() {
-		return self::$configObj;
-	}
-
-	/**
-	 * Returnes the current EventHandler object
-	 */
-	public static function getEvent() {
-		return self::$eventObj;
-	}
-
-	/**
-	 * Returnes the current database connection
-	 */
-	public static function getDB() {
-		return self::$dbObj;
-	}
-
-	/**
-	 * Returnes the current language manager
-	 */
-	public static function getLanguage() {
-		return self::$languageObj;
-	}
-
-	/**
-	 * Returnes the current irc connection
-	 */
-	public static function getConnection() {
-		return self::$ircObj;
-	}
 	
-	/**
-	 * Alias for IRCConnection::getProtocol()
-	 * @return Protocol
-	 */
-	public static function getProtocol() {
-		return self::$ircObj->getProtocol();
-	}
-
-	/**
-	 * Returnes the current user manager object
-	 */
-	public static function getUserManager() {
-		return self::$userManagerObj;
-	}
-
 	/**
 	 * Returnes the current bot manager object
 	 */
 	public static function getBotManager() {
 		return self::$botManagerObj;
 	}
-
+	
 	/**
 	 * Returnes the current channel manager object
 	 */
@@ -258,89 +202,60 @@ class Services {
 	}
 
 	/**
+	 * Returnes the current configuration object
+	 */
+	public static function getConfiguration() {
+		return self::$configObj;
+	}
+	
+	/**
+	 * Returnes the current irc connection
+	 */
+	public static function getConnection() {
+		return self::$ircObj;
+	}
+
+	/**
+	 * Returnes the current database connection
+	 */
+	public static function getDB() {
+		return self::$dbObj;
+	}
+	
+	/**
+	 * Returnes the current EventHandler object
+	 */
+	public static function getEvent() {
+		return self::$eventObj;
+	}
+
+	/**
+	 * Returnes the current language manager
+	 */
+	public static function getLanguage() {
+		return self::$languageObj;
+	}
+	
+	/**
 	 * Returnes the current ModuleManager object
 	 */
 	public static function getModuleManager() {
 		return self::$moduleManagerObj;
 	}
-
+	
 	/**
-	 * Loads the memcache extension
+	 * Alias for IRCConnection::getProtocol()
+	 * @return Protocol
 	 */
-	public static function loadMemcache() {
-		$memcache = Services::getConfiguration()->get('memcache');
-		if ($memcache === null or !extension_loaded('memcache')) {
-			self::getConnection()->getProtocol()->sendLogLine("Cannot use memcache! No configuration found!");
-		} elseif (is_array($memcache['servers'])) {
-			require_once(SDIR.'lib/system/cache/CacheSource.class.php');
-			
-			self::$memcacheObj = new CacheSource();
-
-			// add server
-			foreach($memcache['servers'] as $server) {
-				// create needed array
-				$arguments = array();
-
-				// get server address
-				if (!isset($server['address'])) throw new Exception("Invalid memcache configuration: address tag is missing!");
-				$arguments[] = $server['address'];
-
-				// get port
-				if (isset($server['port'])) $arguments[] = $server['port'];
-
-				// get persistent option
-				if (isset($server['persistent'])) $arguments[] = (bool) intval($server['persistent']);
-
-				// add server
-				call_user_func_array(array(self::$memcacheObj, 'addServer'), $arguments);
-
-				// remove temp variables
-				unset($arguments);
-			}
-
-			// flush old cache (we'll have old resources if the applications was killed)
-			self::$memcacheObj->flush();
-
-			// test connection
-			self::$memcacheObj->add('SERVICES_VERSION', SERVICES_VERSION);
-			if (self::$memcacheObj->get('SERVICES_VERSION') !== false) {
-				// add log entry
-				self::getConnection()->getProtocol()->sendLogLine("Etablished connection to memcache server!");
-			} else {
-				// add log entry
-				self::getConnection()->getProtocol()->sendLogLine("An error occoured with memcache! I'll disable it ...");
-
-				// disable memcache
-				self::$memcacheObj = null;
-			}
-		}
+	public static function getProtocol() {
+		return self::$protocolObj;
 	}
 
 	/**
-	 * Returnes true if memcache is available
+	 * Returnes the current user manager object
 	 */
-	public static function memcacheLoaded() {
-		return (self::$memcacheObj instanceof Memcache);
-	}
-
-	/**
-	 * Returnes the current memcache instance
-	 */
-	public static function getMemcache() {
-		return self::$memcacheObj;
-	}
-
-	/**
-	 * Handles uncought exceptions
-	 * @param	Exception	$ex
-	 */
-	public static function handleException(Exception $ex) {
-		print("\n\n\n");
-		print($ex);
-		print("\n\n");
-
-		// call connection shutdown method
-		if (self::getConnection() !== null and self::getConnection()->getProtocol() !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage());
+	public static function getUserManager() {
+		return self::$userManagerObj;
 	}
 
 	/**
@@ -352,6 +267,19 @@ class Services {
 	 */
 	public static function handleError($errNo, $errMessage, $errFile, $errLine) {
 		throw new Exception("Error in file ".$errFile." on line ".$errLine." (".$errNo."): ".$errMessage);
+	}
+	
+	/**
+	 * Handles uncought exceptions
+	 * @param	Exception	$ex
+	 */
+	public static function handleException(Exception $ex) {
+		print("\n\n\n");
+		print($ex);
+		print("\n\n");
+
+		// call connection shutdown method
+		if (self::getConnection() !== null and self::getConnection()->getProtocol() !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage());
 	}
 }
 ?>
