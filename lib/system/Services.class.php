@@ -14,6 +14,7 @@ require_once(SDIR.'lib/system/event/EventHandler.class.php');
 require_once(SDIR.'lib/system/irc/IRCConnection.class.php');
 require_once(SDIR.'lib/system/language/LanguageManager.class.php');
 require_once(SDIR.'lib/system/module/ModuleManager.class.php');
+require_once(SDIR.'lib/system/irc/Protocol.class.php');
 require_once(SDIR.'lib/system/user/UserManager.class.php');
 
 /**
