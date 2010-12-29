@@ -8,7 +8,7 @@ define('DEBUG', true);
 // imports
 require_once(SDIR.'lib/core.functions.php');
 require_once(SDIR.'lib/system/user/BotManager.class.php');
-require_once(SDIR.'lib/system/irc/channel/ChannelManager.class.php');
+require_once(SDIR.'lib/system/irc/ChannelManager.class.php');
 require_once(SDIR.'lib/system/configuration/Configuration.class.php');
 require_once(SDIR.'lib/system/event/EventHandler.class.php');
 require_once(SDIR.'lib/system/irc/IRCConnection.class.php');
