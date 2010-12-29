@@ -112,7 +112,7 @@
 		<!-- 
 			[REQUIRED] Database Driver
 			The driver that should used
-			Available are: MySQL
+			Available are:  MSAccess, MSSQL, MySQL, MySQLi, PostgreSQL, SQLite2
 		 -->
 		<driver>MySQL</driver>
 		
