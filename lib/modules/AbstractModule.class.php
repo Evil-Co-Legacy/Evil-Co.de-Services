@@ -17,6 +17,15 @@ abstract class AbstractModule implements Module {
 	protected $data = array();
 	
 	/**
+	 * Creates a new instance of AbstractModule
+	 * @param	array<mixed>	$data
+	 * @return void
+	 */
+	public function __construct($data) {
+		$this->data = $data;
+	}
+	
+	/**
 	 * @see Module::registerEvents()
 	 */
 	public function registerEvents() {
