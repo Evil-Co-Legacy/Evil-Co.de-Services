@@ -248,7 +248,7 @@ class Services {
 	}
 	
 	/**
-	 * Alias for IRCConnection::getProtocol()
+	 * Returnes the current Protocol object
 	 * @return Protocol
 	 */
 	public static function getProtocol() {
