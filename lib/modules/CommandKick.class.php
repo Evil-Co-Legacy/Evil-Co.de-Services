@@ -28,13 +28,13 @@ class CommandKick extends CommandModule {
 
 		$access = $this->bot->getAccess($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
 		if ($access < $this->bot->getNeededAccess($target, $this->originalName)) {
-			return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
+			throw new PermissionDeniedException();
 		}
 
 		if (count($messageEx) == 2) {
 			// check target access
 			if ($access < $this->bot->getAccess($target, Services::getUserManager()->getUserByNick($messageEx[1])->accountname))
-				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
+				throw new PermissionDeniedException();
 			else
 				Services::getConnection()->getProtocol()->sendKick($this->bot->getUuid(), $target, $messageEx[1], $user->getNick());
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
@@ -46,7 +46,7 @@ class CommandKick extends CommandModule {
 			// check target access
 			// todo: abort when target has no account
 			if ($access < $this->bot->getAccess($target, Services::getUserManager()->getUserByNick($username)->accountname))
-				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
+				throw new PermissionDeniedException();
 			else
 				Services::getConnection()->getProtocol()->sendKick($this->bot->getUuid(), $target, $username, $user->getNick().': '.implode(' ', $messageEx));
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));

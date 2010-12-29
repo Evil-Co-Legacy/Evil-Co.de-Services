@@ -35,7 +35,7 @@ class CommandCunregister extends CommandModule {
 		}
 		$access = $this->bot->getAccess($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
 		if ($access < 500) {
-			return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
+			throw new PermissionDeniedException();
 		}
 		$sql = "SELECT
 				unregistercode

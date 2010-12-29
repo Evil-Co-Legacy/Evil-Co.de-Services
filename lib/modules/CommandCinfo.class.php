@@ -40,7 +40,9 @@ class CommandCinfo extends CommandModule {
 			$row = Services::getDB()->getFirstRow($sql);
 			$this->bot->sendMessage($user->getUuid(), 'Time: '.date('d.m.Y H:i:s', $row['time']));
 			$this->bot->sendMessage($user->getUuid(), 'Registrar: '.$row['accountname']);
-			
+		}
+		else {
+			throw new SyntaxErrorException();
 		}
 	}
 }
