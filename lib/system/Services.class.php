@@ -11,7 +11,7 @@ require_once(SDIR.'lib/system/user/BotManager.class.php');
 require_once(SDIR.'lib/system/irc/ChannelManager.class.php');
 require_once(SDIR.'lib/system/configuration/Configuration.class.php');
 require_once(SDIR.'lib/system/event/EventHandler.class.php');
-require_once(SDIR.'lib/system/irc/IRCConnection.class.php');
+require_once(SDIR.'lib/system/irc/Connection.class.php');
 require_once(SDIR.'lib/system/language/LanguageManager.class.php');
 require_once(SDIR.'lib/system/module/ModuleManager.class.php');
 require_once(SDIR.'lib/system/irc/Protocol.class.php');
