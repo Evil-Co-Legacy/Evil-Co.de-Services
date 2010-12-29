@@ -1,5 +1,5 @@
 <?php
-// wcf imports
+// imports
 require_once(SDIR.'lib/system/database/MySQLDatabase.class.php');
 require_once(SDIR.'lib/system/database/DatabaseException.class.php');
 
