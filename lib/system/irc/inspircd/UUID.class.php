@@ -2,7 +2,7 @@
 /**
  * Manages UUIDs
  *
- * @author		Tim Düsterhus
+ * @author		Tim DÃ¼sterhus
  * @copyright	2010 DEVel Fusion
  */
 class UUID {
