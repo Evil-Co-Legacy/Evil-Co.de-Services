@@ -1,7 +1,7 @@
 <?php
 // imports
 require_once(SDIR.'lib/system/user/AbstractUserType.class.php');
-require_once(SDIR.'lib/system/user/AbstractUserTypeManager.class.php');
+require_once(SDIR.'lib/system/user/UserTypeManager.class.php');
 
 /**
  * Manages a special type of users
