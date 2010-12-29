@@ -130,7 +130,7 @@ abstract class BotModule implements Module {
 		$inputEx = explode(' ', $message);
 
 		if (!isset($inputEx[1])) {
-			$this->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'bot.global.help', $this->getNick()));
+			$this->sendMessage($user->getUuid(), COLOR_BOLD.COLOR_UNDERLINE.Services::getLanguage()->get($user->languageID, 'bot.global.help', $this->getNick()).COLOR_UNDERLINE.COLOR_BOLD);
 			$longestCommandName = 0;
 
 			foreach($this->commands as $key => $command) {
