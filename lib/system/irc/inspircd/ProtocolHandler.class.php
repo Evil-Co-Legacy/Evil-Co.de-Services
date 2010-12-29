@@ -55,9 +55,9 @@ class ProtocolHandler {
 				$modes .= $inputEx[$activeIndex];
 				$activeIndex++;
 			}
-
+			
 			// generate userlist
-			$userListString = substr($input, (stripos($input, ',') - 1));
+			$userListString = substr($input, (stripos($input, ':') + 1));
 			$userListString = trim($userListString);
 			$userList = array();
 
@@ -98,6 +98,10 @@ class ProtocolHandler {
 			// join users to channel
 			$chan->join($userList);
 		}
+	}
+	
+	public static function FTOPIC($input, $inputEx) {
+		
 	}
 	
 	/**
