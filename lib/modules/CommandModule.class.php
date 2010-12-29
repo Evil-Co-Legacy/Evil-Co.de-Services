@@ -1,13 +1,13 @@
 <?php
 // imports
-require_once(SDIR.'lib/modules/Module.class.php');
+require_once(SDIR.'lib/modules/AbstractModule.class.php');
 
 /**
  * Defines default methods for commands
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
-abstract class CommandModule implements Module {
+abstract class CommandModule extends AbstractModule {
 
 	/**
 	 * Contains the bot instance
@@ -46,9 +46,12 @@ abstract class CommandModule implements Module {
 	 * @param	BotModule	$bot
 	 * @param	string		$name
 	 */
-	public function __construct(&$bot, $name, $appearInHelp = true) {
+	public function __construct(&$bot, $name, $appearInHelp = true, $data = array()) {
+		parent::__construct($data);
+		
+		// handle additional arguments
 		$this->commandName = strtoupper($name);
-		$this->bot = &$bot;
+		$this->bot = $bot;
 		$this->appearInHelp = $appearInHelp;
 		$this->registerEvents();
 	}
@@ -74,20 +77,6 @@ abstract class CommandModule implements Module {
 		// TODO: Add more match types here
 
 		return false;
-	}
-
-	/**
-	 * @see	Module::registerEvents()
-	 */
-	public function registerEvents() {
-		// nothing to do here
-	}
-
-	/**
-	 * Registers the command
-	 */
-	public static final function registerCommand() {
-		// TODO: Implement this method ...
 	}
 }
 ?>
