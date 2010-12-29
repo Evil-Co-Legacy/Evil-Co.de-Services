@@ -286,9 +286,9 @@ class Services {
 			}
 			
 			if($type == 'error')
-				throw new SystemException("Error in file ".$errFile." on line ".$errLine." (".$errNo."): ".$errMessage);
+				throw new SystemException("Error in file ".$errFile." on line ".$errLine." (".$errorNo."): ".$errMessage);
 			elseif ($type == 'warning' or $type == 'notice')
-				throw new RecoverableException("Error in file ".$errFile." on line ".$errLine." (".$errNo."): ".$errMessage);
+				throw new RecoverableException("Error in file ".$errFile." on line ".$errLine." (".$errorNo."): ".$errMessage);
 		}
 	}
 	
