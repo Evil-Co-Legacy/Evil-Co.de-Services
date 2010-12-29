@@ -35,8 +35,7 @@ class CommandEmail extends CommandModule {
 			$this->bot->email(Services::getUserManager()->getUser($user->getUuid())->accountname, $email);
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
 		} else {
-			// send syntax hint
-			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.syntaxHint'));
+			throw new SyntaxErrorException();
 		}
 	}
 }

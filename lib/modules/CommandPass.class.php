@@ -39,8 +39,7 @@ class CommandPass extends CommandModule {
 			$this->bot->pass(Services::getUserManager()->getUser($user->getUuid())->accountname, $newPassword);
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
 		} else {
-			// send syntax hint
-			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.syntaxHint'));
+			throw new SyntaxErrorException();
 		}
 	}
 }

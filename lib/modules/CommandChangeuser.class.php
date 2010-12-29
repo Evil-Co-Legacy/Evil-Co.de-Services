@@ -28,7 +28,7 @@ class CommandChangeuser extends CommandModule {
 
 		$access = $this->bot->getAccess($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
 		if ($access < $this->bot->getNeededAccess($target, 'access')) {
-			return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
+			throw new PermissionDeniedException();
 		}
 
 		if (count($messageEx) == 3) {
@@ -39,7 +39,7 @@ class CommandChangeuser extends CommandModule {
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.tooHigh'));
 			}
 			if ($access <= $this->bot->getAccess($target, Services::getUserManager()->getUserByNick($messageEx[1])->accountname)) {
-				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
+				throw new PermissionDeniedException();
 			}
 			$authServ = Services::getModuleManager()->lookupModule('AuthServ');
 			$userID = call_user_func(array($authServ, 'getUserID'), $messageEx[1]);
@@ -58,7 +58,7 @@ class CommandChangeuser extends CommandModule {
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
 		}
 		else {
-			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.syntaxHint'));
+			throw new SyntaxErrorException();
 		}
 	}
 }

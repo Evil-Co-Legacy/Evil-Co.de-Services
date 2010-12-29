@@ -37,8 +37,7 @@ class CommandLoadModule extends CommandModule {
 				$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.cannotLoad', $ex->getMessage()));
 			}
 		} else {
-			// send syntax hint
-			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.syntaxHint'));
+			throw new SyntaxErrorException();
 		}
 	}
 }

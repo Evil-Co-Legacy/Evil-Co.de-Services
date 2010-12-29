@@ -27,7 +27,7 @@ class CommandMode extends CommandModule {
 		
 		$access = $this->bot->getAccess($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
 		if ($access < $this->bot->getNeededAccess($target, $this->originalName)) {
-			return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
+			throw new PermissionDeniedException();
 		}
 		
 		if (count($messageEx) == 1) {

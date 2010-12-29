@@ -28,7 +28,7 @@ class CommandListuser extends CommandModule {
 
 		$access = $this->bot->getAccess($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
 		if ($access < $this->bot->getNeededAccess($target, 'access')) {
-			return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
+			throw new PermissionDeniedException();
 		}
 
 		if (count($messageEx) == 1) {
@@ -50,7 +50,7 @@ class CommandListuser extends CommandModule {
 			}
 		}
 		else {
-			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.syntaxHint'));
+			throw new SyntaxErrorException();
 		}
 	}
 }

@@ -30,15 +30,16 @@ class CommandJoin extends CommandModule {
 			// get channel name
 			$channel = $messageEx[1];
 			// avoid empty strings
-			if (empty($channel)) $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.syntaxHint'));
+			if (empty($channel)) {
+				throw new SyntaxErrorException();
+			}
 			// add the #
 			if ($channel{0} != '#') $channel = '#'.$channel;
 			
 			$this->bot->join($channel);
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success', $channel));
 		} else {
-			// send syntax hint
-			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.syntaxHint'));
+			throw new SyntaxErrorException();
 		}
 	}
 }
