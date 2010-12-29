@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This exception will thrown if a user makes a mistake at sending commands or other things
+ * @author		Johannes Donath
+ * @copyright	2010 DEVel Fusion
+ * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ */
 class UserException extends SystemException {
 	
 	/**
