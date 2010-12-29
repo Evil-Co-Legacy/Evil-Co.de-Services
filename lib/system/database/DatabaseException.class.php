@@ -9,7 +9,7 @@ require_once(SDIR.'lib/system/database/Database.class.php');
  * @copyright	2001-2009 WoltLab GmbH
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class DatabaseException extends SystemException {
+class DatabaseException extends RecoverableException {
 	protected $errorNumber;
 	protected $errorDesc;
 	protected $sqlVersion = null;
