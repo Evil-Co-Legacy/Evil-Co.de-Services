@@ -9,6 +9,19 @@
 class SystemException extends Exception {
 	
 	/**
+	 * @see Exception::getTraceAsString
+	 */
+	public function getTraceAsString() {
+		$string = parent::getTraceAsString();
+		
+		// replace database shit
+		$string = preg_replace("~Database->__construct\(.*\)~", "Database->__construct(...)", $string);
+		$string = preg_replace("~mysqli->mysqli\(.*\)~", "mysqli->mysqli(.*)", $string);
+		
+		return $string;
+	}
+	
+	/**
 	 * Sends a debug log with exception data
 	 */
 	public function sendDebugLog() {
