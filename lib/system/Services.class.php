@@ -276,7 +276,20 @@ class Services {
 	 * @param	integer	$errLine
 	 */
 	public static function handleError($errNo, $errMessage, $errFile, $errLine) {
-		throw new Exception("Error in file ".$errFile." on line ".$errLine." (".$errNo."): ".$errMessage);
+		if (error_reporting() != 0) {
+			$type = 'error';
+			switch ($errorNo) {
+				case 2: $type = 'warning';
+					break;
+				case 8: $type = 'notice';
+					break;
+			}
+			
+			if($type == 'error')
+				throw new SystemException("Error in file ".$errFile." on line ".$errLine." (".$errNo."): ".$errMessage);
+			elseif ($type == 'warning' or $type == 'notice')
+				throw new RecoverableException("Error in file ".$errFile." on line ".$errLine." (".$errNo."): ".$errMessage);
+		}
 	}
 	
 	/**
