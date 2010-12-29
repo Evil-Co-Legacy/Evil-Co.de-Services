@@ -45,7 +45,7 @@ class UUID {
 	 *
 	 * @return	string
 	 */
-	public function generate() {
+	public function generate($prefix = null) {
 		// get rest
 		$rest = self::$userID++;
 		$uuid = '';
@@ -55,6 +55,9 @@ class UUID {
 			$rest = floor($rest / 26);
 		} while ($rest > 0);
 		$uuid = str_pad($uuid, 6, 'A', STR_PAD_LEFT);
+		
+		// handle prefix
+		if ($prefix !== null) $uuid = $prefix.$uuid;
 		
 		return $uuid;
 	}
