@@ -18,6 +18,12 @@ function __autoload($className) {
 		require_once(SDIR.'lib/utils/'.$className.'.class.php');
 		return;
 	}
+	
+	// autoload exceptions
+	if (file_exists(SDIR.'lib/system/exception/'.$className.'.class.php')) {
+		require_once(SDIR.'lib/system/exception/'.$className.'.class.php');
+		return;
+	}
 }
 
 /**
