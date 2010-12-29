@@ -7,24 +7,11 @@ define('DEBUG', true);
 
 // imports
 require_once(SDIR.'lib/core.functions.php');
-<<<<<<< HEAD
-<<<<<<< HEAD
 require_once(SDIR.'lib/system/user/BotManager.class.php');
 require_once(SDIR.'lib/system/irc/channel/ChannelManager.class.php');
 require_once(SDIR.'lib/system/configuration/Configuration.class.php');
-require_once(SDIR.'lib/system/irc/Connection.class.php');
-require_once(SDIR.'lib/system/event/EventHandler.class.php');
-=======
-require_once(SDIR.'lib/color.inc.php');
-require_once(SDIR.'lib/system/configuration/Configuration.class.php');
 require_once(SDIR.'lib/system/event/EventHandler.class.php');
 require_once(SDIR.'lib/system/irc/IRCConnection.class.php');
->>>>>>> 8ce4029415f2d65bab0b57e7a6518a183c8710fa
-=======
-require_once(SDIR.'lib/system/configuration/Configuration.class.php');
-require_once(SDIR.'lib/system/event/EventHandler.class.php');
-require_once(SDIR.'lib/system/irc/Connection.class.php');
->>>>>>> parent of 15a5f48... Revert "Merge remote branch 'origin/2.0'"
 require_once(SDIR.'lib/system/language/LanguageManager.class.php');
 require_once(SDIR.'lib/system/module/ModuleManager.class.php');
 require_once(SDIR.'lib/system/user/UserManager.class.php');
