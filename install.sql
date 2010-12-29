@@ -111,6 +111,10 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(57, 1, 'comma
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(58, 2, 'command.cinfo', 'Zeigt informationen über einen Channel an.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(59, 1, 'bot.global.help', 'Help for %s');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(60, 2, 'bot.global.noSuchCommand', 'Hilfe für %s');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(61, 1, 'command.unregister', 'Deletes an AuthServ-account.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(62, 2, 'command.unregister', 'Löscht einen AuthServ-Account.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(63, 1, 'command.shutdown', 'Shuts the services down.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(64, 2, 'command.shutdown', 'Fährt die services herunter.');
 
 
 -- --------------------------------------------------------
