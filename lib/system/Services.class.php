@@ -297,12 +297,14 @@ class Services {
 	 * @param	Exception	$ex
 	 */
 	public static function handleException(Exception $ex) {
-		print("\n\n\n");
-		print($ex);
-		print("\n\n");
-
-		// call connection shutdown method
-		if (self::getConnection() !== null and self::getConnection()->getProtocol() !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage());
+		if ($ex instanceof SystemException) {
+			$ex->sendDebugLog();
+		}
+		
+		if (!($ex instanceof RecoverableException) and !($ex instanceof UserException)) {
+			// call connection shutdown method
+			if (self::getConnection() !== null and self::getConnection()->getProtocol() !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage());
+		}
 	}
 }
 ?>
