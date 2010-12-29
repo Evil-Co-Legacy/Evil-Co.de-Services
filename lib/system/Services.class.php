@@ -275,7 +275,7 @@ class Services {
 	 * @param	string	$errFile
 	 * @param	integer	$errLine
 	 */
-	public static function handleError($errNo, $errMessage, $errFile, $errLine) {
+	public static function handleError($errorNo, $errMessage, $errFile, $errLine) {
 		if (error_reporting() != 0) {
 			$type = 'error';
 			switch ($errorNo) {
