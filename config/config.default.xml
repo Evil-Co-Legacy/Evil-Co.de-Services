@@ -95,15 +95,6 @@
 		<dbname>evilcode_services</dbname>
 	</database>
 	
-	<user>
-		<!-- 
-			[REQUIRED] Default Language
-			The ID of the language that should used by default
-			All languageIDs are located in 'language'-Table in your database
-		 -->
-		<language>1</language>
-	</user>
-	
 	<!-- 
 		[OPTIONAL] NickServ
 		All options in this block are optional!
