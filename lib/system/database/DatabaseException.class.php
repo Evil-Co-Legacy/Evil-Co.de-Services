@@ -26,7 +26,7 @@ class DatabaseException extends RecoverableException {
 		$this->errorNumber 	= $db->getErrorNumber();
 		$this->errorDesc	= $db->getErrorDesc();
 		$this->DBType		= $db->getDBType();
-		$this->db 		= $db;
+		$this->db 			= $db;
 		
 		parent::__construct($message, $this->errorNumber);
 	}
