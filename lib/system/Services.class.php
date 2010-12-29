@@ -73,6 +73,12 @@ class Services {
 	protected static $moduleManagerObj = null;
 	
 	/**
+	 * Contains the Protocol object
+	 * @var Protocol
+	 */
+	protected static $protocolObj = null;
+	
+	/**
 	 * Contains the UserManager object
 	 * @var UserManager
 	 */
