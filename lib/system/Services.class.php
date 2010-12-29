@@ -1,7 +1,7 @@
 <?php
 // defines
 define('IRCD', 'inspircd');
-define('SERVICES_VERSION', '1.0.0 Alpha 1');
+define('SERVICES_VERSION', '2.0.0 Alpha 1');
 // Uncomment the following to enable debugging
 define('DEBUG', true);
 
