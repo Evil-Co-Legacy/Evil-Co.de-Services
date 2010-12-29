@@ -103,6 +103,14 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(49, 1, 'comma
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(50, 2, 'command.changeuser.tooHigh', 'Das Zugriffslevel ist zu hoch.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(51, 1, 'command.cunregister.code', 'Use that command to unregister the channel: !unregister %s');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(52, 2, 'command.cunregister.code', 'Benutze folgenden Befehl um den Channel zu löschen: !unregister %s');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(53, 1, 'command.cunregister', 'Removes ChanServ from that channel.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(54, 2, 'command.cunregister', 'Entfernt ChanServ aus dem channel.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(55, 1, 'command.kick', 'Kicks a user.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(56, 2, 'command.kick', 'Kickt einen Benutzer.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(57, 1, 'command.cinfo', 'Shows information about a channel.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(58, 2, 'command.cinfo', 'Zeigt informationen über einen Channel an.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(59, 1, 'bot.global.help', 'Help for %s');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(60, 2, 'bot.global.noSuchCommand', 'Hilfe für %s');
 
 
 -- --------------------------------------------------------
