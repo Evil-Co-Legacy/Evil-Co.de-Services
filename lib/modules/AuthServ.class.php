@@ -6,7 +6,6 @@ require_once(SDIR.'lib/modules/BotModule.class.php');
  *
  * @author		Tim Düsterhus
  * @copyright	2010 DEVel Fusion
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class AuthServ extends BotModule {
 	

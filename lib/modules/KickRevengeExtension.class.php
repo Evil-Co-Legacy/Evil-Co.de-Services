@@ -6,7 +6,6 @@ require_once(SDIR.'lib/modules/ExtensionModule.class.php');
  * Listens on KICK commands and kicks users that aren't allowed to kick other users
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class KickRevengeExtension extends ExtensionModule {
 
