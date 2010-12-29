@@ -88,26 +88,6 @@
 		</servers>
 	</memcache>
 	
-	<modules>
-		<!-- 
-			[REQUIRED] Safe Mode
-			If this is enabled modules will run in safe mode
-		 -->
-		<safe_mode>0</safe_mode>
-		
-		<!-- 
-			[REQUIRED] Allow URL fopen()
-			If this is disabled modules aren't able to access urls via fopen()
-		 -->
-		<allow_url_fopen>1</allow_url_fopen>
-		
-		<!-- 
-			[REQUIRED] Disabled Functions
-			All listed functions aren't available in modules
-		 -->
-		<disable_functions>exec,shell_exec,passthru,system</disable_functions>
-	</modules>
-	
 	<database>
 		<!-- 
 			[REQUIRED] Database Driver
