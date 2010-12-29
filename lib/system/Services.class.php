@@ -302,8 +302,11 @@ class Services {
 		
 		// Call Protocol::handleException()
 		if ($ex instanceof ProtocolException) self::$protocolObj->handleException($ex);
-		
-		// call shutdown methods if the given exception is recoverable (UserExceptions and RecoverableExceptions)
+
+		// Call Connection::handleException()
+		if ($ex instanceof ConnectionException) self::$ircObj->handleException($ex);
+		 
+		// Call shutdown methods if the given exception is recoverable (UserExceptions and RecoverableExceptions)
 		if (!($ex instanceof RecoverableException) and !($ex instanceof UserException)) {
 			// call connection shutdown method
 			if (self::getConnection() !== null and self::getConnection()->getProtocol() !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage());
