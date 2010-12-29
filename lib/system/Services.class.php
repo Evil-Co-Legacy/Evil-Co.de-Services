@@ -147,10 +147,10 @@ class Services {
 		$db = self::getConfiguration()->get('database');
 
 		// validate
-		if (!isset($db['driver'], $db['hostname'], $db['username'], $db['password'], $db['dbname'])) throw new Exception("Invalid Database configuration!");
+		if (!isset($db['driver'], $db['hostname'], $db['username'], $db['password'], $db['dbname'])) throw new SystemException("Invalid Database configuration!");
 
 		// try to find database driver
-		if (!file_exists(SDIR.'lib/system/database/'.$db['driver'].'Database.class.php')) throw new Exception("Invalid database driver: ".$db['driver']);
+		if (!file_exists(SDIR.'lib/system/database/'.$db['driver'].'Database.class.php')) throw new SystemException("Invalid database driver: ".$db['driver']);
 
 		// get drivers classname
 		$className = $db['driver'].'Database';
@@ -159,7 +159,7 @@ class Services {
 		require_once(SDIR.'lib/system/database/'.$className.'.class.php');
 
 		// create new instance
-		self::$dbObj = new $className($db['dbname'], $db['username'], $db['password'], $db['hostname'], 'UTF8');
+		self::$dbObj = new $className($db['hostname'], $db['username'], $db['password'], $db['dbname'], 'UTF-8');
 	}
 
 	/**
