@@ -1,4 +1,11 @@
 <?php
+/**
+ * Starts the services and restarts them if they crash
+ * @author		Johannes Donath
+ * @copyright	2010 DEVel Fusion
+ * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ */
+
 // defines
 define('SDIR', dirname(__FILE__).'/');
 
