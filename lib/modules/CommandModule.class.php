@@ -6,6 +6,7 @@ require_once(SDIR.'lib/modules/Module.class.php');
  * Defines default methods for commands
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
+ * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 abstract class CommandModule implements Module {
 

@@ -6,6 +6,7 @@ require_once(SDIR.'lib/modules/CommandModule.class.php');
  * Sets access-levels with ChanServ
  * @author		Tim Düsterhus
  * @copyright	2010 DEVel Fusion
+ * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class CommandAccess extends CommandModule {
 
