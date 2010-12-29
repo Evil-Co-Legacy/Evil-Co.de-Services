@@ -34,6 +34,13 @@
 		 <numeric>00B</numeric>
 	 	 
 	 	 <!-- 
+	 	 	[REQUIRED] Protocol
+	 	 	The protocol that should used
+	 	 	Available are: inspircd
+	 	 -->
+	 	 <protocol>inspircd</protocol>
+	 	 
+	 	 <!-- 
 	 	 	[REQUIRED] Logchan
 	 	 	The channel where services should announce log messages
 	 	  -->
