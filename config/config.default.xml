@@ -174,7 +174,7 @@
 		 	[OPTIONAL] Required Operator Level for Channel Registrations
 		 	The given integer defines the minimum operator level for channel registrations
 		  -->
-		  <requiredregistrationaccountlevel>200</requiredregistrationaccountlevel>
+		  <requiredregistrationaccountlevel>0</requiredregistrationaccountlevel>
 		 
 		 <!-- 
 		 	[OPTIONAL] Channel Name Pattern
