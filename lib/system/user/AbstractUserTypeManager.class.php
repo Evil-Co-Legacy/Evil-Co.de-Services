@@ -68,7 +68,7 @@ abstract class AbstractUserTypeManager implements UserTypeManager, Iterator {
 	}
 	
 	/**
-	 * @see Ikarus::key()
+	 * @see Iterator::key()
 	 */
 	public function key() {
 		// get keys
@@ -81,14 +81,14 @@ abstract class AbstractUserTypeManager implements UserTypeManager, Iterator {
 	}
 	
 	/**
-	 * @see Ikarus::next()
+	 * @see Iterator::next()
 	 */
 	public function next() {
 		$this->userListPointer++;
 	}
 	
 	/**
-	 * @see Ikarus::valid()
+	 * @see Iterator::valid()
 	 */
 	public function valid() {
 		// get keys
