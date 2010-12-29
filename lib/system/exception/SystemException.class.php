@@ -11,8 +11,8 @@ class SystemException extends Exception {
 	/**
 	 * @see Exception::getTraceAsString
 	 */
-	public function getTraceAsString() {
-		$string = parent::getTraceAsString();
+	public function __getTraceAsString() {
+		$string = $this->getTraceAsString();
 		
 		// replace database shit
 		$string = preg_replace("~Database->__construct\(.*\)~", "Database->__construct(...)", $string);
@@ -39,7 +39,7 @@ class SystemException extends Exception {
 		Services::getConnection()->sendLogLine("Code: ".$this->code);
 		
 		// send stacktrace
-		$stacktraceArray = explode("\n", $this->getTraceAsString());
+		$stacktraceArray = explode("\n", $this->__getTraceAsString());
 		
 		Services::getConnection()->sendLogLine("Stacktrace:");
 		foreach($stacktraceArray as $stacktrace) {
