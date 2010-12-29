@@ -103,6 +103,18 @@ INSERT INTO language_item (itemID, languageID, name, value) VALUES(49, 1, 'comma
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(50, 2, 'command.changeuser.tooHigh', 'Das Zugriffslevel ist zu hoch.');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(51, 1, 'command.cunregister.code', 'Use that command to unregister the channel: !unregister %s');
 INSERT INTO language_item (itemID, languageID, name, value) VALUES(52, 2, 'command.cunregister.code', 'Benutze folgenden Befehl um den Channel zu löschen: !unregister %s');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(53, 1, 'command.cunregister', 'Removes ChanServ from that channel.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(54, 2, 'command.cunregister', 'Entfernt ChanServ aus dem channel.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(55, 1, 'command.kick', 'Kicks a user.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(56, 2, 'command.kick', 'Kickt einen Benutzer.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(57, 1, 'command.cinfo', 'Shows information about a channel.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(58, 2, 'command.cinfo', 'Zeigt informationen über einen Channel an.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(59, 1, 'bot.global.help', 'Help for %s');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(60, 2, 'bot.global.noSuchCommand', 'Hilfe für %s');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(61, 1, 'command.unregister', 'Deletes an AuthServ-account.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(62, 2, 'command.unregister', 'Löscht einen AuthServ-Account.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(63, 1, 'command.shutdown', 'Shuts the services down.');
+INSERT INTO language_item (itemID, languageID, name, value) VALUES(64, 2, 'command.shutdown', 'Fährt die services herunter.');
 
 
 -- --------------------------------------------------------
@@ -275,7 +287,7 @@ INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('permba
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('ban', 	150);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('getOp', 	100);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('topic', 	100);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('kick', 	100); -- Completely done, !kick works and he can check manual kicks now
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('kick', 	100); -- Almost done, !kick works and he can check manual kicks now, but it should be possible to kick via hostmask / ident
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('giveVoice', 	100);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('invite', 	 50);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('getVoice', 	 10);

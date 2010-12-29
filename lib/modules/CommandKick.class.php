@@ -45,6 +45,7 @@ class CommandKick extends CommandModule {
 			$username = $messageEx[1];
 			unset($messageEx[1]);
 			// check target access
+			// todo: abort when target has no account
 			if ($access < $this->bot->getAccess($target, Services::getUserManager()->getUserByNick($username)->accountname))
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.permissionDenied'));
 			else
