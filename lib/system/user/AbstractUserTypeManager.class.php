@@ -30,19 +30,14 @@ abstract class AbstractUserTypeManager implements UserTypeManager, Iterator {
 	protected $userType = 'AbstractUserType';
 
 	/**
-	 * Adds a new user to userlist
-	 * @param	mixed			$userID
-	 * @param	array<mixed>	$data
-	 * @return void
+	 * @see UserTypeManager::addUser()
 	 */
 	public function addUser($userID, $data = array()) {
 		$this->userList[$userID] = new $this->userType($userID, $data);
 	}
 	
 	/**
-	 * Returnes the user with ID $userID
-	 * @param	mixed	$userID
-	 * @return UserType
+	 * @see UserTypeManager::getUser()
 	 */
 	public function getUser($userID) {
 		if (isset($this->userList[$userID])) return $this->userList[$userID];
@@ -50,9 +45,7 @@ abstract class AbstractUserTypeManager implements UserTypeManager, Iterator {
 	}
 	
 	/**
-	 * Removes a user from userlist
-	 * @param	mixed	$userID
-	 * @return void
+	 * @see UserTypeManager::removeUser()
 	 */
 	public function removeUser($userID) {
 		if (isset($this->userList[$userID])) unset($this->userList[$userID]);
