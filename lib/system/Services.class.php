@@ -177,6 +177,9 @@ class Services {
 		self::$moduleManagerObj = new ModuleManager();
 	}
 	
+	/**
+	 * Creates a new Protocol instance
+	 */
 	protected function initProtocol() {
 		self::$protocolObj = new Protocol();
 	}
