@@ -53,7 +53,6 @@ abstract class CommandModule extends AbstractModule {
 		$this->commandName = strtoupper($name);
 		$this->bot = $bot;
 		$this->appearInHelp = $appearInHelp;
-		$this->registerEvents();
 	}
 
 	/**

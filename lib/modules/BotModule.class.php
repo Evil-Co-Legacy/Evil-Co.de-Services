@@ -50,9 +50,6 @@ abstract class BotModule extends AbstractModule {
 		$this->bot = $bot;
 		$this->trigger = $trigger;
 		$this->data = $data;
-		
-		// call init methods
-		$this->registerEvents();
 
 		// join channel
 		$this->join(Services::getConnection()->getProtocol()->getServiceChannel());
