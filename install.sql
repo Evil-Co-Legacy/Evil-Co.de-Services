@@ -287,7 +287,7 @@ INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('permba
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('ban', 	150);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('getOp', 	100);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('topic', 	100);
-INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('kick', 	100); -- Completely done, !kick works and he can check manual kicks now
+INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('kick', 	100); -- Almost done, !kick works and he can check manual kicks now, but it should be possible to kick via hostmask / ident
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('giveVoice', 	100);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('invite', 	 50);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('getVoice', 	 10);
