@@ -1,6 +1,6 @@
 <?php
 // imports
-require_once(SDIR.'lib/modules/Module.class.php');
+require_once(SDIR.'lib/modules/AbstractModule.class.php');
 
 /**
  * Defines default methods for bots
@@ -8,7 +8,7 @@ require_once(SDIR.'lib/modules/Module.class.php');
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
-abstract class BotModule implements Module {
+abstract class BotModule implements AbstractModule {
 
 	/**
 	 * Contains the name of this bot (This must defined!)
@@ -43,9 +43,15 @@ abstract class BotModule implements Module {
 	 *
 	 * @param	UserType	$bot
 	 */
-	public function __construct(UserType $bot, $trigger = '') {
+	public function __construct(UserType $bot, $trigger = '',  $data = array()) {
+		parent::__construct($data);
+		
+		// handle additional parameters
 		$this->bot = $bot;
 		$this->trigger = $trigger;
+		$this->data = $data;
+		
+		// call init methods
 		$this->registerEvents();
 
 		// join channel
@@ -72,22 +78,27 @@ abstract class BotModule implements Module {
 	public final function handleLine($user, $target, $message) {
 		$found = false;
 
+		// loop through commands array
 		foreach($this->commands as $key => $command) {
-			if ($this->commands[$key]->matches($message) and $this->getPermissions($user, $command->neededPermissions)) {
-				try {
-					$this->commands[$key]->execute($user, $target, $message);
-				} catch (UserException $ex) {
-					$ex->sendMessage();
-					if (defined('DEBUG')) $ex->sendDebugLog();
+			if ($this->commands[$key]->matches($message)) {
+				if ($this->getPermissions($user, $command->neededPermissions)) {
+					// catch UserExceptions
+					try {
+						$this->commands[$key]->execute($user, $target, $message);
+					} catch (UserException $ex) {
+						$ex->sendMessage();
+						if (defined('DEBUG')) $ex->sendDebugLog();
+					}
+				} else {
+					// send permission denied message
+					$this->sendMessage($user->getUuid(), Services::getLanguage()->get($user->language, 'bot.global.permissionDenied'));
 				}
 				
-				$found = true;
-			} elseif ($this->commands[$key]->matches($message) and !$this->getPermissions($user, $command->neededPermissions)) {
-				$this->sendMessage($user->getUuid(), Services::getLanguage()->get($user->language, 'bot.global.permissionDenied'));
 				$found = true;
 			}
 		}
 
+		// command not found
 		if (!$found) {
 			// handle help command
 			$inputEx = explode(' ', $message);
@@ -104,8 +115,20 @@ abstract class BotModule implements Module {
 	 * @param	CommandModule	$command
 	 * @return	void
 	 */
-	public function registerCommand($command) {
+	public function bind($command) {
 		$this->commands[] = $command;
+	}
+	
+	/**
+	 * Unbinds a command
+	 * 
+	 * @param	string	$commandName
+	 * @return void
+	 */
+	public function unbind($commandName) {
+		foreach($this->commands as $key => $command) {
+			if ($command->commandName == $commandName) unset($this->commands[$key]);
+		}
 	}
 
 	/**
@@ -118,11 +141,10 @@ abstract class BotModule implements Module {
 	/**
 	 * Registers a bot (Sas the module manager that this module is available)
 	 *
+	 * @deprecated
 	 * @return	void
 	 */
-	public static function registerBot() {
-		// TODO: Implement this function
-	}
+	public static function registerBot();
 
 	/**
 	 * Spits out the help
@@ -131,34 +153,59 @@ abstract class BotModule implements Module {
 	 * @param	string		$target
 	 * @param	string		$message
 	 * @return	void
+	 * @todo This should be an external module
 	 */
 	public function generateHelp(UserType $user, $target, $message) {
+		// split message
 		$inputEx = explode(' ', $message);
 
+		// check for index 1
 		if (!isset($inputEx[1])) {
-			$this->sendMessage($user->getUuid(), COLOR_BOLD.COLOR_UNDERLINE.Services::getLanguage()->get($user->languageID, 'bot.global.help', $this->getNick()).COLOR_UNDERLINE.COLOR_BOLD);
+			// get longest command
 			$longestCommandName = 0;
 
 			foreach($this->commands as $key => $command) {
 				if ($command->appearInHelp and strlen($command->commandName) > $longestCommandName) $longestCommandName = strlen($command->commandName);
 			}
+			
+			// create header
+			// TODO: Add a table for this
+			$this->sendMessage($user->getUuid(), MessageParser::addColorCode(COLOR_UNDERLINE, MessageParser::addColorCode(COLOR_BOLD, Services::getLanguage()->get($user->languageID, 'bot.global.help', $this->getNick()))));
 
+			// send command help
 			foreach($this->commands as $key => $command) {
 				if ($command->appearInHelp and $this->getPermissions($user, $command->neededPermissions)) {
 					$this->sendMessage($user->getUuid(), str_pad($command->commandName, ($longestCommandName + 3)).Services::getLanguage()->get($user->languageID, 'command.'.$command->originalName));
 				}
 			}
 		} else {
+			// loop through commands and find searched command
 			foreach($this->commands as $key => $command) {
 				if ($command->commandName == strtoupper($inputEx[1])) {
+					// send command name
 					$this->sendMessage($user->getUuid(), $command->commandName);
-					$this->sendMessage($user->getUuid(), COLOR_BOLD.COLOR_UNDERLINE."Syntax:".COLOR_UNDERLINE.COLOR_BOLD." ".Services::getLanguage()->get($user->languageID, 'command.'.$command->originalName.'.syntaxHint'));
-					if ($command->neededPermissions > 0) $this->sendMessage($user->getUuid(), COLOR_BOLD.Services::getLanguage()->get($user->languageID, 'bot.global.neededPermissions').COLOR_BOLD." ".$command->neededPermissions);
-					if (Services::getLanguage()->get($user->languageID, 'command.'.$command->originalName.'.description') != 'command.'.$command->originalName.'.description') $this->sendMessage($user->getUuid(), 'command.'.$command->originalName.'.description');
+					
+					// send syntax help
+					$this->sendMessage($user->getUuid(), MessageParser::addColorCode(COLOR_UNDERLINE, MessageParser::addColorCode(COLOR_BOLD, "Syntax:"))." ".Services::getLanguage()->get($user->languageID, 'command.'.$command->originalName.'.syntaxHint'));
+					
+					// add needed permissions if needed
+					if ($command->neededPermissions > 0) $this->sendMessage($user->getUuid(), MessageParser::addColorCode(COLOR_UNDERLINE, MessageParser::addColorCode(COLOR_BOLD, Services::getLanguage()->get($user->languageID, 'bot.global.neededPermissions')))." ".$command->neededPermissions);
+					
+					// add description
+					if (Services::getLanguage()->get($user->languageID, 'command.'.$command->originalName.'.description') != 'command.'.$command->originalName.'.description') {
+						// split message at newlines
+						$descriptionArray = explode("\n", Services::getLanguage()->get($user->languageID, 'command.'.$command->originalName.'.description'));
+						
+						// send each line to user
+						foreach($descriptionArray as $description) {
+							$this->sendMessage($user->getUuid(), $description);
+						}
+					}
 					return;
 				}
 			}
 
+			// send no such command message
 			$this->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'bot.global.noSuchCommand'));
 		}
 	}
@@ -203,7 +250,7 @@ abstract class BotModule implements Module {
 		if (method_exists($this->bot, $method))
 			return call_user_func_array(array($this->bot, $method), $arguments);
 
-		throw new Exception("Method '".$method."' does not exist in class ".get_class($this));
+		throw new RecoverableException("Method '".$method."' does not exist in class ".get_class($this));
 	}
 }
 ?>
