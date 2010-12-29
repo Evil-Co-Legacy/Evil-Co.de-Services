@@ -6,5 +6,5 @@
  * @copyright	2010 DEVel Fusion
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class SuccessException extends Exception { }
+class SuccessException extends SystemException { }
 ?>
