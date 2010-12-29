@@ -1,28 +1,11 @@
 <?php
 // imports
-require_once(SDIR.'lib/modules/Module.class.php');
+require_once(SDIR.'lib/modules/AbstractModule.class.php');
 
 /**
  * Defines default methods for extensions
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
-abstract class ExtensionModule implements Module {
-	
-	/**
-	 * Creates a new instance of type Command
-	 * @param	BotModule	$bot
-	 * @param	string		$name
-	 */
-	public function __construct() {
-		$this->registerEvents();
-	}
-	
-	/**
-	 * @see	Module::registerEvents()
-	 */
-	public function registerEvents() {
-		// nothing to do here
-	}
-}
+abstract class ExtensionModule extends AbstractModule { }
 ?>
