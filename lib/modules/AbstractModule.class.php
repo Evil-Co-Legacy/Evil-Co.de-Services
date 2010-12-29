@@ -22,7 +22,11 @@ abstract class AbstractModule implements Module {
 	 * @return void
 	 */
 	public function __construct($data) {
+		// handle arguments
 		$this->data = $data;
+		
+		// call init methods
+		$this->registerEvents();
 	}
 	
 	/**
