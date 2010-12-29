@@ -56,7 +56,7 @@ abstract class AbstractUserTypeManager implements UserTypeManager, Iterator {
 	 * @see Iterator::rewind()
 	 */
 	public function rewind() {
-		$this->userListPointer--;
+		$this->userListPointer = 0;
 	}
 	
 	/**
