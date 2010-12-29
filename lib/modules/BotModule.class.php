@@ -8,7 +8,7 @@ require_once(SDIR.'lib/modules/AbstractModule.class.php');
  * @author		Johannes Donath
  * @copyright	2010 DEVel Fusion
  */
-abstract class BotModule implements AbstractModule {
+abstract class BotModule extends AbstractModule {
 
 	/**
 	 * Contains the name of this bot (This must defined!)
