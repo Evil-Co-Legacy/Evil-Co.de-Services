@@ -56,7 +56,7 @@ class Services {
 
 	/**
 	 * Contains the IRCConnection object
-	 * @var	IRCConnection
+	 * @var	Connection
 	 */
 	protected static $ircObj = null;
 	
