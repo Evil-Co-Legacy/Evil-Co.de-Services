@@ -14,6 +14,6 @@ class BotUserType extends AbstractUserType {
 	 * This is just set to true. It will used to identify bots
 	 * @var boolean
 	 */
-	public final $isBot = true;
+	public $isBot = true;
 }
 ?>
