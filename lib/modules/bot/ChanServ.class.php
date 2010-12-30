@@ -38,6 +38,7 @@ class ChanServ extends BotModule {
 		$authServ = Services::getModuleManager()->lookupModule('AuthServ');
 		$userID = call_user_func(array($authServ, 'getUserID'), $accountname);
 		if (!$userID) return 0;
+		
 		$sql = "SELECT
 				accessLevel
 			FROM
@@ -146,10 +147,12 @@ class ChanServ extends BotModule {
 		$authServ = Services::getModuleManager()->lookupModule('AuthServ');
 		$userID = call_user_func(array($authServ, 'getUserID'), $accountname);
 		
-		$sql = "INSERT INTO chanserv_channels (channel, modes, time, registrar, unregistercode) VALUES ('".escapeString($channel)."', '+tnr', ".time().", ".$userID.", '".StringUtil::getRandomID()."')";
+		$sql = "INSERT INTO chanserv_channels 	(channel, modes, time, registrar, unregistercode) 
+			VALUES 				('".escapeString($channel)."', '+tnr', ".time().", ".$userID.", '".StringUtil::getRandomID()."')";
 		Services::getDB()->sendQuery($sql);
 
-		$sql = "INSERT INTO chanserv_channels_to_users (channel, userID, accessLevel) VALUES ('".escapeString($channel)."', ".$userID.", 500)";
+		$sql = "INSERT INTO chanserv_channels_to_users 	(channel, userID, accessLevel) 
+			VALUES 					('".escapeString($channel)."', ".$userID.", 500)";
 		Services::getDB()->sendQuery($sql);
 
 		$values = '';
@@ -163,7 +166,8 @@ class ChanServ extends BotModule {
 			$values .= "('".escapeString($channel)."', '".$row['function']."', ".$row['accessLevel'].")";
 		}
 
-		$sql = "INSERT INTO chanserv_channel_accessLevel (channel, function, accessLevel) VALUES ".$values;
+		$sql = "INSERT INTO chanserv_channel_accessLevel (channel, function, accessLevel) 
+			VALUES 					".$values;
 		Services::getDB()->sendQuery($sql);
 		
 		// join the channel

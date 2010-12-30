@@ -4,7 +4,7 @@ require_once(SDIR.'lib/modules/BotModule.class.php');
 /**
  * Implements the AuthServ bot
  *
- * @author		Tim Düsterhus
+ * @author	Tim Düsterhus
  * @copyright	2010 DEVel Fusion
  */
 class AuthServ extends BotModule {
@@ -86,7 +86,8 @@ class AuthServ extends BotModule {
 	public function create($accountname, $password, $email) {
 		$salt = StringUtil::getRandomID();
 		$password = sha1($salt.sha1($salt.$password));
-		$sql = "INSERT INTO authserv_users (accountname, password, email, salt, time) VALUES ('".escapeString($accountname)."', '".$password."', '".escapeString($email)."', '".$salt."', ".time().")";
+		$sql = "INSERT INTO authserv_users 	(accountname, password, email, salt, time) 
+			VALUES 				('".escapeString($accountname)."', '".$password."', '".escapeString($email)."', '".$salt."', ".time().")";
 		Services::getDB()->sendQuery($sql);
 	}
 	
@@ -97,7 +98,10 @@ class AuthServ extends BotModule {
 	 * @return	void
 	 */
 	public function delete($accountname) {
-		$sql = "DELETE FROM authserv_users WHERE accountname = '".escapeString($accountname)."'";
+		$sql = "DELETE FROM 
+				authserv_users 
+			WHERE 
+				accountname = '".escapeString($accountname)."'";
 		Services::getDB()->sendQuery($sql);
 	}
 
@@ -146,7 +150,7 @@ class AuthServ extends BotModule {
 			FROM
 				authserv_users
 			WHERE
-					accountname = '".escapeString($accountname)."'";
+				accountname = '".escapeString($accountname)."'";
 		$row = Services::getDB()->getFirstRow($sql);
 
 		return $row['count'] > 0;
@@ -164,7 +168,7 @@ class AuthServ extends BotModule {
 			FROM
 				authserv_users
 			WHERE
-					email = '".escapeString($email)."'";
+				email = '".escapeString($email)."'";
 		$row = Services::getDB()->getFirstRow($sql);
 
 		return $row['count'] > 0;
@@ -182,7 +186,7 @@ class AuthServ extends BotModule {
 			FROM
 				authserv_users
 			WHERE
-					accountname = '".escapeString($accountname)."'";
+				accountname = '".escapeString($accountname)."'";
 		$row = Services::getDB()->getFirstRow($sql);
 
 		return $row['userID'];
@@ -196,11 +200,11 @@ class AuthServ extends BotModule {
 	 */
 	public static function getAccessLevel($accountname) {
 		$sql = "SELECT
-					accessLevel
-				FROM
-					authserv_users
-				WHERE
-					accountname = '".escapeString($accountname)."'";
+				accessLevel
+			FROM
+				authserv_users
+			WHERE
+				accountname = '".escapeString($accountname)."'";
 		$row = Services::getDB()->getFirstRow($sql);
 
 		// workaround ...
