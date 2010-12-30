@@ -21,6 +21,12 @@ interface ModeList {
 	public function hasMode($modeChar);
 	
 	/**
+	 * Parses the given mode string
+	 * @param	string	$string
+	 */
+	protected function parseModeString($string);
+	
+	/**
 	 * Updates the current mode string
 	 * @param	string	$modeString
 	 */
