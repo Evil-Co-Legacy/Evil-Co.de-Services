@@ -26,9 +26,9 @@ class ModuleParser {
 	 * Parses the given module file and creates a copy
 	 * @param unknown_type $filename
 	 */
-	public function parseModule($filename) {
+	public function parseModule($filename, $namespace = null) {
 		// generate namespace
-		$namespace = self::generateNamespaceID();
+		if ($namespace === null) $namespace = self::generateNamespaceID();
 		
 		// read file
 		$file = file_get_contents($filename);
