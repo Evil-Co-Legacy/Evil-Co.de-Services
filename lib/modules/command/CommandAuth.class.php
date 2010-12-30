@@ -4,8 +4,10 @@ require_once(SDIR.'lib/modules/CommandModule.class.php');
 
 /**
  * Auths the user
- * @author		Tim Düsterhus
+ *
+ * @author	Tim Düsterhus
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class CommandAuth extends CommandModule {
 
@@ -29,6 +31,7 @@ class CommandAuth extends CommandModule {
 		if (count($messageEx) == 3) {
 			$accountname = $messageEx[1];
 			$password = $messageEx[2];
+			
 			if ($this->bot->isAuthed($user->getUuid())) {
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.alreadyAuthed'));
 			}
@@ -37,6 +40,8 @@ class CommandAuth extends CommandModule {
 			}
 
 			$users = $this->bot->getUsers($accountname);
+			// inform other users
+			// TODO: FIXME
 			foreach ($users as $uuid) {
 				$this->bot->sendMessage($uuid, Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.login'));
 			}

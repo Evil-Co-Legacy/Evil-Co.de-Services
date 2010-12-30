@@ -4,8 +4,10 @@ require_once(SDIR.'lib/modules/CommandModule.class.php');
 
 /**
  * Unregisters the channel
- * @author		Tim Düsterhus
+ *
+ * @author	Tim Düsterhus
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class CommandCunregister extends CommandModule {
 
@@ -15,28 +17,22 @@ class CommandCunregister extends CommandModule {
 	public $originalName = 'cunregister';
 
 	/**
-	 * @see CommandModule::$neededPermissions
-	 */
-	public $neededPermissions = 0;
-
-	/**
 	 * @see lib/modules/CommandModule::execute()
 	 */
 	public function execute($user, $target, $message) {
 		// split message
 		$messageEx = explode(' ', $message);
-		if ($target{0} != '#') {
-			$target = $messageEx[1];
-			unset($messageEx[1]);
-			$messageEx = array_values($messageEx);
-		}
+		$this->checkTarget($target, $messageEx);
+		
 		if (!$this->bot->isRegistered($target)) {
 			return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.notRegistered'));
 		}
 		$access = $this->bot->getAccess($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
+		
 		if ($access < 500) {
 			throw new PermissionDeniedException();
 		}
+		
 		$sql = "SELECT
 				unregistercode
 			FROM
@@ -45,11 +41,11 @@ class CommandCunregister extends CommandModule {
 				channel = '".escapeString($target)."'";
 		$row = Services::getDB()->getFirstRow($sql);
 		$code = $row['unregistercode'];
+		
 		if (isset($messageEx[1])) {
 			if ($code != trim($messageEx[1])) {
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.codeWrong', $target));
 			}
-			// TODO: Validate unregistercode
 			$this->bot->unregister($target);
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success', $target));
 		}

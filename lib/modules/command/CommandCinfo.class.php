@@ -20,11 +20,7 @@ class CommandCinfo extends CommandModule {
 	public function execute($user, $target, $message) {
 		// split message
 		$messageEx = explode(' ', $message);
-		if ($target{0} != '#') {
-			$target = $messageEx[1];
-			unset($messageEx[1]);
-			$messageEx = array_values($messageEx);
-		}
+		$this->checkTarget($target, $messageEx);
 		
 		if (count($messageEx) == 1) {
 			$sql = "SELECT
@@ -38,6 +34,7 @@ class CommandCinfo extends CommandModule {
 				WHERE
 					channel = '".escapeString($target)."'";
 			$row = Services::getDB()->getFirstRow($sql);
+			// TODO: Use language
 			$this->bot->sendMessage($user->getUuid(), 'Time: '.date('d.m.Y H:i:s', $row['time']));
 			$this->bot->sendMessage($user->getUuid(), 'Registrar: '.$row['accountname']);
 		}
