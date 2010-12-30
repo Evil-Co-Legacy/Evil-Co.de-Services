@@ -15,5 +15,19 @@ class ChannelUserList extends AbstractUserTypeManager {
 	 * @see AbstractUserTypeManager::$userType
 	 */
 	protected $userType = 'ChannelUserType';
+	
+	/**
+	 * Contains the parent channel
+	 * @var	Channel
+	 */
+	protected $channel = null;
+	
+	/**
+	 * Creates a new instance of type ChannelUserList
+	 * @param	Channel	$channel
+	 */
+	public function __construct(&$channel) {
+		$this->channel = $channel;
+	}
 }
 ?>
