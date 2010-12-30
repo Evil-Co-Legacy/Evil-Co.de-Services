@@ -15,16 +15,40 @@ interface ModeList {
 	public function __construct($modeString);
 	
 	/**
+	 * Adds a mode char
+	 * @param	string	$modeChar
+	 */
+	protected function addMode($modeChar);
+	
+	/**
+	 * Returnes true if the given mode char has an argument
+	 * @param	string(1) $modeChar
+	 */
+	public static function hasArgument($modeChar);
+	
+	/**
 	 * Returnes true if the specified mode is set
 	 * @param	string(1)	$modeChar
 	 */
 	public function hasMode($modeChar);
 	
 	/**
+	 * Loads a mode from predefined location
+	 * @param	string(1)	$modeChar
+	 */
+	public static function loadMode($modeChar);
+	
+	/**
 	 * Parses the given mode string
 	 * @param	string	$string
 	 */
 	protected function parseModeString($string);
+	
+	/**
+	 * Removes a mode char
+	 * @param	string(1)	$modeChar
+	 */
+	protected function removeMode($modeChar);
 	
 	/**
 	 * Updates the current mode string
