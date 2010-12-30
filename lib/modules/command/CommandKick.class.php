@@ -4,8 +4,10 @@ require_once(SDIR.'lib/modules/CommandModule.class.php');
 
 /**
  * Kicks with ChanServ
- * @author		Tim Düsterhus
+ *
+ * @author	Tim Düsterhus
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class CommandKick extends CommandModule {
 
@@ -20,11 +22,7 @@ class CommandKick extends CommandModule {
 	public function execute($user, $target, $message) {
 		// split message
 		$messageEx = explode(' ', $message);
-		if ($target{0} != '#') {
-			$target = $messageEx[1];
-			unset($messageEx[1]);
-			$messageEx = array_values($messageEx);
-		}
+		$this->checkTarget($target, $messageEx);
 
 		$access = $this->bot->getAccess($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
 		if ($access < $this->bot->getNeededAccess($target, $this->originalName)) {
@@ -33,6 +31,7 @@ class CommandKick extends CommandModule {
 
 		if (count($messageEx) == 2) {
 			// check target access
+			// todo: abort when target has no account
 			if ($access < $this->bot->getAccess($target, Services::getUserManager()->getUserByNick($messageEx[1])->accountname))
 				throw new PermissionDeniedException();
 			else
@@ -43,6 +42,7 @@ class CommandKick extends CommandModule {
 			unset($messageEx[0]);
 			$username = $messageEx[1];
 			unset($messageEx[1]);
+			
 			// check target access
 			// todo: abort when target has no account
 			if ($access < $this->bot->getAccess($target, Services::getUserManager()->getUserByNick($username)->accountname))

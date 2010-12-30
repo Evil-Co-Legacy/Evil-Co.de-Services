@@ -3,9 +3,11 @@
 require_once(SDIR.'lib/modules/CommandModule.class.php');
 
 /**
- * Loads modules via IRC
- * @author		Johannes Donath
+ * Shuts the services down
+ *
+ * @author	Johannes Donath, Tim Düsterhus
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class CommandShutdown extends CommandModule {
 

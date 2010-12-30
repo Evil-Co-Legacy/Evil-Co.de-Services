@@ -3,9 +3,11 @@
 require_once(SDIR.'lib/modules/CommandModule.class.php');
 
 /**
- * Loads modules via IRC
- * @author		Tim Düsterhus
+ * Parts the channel
+ *
+ * @author	Tim Düsterhus
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class CommandPart extends CommandModule {
 
@@ -36,8 +38,7 @@ class CommandPart extends CommandModule {
 			// add the #
 			if ($channel{0} != '#') $channel = '#'.$channel;
 			
-			unset($messageEx[0]);
-			unset($messageEx[1]);
+			unset($messageEx[0], $messageEx[1]);
 			$message = implode(' ', $messageEx);
 			
 			$this->bot->part($channel, $message);

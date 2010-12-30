@@ -3,9 +3,11 @@
 require_once(SDIR.'lib/modules/CommandModule.class.php');
 
 /**
- * Registers the user
- * @author		Tim Düsterhus
+ * Changes password
+ *
+ * @author	Tim Düsterhus
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class CommandPass extends CommandModule {
 
@@ -36,6 +38,7 @@ class CommandPass extends CommandModule {
 			if (!$this->bot->checkCredentials($accountname, $oldPassword)) {
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.auth.invalidCredentials'));
 			}
+			
 			$this->bot->pass(Services::getUserManager()->getUser($user->getUuid())->accountname, $newPassword);
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
 		} else {

@@ -4,8 +4,10 @@ require_once(SDIR.'lib/modules/CommandModule.class.php');
 
 /**
  * Registers the user
- * @author		Tim Düsterhus
+ *
+ * @author	Tim Düsterhus
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class CommandRegister extends CommandModule {
 
@@ -40,6 +42,7 @@ class CommandRegister extends CommandModule {
 			if ($this->bot->emailExists($email)) {
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.emailExists'));
 			}
+			
 			$this->bot->create($accountname, $password, $email);
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success', $accountname));
 		} else {
