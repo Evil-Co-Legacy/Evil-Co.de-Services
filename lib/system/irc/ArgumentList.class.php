@@ -15,12 +15,6 @@ interface ArgumentList {
 	public function __construct($modeSource, $argumentString);
 	
 	/**
-	 * Parses an argument list
-	 * @param	string	$argumentString
-	 */
-	protected function parseArgumentString($argumentString);
-	
-	/**
 	 * Returnes the argument for given index
 	 * @param	integer	$index
 	 */
