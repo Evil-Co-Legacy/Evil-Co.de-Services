@@ -92,6 +92,13 @@ class ChannelManager implements Iterator {
 	}
 	
 	/**
+	 * @see Iterator::next()
+	 */
+	public function next() {
+		$this->channelPointer++;
+	}
+	
+	/**
 	 * @see Iterator::key()
 	 */
 	public function key() {
