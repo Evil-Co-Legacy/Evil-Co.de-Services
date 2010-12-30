@@ -34,11 +34,11 @@ class ChannelUserList extends AbstractUserTypeManager {
 	/**
 	 * Adds a new user to a channel
 	 * @param	mixed			$userID
-	 * @param	string			$userModes
-	 * @param	array<mixed>	$data
+	 * @param	array<mixed>		$data
+	 * * @param	string			$userModes
 	 * @return void
 	 */
-	public function addUser($userID, $userModes, $data = array()) {
+	public function addUser($userID, $data = array(), $userModes = '') {
 		parent::addUser($userID, $data);
 		$this->userList[$userID]->setModes($userModes);
 	}
