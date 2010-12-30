@@ -10,6 +10,12 @@
 class ModuleParser {
 	
 	/**
+	 * Contains the name of the dir (relative from SDIR) where cache files should stored
+	 * @var string
+	 */
+	const PARSER_DIR = 'cache/';
+	
+	/**
 	 * Contains already loaded namespaces
 	 * Note: This will only used to find existing namespaces
 	 * @var array<string>
