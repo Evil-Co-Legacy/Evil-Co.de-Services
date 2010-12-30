@@ -15,24 +15,17 @@ class CommandCregister extends CommandModule {
 	public $originalName = 'cregister';
 
 	/**
-	 * @see CommandModule::$neededPermissions
-	 */
-	public $neededPermissions = 0;
-
-	/**
 	 * @see lib/modules/CommandModule::execute()
 	 */
 	public function execute($user, $target, $message) {
 		// split message
 		$messageEx = explode(' ', $message);
-		if ($target{0} != '#') {
-			$target = $messageEx[1];
-			unset($messageEx[1]);
-			$messageEx = array_values($messageEx);
-		}
+		$this->checkTarget($target, $messageEx);
+		
 		if ($this->bot->isRegistered($target)) {
 			return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.alreadyRegistered'));
 		}
+		
 		$users = Services::getChannelManager()->getChannel($target)->getUserList();
 		foreach ($users as $channelUser) {
 			if ($channelUser['user']->getUuid() == $user->getUuid()) {
