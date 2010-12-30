@@ -30,6 +30,12 @@ abstract class AbstractModeList implements ModeList, Iterator {
 	protected $modes = array();
 	
 	/**
+	 * Contains a pointer to current iterator element
+	 * @var integer
+	 */
+	protected $modePointer = 0;
+	
+	/**
 	 * @see ModeList::__construct($modeString)
 	 */
 	public function __construct($modeString) {
@@ -150,6 +156,43 @@ abstract class AbstractModeList implements ModeList, Iterator {
 		}
 		
 		return $string;
+	}
+	
+	// ITERATOR METHODS
+	
+	/**
+	 * @see Iterator::rewind()
+	 */
+	public function rewind() {
+		$this->modePointer = 0;
+	}
+	
+	/**
+	 * @see Iterator::current()
+	 */
+	public function current() {
+		return $this->modes[$this->modePointer];
+	}
+	
+	/**
+	 * @see Iterator::key()
+	 */
+	public function key() {
+		return $this->modePointer;
+	}
+	
+	/**
+	 * @see Iterator::next()
+	 */
+	public function next() {
+		$this->modePointer++;
+	}
+	
+	/**
+	 * @see Iterator::valid()
+	 */
+	public function valid() {
+		return (isset($this->modes[$this->modePointer]));
 	}
 }
 ?>
