@@ -90,5 +90,20 @@ abstract class CommandModule extends AbstractModule {
 
 		return false;
 	}
+	
+	/**
+	 * Checks whether target was a channel
+	 *
+	 * @param	string		$target
+	 * @param	array<string>	$messageEx
+	 * @return	void
+	 */
+	public function checkTarget(&$target, &$messageEx) {
+		if ($target{0} != '#') {
+			$target = $messageEx[1];
+			unset($messageEx[1]);
+			$messageEx = array_values($messageEx);
+		}
+	}
 }
 ?>
