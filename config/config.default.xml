@@ -41,6 +41,12 @@
 	 	 <protocol>inspircd</protocol>
 	 	 
 	 	 <!-- 
+	 	 	[REQUIRED] IP Protocol Version
+	 	 	Sets the 
+	 	  -->
+	 	 <ipversion>4</ipversion>
+	 	 
+	 	 <!-- 
 	 	 	[REQUIRED] Logchan
 	 	 	The channel where services should announce log messages
 	 	  -->
