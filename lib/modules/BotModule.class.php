@@ -5,45 +5,48 @@ require_once(SDIR.'lib/modules/AbstractModule.class.php');
 /**
  * Defines default methods for bots
  *
- * @author		Johannes Donath
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 abstract class BotModule extends AbstractModule {
 
 	/**
 	 * Contains the name of this bot (This must defined!)
 	 *
-	 * @var	string
+	 * @var		string
 	 */
 	protected $botName = 'Bot';
 
 	/**
 	 * Contains the user type object of this bot
 	 *
-	 * @var	UserType
+	 * @var		UserType
 	 */
 	protected $bot = null;
 
 	/**
 	 * Contains all bound commands for this bot
 	 *
-	 * @var	array<CommandModule>
+	 * @var		array<CommandModule>
 	 */
 	protected $commands = array();
 
 	/**
 	 * Contains the trigger of this bot (The trigger is used for public channel commands)
 	 *
-	 * @var	string
+	 * @var		string
 	 */
 	protected $trigger = '';
 
 	/**
 	 * Creates a new instance of type Bot
 	 *
-	 * @param	UserType	$bot
+	 * @param	UserType		$bot
+	 * @param	string		$trigger
+	 * @param	array<mixed>	$data
 	 */
-	public function __construct(UserType $bot, $trigger = '',  $data = array()) {
+	public function __construct(UserType $bot, $trigger = '', Array $data = array()) {
 		parent::__construct($data);
 		
 		// handle additional parameters
@@ -120,7 +123,7 @@ abstract class BotModule extends AbstractModule {
 	 * Unbinds a command
 	 * 
 	 * @param	string	$commandName
-	 * @return void
+	 * @return 	void
 	 */
 	public function unbind($commandName) {
 		foreach($this->commands as $key => $command) {
@@ -143,7 +146,7 @@ abstract class BotModule extends AbstractModule {
 	 * @param	string		$target
 	 * @param	string		$message
 	 * @return	void
-	 * @todo This should be an external module
+	 * @todo 	This should be an external module
 	 */
 	public function generateHelp(UserType $user, $target, $message) {
 		// split message
@@ -221,7 +224,7 @@ abstract class BotModule extends AbstractModule {
 	}
 
 	/**
-	 * Returnes bot's trigger
+	 * Returns the bot's trigger
 	 *
 	 * @return	string
 	 */
@@ -234,7 +237,7 @@ abstract class BotModule extends AbstractModule {
 	 *
 	 * @param	string	$method
 	 * @return	void
-	 * @throws 	Exception
+	 * @throws 	RecoverableException
 	 */
 	public final function __call($method, $arguments) {
 		if (method_exists($this->bot, $method))
