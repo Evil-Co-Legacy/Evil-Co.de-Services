@@ -55,12 +55,12 @@ abstract class AbstractModeList implements ModeList, Iterator {
 	 */
 	public static function hasArgument($modeChar) {
 		// try to load information
-		if (!isset(self::$loadedModeInformation[$modeChar])) self::loadMode($modeChar);
+		if (!isset(static::$loadedModeInformation[$modeChar])) self::loadMode($modeChar);
 		
 		// validate
-		if (!isset(self::$loadedModeInformation[$modeChar])) throw new RecoverableException("Unknown mode char '".$modeChar."'");
+		if (!isset(static::$loadedModeInformation[$modeChar])) throw new RecoverableException("Unknown mode char '".$modeChar."'");
 		
-		return self::$loadedModeInformation[$modeChar];
+		return static::$loadedModeInformation[$modeChar];
 	}
 	
 	/**
@@ -86,7 +86,7 @@ abstract class AbstractModeList implements ModeList, Iterator {
 			foreach($data['children'] as $child) {
 				if (!isset($child['cdata']) or !isset($child['attrs']['attribute'])) throw new RecoverableException("Invalid mode definition in file '".Services::getProtocol()->getProtocolDir().'modes/'.self::$modeInformationFilename.'.xml'."'");
 				
-				if ($child['cdata'] == $modeCar) self::$loadedModeInformation[$modeChar] = (bool) intval($child['attrs']['attribute']);
+				if ($child['cdata'] == $modeCar) static::$loadedModeInformation[$modeChar] = (bool) intval($child['attrs']['attribute']);
 			}
 			
 			// destroy elements
