@@ -12,7 +12,7 @@ interface ArgumentList {
 	 * Creates a new instance of type ArgumentList
 	 * @param	string	$argumentString
 	 */
-	public function __construct($argumentString);
+	public function __construct($modeSource, $argumentString);
 	
 	/**
 	 * Parses an argument list
