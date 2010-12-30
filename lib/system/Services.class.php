@@ -136,7 +136,7 @@ class Services {
 	 * Creates a new IRCConnection instance
 	 */
 	protected function initConnection() {
-		self::$ircObj = new IRCConnection();
+		self::$ircObj = new Connection();
 	}
 	
 	/**
