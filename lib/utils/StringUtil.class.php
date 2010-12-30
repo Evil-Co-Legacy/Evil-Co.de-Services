@@ -2,79 +2,15 @@
 /**
  * Contains string-related functions.
  * 
- * @author 		Marcel Werk
+ * @author 	Marcel Werk
  * @copyright	2001-2009 WoltLab GmbH
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class StringUtil {
 	const HTML_PATTERN = '~</?[a-z]+[1-6]?
 			(?:\s*[a-z]+\s*=\s*(?:
 			"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^\s>]
 			))*\s*/?>~ix';
-	
-	/**
-	 * Returns a salted hash of the given value.
-	 *
-	 * @param 	string 		$value
-	 * @param	string		$salt
-	 * @return 	string 		$hash
-	 */
-	public static function getSaltedHash($value, $salt) {
-		if (!defined('ENCRYPTION_ENABLE_SALTING') || ENCRYPTION_ENABLE_SALTING) {
-			$hash = '';
-			// salt
-			if (!defined('ENCRYPTION_SALT_POSITION') || ENCRYPTION_SALT_POSITION == 'before') {
-				$hash .= $salt;
-			}
-			
-			// value
-			if (!defined('ENCRYPTION_ENCRYPT_BEFORE_SALTING') || ENCRYPTION_ENCRYPT_BEFORE_SALTING) {
-				$hash .= self::encrypt($value);
-			}
-			else {
-				$hash .= $value;
-			}
-			
-			// salt
-			if (defined('ENCRYPTION_SALT_POSITION') && ENCRYPTION_SALT_POSITION == 'after') {
-				$hash .= $salt;
-			}
-			
-			return self::encrypt($hash);
-		}
-		else {
-			return self::encrypt($value);
-		}
-	}
-	
-	/**
-	 * Returns a double salted hash of the given value.
-	 *
-	 * @param 	string 		$value
-	 * @param	string		$salt
-	 * @return 	string 		$hash
-	 */
-	public static function getDoubleSaltedHash($value, $salt) {
-		return self::encrypt($salt . self::getSaltedHash($value, $salt));
-	}
-	
-	/**
-	 * encrypts the given value.
-	 *
-	 * @param 	string 		$value
-	 * @return 	string 		$hash
-	 */
-	public static function encrypt($value) {
-		if (defined('ENCRYPTION_METHOD')) {
-			switch (ENCRYPTION_METHOD) {
-				case 'sha1': return sha1($value);
-				case 'md5': return md5($value);
-				case 'crc32': return crc32($value);
-				case 'crypt': return crypt($value);
-			}
-		}
-		return sha1($value);
-	}
 	
 	/**
 	 * alias to php sha1() function.
@@ -140,81 +76,6 @@ class StringUtil {
 		
 		$string = str_ireplace('&nbsp;', ' ', $string); // convert non-breaking spaces to ascii 32; not ascii 160
 		return @html_entity_decode($string, ENT_COMPAT, defined('CHARSET') ? CHARSET : 'UTF-8');
-	}
-
-	/**
-	 * Formats a numeric.
-	 *
-	 * @param 	numeric 	$numeric
-	 * @return 	string 		
-	 */
-	public static function formatNumeric($numeric) {
-		if (is_int($numeric)) 
-			return self::formatInteger($numeric);
-			
-		else if (is_float($numeric))
-			return self::formatDouble($numeric);
-			
-		else {
-			if (floatval($numeric) - (float) intval($numeric))
-				return self::formatDouble($numeric);
-			else 
-				return self::formatInteger(intval($numeric));
-		}
-	}
-	
-	/**
-	 * Formats an integer.
-	 * 
-	 * @param	integer		$integer
-	 * @return	string
-	 */
-	public static function formatInteger($integer) {
-		$integer = self::addThousandsSeparator($integer);
-		
-		return $integer;
-	}
-	
-	/**
-	 * Formats a double.
-	 * 
-	 * @param	double		$double
-	 * @param	integer		$minDecimals
-	 * @return	string
-	 */
-	public static function formatDouble($double, $minDecimals = 0) {
-		// consider as integer, if no decimal places found
-		if (!$minDecimals && preg_match('~^(-?\d+)(?:\.(?:0*|00[0-4]\d*))?$~', $double, $match)) {
-			return self::formatInteger($match[1]);
-		}
-	
-		// round
-		$double = round($double, ($minDecimals > 2 ? $minDecimals : 2));
-		
-		// remove last 0
-		if ($minDecimals < 2 && substr($double, -1) == '0') $double = substr($double, 0, -1);
-		
-		// replace decimal point
-		$double = str_replace('.', WCF::getLanguage()->get('wcf.global.decimalPoint'), $double);
-		
-		// add thousands separator
-		$double = self::addThousandsSeparator($double);
-		
-		return $double;
-	}
-	
-	/**
-	 * Adds thousands separators to a given number.
-	 * 
-	 * @param	mixed		$number
-	 * @return	string
-	 */
-	public static function addThousandsSeparator($number) {
-		if ($number >= 1000 || $number <= -1000) {
-			$number = preg_replace('~(?<=\d)(?=(\d{3})+(?!\d))~', WCF::getLanguage()->get('wcf.global.thousandsSeparator'), $number);
-		}
-		
-		return $number;
 	}
 	
 	/**
@@ -585,22 +446,6 @@ class StringUtil {
 		else {
 			return chunk_split($string, $length, $break);
 		}
-	}
-	
-	/**
-	 * @see	StringUtil::getSaltedHash()
-	 * @deprecated
-	 */
-	public static function getCookieSaltHash($value, $salt) {
-		return self::getSaltedHash($value, $salt);
-	}
-	
-	/**
-	 * @see	StringUtil::getSaltedHash()
-	 * @deprecated
-	 */
-	public static function getSaltHash($value, $salt) {
-		return self::getDoubleSaltedHash($value, $salt);
 	}
 }
 ?>

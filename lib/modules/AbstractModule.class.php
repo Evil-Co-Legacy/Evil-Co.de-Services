@@ -4,24 +4,27 @@ require_once(SDIR.'lib/modules/Module.class.php');
 
 /**
  * Defines default methods for modules
- * @author		Johannes Donath
+ *
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 abstract class AbstractModule implements Module {
 	
 	/**
 	 * Contains additional properties for modules
-	 * @var array
+	 *
+	 * @var		array<mixed>
 	 */
 	protected $data = array();
 	
 	/**
 	 * Creates a new instance of AbstractModule
+	 *
 	 * @param	array<mixed>	$data
-	 * @return void
+	 * @return 	void
 	 */
-	public function __construct($data) {
+	public function __construct(Array $data) {
 		// handle arguments
 		$this->data = $data;
 		
@@ -38,24 +41,30 @@ abstract class AbstractModule implements Module {
 	
 	/**
 	 * Sets an additional property
+	 *
 	 * @param	string	$property
 	 * @param	mixed	$value
+	 * @return	void
 	 */
 	public final function __set($property, $value) {
 		$this->data[$property] = $value;
 	}
 	
 	/**
-	 * Returnes true if the given property already exists
+	 * Returns whether the given property already exists
+	 *
 	 * @param	string	$property
+	 * @return	boolean
 	 */
 	public final function __isset($property) {
 		return (isset($this->data[$property]));
 	}
 	
 	/**
-	 * Returnes the value of given property
+	 * Returns the value of given property
+	 *
 	 * @param	string	$property
+	 * @return	mixed
 	 */
 	public final function __get($property) {
 		if ($this->__isset($property)) return $this->data[$property];

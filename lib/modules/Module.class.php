@@ -1,14 +1,15 @@
 <?php
-
 /**
  * Defines needed methods for modules
- * @author		Johannes Donath
+ *
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 interface Module {
 	
 	/**
-	 * Registeres events
+	 * Registers events
 	 */
 	public function registerEvents();
 }

@@ -2,9 +2,9 @@
 /**
  * Opens and reads data from an XML file or string.
  *
- * @author 		Marcel Werk
+ * @author 	Marcel Werk
  * @copyright	2001-2009 WoltLab GmbH
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class XML {
 	protected $encoding = 'UTF-8';

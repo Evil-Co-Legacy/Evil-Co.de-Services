@@ -1,29 +1,32 @@
 <?php
-
 /**
  * Represents a string
- * @author		Johannes Donath
+ *
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class StringBuffer {
 	
 	/**
 	 * Contains the correct newline char
-	 * @var string
+	 *
+	 * @var		string
 	 */
 	const NEWLINE = "\n";
 	
 	/**
 	 * Contains the current string
-	 * @var string
+	 *
+	 * @var		string
 	 */
 	protected $string = '';
 	
 	/**
 	 * Adds a part to current string
+	 *
 	 * @param	string	$string
-	 * @return void
+	 * @return	void
 	 */
 	public function add($string) {
 		$this->string .= $string;
@@ -31,14 +34,17 @@ class StringBuffer {
 	
 	/**
 	 * Clears the buffer
+	 *
+	 * @return	void
 	 */
 	public function clearBuffer() {
-		$this->string = "";
+		$this->string = '';
 	}
 	
 	/**
 	 * Returnes the current buffer and clears it
-	 * @return string
+	 *
+	 * @return	string
 	 */
 	public function get() {
 		$string = $this->string;
@@ -47,9 +53,10 @@ class StringBuffer {
 	}
 	
 	/**
-	 * Returnes true if the given pattern matches the current buffer
+	 * Check whether the given pattern matches the current buffer
+	 *
 	 * @param	string	$pattern
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public function match($pattern) {
 		return (preg_match($pattern, $this->string));
@@ -57,16 +64,16 @@ class StringBuffer {
 	
 	/**
 	 * Replaces $search with $replace
+	 *
 	 * @param	string	$search
 	 * @param	string	$replace
-	 * @return void
+	 * @return	void
 	 */
 	public function replace($search, $replace) {
-		$this->string = str_replace($search, $replace, $this->string);
+		$this->string = StringUtil::replace($search, $replace, $this->string);
 	}
 	
 	/**
-	 * Alias for StringBuffer::get()
 	 * @see StringBuffer::get()
 	 */
 	public function __toString() {

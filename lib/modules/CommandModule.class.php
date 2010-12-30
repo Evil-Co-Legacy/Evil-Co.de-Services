@@ -4,13 +4,16 @@ require_once(SDIR.'lib/modules/AbstractModule.class.php');
 
 /**
  * Defines default methods for commands
- * @author		Johannes Donath
+ *
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 abstract class CommandModule extends AbstractModule {
 
 	/**
 	 * Contains the bot instance
+	 *
 	 * @var	BotModule
 	 */
 	protected $bot = null;
@@ -18,6 +21,7 @@ abstract class CommandModule extends AbstractModule {
 	/**
 	 * Contains the name of bound command
 	 * Note: This must be uppercase!
+	 *
 	 * @var	string
 	 */
 	public $commandName = '';
@@ -25,28 +29,34 @@ abstract class CommandModule extends AbstractModule {
 	/**
 	 * Contains the original command name
 	 * Note: This will used in language system
-	 * @var string
+	 *
+	 * @var	string
 	 */
 	public $originalName = 'Command';
 
 	/**
 	 * If this is set to false we'll hide the command in HELP command
+	 *
 	 * @var boolean
 	 */
 	public $appearInHelp = true;
 
 	/**
 	 * Contains the needed level
+	 *
 	 * @var integer
 	 */
 	public $neededPermissions = 0;
 
 	/**
 	 * Creates a new instance of type Command
+	 *
 	 * @param	BotModule	$bot
 	 * @param	string		$name
+	 * @param	boolean		$appearInHelp
+	 * @param	array<mixed>	$data
 	 */
-	public function __construct(&$bot, $name, $appearInHelp = true, $data = array()) {
+	public function __construct(BotModule &$bot, $name, $appearInHelp = true, Array $data = array()) {
 		parent::__construct($data);
 		
 		// handle additional arguments
@@ -57,13 +67,16 @@ abstract class CommandModule extends AbstractModule {
 
 	/**
 	 * Executes the command
+	 *
 	 * @param	UserObject	$user
+	 * @param	string		$target
 	 * @param	string		$message
 	 */
-	abstract public function execute($user, $target, $message);
+	abstract public function execute(UserObject $user, $target, $message);
 
 	/**
 	 * Returnes true if the given line matches command
+	 *
 	 * @param	string	$input
 	 * @return	boolean
 	 */
@@ -71,7 +84,7 @@ abstract class CommandModule extends AbstractModule {
 		// split string
 		$commandEx = explode(' ', $command);
 
-		if (!empty($this->commandName) and strtoupper($commandEx[0]) == $this->commandName) return true;
+		if (!empty($this->commandName) && strtoupper($commandEx[0]) == $this->commandName) return true;
 
 		// TODO: Add more match types here
 
