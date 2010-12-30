@@ -4,8 +4,10 @@ require_once(SDIR.'lib/modules/CommandModule.class.php');
 
 /**
  * Loads modules via IRC
- * @author		Johannes Donath
+ *
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class CommandLoadModule extends CommandModule {
 
@@ -26,7 +28,7 @@ class CommandLoadModule extends CommandModule {
 		// split message
 		$messageEx = explode(' ', $message);
 
-		if (count($messageEx) == 2 and !empty($messageEx[1])) {
+		if (count($messageEx) == 2 && !empty($messageEx[1])) {
 			// get module name
 			$moduleName = $messageEx[1];
 

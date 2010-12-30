@@ -4,8 +4,10 @@ require_once(SDIR.'lib/modules/CommandModule.class.php');
 
 /**
  * Sets modes with ChanServ
- * @author		Tim Düsterhus
+ *
+ * @author	Tim Düsterhus
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class CommandMode extends CommandModule {
 
@@ -20,10 +22,7 @@ class CommandMode extends CommandModule {
 	public function execute($user, $target, $message) {
 		// split message
 		$messageEx = explode(' ', $message);
-		if ($target{0} != '#') {
-			$target = $messageEx[1];
-			unset($messageEx[1]);
-		}
+		$this->checkTarget($target, $message);
 		
 		$access = $this->bot->getAccess($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
 		if ($access < $this->bot->getNeededAccess($target, $this->originalName)) {

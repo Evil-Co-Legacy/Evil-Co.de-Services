@@ -3,9 +3,11 @@
 require_once(SDIR.'lib/modules/CommandModule.class.php');
 
 /**
- * Sets access-levels with ChanServ
+ * Lists users with access
+ *
  * @author		Tim Düsterhus
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class CommandListuser extends CommandModule {
 
@@ -20,11 +22,7 @@ class CommandListuser extends CommandModule {
 	public function execute($user, $target, $message) {
 		// split message
 		$messageEx = explode(' ', $message);
-		if ($target{0} != '#') {
-			$target = $messageEx[1];
-			unset($messageEx[1]);
-			$messageEx = array_values($messageEx);
-		}
+		$this->checkTarget($target, $messageEx);
 
 		$access = $this->bot->getAccess($target, Services::getUserManager()->getUser($user->getUuid())->accountname);
 		if ($access < $this->bot->getNeededAccess($target, 'access')) {

@@ -3,7 +3,7 @@
 require_once(SDIR.'lib/modules/CommandModule.class.php');
 
 /**
- * Registers the user
+ * Changes the email
  *
  * @author	Tim Düsterhus
  * @copyright	2010 DEVel Fusion
@@ -30,6 +30,7 @@ class CommandEmail extends CommandModule {
 				return $this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.notAuthed'));
 			}
 			$this->bot->email(Services::getUserManager()->getUser($user->getUuid())->accountname, $email);
+			// TODO: Kill user for revalidation
 			$this->bot->sendMessage($user->getUuid(), Services::getLanguage()->get($user->languageID, 'command.'.$this->originalName.'.success'));
 		} else {
 			throw new SyntaxErrorException();

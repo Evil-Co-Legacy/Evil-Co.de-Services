@@ -3,9 +3,11 @@
 require_once(SDIR.'lib/modules/CommandModule.class.php');
 
 /**
- * Registers the user
- * @author		Tim Düsterhus
+ * Deletes a user
+ *
+ * @author	Tim Düsterhus
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class CommandUnregister extends CommandModule {
 
