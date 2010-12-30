@@ -4,12 +4,17 @@ require_once(SDIR.'lib/modules/BotModule.class.php');
 /**
  * Implements the ChanServ bot
  *
- * @author		Tim Düsterhus
+ * @author	Tim Düsterhus
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class ChanServ extends BotModule {
 	
-	
+	/**
+	 * Creates new ChanServ
+	 * @param	UserType	$bot
+	 * @param	string		$trigger
+	 */
 	public function __construct($bot, $trigger = '') {
 		parent::__construct($bot, $trigger);
 
@@ -48,6 +53,7 @@ class ChanServ extends BotModule {
 				AND	userID = ".$userID;
 		$row = Services::getDB()->getFirstRow($sql);
 		if ($row) return $row['accessLevel'];
+		
 		return 0;
 	}
 	
@@ -78,6 +84,7 @@ class ChanServ extends BotModule {
 					channel = '".escapeString($channel)."'
 				AND	function = '".escapeString($function)."'";
 		$row = Services::getDB()->getFirstRow($sql);
+		
 		if (!$row) return false;
 		return $row['accessLevel'];
 	}

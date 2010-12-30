@@ -6,13 +6,14 @@ require_once(SDIR.'lib/modules/BotModule.class.php');
  *
  * @author	Tim Düsterhus
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class AuthServ extends BotModule {
 	
 	/**
 	 * Binds the account to uuids
 	 *
-	 * @var	array<string>
+	 * @var		array<string>
 	 */
 	protected $accountToUser = array();
 
@@ -31,14 +32,18 @@ class AuthServ extends BotModule {
 	 *
 	 * @param	string	$uuid
 	 * @param	string	$accountname
-	 * @retuen	void
+	 * @return	void
 	 */
 	public function setAccount($uuid, $accountname) {
 		Services::getUserManager()->getUser($uuid)->accountname = $accountname;
 
-		if (isset($this->accountToUser[$accountname])) $this->accountToUser[$accountname][] = $uuid;
-		else $this->accountToUser[$accountname] = array($uuid);
-
+		if (isset($this->accountToUser[$accountname])) {
+			$this->accountToUser[$accountname][] = $uuid;
+		}
+		else {
+			$this->accountToUser[$accountname] = array($uuid);
+		}
+		
 		// set umode +r
 		Services::getConnection()->getProtocol()->sendMode($this->getUuid(), $uuid, '+r');
 	}
@@ -46,11 +51,13 @@ class AuthServ extends BotModule {
 	/**
 	 * Get authed users for $accountname
 	 *
-	 * @param	string	$accountname
+	 * @param	string			$accountname
 	 * @return	array<string>
 	 */
 	public function getUsers($accountname) {
-		if (isset($this->accountToUser[$accountname])) return $this->accountToUser[$accountname];
+		if (isset($this->accountToUser[$accountname])) {
+			return $this->accountToUser[$accountname];
+		}
 		return array();
 	}
 
@@ -86,6 +93,7 @@ class AuthServ extends BotModule {
 	public function create($accountname, $password, $email) {
 		$salt = StringUtil::getRandomID();
 		$password = sha1($salt.sha1($salt.$password));
+		
 		$sql = "INSERT INTO authserv_users 	(accountname, password, email, salt, time) 
 			VALUES 				('".escapeString($accountname)."', '".$password."', '".escapeString($email)."', '".$salt."', ".time().")";
 		Services::getDB()->sendQuery($sql);
@@ -208,7 +216,7 @@ class AuthServ extends BotModule {
 		$row = Services::getDB()->getFirstRow($sql);
 
 		// workaround ...
-		if (!Services::getDB()->getNumRows()) return 0;
+		if (!$row) return 0;
 
 		return intval($row['accessLevel']);
 	}
