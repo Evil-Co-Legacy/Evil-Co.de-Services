@@ -25,9 +25,22 @@ class ChannelUserList extends AbstractUserTypeManager {
 	/**
 	 * Creates a new instance of type ChannelUserList
 	 * @param	Channel	$channel
+	 * @return void
 	 */
 	public function __construct(&$channel) {
 		$this->channel = $channel;
+	}
+	
+	/**
+	 * Adds a new user to a channel
+	 * @param	mixed			$userID
+	 * @param	string			$userModes
+	 * @param	array<mixed>	$data
+	 * @return void
+	 */
+	public function addUser($userID, $userModes, $data = array()) {
+		parent::addUser($userID, $data);
+		$this->userList[$userID]->setModes($userModes);
 	}
 }
 ?>
