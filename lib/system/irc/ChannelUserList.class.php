@@ -42,5 +42,23 @@ class ChannelUserList extends AbstractUserTypeManager {
 		parent::addUser($userID, $data);
 		$this->userList[$userID]->setModes($userModes);
 	}
+	
+	/**
+	 * Alias for ChannelUserList::addUser()
+	 * @see ChannelUserList::addUser()
+	 * @deprecated
+	 */
+	public function join($userID, $userModes, $data = array()) {
+		$this->addUser($userID, $userModes, $data);
+	}
+	
+	/**
+	 * Alias for ChannelUserList::removeUser()
+	 * @param	mixed	$userID
+	 * @deprecated
+	 */
+	public function part($userID) {
+		$this->removeUser($userID);
+	}
 }
 ?>
