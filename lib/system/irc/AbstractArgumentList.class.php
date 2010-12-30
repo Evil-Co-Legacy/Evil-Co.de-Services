@@ -4,26 +4,30 @@ require_once(SDIR.'lib/system/irc/ArgumentList.class.php');
 
 /**
  * Defines default methods and properties for argument lists
- * @author		Johannes Donath
+ *
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 abstract class AbstractArgumentList implements ArgumentList, Iterator {
 	
 	/**
 	 * Contains a list of arguments
+	 *
 	 * @var array<mixed>
 	 */
 	protected $argumentList = array();
 	
 	/**
 	 * Points to the current argument
+	 *
 	 * @var integer
 	 */
 	protected $argumentPointer = 0;
 	
 	/**
 	 * Contains the source for modes
+	 *
 	 * @var string
 	 */
 	protected $modeSource = '';
@@ -43,6 +47,7 @@ abstract class AbstractArgumentList implements ArgumentList, Iterator {
 	
 	/**
 	 * Returnes the argument at given index
+	 *
 	 * @param	integer	$index
 	 */
 	public function getArgument($index) {
@@ -69,11 +74,12 @@ abstract class AbstractArgumentList implements ArgumentList, Iterator {
 	
 	/**
 	 * Strips disallowed chars from argument string
+	 *
 	 * @param	string	$argumentString
 	 */
 	protected function stripDisallowedChars($argumentString) {
 		$argumentString = str_replace('+', '', $argumentString);
-		$argumentString = preg_replace('~-[A-Z]~i', '', $argumentString);
+		$argumentString = preg_replace('~-[A-Z]+~i', '', $argumentString);
 		return $argumentString;
 	}
 	
