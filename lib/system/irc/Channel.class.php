@@ -5,7 +5,7 @@ require_once(SDIR.'lib/system/irc/ChannelUserList.class.php');
 /**
  * Represents a channel
  * @author		Johannes Donath
- * @copyright	2010 DEVel Fusion
+ * @copyright		2010 DEVel Fusion
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class Channel {
@@ -59,6 +59,16 @@ class Channel {
 	 */
 	public function getUserList() {
 		return $this->userList;
+	}
+	
+	/**
+	 * Unifies channel names
+	 * @param	string	$channelName
+	 */
+	public static function unifyChannelName($channelName) {
+		$channelName = strtolower($channelName);
+		
+		return $channelName;
 	}
 	
 	/**
