@@ -1,4 +1,11 @@
 <?php
+/**
+ * Creates autoloader and error handlers
+ *
+ * @author	Johannes Donath
+ * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ */
 // define exception handler
 set_exception_handler(array('Services', 'handleException'));
 
@@ -10,6 +17,7 @@ register_shutdown_function(array('Services', 'destruct'));
 
 /**
  * Autoloads default classes
+ *
  * @param	string	$className
  */
 function __autoload($className) {
@@ -28,7 +36,6 @@ function __autoload($className) {
 
 /**
  * @see Database::escapeString()
- * @param	string	$str
  */
 function escapeString($str) {
 	return Services::getDB()->escapeString($str);
