@@ -1,6 +1,7 @@
 <?php
 // imports
 require_once(SDIR.'lib/system/irc/ModeList.class.php');
+require_once(SDIR.'lib/system/irc/ModeArgumentList.class.php');
 
 /**
  * Manages and parses mode strings
