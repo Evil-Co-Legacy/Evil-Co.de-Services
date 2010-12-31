@@ -4,8 +4,10 @@ require_once(SDIR.'lib/modules/ExtensionModule.class.php');
 
 /**
  * Listens on KICK commands and kicks users that aren't allowed to kick other users
- * @author		Johannes Donath
+ *
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class KickRevengeExtension extends ExtensionModule {
 
@@ -20,7 +22,8 @@ class KickRevengeExtension extends ExtensionModule {
 
 	/**
 	 * Handles an incoming KICK event
-	 * @param	array	$data
+	 *
+	 * @param	array<string>	$data
 	 */
 	public function handleKick($data) {
 		// get chanserv
