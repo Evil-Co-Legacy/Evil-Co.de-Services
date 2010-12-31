@@ -5,9 +5,9 @@ require_once(SDIR.'lib/system/database/Database.class.php');
 /**
  * DatabaseException is a specific SystemException for database errors.
  * 
- * @author		Marcel Werk, Johannes Donath
+ * @author	Marcel Werk, Johannes Donath
  * @copyright	2001-2009 WoltLab GmbH
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class DatabaseException extends RecoverableException {
 	protected $errorNumber;

@@ -7,9 +7,9 @@ require_once(SDIR.'lib/system/database/DatabaseException.class.php');
 /**
  * This is the database implementation for MySQL4.1 or higher.
  * 
- * @author		Marcel Werk
+ * @author	Marcel Werk
  * @copyright	2001-2009 WoltLab GmbH
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class MySQLDatabase extends Database {
 	/**
