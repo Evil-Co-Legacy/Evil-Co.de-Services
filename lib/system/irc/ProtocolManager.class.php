@@ -27,6 +27,12 @@ class ProtocolManager {
 	protected $protocolInformation = array();
 	
 	/**
+	 * Contains required protocol information fields
+	 * @var array
+	 */
+	protected $requiredProtocolInformation = array('author', 'copyright', 'file');
+	
+	/**
 	 * Contains a list of supported methods and modes
 	 * @var array
 	 */
@@ -128,6 +134,9 @@ class ProtocolManager {
 			
 			$this->protocolInformation[$child['name']] = $child['cdata'];
 		}
+		
+		// validate protocol information
+		$this->validateProtocolInformation();
 	}
 	
 	/**
@@ -152,6 +161,17 @@ class ProtocolManager {
 			
 			
 			$this->supportedTypes[$child['name']] = (bool) intval($child['cdata']);
+		}
+	}
+	
+	/**
+	 * Validates protocol information
+	 * @return void
+	 * @throws ProtocolException
+	 */
+	protected function validateProtocolInformation() {
+		foreach($this->requiredProtocolInformation as $field) {
+			if (!isset($this->protocolInformation[$field])) throw new ProtocolException("Invalid protocol information: Field '".$field."' is missing");
 		}
 	}
 	
