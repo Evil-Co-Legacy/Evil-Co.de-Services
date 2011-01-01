@@ -5,27 +5,32 @@ require_once(SDIR.'lib/system/user/ChannelUserModeList.class.php');
 
 /**
  * Represents a user in a channel
- * @author		Johannes Donath
+ *
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class ChannelUserType extends AbstractUserType {
 	
 	/**
 	 * Contains all user modes in the parent channel
+	 *
 	 * @var ModeList
 	 */
 	protected $modes = null;
 	
 	/**
 	 * Sets new modes to user
+	 *
 	 * @param	string	$modeString
 	 */
 	public function setModes($modeString) {
-		if ($this->modes === null)
+		if ($this->modes === null) {
 			$this->modes = new ChannelUserModeList($modeString);
-		else
+		}
+		else {
 			$this->modes->updateModes($modeString);
+		}
 	}
 }
 ?>

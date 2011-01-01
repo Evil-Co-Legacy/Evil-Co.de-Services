@@ -1,7 +1,7 @@
 <?php
-
 /**
  * Handles module instances
+ *
  * @author		Johannes Donath
  * @copyright		2010 DEVel Fusion
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -10,6 +10,7 @@ class ModuleHandler {
 	
 	/**
 	 * Contains the current instance of ModuleHandler
+	 *
 	 * @var ModuleHandler
 	 */
 	protected static $instance = null;
@@ -26,7 +27,8 @@ class ModuleHandler {
 	
 	/**
 	 * Contains all module instances
-	 * @var array
+	 *
+	 * @var array<Module>
 	 */
 	protected $moduleInstances = array();
 	
@@ -37,8 +39,9 @@ class ModuleHandler {
 	
 	/**
 	 * Creates a new instance of given module
+	 *
 	 * @param	string	$moduleName
-	 * @return Module
+	 * @return 	Module
 	 */
 	public function createInstance($moduleName) {
 		// validate
@@ -55,6 +58,8 @@ class ModuleHandler {
 	
 	/**
 	 * Returnes the current instance of ModuleHandler
+	 *
+	 * @return	ModuleHandler
 	 */
 	public static function getInstance() {
 		if (static::$instance === null) {
@@ -66,7 +71,9 @@ class ModuleHandler {
 	
 	/**
 	 * Sets loaded modules array
-	 * @param	array	$loadedModules
+	 *
+	 * @param	array<string>	$loadedModules
+	 * @return	void
 	 */
 	public function setLoadedModules(&$loadedModules) {
 		$this->loadedModules = $loadedModules;
@@ -74,7 +81,9 @@ class ModuleHandler {
 	
 	/**
 	 * Sets module information array
-	 * @param	array	$moduleInformation
+	 *
+	 * @param	array<string>	$moduleInformation
+	 * @return	void
 	 */
 	public function setModuleInformation(&$moduleInformation) {
 		$this->moduleInformation = $moduleInformation;

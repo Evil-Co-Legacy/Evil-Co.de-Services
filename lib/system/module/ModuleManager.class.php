@@ -5,6 +5,7 @@ require_once(SDIR.'lib/system/module/ModuleParser.class.php');
 
 /**
  * Manages module instances
+ *
  * @author		Johannes Donath
  * @copyright		2010 DEVel Fusion
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -13,13 +14,15 @@ class ModuleManager {
 	
 	/**
 	 * Contains a relative path from SDIR to location where module classes are stored
-	 * @var unknown_type
+	 *
+	 * @var string
 	 */
 	const MODULE_DIR = 'lib/modules/';
 	
 	/**
 	 * Contains a relative path from SDIR to location where module information are stored
-	 * @var stromg
+	 *
+	 * @var string
 	 */
 	const MODULE_INFO_DIR = 'lib/modules/info/';
 	
@@ -29,12 +32,14 @@ class ModuleManager {
 	 * 	[moduleName] => namespace
 	 * 	...
 	 * )
+	 *
 	 * @var array<string>
 	 */
 	protected $loadedModules = array();
 	
 	/**
 	 * Contains information about loaded modules
+	 *
 	 * @var array<string>
 	 */
 	protected $moduleInformation = array();
@@ -51,7 +56,8 @@ class ModuleManager {
 	 * 		...
 	 * 	)
 	 * )
-	 * @var array
+	 *
+	 * @var array<array>
 	 */
 	protected $moduleDependencyTree = array();
 	
@@ -64,8 +70,9 @@ class ModuleManager {
 	
 	/**
 	 * Loads a module to memory
+	 *
 	 * @param	string	$name
-	 * @return string
+	 * @return 	string
 	 */
 	public function loadModule($name) {
 		// try to find module information
@@ -126,7 +133,6 @@ class ModuleManager {
 	}
 	
 	/**
-	 * Alias for ModuleHandler::getModuleInstances()
 	 * @see ModuleHandler::getModuleInstances()
 	 */
 	public function getModuleInstances($moduleName) {
@@ -134,7 +140,6 @@ class ModuleManager {
 	}
 	
 	/**
-	 * Alias for ModuleHandler::getFirstModuleInstance()
 	 * @see ModuleHandler::getFirstModuleInstance()
 	 */
 	public function getFirstModuleInstance($moduleName) {
