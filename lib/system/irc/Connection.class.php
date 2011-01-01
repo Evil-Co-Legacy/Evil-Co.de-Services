@@ -102,6 +102,9 @@ class Connection {
 	 * @return void
 	 */
 	protected function initSocket() {
+		// check configuration
+		if (!isset($this->configuration['ipversion']) or !isset($this->configuration['hostname']) or !isset($this->configuration['port'])) throw new ConnectionException("Invalid configuration. Please recheck your configuration ... NOOB!");
+		
 		// create socket
 		$this->socket = socket_create(($this->configuration['ipversion'] == '4' ? AF_INET : AF_INET6), SOCK_STREAM, getprotobyname('tcp'));
 		
