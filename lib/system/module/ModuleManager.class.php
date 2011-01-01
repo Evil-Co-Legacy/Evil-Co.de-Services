@@ -9,28 +9,10 @@
 class ModuleManager {
 	
 	/**
-	 * Contains a prefix for bot filenames
-	 * @var string
-	 */
-	const MODULE_BOT_PREFIX = 'bot/';
-	
-	/**
-	 * Contains a prefix for command filenames
-	 * @var string
-	 */
-	const MODULE_COMMAND_PREFIX = 'command/';
-	
-	/**
 	 * Contains a relative path from SDIR to location where module classes are stored
 	 * @var unknown_type
 	 */
 	const MODULE_DIR = 'lib/modules/';
-	
-	/**
-	 * Contains a prefix for extension filenames
-	 * @var string
-	 */
-	const MODULE_EXTENSION_PREFIX = 'extension/';
 	
 	/**
 	 * Contains a relative path from SDIR to location where module information are stored
