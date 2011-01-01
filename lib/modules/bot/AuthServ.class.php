@@ -118,6 +118,7 @@ class AuthServ extends BotModule {
 	 *
 	 * @param	string	$accountname
 	 * @param	string	$password
+	 * @return	void
 	 */
 	public function pass($accountname, $password) {
 		$sql = "UPDATE
