@@ -56,6 +56,13 @@ class ModuleManager {
 	protected $moduleDependencyTree = array();
 	
 	/**
+	 * Creates a new instance of ModuleManager
+	 */
+	public function __construct() {
+		ModuleHandler::getInstance()->setModuleInformation($this->moduleInformation);
+	}
+	
+	/**
 	 * Loads a module to memory
 	 * @param	string	$name
 	 * @return string
