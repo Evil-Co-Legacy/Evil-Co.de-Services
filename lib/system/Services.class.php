@@ -104,6 +104,9 @@ class Services {
 	 * Shuts down our services
 	 */
 	public static function destruct() {
+		// call protocol shutdown method
+		if (self::getProtocol() !== null and self::getProtocol()->isAlive()) self::getProtocol()->shutdown();
+		
 		// call connection shutdown method
 		if (self::getConnection() !== null) self::getConnection()->shutdown();
 
