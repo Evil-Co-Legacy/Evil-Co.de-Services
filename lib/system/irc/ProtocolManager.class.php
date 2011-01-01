@@ -86,6 +86,15 @@ class ProtocolManager {
 	}
 	
 	/**
+	 * Returnes true if the protocol is alive
+	 * @return boolean
+	 */
+	public function isAlive() {
+		if ($this->protocol !== null and $this->protocol->isAlive()) return true;
+		return false;
+	}
+	
+	/**
 	 * Returnes true if the given type (or function) is supported in current protocol
 	 * @param	string	$type
 	 * @return boolean
