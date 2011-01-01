@@ -47,7 +47,7 @@ class ModuleHandler {
 		
 		// create a new instance
 		$namespace = $this->loadedModules[$moduleName];
-		$this->moduleInstances[$moduleName] = new $namespace\$moduleName;
+		$this->moduleInstances[$moduleName] = eval("new ".$namespace."\\".$moduleName.";");
 		
 		return $this->moduleInstances[$moduleName];
 	}
