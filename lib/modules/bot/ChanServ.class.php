@@ -12,6 +12,7 @@ class ChanServ extends BotModule {
 	
 	/**
 	 * Creates new ChanServ
+	 *
 	 * @param	UserType	$bot
 	 * @param	string		$trigger
 	 */
@@ -62,6 +63,7 @@ class ChanServ extends BotModule {
 	 *
 	 * @param	string	$channel
 	 * @param	string	$uuid
+	 * @return	void
 	 */
 	public function setAccess($channel) {
 		// todo remove usermodes for all that have no access

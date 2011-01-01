@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This exception will thrown if an exception isn't fatal
  *

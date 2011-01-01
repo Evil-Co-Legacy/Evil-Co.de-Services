@@ -24,6 +24,7 @@ class KickRevengeExtension extends ExtensionModule {
 	 * Handles an incoming KICK event
 	 *
 	 * @param	array<string>	$data
+	 * @return	void
 	 */
 	public function handleKick($data) {
 		// get chanserv
