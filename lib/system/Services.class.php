@@ -19,67 +19,79 @@ require_once(SDIR.'lib/system/user/UserManager.class.php');
 
 /**
  * Manages all needed core instances
- * @author		Johannes Donath
+ *
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class Services {
 	
 	/**
 	 * Contains the BotManager object
+	 *
 	 * @var	BotManager
 	 */
 	protected static $botManagerObj = null;
 
 	/**
 	 * Contains the ChannelManager object
+	 *
 	 * @var	ChannelManager
 	 */
 	protected static $channelManagerObj = null;
 	
 	/**
 	 * Contains the Configuration object
+	 *
 	 * @var Configuration
 	 */
 	protected static $configObj = null;
 
 	/**
 	 * Contains the database connection
+	 *
 	 * @var	Database
 	 */
 	protected static $dbObj = null;
 	
 	/**
 	 * Contains the EventHandler object
+	 *
 	 * @var	EventHandler
 	 */
 	protected static $eventObj = null;
 
 	/**
 	 * Contains the IRCConnection object
+	 *
 	 * @var	Connection
 	 */
 	protected static $ircObj = null;
 	
 	/**
 	 * Contains the LanguageManager object
+	 *
 	 * @var	LanguageManager
 	 */
 	protected static $languageObj = null;
 
 	/**
 	 * Contains the ModuleManager object
+	 *
 	 * @var	ModuleManager
 	 */
 	protected static $moduleManagerObj = null;
 	
 	/**
 	 * Contains the Protocol object
+	 *
 	 * @var Protocol
 	 */
 	protected static $protocolObj = null;
 	
 	/**
 	 * Contains the UserManager object
+	 *
 	 * @var UserManager
 	 */
 	protected static $userManagerObj = null;
@@ -102,6 +114,8 @@ class Services {
 
 	/**
 	 * Shuts down our services
+	 *
+	 * @return	void
 	 */
 	public static function destruct() {
 		// call connection shutdown method
@@ -113,6 +127,8 @@ class Services {
 	
 	/**
 	 * Creates a new BotManager instance
+	 *
+	 * @return	void
 	 */
 	protected function initBotManager() {
 		self::$botManagerObj = new BotManager();
@@ -120,6 +136,8 @@ class Services {
 	
 	/**
 	 * Creates an new ChannelManager instance
+	 *
+	 * @return	void
 	 */
 	protected function initChannelManager() {
 		self::$channelManagerObj = new ChannelManager();
@@ -127,6 +145,8 @@ class Services {
 
 	/**
 	 * Creates a new configuration object
+	 *
+	 * @return	void
 	 */
 	protected function initConfiguration() {
 		self::$configObj = new Configuration();
@@ -134,6 +154,8 @@ class Services {
 	
 	/**
 	 * Creates a new IRCConnection instance
+	 *
+	 * @return	void
 	 */
 	protected function initConnection() {
 		self::$ircObj = new Connection();
@@ -141,6 +163,8 @@ class Services {
 	
 	/**
 	 * Creates a new database connection
+	 *
+	 * @return	void
 	 */
 	protected function initDB() {
 		// get configuration
@@ -164,6 +188,8 @@ class Services {
 
 	/**
 	 * Creates a new EventHandler object
+	 *
+	 * @return	void
 	 */
 	protected function initEvents() {
 		self::$eventObj = new EventHandler();
@@ -171,6 +197,8 @@ class Services {
 
 	/**
 	 * Creates a new LanguageManager instance
+	 *
+	 * @return	void
 	 */
 	protected function initLanguage() {
 		self::$languageObj = new LanguageManager();
@@ -178,6 +206,8 @@ class Services {
 	
 	/**
 	 * Creates a new ModuleManager instance
+	 *
+	 * @return	void
 	 */
 	protected function initModules() {
 		self::$moduleManagerObj = new ModuleManager();
@@ -185,6 +215,8 @@ class Services {
 	
 	/**
 	 * Creates a new Protocol instance
+	 *
+	 * @return	void
 	 */
 	protected function initProtocol() {
 		self::$protocolObj = new Protocol();
@@ -192,77 +224,98 @@ class Services {
 
 	/**
 	 * Creates a new UserManager instance
+	 *
+	 * @return	void
 	 */
 	protected function initUserManager() {
 		self::$userManagerObj = new UserManager();
 	}
 	
 	/**
-	 * Returnes the current bot manager object
+	 * Returns the current bot manager object
+	 *
+	 * @return	BotManager
 	 */
 	public static function getBotManager() {
 		return self::$botManagerObj;
 	}
 	
 	/**
-	 * Returnes the current channel manager object
+	 * Returns the current channel manager object
+	 *
+	 * @return	ChannelManager
 	 */
 	public static function getChannelManager() {
 		return self::$channelManagerObj;
 	}
 
 	/**
-	 * Returnes the current configuration object
+	 * Returns the current configuration object
+	 *
+	 * @return	Configuration
 	 */
 	public static function getConfiguration() {
 		return self::$configObj;
 	}
 	
 	/**
-	 * Returnes the current irc connection
+	 * Returns the current irc connection
+	 *
+	 * @return	Connection
 	 */
 	public static function getConnection() {
 		return self::$ircObj;
 	}
 
 	/**
-	 * Returnes the current database connection
+	 * Returns the current database connection
+	 *
+	 * @return	DataBase
 	 */
 	public static function getDB() {
 		return self::$dbObj;
 	}
 	
 	/**
-	 * Returnes the current EventHandler object
+	 * Returns the current EventHandler object
+	 *
+	 * @return	EventHandler
 	 */
 	public static function getEvent() {
 		return self::$eventObj;
 	}
 
 	/**
-	 * Returnes the current language manager
+	 * Returns the current language manager
+	 *
+	 * @return	LanguageManager
 	 */
 	public static function getLanguage() {
 		return self::$languageObj;
 	}
 	
 	/**
-	 * Returnes the current ModuleManager object
+	 * Returns the current ModuleManager object
+	 *
+	 * @return	ModuleManager
 	 */
 	public static function getModuleManager() {
 		return self::$moduleManagerObj;
 	}
 	
 	/**
-	 * Returnes the current Protocol object
-	 * @return Protocol
+	 * Returns the current Protocol object
+	 *
+	 * @return	Protocol
 	 */
 	public static function getProtocol() {
 		return self::$protocolObj;
 	}
 
 	/**
-	 * Returnes the current user manager object
+	 * Returns the current user manager object
+	 *
+	 * @return	UserManager
 	 */
 	public static function getUserManager() {
 		return self::$userManagerObj;
@@ -270,10 +323,12 @@ class Services {
 
 	/**
 	 * Handles errors
+	 *
 	 * @param	integer	$errNo
 	 * @param	string	$errMessage
 	 * @param	string	$errFile
 	 * @param	integer	$errLine
+	 * @return	void
 	 */
 	public static function handleError($errorNo, $errMessage, $errFile, $errLine) {
 		if (error_reporting() != 0) {
@@ -294,7 +349,9 @@ class Services {
 	
 	/**
 	 * Handles uncought exceptions
+	 *
 	 * @param	Exception	$ex
+	 * @return	void
 	 */
 	public static function handleException(Exception $ex) {
 		// Call SystemException::sendDebugLog()
@@ -307,9 +364,9 @@ class Services {
 		if ($ex instanceof ConnectionException) self::$ircObj->handleException($ex);
 		 
 		// Call shutdown methods if the given exception is recoverable (UserExceptions and RecoverableExceptions)
-		if (!($ex instanceof RecoverableException) and !($ex instanceof UserException)) {
+		if (!($ex instanceof RecoverableException) && !($ex instanceof UserException)) {
 			// call connection shutdown method
-			if (self::getConnection() !== null and self::getConnection()->getProtocol() !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage());
+			if (self::getConnection() !== null && self::getConnection()->getProtocol() !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage());
 		}
 	}
 }

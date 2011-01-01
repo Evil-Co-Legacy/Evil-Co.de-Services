@@ -4,20 +4,23 @@ require_once(SDIR.'lib/system/user/UserType.class.php');
 
 /**
  * Defines defaults for user types
- * @author		Johannes Donath
+ *
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class AbstractUserType implements UserType {
 	
 	/**
 	 * Contains additional properties for user objects
+	 *
 	 * @var array<mixed>
 	 */
 	protected $data = array();
 	
 	/**
 	 * Contains an unique ID for users
+	 *
 	 * @var mixed
 	 */
 	public $userID = null;

@@ -5,26 +5,30 @@ require_once(SDIR.'lib/system/user/UserTypeManager.class.php');
 
 /**
  * Manages a special type of users
- * @author		Johannes Donath
+ *
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 abstract class AbstractUserTypeManager implements UserTypeManager, Iterator {
 	
 	/**
 	 * Contains all users to manage
+	 *
 	 * @var array<UserType>
 	 */
 	protected $userList = array();
 	
 	/**
 	 * Contains the current iterator pointer
+	 *
 	 * @var integer
 	 */
 	protected $userListPointer = 0;
 
 	/**
 	 * Contains the class name that should used for every user
+	 *
 	 * @var string
 	 */
 	protected $userType = 'AbstractUserType';
