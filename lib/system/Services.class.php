@@ -187,7 +187,7 @@ class Services {
 	 * Creates a new Protocol instance
 	 */
 	protected function initProtocol() {
-		self::$protocolObj = new Protocol();
+		self::$protocolObj = new ProtocolManager();
 	}
 
 	/**
