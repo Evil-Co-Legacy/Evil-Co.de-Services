@@ -54,7 +54,7 @@ class ModuleParser {
 		}
 		
 		// add namespace section
-		$file = str_replace("<?php\n", "<?php\n".$namespaceSection."\n", $file);
+		$file = str_replace("<?php\n", "<?php\n// imports\nrequire_once(SDIR.'lib/system/module/ModuleHandler.class.php');\n\n".$namespaceSection."\n", $file);
 		
 		// get filename
 		$newFile = basename($filename);
