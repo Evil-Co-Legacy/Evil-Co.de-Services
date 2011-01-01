@@ -152,5 +152,12 @@ class Connection {
 	public function sendLine($message, $length = null) {
 		return $this->__send($message.(stripos($message, "\n") === false ? "\n" : ""));
 	}
+	
+	/**
+	 * Shuts down the connection
+	 */
+	public function shutdown() {
+		socket_shutdown($this->socket);
+	}
 }
 ?>
