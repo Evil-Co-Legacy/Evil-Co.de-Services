@@ -5,9 +5,10 @@ require_once(SDIR.'lib/system/user/ChannelUserType.class.php');
 
 /**
  * Manages users in a channel
- * @author		Johannes Donath
+ *
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class ChannelUserList extends AbstractUserTypeManager {
 	
@@ -18,14 +19,16 @@ class ChannelUserList extends AbstractUserTypeManager {
 	
 	/**
 	 * Contains the parent channel
+	 *
 	 * @var	Channel
 	 */
 	protected $channel = null;
 	
 	/**
 	 * Creates a new instance of type ChannelUserList
+	 *
 	 * @param	Channel	$channel
-	 * @return void
+	 * @return 	void
 	 */
 	public function __construct(&$channel) {
 		$this->channel = $channel;
@@ -33,10 +36,11 @@ class ChannelUserList extends AbstractUserTypeManager {
 	
 	/**
 	 * Adds a new user to a channel
+	 *
 	 * @param	mixed			$userID
 	 * @param	array<mixed>		$data
-	 * * @param	string			$userModes
-	 * @return void
+	 * @param	string			$userModes
+	 * @return 	void
 	 */
 	public function addUser($userID, $data = array(), $userModes = '') {
 		parent::addUser($userID, $data);
@@ -45,6 +49,7 @@ class ChannelUserList extends AbstractUserTypeManager {
 	
 	/**
 	 * Alias for ChannelUserList::addUser()
+	 *
 	 * @see ChannelUserList::addUser()
 	 * @deprecated
 	 */
@@ -54,6 +59,7 @@ class ChannelUserList extends AbstractUserTypeManager {
 	
 	/**
 	 * Alias for ChannelUserList::removeUser()
+	 *
 	 * @param	mixed	$userID
 	 * @deprecated
 	 */

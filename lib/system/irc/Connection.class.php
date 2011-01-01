@@ -1,7 +1,7 @@
 <?php
-
 /**
  * Manages the connection to server
+ *
  * @author		Johannes Donath
  * @copyright		2010 DEVel Fusion
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -10,6 +10,7 @@ class Connection {
 	
 	/**
 	 * Contains a timeout for socket_select calls
+	 *
 	 * @var integer
 	 */
 	const SOCKET_CHECK_TIMEOUT = 0;
@@ -17,24 +18,28 @@ class Connection {
 	/**
 	 * Contains the maximum of bytes that should read from socket
 	 * Note: This is defined by IRC RCF
+	 *
 	 * @var integer
 	 */
 	const SOCKET_READ_MAX = 512;
 	
 	/**
 	 * Contains the socket that is connected to server
+	 *
 	 * @var Resource
 	 */
 	protected $socket = null;
 	
 	/**
 	 * Contains configuration variables
+	 *
 	 * @var	array<string>
 	 */
 	private $configuration = array();
 	
 	/**
 	 * Contains the current connection state
+	 *
 	 * @var string
 	 */
 	protected $connectionState = 'none';
@@ -54,6 +59,7 @@ class Connection {
 	/**
 	 * Returnes a count of modified sockets
 	 * Note: This returnes 0 if no sockets modified
+	 *
 	 * @return integer
 	 */
 	public function check() {
@@ -68,6 +74,8 @@ class Connection {
 	
 	/**
 	 * Starts the connection
+	 *
+	 * @return void
 	 */
 	protected function connect() {
 		if(!socket_connect($this->socket, $this->configuration['hostname'], intval($this->configuration['port'])))
@@ -81,6 +89,7 @@ class Connection {
 	
 	/**
 	 * Returnes the current connection state
+	 *
 	 * @return string
 	 */
 	public function getConnectionState() {
@@ -89,6 +98,8 @@ class Connection {
 	
 	/**
 	 * Creates a new socket
+	 *
+	 * @return void
 	 */
 	protected function initSocket() {
 		// create socket
@@ -103,6 +114,7 @@ class Connection {
 	
 	/**
 	 * Reads a line from server
+	 *
 	 * @return string
 	 */
 	public function readLine() {
@@ -115,9 +127,10 @@ class Connection {
 	/**
 	 * Writes the given message with given length to string
 	 * Note: The second parameter is optional. It will set automaticly if it isn't given
+	 *
 	 * @param	string	$message
 	 * @param	integer	$length
-	 * @return integer
+	 * @return 	integer
 	 */
 	protected function __send($message, $length = null) {
 		if (($bytes = socket_write($this->socket, $message, ($length !== null ? $length : strlen($message)))) === false)
@@ -128,9 +141,10 @@ class Connection {
 	
 	/**
 	 * Sends a line to server
+	 *
 	 * @param	string	$message
 	 * @param	integer	$length
-	 * @return integer
+	 * @return 	integer
 	 */
 	public function sendLine($message, $length = null) {
 		return $this->__send($message.(stripos($message, "\n") === false ? "\n" : ""));
