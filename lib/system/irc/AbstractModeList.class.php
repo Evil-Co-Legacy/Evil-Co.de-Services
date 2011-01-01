@@ -15,7 +15,7 @@ abstract class AbstractModeList implements ModeList, Iterator {
 	/**
 	 * TODO: Add description
 	 *
-	 * @var array
+	 * @var array<boolean>
 	 */
 	protected static $loadedModeInformation = array();
 	

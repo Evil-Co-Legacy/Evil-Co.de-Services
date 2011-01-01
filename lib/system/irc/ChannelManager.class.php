@@ -38,8 +38,8 @@ class ChannelManager implements Iterator {
 	/**
 	 * Creates a new channel in manager
 	 *
-	 * @param	string	$channelName
-	 * @param	array	$data
+	 * @param	string		$channelName
+	 * @param	array<mixed>	$data
 	 * @return	void
 	 */
 	public function createChannel($channelName, $data) {

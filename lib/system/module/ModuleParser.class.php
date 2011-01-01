@@ -1,7 +1,7 @@
 <?php
-
 /**
  * Parses a module for using in our system
+ *
  * @author		Johannes Donath
  * @copyright		2010 DEVel Fusion
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -12,13 +12,16 @@ class ModuleParser {
 	/**
 	 * Contains already loaded namespaces
 	 * Note: This will only used to find existing namespaces
+	 *
 	 * @var array<string>
 	 */
 	protected static $knownNamespaces = array();
 	
 	/**
 	 * Parses the given module file and creates a copy
-	 * @param unknown_type $filename
+	 *
+	 * @param	string $filename
+	 * @return	string
 	 */
 	public function parseModule($filename) {
 		// generate namespace
@@ -42,6 +45,8 @@ class ModuleParser {
 	
 	/**
 	 * Generates an unique namespace ID
+	 *
+	 * @return string
 	 */
 	protected static function generateNamespaceID() {
 		// loop while generating a new ID
