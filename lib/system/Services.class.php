@@ -298,7 +298,10 @@ class Services {
 	 */
 	public static function handleException(Exception $ex) {
 		// Call SystemException::sendDebugLog()
-		if ($ex instanceof SystemException and self::$protocolObj->isAlive()) $ex->sendDebugLog();
+		if ($ex instanceof SystemException and self::$protocolObj !== null and self::$protocolObj->isAlive())
+			$ex->sendDebugLog();
+		else
+			print($ex);
 		
 		// Call Protocol::handleException()
 		if ($ex instanceof ProtocolException) self::$protocolObj->handleException($ex);
