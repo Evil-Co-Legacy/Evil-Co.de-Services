@@ -1,4 +1,7 @@
 <?php
+// imports
+require_once(SDIR.'lib/system/module/ModuleHandler.class.php');
+require_once(SDIR.'lib/system/module/ModuleParser.class.php');
 
 /**
  * Manages module instances
