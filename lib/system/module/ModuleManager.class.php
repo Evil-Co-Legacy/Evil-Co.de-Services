@@ -108,7 +108,7 @@ class ModuleManager {
 			// try to find parent package
 			if (!in_array($info['parentExtension'], array_keys($this->loadedModules))) throw new ModuleException("What the hell? You should really add the parent package to requirement list my friend ...");
 			
-			$namespace = $this->loadedModules[$info['parentEtension']];
+			$namespace = $this->loadedModules[$info['parentExtension']];
 		}
 		
 		// start parser
@@ -131,6 +131,22 @@ class ModuleManager {
 		
 		// whoops?!
 		throw new SuccessException("Something went terrible wrong ... :-X");
+	}
+	
+	/**
+	 * Alias for ModuleHandler::getModuleInstances()
+	 * @see ModuleHandler::getModuleInstances()
+	 */
+	public function getModuleInstances($moduleName) {
+		return ModuleHandler::getInstance()->getModuleInstances($moduleName);
+	}
+	
+	/**
+	 * Alias for ModuleHandler::getFirstModuleInstance()
+	 * @see ModuleHandler::getFirstModuleInstance()
+	 */
+	public function getFirstModuleInstance($moduleName) {
+		return ModuleHandler::getFirstModuleInstance($moduleName);
 	}
 }
 ?>
