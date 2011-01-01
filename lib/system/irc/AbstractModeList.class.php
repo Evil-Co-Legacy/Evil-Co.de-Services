@@ -5,32 +5,37 @@ require_once(SDIR.'lib/system/irc/ModeArgumentList.class.php');
 
 /**
  * Manages and parses mode strings
- * @author		Johannes Donath
+ *
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 abstract class AbstractModeList implements ModeList, Iterator {
 	
 	/**
-	 * 
-	 * @var unknown_type
+	 * TODO: Add description
+	 *
+	 * @var array
 	 */
 	protected static $loadedModeInformation = array();
 	
 	/**
 	 * Contains the name of the file that contains mode information
+	 *
 	 * @var string
 	 */
 	protected static $modeInformationFilename = '';
 	
 	/**
 	 * Contains a list of modes
+	 *
 	 * @var array<Mode>
 	 */
 	protected $modes = array();
 	
 	/**
 	 * Contains a pointer to current iterator element
+	 *
 	 * @var integer
 	 */
 	protected $modePointer = 0;
@@ -119,10 +124,10 @@ abstract class AbstractModeList implements ModeList, Iterator {
 						case '+':
 							$argument = $argumentList->getArgument($i);
 							$this->addMode($string{$i}, $argument);
-							break;
+						break;
 						case '-':
 							$this->removeMode($string{$i});
-							break;
+						break;
 					}
 			}
 		}

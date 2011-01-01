@@ -4,6 +4,7 @@ require_once(SDIR.'lib/system/irc/ChannelUserList.class.php');
 
 /**
  * Represents a channel
+ *
  * @author		Johannes Donath
  * @copyright		2010 DEVel Fusion
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -12,26 +13,31 @@ class Channel {
 	
 	/**
 	 * Contains the channel name
+	 *
 	 * @var	string
 	 */
 	protected $channelName = '';
 	
 	/**
 	 * Contains additional properties
+	 *
 	 * @var array<mixed>
 	 */
 	protected $data = array();
 	
 	/**
 	 * Contains a ChannelUserList
+	 *
 	 * @var ChannelUserList
 	 */
 	protected $userList = null;
 	
 	/**
 	 * Creates a new instance of Channel
-	 * @param	string			$channelName
+	 *
+	 * @param	string		$channelName
 	 * @param	array<mixed>	$data
+	 * @return	void
 	 */
 	public function __construct($channelName, $data) {
 		// set properties
@@ -48,6 +54,7 @@ class Channel {
 	
 	/**
 	 * Returnes the name of this channel
+	 *
 	 * @return string
 	 */
 	public function getChannelName() {
@@ -56,6 +63,8 @@ class Channel {
 	
 	/**
 	 * Returnes the ChannelUserList object for this channel
+	 *
+	 * @return	ChannelUserList
 	 */
 	public function getUserList() {
 		return $this->userList;
@@ -63,7 +72,9 @@ class Channel {
 	
 	/**
 	 * Unifies channel names
+	 *
 	 * @param	string	$channelName
+	 * @return	string
 	 */
 	public static function unifyChannelName($channelName) {
 		$channelName = strtolower($channelName);
@@ -73,9 +84,10 @@ class Channel {
 	
 	/**
 	 * Sets an additional property
+	 *
 	 * @param	string	$property
 	 * @param	mixed	$value
-	 * @return void
+	 * @return 	void
 	 */
 	public function __set($property, $value) {
 		Services::getEvent()->fire($this, 'dataSet', array('property' => $property, 'value' => $value));
@@ -83,18 +95,20 @@ class Channel {
 	}
 	
 	/**
-	 * Returnes true if the given property exists
+	 * Returns true if the given property exists
+	 *
 	 * @param	string	$property
-	 * @return boolean
+	 * @return 	boolean
 	 */
 	public function __isset($property) {
 		return (isset($this->data[$property]));
 	}
 	
 	/**
-	 * Returnes the value of an additional property
+	 * Returns the value of an additional property
+	 *
 	 * @param	string	$property
-	 * @return mixed
+	 * @return 	mixed
 	 */
 	public function __get($property) {
 		if (isset($this->data[$property])) return $this->data[$property];

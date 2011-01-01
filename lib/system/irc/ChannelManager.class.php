@@ -4,6 +4,7 @@ require_once(SDIR.'lib/system/irc/Channel.class.php');
 
 /**
  * Manages channels and their user lists
+ *
  * @author		Johannes Donath
  * @copyright		2010 DEVel Fusion
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -12,20 +13,23 @@ class ChannelManager implements Iterator {
 	
 	/**
 	 * Contains all channels
+	 *
 	 * @var array<Channel>
 	 */
 	protected $channelList = array();
 	
 	/**
 	 * Points to the current selected channel object in list
+	 *
 	 * @var integer
 	 */
 	protected $channelPointer = 0;
 	
 	/**
 	 * Returnes true if a channel already exists in list
+	 *
 	 * @param	string	$channelName
-	 * @return boolean
+	 * @return 	boolean
 	 */
 	public function channelExists($channelName) {
 		return (isset($this->channelList[$channelName]));
@@ -33,8 +37,10 @@ class ChannelManager implements Iterator {
 	
 	/**
 	 * Creates a new channel in manager
+	 *
 	 * @param	string	$channelName
 	 * @param	array	$data
+	 * @return	void
 	 */
 	public function createChannel($channelName, $data) {
 		// unify channel name
@@ -49,8 +55,9 @@ class ChannelManager implements Iterator {
 	
 	/**
 	 * Returnes the channel object for given channel name
+	 *
 	 * @param	string	$channelName
-	 * @return channel
+	 * @return 	Channel
 	 */
 	public function getChannel($channelName) {
 		// unify channel name
@@ -64,7 +71,9 @@ class ChannelManager implements Iterator {
 	
 	/**
 	 * Removes a channel from list
+	 *
 	 * @param	string	$channelName
+	 * @return	void
 	 */
 	public function removeChannel($channelName) {
 		// unify channel name

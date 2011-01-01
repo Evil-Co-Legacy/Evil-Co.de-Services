@@ -4,8 +4,10 @@ require_once(SDIR.'lib/modules/ExtensionModule.class.php');
 
 /**
  * Listens on JOIN notifications and gives additional permissions to users
- * @author		Johannes Donath
+ *
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class JoinModeExtension extends ExtensionModule {
 
@@ -20,7 +22,8 @@ class JoinModeExtension extends ExtensionModule {
 	
 	/**
 	 * Handles joins on channels registered with chanserv
-	 * @param	string	$data
+	 *
+	 * @param	array<array>	$data
 	 */
 	public function handleJoin($data) {
 		// get chanserv address
