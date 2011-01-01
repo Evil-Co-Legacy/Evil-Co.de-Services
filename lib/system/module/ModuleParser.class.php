@@ -24,17 +24,31 @@ class ModuleParser {
 	
 	/**
 	 * Parses the given module file and creates a copy
-	 * @param unknown_type $filename
+	 * @param	string	$filename
+	 * @param	array	$knownNamespaces This array should formated like this:
+	 * array(
+	 * 	[namespace] => 'class'
+	 * 	[namespace2] => 'class2'
+	 * )
 	 */
-	public function parseModule($filename, $namespace = null) {
+	public function parseModule($filename, $knownNamespaces) {
 		// generate namespace
-		if ($namespace === null) $namespace = self::generateNamespaceID();
+		$namespace = self::generateNamespaceID();
 		
 		// read file
 		$file = file_get_contents($filename);
 		
 		// add namespace definition
-		$file = str_replace("<?php", "<?php\nnamespace ".$namespace.";\n");
+		$namespaceSection = "namespace ".$namespace.";\n\n/** known namespaces **/\n";
+		
+		// add known namespaces
+		foreach($knownNamespaces as $namespaceName => $class) {
+			$namespaceSection .= "use ".$namespaceName.";";
+			$file = str_replace($class, $namespaceName."\\".$class, $file);
+		}
+		
+		// add namespace section
+		$file = str_replace("<?php\n", "<?php\n".$namespaceSection."\n", $file);
 		
 		// get filename
 		$newFile = basename($filename);
