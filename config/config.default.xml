@@ -87,43 +87,30 @@
 	</database>
 	
 	<!-- 
-		[OPTIONAL] NickServ
+		[OPTIONAL] AuthServ
 		All options in this block are optional!
-		Note that these options are only usefull if you've loaded the NickServ-Module (Loaded by default)
+		Note that these options are only useful if you've loaded the AuthServ-Module (Loaded by default)
 	 -->
-	<nickserv>
+	<authserv>
 		<!-- 
 			[OPTIONAL] Allow Registrations
-			If this is set to 1 the NickServ Module allows account registrations
+			If this is set to 1 the AuthServ Module allows account registrations
 		 -->
 		<enableregistration>1</enableregistration>
 		
 		<!-- 
 			[OPTIONAL] Require Email
-			If this is set to 1 NickServ will require the E-Mail field for new accounts
-			Note: This is only usefull if you enable the 'enablregistration' option!
+			If this is set to 1 AuthServ will require the E-Mail field for new accounts
+			Note: This is only useful if you enable the 'enableregistration' option!
 		 -->
 		<requireemail>1</requireemail>
 		
 		<!-- 
 			[OPTIONAL] Use Emails
-			If this is set to 1 NickServ will send E-Mails to users to validate Accounts
+			If this is set to 1 AuthServ will send E-Mails to users to validate Accounts
 			Note: This REQUIRES the 'requireemail' option!
 		 -->
 		<usemail>1</usemail>
-		
-		<!-- 
-			[OPTIONAL] Allow Nickregistrations
-			If this is set to 1 NickServ will allow users to register nicknames (Protect them)
-		 -->
-		<allownickregistration>1</allownickregistration>
-		
-		<!-- 
-			[OPTIONAL] Nickregistration Maximum
-			Defines the maximum of registrated nicknames in one user account
-			Note: This will only used if the 'allownickregistration' option is set to 1
-		 -->
-		<nickregistrationmax>5</nickregistrationmax>
 		
 		<!-- 
 			[OPTIONAL] Accountname Pattern
@@ -132,12 +119,12 @@
 			Note: This will only used if the 'enableregistration' setting is set to 1
 		 -->
 		<usernamepattern><![CDATA[~([A-Z0-9_\-\.]+)~i]]></usernamepattern>
-	</nickserv>
+	</authserv>
 	
 	<!-- 
-		[OPTIONAL] NickServ
+		[OPTIONAL] ChanServ
 		All options in this block are optional!
-		Note that these options are only usefull if you've loaded the ChanServ-Module (Loaded by default)
+		Note that these options are only useful if you've loaded the ChanServ-Module (Loaded by default)
 	 -->
 	<chanserv>
 		<!-- 
@@ -145,12 +132,6 @@
 			If this is set to 1 ChanServ will deny all users access that aren't authed
 		 -->
 		<requireaccount>0</requireaccount>
-		
-		<!-- 
-			[OPTIONAL] Require Account for Channel Registrations
-			If this is set to 1 ChanServ will deny all users access to registration command that aren't authed
-		 -->
-		 <requireaccountregistration>1</requireaccountregistration>
 		 
 		 <!-- 
 		 	[OPTIONAL] Required Operator Level for Channel Registrations
