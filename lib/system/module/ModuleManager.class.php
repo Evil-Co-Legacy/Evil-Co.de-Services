@@ -146,7 +146,7 @@ class ModuleManager {
 	 * @see ModuleHandler::getFirstModuleInstance()
 	 */
 	public function getFirstModuleInstance($moduleName) {
-		return ModuleHandler::getFirstModuleInstance($moduleName);
+		return ModuleHandler::getInstance()->getFirstModuleInstance($moduleName);
 	}
 }
 ?>
