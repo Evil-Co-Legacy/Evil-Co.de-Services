@@ -97,6 +97,15 @@ class Connection {
 	}
 	
 	/**
+	 * Alias for Services::getProtocol()
+	 * @see Services::getProtocol()
+	 * @deprecated
+	 */
+	public function getProtocol() {
+		return Services::getProtocol();
+	}
+	
+	/**
 	 * Creates a new socket
 	 *
 	 * @return void
