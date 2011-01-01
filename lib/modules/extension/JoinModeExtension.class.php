@@ -24,6 +24,7 @@ class JoinModeExtension extends ExtensionModule {
 	 * Handles joins on channels registered with chanserv
 	 *
 	 * @param	array<array>	$data
+	 * @return	void
 	 */
 	public function handleJoin($data) {
 		// get chanserv address

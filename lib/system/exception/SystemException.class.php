@@ -23,6 +23,8 @@ class SystemException extends Exception {
 	
 	/**
 	 * Sends a debug log with exception data
+	 * 
+	 * @return	void
 	 */
 	public function sendDebugLog() {
 		// send message
