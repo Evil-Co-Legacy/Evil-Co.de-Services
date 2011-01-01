@@ -1,21 +1,24 @@
 <?php
-
 /**
  * Manages all language variables
- * @author		Johannes Donath
+ *
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class LanguageManager {
 
 	/**
 	 * Contains all
-	 * @var unknown_type
+	 *
+	 * @var array<mixed>
 	 */
 	protected $availableLanguages = array();
 
 	/**
 	 * Contains all items
-	 * @var	array
+	 *
+	 * @var	array<array>
 	 */
 	protected $items = array();
 
@@ -47,8 +50,10 @@ class LanguageManager {
 
 	/**
 	 * Returnes the content of the given language var (This method returnes the name of the variable if no matching variable exists)
+	 *
 	 * @param	integer	$languageID
 	 * @param	string	$variable
+	 * @return	string
 	 */
 	public function get($languageID, $variable) {
 		// whohoo hardcoded shit

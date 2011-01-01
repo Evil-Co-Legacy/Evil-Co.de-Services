@@ -49,6 +49,7 @@ abstract class AbstractArgumentList implements ArgumentList, Iterator {
 	 * Returnes the argument at given index
 	 *
 	 * @param	integer	$index
+	 * @return	string
 	 */
 	public function getArgument($index) {
 		return $this->argumentList[$i];
@@ -76,6 +77,7 @@ abstract class AbstractArgumentList implements ArgumentList, Iterator {
 	 * Strips disallowed chars from argument string
 	 *
 	 * @param	string	$argumentString
+	 * @return	string
 	 */
 	protected function stripDisallowedChars($argumentString) {
 		$argumentString = str_replace('+', '', $argumentString);

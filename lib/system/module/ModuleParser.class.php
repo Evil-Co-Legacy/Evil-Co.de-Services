@@ -1,7 +1,7 @@
 <?php
-
 /**
  * Parses a module for using in our system
+ *
  * @author		Johannes Donath
  * @copyright		2010 DEVel Fusion
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -11,6 +11,7 @@ class ModuleParser {
 	
 	/**
 	 * Contains the name of the dir (relative from SDIR) where cache files should stored
+	 * 
 	 * @var string
 	 */
 	const PARSER_DIR = 'cache/';
@@ -18,18 +19,23 @@ class ModuleParser {
 	/**
 	 * Contains already loaded namespaces
 	 * Note: This will only used to find existing namespaces
+	 *
 	 * @var array<string>
 	 */
 	protected static $knownNamespaces = array();
 	
 	/**
 	 * Parses the given module file and creates a copy
+	 * 
 	 * @param	string	$filename
 	 * @param	array	$knownNamespaces This array should formated like this:
 	 * array(
 	 * 	[namespace] => 'class'
 	 * 	[namespace2] => 'class2'
 	 * )
+	 *
+	 * @param	string $filename
+	 * @return	string
 	 */
 	public function parseModule($filename, $knownNamespaces) {
 		// generate namespace
@@ -62,6 +68,8 @@ class ModuleParser {
 	
 	/**
 	 * Generates an unique namespace ID
+	 *
+	 * @return string
 	 */
 	protected static function generateNamespaceID() {
 		// loop while generating a new ID

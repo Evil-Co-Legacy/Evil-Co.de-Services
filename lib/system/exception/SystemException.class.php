@@ -1,10 +1,10 @@
 <?php
-
 /**
  * Exception for system errors
- * @author		Johannes Donath
+ *
+ * @author	Johannes Donath
  * @copyright	2010 DEVel Fusion
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class SystemException extends Exception {
 	
@@ -23,6 +23,8 @@ class SystemException extends Exception {
 	
 	/**
 	 * Sends a debug log with exception data
+	 * 
+	 * @return	void
 	 */
 	public function sendDebugLog() {
 		// send message
