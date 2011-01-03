@@ -145,7 +145,7 @@ class ProtocolManager {
 	 */
 	protected function readSupportedTypes($protocol) {
 		try {
-			$xml = new XML(SDIR.self::PROTOCOL_PATH.$protocol.'/protocol.xml');
+			$xml = new XML(SDIR.self::PROTOCOL_PATH.$protocol.'/types.xml');
 		} catch (SystemException $ex) {
 			// replace SystemExceptions with correct ProtocolException
 			throw new ProtocolException("Cannot read protocol information: ".$ex->getMessage());
