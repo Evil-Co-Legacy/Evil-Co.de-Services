@@ -157,10 +157,9 @@ class ProtocolManager {
 		// read information
 		foreach($data['children'] as $child) {
 			// remove elements without content
-			if (!isset($child['cdata'])) continue;
+			if (!isset($child['cdata']) or !isset($child['attrs']['type'])) continue;
 
-
-			$this->supportedTypes[$child['name']] = (bool) intval($child['cdata']);
+			$this->supportedTypes[$child['attrs']['type']] = $child['cdata'];
 		}
 	}
 
