@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE types SYSTEM "http://www.evil-co.de/irc/DTDs/types.dtd">
+<types>
+	<!-- commands -->
+	<type name="addLine">sendAddLine</type>
+	<type name="changeHost">sendChangeHost</type>
+	<type name="holdNick">sendHold</type>
+	<type name="join">sendJoin</type>
+	<type name="metadata">sendMetadata</type>
+	<type name="mode">sendMode</type>
+	<type name="nick">sendNickname</type>
+	<type name="ping">sendPing</type>
+	<type name="pong">sendPong</type>
+	<type name="removeLine">sendDelLine</type>
+	<type name="sajoin">sendSVSJoin</type>
+	<type name="samode">sendSVSMode</type>
+	<type name="sanick">sendSVSNick</type>
+	<type name="sapart">sendSVSPart</type>
+	<type name="server">sendServer</type>
+	<type name="squit">sendSQuit</type>
+	<type name="topic">sendTopic</type>
+
+	<!-- channel modes -->
+	<type name="channelBan">b</type>
+	<type name="channelBanException">e</type>
+	<type name="channelBlockColor">c</type>
+	<type name="channelInviteException">I</type>
+	<type name="channelMessageFlood">f</type>
+	<type name="channelInviteOnly">i</type>
+	<type name="channelJoinFlood">j</type>
+	<type name="channelKey">k</type>
+	<type name="channelLimit">l</type>
+	<type name="channelModerate">m</type>
+	<type name="channelRegistered">r</type>
+
+	<!-- user modes -->
+	<type name="userBot">b</type>
+	<type name="userCallerid">g</type>
+	<type name="userCensor">G</type>
+	<type name="userCloaked">x</type>
+	<type name="userCommonchans">c</type>
+	<type name="userDeaf">d</type>
+	<type name="userHelp">h</type>
+	<type name="userHideChannels">I</type>
+	<type name="userHideOperator">H</type>
+	<type name="userInvisible">i</type>
+	<type name="userOperator">o</type>
+	<type name="userRegistered">r</type>
+	<type name="userServprotect">k</type>
+
+	<!-- user channel modes -->
+	<type name="halfoperator">h</type>
+	<type name="operator">o</type>
+	<type name="owner">q</type>
+	<type name="protect">a</type>
+	<type name="voice">v</type>
+</types>
