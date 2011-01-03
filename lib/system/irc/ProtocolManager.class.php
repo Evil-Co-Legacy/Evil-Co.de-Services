@@ -152,7 +152,7 @@ class ProtocolManager {
 		}
 
 		// get protocol tree
-		$data = $xml->getElementTree('definition');
+		$data = $xml->getElementTree('types');
 
 		// read information
 		foreach($data['children'] as $child) {
