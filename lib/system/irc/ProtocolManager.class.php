@@ -159,7 +159,7 @@ class ProtocolManager {
 			// remove elements without content
 			if (!isset($child['cdata']) or !isset($child['attrs']['type'])) continue;
 
-			$this->supportedTypes[$child['attrs']['type']] = $child['cdata'];
+			$this->supportedTypes[$child['attrs']['name']] = $child['cdata'];
 		}
 	}
 
