@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE protocol SYSTEM "http://www.evil-co.de/irc/DTDs/protocol.dtd">
+<protocol>
+	<author>Johannes Donath</author>
+	<copyright>2010 DEVel Fusion</copyright>
+	<file>lib/system/irc/protocol/inspircd/InspIRCdProtocol.class.php</file>
+</protocol>
