@@ -106,7 +106,7 @@ class Connection {
 	 */
 	public function getProtocol() {
 		// log this shit!
-		if (DEBUG) Services::getLog()->debug("Use of deprecated method Connection::getProtocol():" . PHP_EOL . implode(PHP_EOL, debug_backtrace()));
+		Services::getLog()->debug("Use of deprecated method Connection::getProtocol():" . PHP_EOL . implode(PHP_EOL, debug_backtrace()));
 		
 		// call alias
 		return Services::getProtocol();
@@ -123,6 +123,9 @@ class Connection {
 		
 		// create socket
 		$this->socket = socket_create(($this->configuration->ipversion == '4' ? AF_INET : AF_INET6), SOCK_STREAM, getprotobyname('tcp'));
+		
+		// send debug log
+		Services::getLog()->debug("Created IPv".($this->configuration->ipversion == '4' ? '4' : '6')." socket");
 		
 		// check created socket
 		if ($this->socket === false)
