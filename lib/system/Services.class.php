@@ -3,7 +3,7 @@
 define('IRCD', 'inspircd');
 define('SERVICES_VERSION', '2.0.0-eatsChildren');
 // Uncomment the following to enable debugging
-define('DEBUG', false);
+define('DEBUG', true);
 // set this to your location
 date_default_timezone_set('Europe/Berlin');
 
