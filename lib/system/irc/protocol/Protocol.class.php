@@ -14,6 +14,11 @@ interface Protocol {
 	public function __construct(&$supportedTypes);
 
 	/**
+	 * Inits the IRC server-to-server connection
+	 */
+	public function initConnection();
+	
+	/**
 	 * Returnes true if the current connection to server is alive
 	 */
 	public function isAlive();
