@@ -100,6 +100,12 @@ class Services {
 	protected static $logWriterDebugObj = null;
 	
 	/**
+	 * Contains the log writer formatter for log outputs
+	 * @var Zend_Log_Formatter_Simple
+	 */
+	protected static $logWriterFormatter = null;
+	
+	/**
 	 * Contains a file stream
 	 * @var resource
 	 */
@@ -246,9 +252,14 @@ class Services {
 	protected function initLog() {
 		// open file
 		self::$logWriterStream = fopen(SDIR.'logs/services-'.gmdate('M-d-Y').'.log', 'a', false);
+		
+		// create formatter
+		self::$logWriterFormatter = new Zend_Log_Formatter_Simple('[%timestamp%] %priorityName% (%priority%): %message%' . PHP_EOL);
 		 
 		// create log instances
 		self::$logWriterObj = new Zend_Log_Writer_Stream(self::$logWriterStream);
+		self::$logWriterObj->setFormatter(self::$logWriterFormatter);
+		
 		self::$loggerObj = new Zend_Log();
 		
 		// add file writer
@@ -257,6 +268,7 @@ class Services {
 		// create debug log instances
 		if (DEBUG) {
 			self::$logWriterDebugObj = new Zend_Log_Writer_Stream('php://output');
+			self::$logWriterDebugObj->setFormatter(self::$logWriterFormatter);
 			self::$loggerObj->addWriter(self::$logWriterDebugObj);
 		}
 		
