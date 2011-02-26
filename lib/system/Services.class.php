@@ -3,7 +3,7 @@
 define('IRCD', 'inspircd');
 define('SERVICES_VERSION', '2.0.0-eatsChildren');
 // Uncomment the following to enable debugging
-define('DEBUG', true);
+define('DEBUG', false);
 // set this to your location
 date_default_timezone_set('Europe/Berlin');
 
@@ -98,6 +98,12 @@ class Services {
 	 * @var Zend_Log_Writer_Stream
 	 */
 	protected static $logWriterDebugObj = null;
+	
+	/**
+	 * 
+	 * @var unknown_type
+	 */
+	protected static $logWriterFilterObj = null;
 	
 	/**
 	 * Contains the log writer formatter for log outputs
@@ -270,6 +276,9 @@ class Services {
 			self::$logWriterDebugObj = new Zend_Log_Writer_Stream('php://output');
 			self::$logWriterDebugObj->setFormatter(self::$logWriterFormatter);
 			self::$loggerObj->addWriter(self::$logWriterDebugObj);
+		} else {
+			self::$logWriterFilterObj = new Zend_Log_Filter_Priority(Zend_LOG::DEBUG, '<');
+			self::$logWriterObj->addFilter(self::$logWriterFilterObj);
 		}
 		
 		// add log entry
