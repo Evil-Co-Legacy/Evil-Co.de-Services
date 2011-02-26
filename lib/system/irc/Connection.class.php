@@ -82,6 +82,9 @@ class Connection {
 			throw new ConnectionException("Cannot connect to ".$this->configuration->hostname.":".$this->configuration->port);
 		else
 			$this->connectionState = 'connected';
+		
+		// log
+		Services::getLog()->info('Connected to '.$this->configuration->hostname.':'.intval($this->configuration->port));
 			
 		// fire event
 		Services::getEvent()->fire($this, 'connected');
@@ -102,6 +105,10 @@ class Connection {
 	 * @deprecated
 	 */
 	public function getProtocol() {
+		// log this shit!
+		if (DEBUG) Services::getLog()->debug("Use of deprecated method Connection::getProtocol():" . PHP_EOL . implode(PHP_EOL, debug_backtrace()));
+		
+		// call alias
 		return Services::getProtocol();
 	}
 	
