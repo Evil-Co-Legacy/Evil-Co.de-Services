@@ -176,6 +176,7 @@ class Services {
 	 * @return	void
 	 */
 	protected function initConfiguration() {
+		self::$loggerObj->info = "Reading configuration file '".SDIR.'config/config.xml'."'";
 		self::$configObj = new Zend_Config_Xml(SDIR.'config/config.xml');
 	}
 	
@@ -238,6 +239,9 @@ class Services {
 		// create log instances
 		self::$logWriterObj = new Zend_Log_Writer_Stream(self::$logWriterStream);
 		self::$loggerObj = new Zend_Log(self::$logWriterObj);
+		
+		// add log entry
+		self::$loggerObj->info = "Evil-Co.de Services ".SERVICES_VERSION." running on PHP ".phpversion();
 	}
 	
 	/**
