@@ -147,7 +147,7 @@ class Services {
 		
 		// call connection shutdown method
 		if (self::getConnection() !== null) self::getConnection()->shutdown();
-
+		
 		// remove pidfile (if any)
 		if (file_exists(SDIR.'services.pid')) @unlink(SDIR.'services.pid');
 	}
@@ -401,25 +401,22 @@ class Services {
 	 */
 	public static function handleException(Exception $ex) {
 		// Call SystemException::sendDebugLog()
-		if ($ex instanceof SystemException && self::$protocolObj !== null && self::$protocolObj->isAlive())
-			$ex->sendDebugLog();
-		else
-			print($ex);
+		if ($ex instanceof SystemException && self::$protocolObj !== null && self::$protocolObj->isAlive()) $ex->sendDebugLog();
 		
 		// Call Protocol::handleException()
-		if ($ex instanceof ProtocolException && self::$protocolObj !== null && self::$protocolObj->isAlive())
-			self::$protocolObj->handleException($ex);
-		else
-			print($ex);
-
+		if ($ex instanceof ProtocolException && self::$protocolObj !== null && self::$protocolObj->isAlive()) self::$protocolObj->handleException($ex);
+		
 		// Call Connection::handleException()
 		if ($ex instanceof ConnectionException) self::$ircObj->handleException($ex);
 		 
-		// Call shutdown methods if the given exception is recoverable (UserExceptions and RecoverableExceptions)
+		// Call shutdown methods if the given exception isn't recoverable (UserExceptions and RecoverableExceptions)
 		if (!($ex instanceof RecoverableException) && !($ex instanceof UserException)) {
 			// call connection shutdown method
 			if (self::getConnection() !== null && self::$protocolObj !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage());
 		}
+		
+		// Call Zend_Log::err()
+		if ($ex instanceof Zend_Exception) self::$loggerObj->err($ex);
 	}
 }
 ?>
