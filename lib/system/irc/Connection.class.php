@@ -78,8 +78,8 @@ class Connection {
 	 * @return void
 	 */
 	protected function connect() {
-		if(!socket_connect($this->socket, $this->configuration['hostname'], intval($this->configuration['port'])))
-			throw new ConnectionException("Cannot connect to ".$this->configuration['hostname'].":".$this->configuration['port']);
+		if(!socket_connect($this->socket, $this->configuration->hostname, intval($this->configuration->port)))
+			throw new ConnectionException("Cannot connect to ".$this->configuration->hostname.":".$this->configuration->port);
 		else
 			$this->connectionState = 'connected';
 			
@@ -112,10 +112,10 @@ class Connection {
 	 */
 	protected function initSocket() {
 		// check configuration
-		if (!isset($this->configuration['ipversion']) or !isset($this->configuration['hostname']) or !isset($this->configuration['port'])) throw new ConnectionException("Invalid configuration. Please recheck your configuration ... NOOB!");
+		if (!isset($this->configuration->ipversion) or !isset($this->configuration->hostname) or !isset($this->configuration->port)) throw new ConnectionException("Invalid configuration. Please recheck your configuration ... NOOB!");
 		
 		// create socket
-		$this->socket = socket_create(($this->configuration['ipversion'] == '4' ? AF_INET : AF_INET6), SOCK_STREAM, getprotobyname('tcp'));
+		$this->socket = socket_create(($this->configuration->ipversion == '4' ? AF_INET : AF_INET6), SOCK_STREAM, getprotobyname('tcp'));
 		
 		// check created socket
 		if ($this->socket === false)

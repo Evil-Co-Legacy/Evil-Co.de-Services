@@ -70,10 +70,10 @@ class ProtocolManager {
 		$connectionConfiguration = Services::getConfiguration()->get('connection');
 
 		// detect missing information
-		if (!isset($connectionConfiguration['protocol'])) throw new ProtocolException("Missing protocol configuration variable");
+		if (!isset($connectionConfiguration->protocol)) throw new ProtocolException("Missing protocol configuration variable");
 
 		// get protocol string
-		return strtolower($connectionConfiguration['protocol']);
+		return strtolower($connectionConfiguration->protocol);
 	}
 	
 	/**

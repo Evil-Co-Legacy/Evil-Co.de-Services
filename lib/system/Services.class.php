@@ -9,13 +9,15 @@ define('DEBUG', true);
 require_once(SDIR.'lib/core.functions.php');
 require_once(SDIR.'lib/system/user/BotManager.class.php');
 require_once(SDIR.'lib/system/irc/ChannelManager.class.php');
-require_once(SDIR.'lib/system/configuration/Configuration.class.php');
 require_once(SDIR.'lib/system/event/EventHandler.class.php');
 require_once(SDIR.'lib/system/irc/Connection.class.php');
 require_once(SDIR.'lib/system/language/LanguageManager.class.php');
 require_once(SDIR.'lib/system/module/ModuleManager.class.php');
 require_once(SDIR.'lib/system/irc/ProtocolManager.class.php');
 require_once(SDIR.'lib/system/user/UserManager.class.php');
+
+// Zend imports
+require_once('Zend/Config/Xml.php');
 
 /**
  * Manages all needed core instances
@@ -153,7 +155,7 @@ class Services {
 	 * @return	void
 	 */
 	protected function initConfiguration() {
-		self::$configObj = new Configuration();
+		self::$configObj = new Zend_Config_Xml(SDIR.'config/config.xml');
 	}
 	
 	/**
@@ -171,23 +173,20 @@ class Services {
 	 * @return	void
 	 */
 	protected function initDB() {
-		// get configuration
-		$db = self::getConfiguration()->get('database');
-
 		// validate
-		if (!isset($db['driver'], $db['hostname'], $db['username'], $db['password'], $db['dbname'])) throw new SystemException("Invalid Database configuration!");
-
+		if (!isset(self::getConfiguration()->database->driver) or !isset(self::getConfiguration()->database->hostname) or !isset(self::getConfiguration()->database->username) or !isset(self::getConfiguration()->database->password) or !isset(self::getConfiguration()->database->dbname)) throw new SystemException("Invalid Database configuration!");
+		
 		// try to find database driver
-		if (!file_exists(SDIR.'lib/system/database/'.$db['driver'].'Database.class.php')) throw new SystemException("Invalid database driver: ".$db['driver']);
+		if (!file_exists(SDIR.'lib/system/database/'.self::getConfiguration()->database->driver.'Database.class.php')) throw new SystemException("Invalid database driver: ".$db['driver']);
 
 		// get drivers classname
-		$className = $db['driver'].'Database';
+		$className = self::getConfiguration()->database->driver.'Database';
 
 		// include driver
 		require_once(SDIR.'lib/system/database/'.$className.'.class.php');
 
 		// create new instance
-		self::$dbObj = new $className($db['hostname'], $db['username'], $db['password'], $db['dbname'], 'UTF-8');
+		self::$dbObj = new $className(self::getConfiguration()->database->hostname, self::getConfiguration()->database->username, self::getConfiguration()->database->password, self::getConfiguration()->database->dbname, 'UTF-8');
 	}
 
 	/**
