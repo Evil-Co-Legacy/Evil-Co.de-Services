@@ -4,6 +4,8 @@ define('IRCD', 'inspircd');
 define('SERVICES_VERSION', '2.0.0-eatsChildren');
 // Uncomment the following to enable debugging
 define('DEBUG', true);
+// set this to your location
+date_default_timezone_set('Europe/Berlin');
 
 // imports
 require_once(SDIR.'lib/core.functions.php');
@@ -92,6 +94,12 @@ class Services {
 	protected static $logWriterObj = null;
 	
 	/**
+	 * Contains the log writer for debug outputs
+	 * @var Zend_Log_Writer_Stream
+	 */
+	protected static $logWriterDebugObj = null;
+	
+	/**
 	 * Contains a file stream
 	 * @var resource
 	 */
@@ -150,6 +158,9 @@ class Services {
 		
 		// remove pidfile (if any)
 		if (file_exists(SDIR.'services.pid')) @unlink(SDIR.'services.pid');
+		
+		// add shutdown log entry
+		self::$loggerObj->info("Shutting down ...");
 	}
 	
 	/**
@@ -176,7 +187,7 @@ class Services {
 	 * @return	void
 	 */
 	protected function initConfiguration() {
-		self::$loggerObj->info = "Reading configuration file '".SDIR.'config/config.xml'."'";
+		self::$loggerObj->info("Reading configuration file '".SDIR.'config/config.xml'."'");
 		self::$configObj = new Zend_Config_Xml(SDIR.'config/config.xml');
 	}
 	
@@ -238,10 +249,19 @@ class Services {
 		 
 		// create log instances
 		self::$logWriterObj = new Zend_Log_Writer_Stream(self::$logWriterStream);
-		self::$loggerObj = new Zend_Log(self::$logWriterObj);
+		self::$loggerObj = new Zend_Log();
+		
+		// add file writer
+		self::$loggerObj->addWriter(self::$logWriterObj);
+		
+		// create debug log instances
+		if (DEBUG) {
+			self::$logWriterDebugObj = new Zend_Log_Writer_Stream('php://output');
+			self::$loggerObj->addWriter(self::$logWriterDebugObj);
+		}
 		
 		// add log entry
-		self::$loggerObj->info = "Evil-Co.de Services ".SERVICES_VERSION." running on PHP ".phpversion();
+		self::$loggerObj->info("Evil-Co.de Services ".SERVICES_VERSION." running on PHP ".phpversion());
 	}
 	
 	/**
