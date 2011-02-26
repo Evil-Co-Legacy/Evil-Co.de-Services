@@ -81,6 +81,9 @@ abstract class Database {
 			$this->createDatabase();
 			$this->selectDatabase();
 		}
+		
+		// add log entry
+		Services::getLog()->info('Connected to '.$host.':3306 as user '.$user);
 	}
 
 	/**
