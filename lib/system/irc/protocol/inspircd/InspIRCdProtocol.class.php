@@ -1,7 +1,7 @@
 <?php
 // imports
 require_once(SDIR.'lib/system/irc/protocol/Protocol.class.php');
-require_once(SDIR.'lib/system/irc/protocol/inspircd/InspIRCdProtocol.class.php');
+require_once(SDIR.'lib/system/irc/protocol/inspircd/InspIRCdProtocolParser.class.php');
 
 /**
  * Contains methods for IRCd linking protocols (Communicating with connected server)
