@@ -40,6 +40,17 @@
 	 	 -->
 	 	 <protocol>inspircd</protocol>
 	 	 
+	 	 <!--
+	 	 	[EXPERIMENTAL] HMAC
+	 	 	The type of HMAC that should used.
+	 	 	Note: This is not supported in all server-to-server protocols
+	 	 	Available options are:
+	 	 		none (disables hmac)
+	 	 		sha256
+	 	 		<other by php supported types>
+	 	  -->
+	 	 <hmac>none</hmac>
+	 	 
 	 	 <!-- 
 	 	 	[REQUIRED] IP Protocol Version
 	 	 	Sets the 
