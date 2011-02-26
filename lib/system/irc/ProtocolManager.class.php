@@ -75,6 +75,14 @@ class ProtocolManager {
 		// get protocol string
 		return strtolower($connectionConfiguration['protocol']);
 	}
+	
+	/**
+	 * Inits the IRC-Connection
+	 * @return void
+	 */
+	public function initConnection() {
+		$this->protocol->initConnection();
+	}
 
 	/**
 	 * Creates a new protocol instance for correct protocol
