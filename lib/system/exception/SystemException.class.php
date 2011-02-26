@@ -1,4 +1,7 @@
 <?php
+// Zend imports
+require_once('Zend/Exception.php');
+
 /**
  * Exception for system errors
  *
@@ -6,7 +9,7 @@
  * @copyright	2010 DEVel Fusion
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class SystemException extends Exception {
+class SystemException extends Zend_Exception {
 	
 	/**
 	 * @see Exception::getTraceAsString
