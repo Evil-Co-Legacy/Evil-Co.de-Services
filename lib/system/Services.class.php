@@ -18,6 +18,8 @@ require_once(SDIR.'lib/system/user/UserManager.class.php');
 
 // Zend imports
 require_once('Zend/Config/Xml.php');
+require_once('Zend/Log.php');
+require_once('Zend/Log/Writer/Stream.php');
 
 /**
  * Manages all needed core instances
@@ -76,6 +78,24 @@ class Services {
 	 * @var	LanguageManager
 	 */
 	protected static $languageObj = null;
+	
+	/**
+	 * Contains the logger object
+	 * @var Zend_Log
+	 */
+	protected static $loggerObj = null;
+	
+	/**
+	 * Contains the log writer
+	 * @var Zend_Log_Writer_Stream
+	 */
+	protected static $logWriterObj = null;
+	
+	/**
+	 * Contains a file stream
+	 * @var resource
+	 */
+	protected static $logWriterStream = null;
 
 	/**
 	 * Contains the ModuleManager object
@@ -102,6 +122,7 @@ class Services {
 	 * Creates a new instance of Services
 	 */
 	public function __construct() {
+		$this->initLog();
 		$this->initConfiguration();
 		$this->initEvents();
 		$this->initDB();
@@ -208,6 +229,18 @@ class Services {
 	}
 	
 	/**
+	 * Creates a new Zend_Log_Writer_Stream and Zend_Log instance
+	 */
+	protected function initLog() {
+		// open file
+		self::$logWriterStream = fopen(SDIR.'logs/services-'.gmdate('M-d-Y').'.log', 'a', false);
+		 
+		// create log instances
+		self::$logWriterObj = new Zend_Log_Writer_Stream(self::$logWriterStream);
+		self::$loggerObj = new Zend_Log(self::$logWriterObj);
+	}
+	
+	/**
 	 * Creates a new ModuleManager instance
 	 *
 	 * @return	void
@@ -295,6 +328,14 @@ class Services {
 	 */
 	public static function getLanguage() {
 		return self::$languageObj;
+	}
+	
+	/**
+	 * Returnes the current Zend_Log instance
+	 * @return Zend_Log
+	 */
+	public static function getLog() {
+		return self::$loggerObj;
 	}
 	
 	/**
