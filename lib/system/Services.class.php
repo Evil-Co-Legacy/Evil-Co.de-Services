@@ -110,6 +110,7 @@ class Services {
 		$this->initModules();
 		$this->initConnection();
 		$this->initProtocol();
+		self::$protocolObj->initConnection();
 	}
 
 	/**
