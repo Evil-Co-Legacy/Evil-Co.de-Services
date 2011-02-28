@@ -22,5 +22,12 @@ interface Protocol {
 	 * Returnes true if the current connection to server is alive
 	 */
 	public function isAlive();
+	
+	/**
+	 * Handles exceptions in protocol system
+	 * @param	ProtocolException	$ex
+	 * @return void
+	 */
+	public function handleException(ProtocolException $ex);
 }
 ?>
