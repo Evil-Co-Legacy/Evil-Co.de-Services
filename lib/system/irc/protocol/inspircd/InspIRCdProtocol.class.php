@@ -71,7 +71,7 @@ class InspIRCdProtocol implements Protocol {
 		Services::getConnection()->sendLine("CAPAB START");
 		
 		// send information about this server
-		Services::getConnection()->sendLine("CAPAB CAPABILITIES PROTOCOL=".self::PROTOCOL_VERSION.(Services::getConfiguration()->connection->hmac != 'none' ? " CHALLENGE=".$this->generateHMACKey() : ""));
+		Services::getConnection()->sendLine("CAPAB CAPABILITIES :PROTOCOL=".self::PROTOCOL_VERSION.(Services::getConfiguration()->connection->hmac != 'none' ? " CHALLENGE=".$this->generateHMACKey() : ""));
 		
 		// end capab
 		Services::getConnection()->sendLine("CAPAB END");
@@ -121,9 +121,7 @@ class InspIRCdProtocol implements Protocol {
 			}
 			
 			// handle timers
-			if (Services::getTimerManager()->check()) {
-				Services::getTimerManager()->execute();
-			}
+			Services::getTimerManager()->execute();
 			
 			// TODO: Add a handler for special methods that MUST called in every loop. This will be very usefull for additional socket servers (XMLRPC, HTTP and other nice shit)
 		}
