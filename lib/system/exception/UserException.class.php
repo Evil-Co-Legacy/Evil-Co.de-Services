@@ -6,7 +6,7 @@
  * @copyright	2010 DEVel Fusion
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class UserException extends SystemException {
+class UserException extends RecoverableException {
 	
 	/**
 	 * Contains a user object
