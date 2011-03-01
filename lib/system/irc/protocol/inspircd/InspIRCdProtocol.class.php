@@ -124,6 +124,8 @@ class InspIRCdProtocol implements Protocol {
 			if (Services::getTimerManager()->check()) {
 				Services::getTimerManager()->execute();
 			}
+			
+			// TODO: Add a handler for special methods that MUST called in every loop. This will be very usefull for additional socket servers (XMLRPC, HTTP and other nice shit)
 		}
 	}
 	
