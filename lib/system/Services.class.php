@@ -16,6 +16,7 @@ require_once(SDIR.'lib/system/irc/Connection.class.php');
 require_once(SDIR.'lib/system/language/LanguageManager.class.php');
 require_once(SDIR.'lib/system/module/ModuleManager.class.php');
 require_once(SDIR.'lib/system/irc/ProtocolManager.class.php');
+require_once(SDIR.'lib/system/timer/TimerManager.class.php');
 require_once(SDIR.'lib/system/user/UserManager.class.php');
 
 // Zend imports
@@ -132,6 +133,12 @@ class Services {
 	protected static $protocolObj = null;
 	
 	/**
+	 * Contains the TimerManager object
+	 * @var TimerManager
+	 */
+	protected static $timerManagerObj = null;
+	
+	/**
 	 * Contains the UserManager object
 	 *
 	 * @var	UserManager
@@ -145,6 +152,7 @@ class Services {
 		$this->initLog();
 		$this->initConfiguration();
 		$this->initEvents();
+		$this->initTimerManager();
 		$this->initDB();
 		$this->initLanguage();
 		$this->initUserManager();
@@ -304,6 +312,14 @@ class Services {
 	}
 
 	/**
+	 * Creates a new TimerManager instance
+	 * @return void
+	 */
+	protected function initTimerManager() {
+		self::$timerManagerObj = new TimerManager();
+	}
+	
+	/**
 	 * Creates a new UserManager instance
 	 *
 	 * @return	void
@@ -399,6 +415,14 @@ class Services {
 	 */
 	public static function getProtocol() {
 		return self::$protocolObj;
+	}
+	
+	/**
+	 * Returnes the current TimerManager object
+	 * @return TimerManager
+	 */
+	public static function getTimerManager() {
+		return self::$timerManagerObj;
 	}
 
 	/**
