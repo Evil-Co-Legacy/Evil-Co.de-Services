@@ -135,14 +135,35 @@ class Connection {
 	}
 	
 	/**
+	 * Returnes true if the connection is still alive
+	 */
+	public function isAlive() {
+		// socket errors
+		if (socket_last_error($this->socket) != 0) return false;
+		
+		return true;
+	}
+	
+	/**
 	 * Reads a line from server
 	 *
 	 * @return string
 	 */
 	public function readLine() {
+		// read line and check for errors
 		if (($line = socket_read($this->socket, self::SOCKET_READ_MAX, PHP_NORMAL_READ)) === false)
 			throw new ConnectionException("An error occoured while reading from socket: ".socket_strerror(socket_last_error($this->socket)), socket_last_error($this->socket));
 		
+		// unify newlines
+		$line = StringUtil::unifyNewlines($line);
+			
+		// remove newlines
+		$line = str_replace("\n", "", $line);
+			
+		// debug information
+		if (strlen($line)) Services::getLog()->debug("[-->] ".$line);
+			
+		// return line
 		return $line;
 	}
 	
@@ -155,9 +176,16 @@ class Connection {
 	 * @return 	integer
 	 */
 	protected function __send($message, $length = null) {
+		// unify newlines
+		$message = StringUtil::unifyNewlines($message);
+		
+		// send message
 		if (($bytes = socket_write($this->socket, $message, ($length !== null ? $length : strlen($message)))) === false)
 			throw new ConnectionException("An error occoured while write to socket: ".socket_strerror(socket_last_error($this->socket)), socket_last_error($this->socket));
 		
+		// send log message
+		Services::getLog()->debug("[<--] ".preg_replace("%(\r\n)|(\r)%", "", $message));
+			
 		return $bytes;
 	}
 	
