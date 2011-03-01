@@ -159,6 +159,7 @@ class InspIRCdProtocol implements Protocol {
 				Services::getTimerManager()->execute();
 				
 				// TODO: Add a handler for special methods that MUST called in every loop. This will be very usefull for additional socket servers (XMLRPC, HTTP and other nice shit)
+				// At this moment you can use timers with an interval of zero to get the same effect
 			} catch (Exception $ex) {
 				Services::handleException($ex);
 			}
