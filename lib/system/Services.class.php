@@ -108,10 +108,16 @@ class Services {
 	protected static $logWriterDebugObj = null;
 	
 	/**
-	 * 
-	 * @var unknown_type
+	 * Contains the log filter for debugging inputs
+	 * @var Zend_Log_Filter_Priority
 	 */
 	protected static $logWriterFilterObj = null;
+	
+	/**
+	 * Contains the log filter for irc debug outputs
+	 * @var Zend_Log_Filter_Priority
+	 */
+	protected static $logWriterIrcFilterObj = null;
 	
 	/**
 	 * Contains the log writer formatter for log outputs
@@ -283,6 +289,9 @@ class Services {
 		
 		self::$loggerObj = new Zend_Log();
 		
+		// add irc debug level
+		self::$loggerObj->addPriority('IRCDEBUG', 8);
+		
 		// add file writer
 		self::$loggerObj->addWriter(self::$logWriterObj);
 		
@@ -301,6 +310,10 @@ class Services {
 			self::$logWriterObj->addFilter(self::$logWriterFilterObj);
 			self::$logIrcWriterObj->addFilter(self::$logWriterFilterObj);
 		}
+		
+		// add special filter
+		self::$logWriterIrcFilterObj = new Zend_Log_Filter_Priority(8, '<');
+		self::$logIrcWriterObj->addFilter(self::$logWriterIrcFilterObj);
 		
 		// add log entry
 		self::$loggerObj->info("Evil-Co.de Services ".SERVICES_VERSION." running on PHP ".phpversion());
@@ -485,6 +498,12 @@ class Services {
 		// Call SystemException::sendDebugLog()
 		if ($ex instanceof SystemException && self::$protocolObj !== null && self::$protocolObj->isAlive()) $ex->sendDebugLog();
 		
+		// Call Zend_Log::err()
+		if ($ex instanceof Zend_Exception) self::$loggerObj->err($ex);
+		
+		// send stacktrace
+		if ($ex instanceof SystemException) self::$loggerObj->err($ex->__getTraceAsString());
+		
 		// Call Protocol::handleException()
 		if ($ex instanceof ProtocolException && self::$protocolObj !== null && self::$protocolObj->isAlive()) self::$protocolObj->handleException($ex);
 		
@@ -492,13 +511,10 @@ class Services {
 		if ($ex instanceof ConnectionException) self::$ircObj->handleException($ex);
 		 
 		// Call shutdown methods if the given exception isn't recoverable (UserExceptions and RecoverableExceptions)
-		if (!($ex instanceof RecoverableException) && !($ex instanceof UserException)) {
+		if (!($ex instanceof RecoverableException)) {
 			// call connection shutdown method
 			if (self::getConnection() !== null && self::$protocolObj !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage());
 		}
-		
-		// Call Zend_Log::err()
-		if ($ex instanceof Zend_Exception) self::$loggerObj->err($ex);
 	}
 }
 ?>
