@@ -49,6 +49,15 @@ class InspIRCdProtocol implements Protocol {
 	}
 	
 	/**
+	 * Formates the given message string
+	 * @param	string	$target
+	 * @param	string	$message
+	 */
+	public function formatMessage($target, $message) {
+		return Services::getConnection()->sendLine("PRIVMSG ".$target." :".$message);
+	}
+	
+	/**
 	 * Generates a hmac key
 	 */
 	protected function generateHMACKey() {
@@ -120,7 +129,7 @@ class InspIRCdProtocol implements Protocol {
 		Services::getEvent()->fire($this, 'endburst');
 		
 		// fire protocol independent event
-		Services::getEevent()->fire($this, 'connected');
+		Services::getEvent()->fire($this, 'connected');
 		
 		// set ready for messages
 		$this->isReady = true;
@@ -174,9 +183,9 @@ class InspIRCdProtocol implements Protocol {
 	 * @throws RecoverableException
 	 */
 	public function __call($methodName, $arguments) {
-		if (substr($methodName, 0, 3) == 'send') {
+		if (substr($methodName, 0, 4) == 'send') {
 			// try to find correct format method
-			if (method_exists($this, 'format'.substr($methodName, 3))) return $this->sendLine(call_user_func_array(array($this, 'format'.substr($methodName, 3)), $arguments));
+			if (method_exists($this, 'format'.substr($methodName, 4))) return Services::getConnection()->sendLine(call_user_func_array(array($this, 'format'.substr($methodName, 4)), $arguments));
 		}
 		
 		// throw exception ...
