@@ -45,6 +45,12 @@ class Connection {
 	protected $connectionState = 'none';
 	
 	/**
+	 * Contains a prefix for message lines
+	 * @var string
+	 */
+	protected $messagePrefix = '';
+	
+	/**
 	 * Creates a new instance of construct
 	 */
 	public function __construct() {
@@ -197,7 +203,19 @@ class Connection {
 	 * @return 	integer
 	 */
 	public function sendLine($message, $length = null) {
+		// ad prefix to message
+		$message = $this->messagePrefix.$message;
+		
+		// send message
 		return $this->__send($message.(stripos($message, "\n") === false ? "\n" : ""));
+	}
+	
+	/**
+	 * Sets the message prefix
+	 * @param	string	$prefix
+	 */
+	public function setMessagePrefix($prefix) {
+		$this->messagePrefix = $prefix;
 	}
 	
 	/**
