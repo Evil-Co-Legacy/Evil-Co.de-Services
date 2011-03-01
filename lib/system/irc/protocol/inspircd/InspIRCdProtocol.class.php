@@ -114,16 +114,20 @@ class InspIRCdProtocol implements Protocol {
 	 */
 	protected function listen() {
 		while($this->isAlive() and Services::getConnection()->isAlive()) {
-			// handle server commands
-			if (Services::getConnection()->check()) { // we'll only parse new lines if there are changes at socket
-				$line = Services::getConnection()->readLine();
-				InspIRCdProtocolParser::handleCommand($line);
+			try {
+				// handle server commands
+				if (Services::getConnection()->check()) { // we'll only parse new lines if there are changes at socket
+					$line = Services::getConnection()->readLine();
+					InspIRCdProtocolParser::handleCommand($line);
+				}
+				
+				// handle timers
+				Services::getTimerManager()->execute();
+				
+				// TODO: Add a handler for special methods that MUST called in every loop. This will be very usefull for additional socket servers (XMLRPC, HTTP and other nice shit)
+			} catch (Exception $ex) {
+				Services::handleException($ex);
 			}
-			
-			// handle timers
-			Services::getTimerManager()->execute();
-			
-			// TODO: Add a handler for special methods that MUST called in every loop. This will be very usefull for additional socket servers (XMLRPC, HTTP and other nice shit)
 		}
 	}
 	
