@@ -19,12 +19,22 @@ class IRCLogWriter extends Zend_Log_Writer_Abstract {
 	}
 	
 	/**
+	 * Create a new instance of Zend_Log_Writer_Mock
+	 *
+	 * @param  array|Zend_Config $config
+	 * @return Zend_Log_Writer_Mock
+	 */
+	public static function factory($config) {
+		return new self();
+	}
+	
+	/**
 	 * Writes an event to log
 	 * @param	array	$event
 	 * @return void
 	 */
 	protected function _write($event) {
-		if (Services::getConnection()->isAlive() and Services::getProtocol()->isAlive()) {
+		if (Services::getConnection() !== null and Services::getConnection()->isAlive() and Services::getProtocol() !== null and Services::getProtocol()->isAlive() and Services::getProtocol()->isReady()) {
 			// get log string
 			$line = $this->_formatter->format($event);
 			
