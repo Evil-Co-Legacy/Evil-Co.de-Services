@@ -9,14 +9,15 @@ date_default_timezone_set('Europe/Berlin');
 
 // imports
 require_once(SDIR.'lib/core.functions.php');
-require_once(SDIR.'lib/system/user/BotManager.class.php');
-require_once(SDIR.'lib/system/irc/ChannelManager.class.php');
 require_once(SDIR.'lib/system/event/EventHandler.class.php');
+require_once(SDIR.'lib/system/irc/ChannelManager.class.php');
 require_once(SDIR.'lib/system/irc/Connection.class.php');
-require_once(SDIR.'lib/system/language/LanguageManager.class.php');
-require_once(SDIR.'lib/system/module/ModuleManager.class.php');
 require_once(SDIR.'lib/system/irc/ProtocolManager.class.php');
+require_once(SDIR.'lib/system/language/LanguageManager.class.php');
+require_once(SDIR.'lib/system/log/IRCLogWriter.class.php');
+require_once(SDIR.'lib/system/module/ModuleManager.class.php');
 require_once(SDIR.'lib/system/timer/TimerManager.class.php');
+require_once(SDIR.'lib/system/user/BotManager.class.php');
 require_once(SDIR.'lib/system/user/UserManager.class.php');
 
 // Zend imports
@@ -87,6 +88,12 @@ class Services {
 	 * @var Zend_Log
 	 */
 	protected static $loggerObj = null;
+	
+	/**
+	 * Contains the IRCLogWriter object
+	 * @var IRCLogWriter
+	 */
+	protected static $logIrcWriterObj = null;
 	
 	/**
 	 * Contains the log writer
@@ -279,6 +286,11 @@ class Services {
 		// add file writer
 		self::$loggerObj->addWriter(self::$logWriterObj);
 		
+		// add irc writer
+		self::$logIrcWriterObj = new IRCLogWriter();
+		self::$logIrcWriterObj->setFormatter(self::$logWriterFormatter);
+		self::$loggerObj->addWriter(self::$logIrcWriterObj);
+		
 		// create debug log instances
 		if (DEBUG) {
 			self::$logWriterDebugObj = new Zend_Log_Writer_Stream('php://output');
@@ -287,6 +299,7 @@ class Services {
 		} else {
 			self::$logWriterFilterObj = new Zend_Log_Filter_Priority(Zend_LOG::DEBUG, '<');
 			self::$logWriterObj->addFilter(self::$logWriterFilterObj);
+			self::$logIrcWriterObj->addFilter(self::$logWriterFilterObj);
 		}
 		
 		// add log entry
