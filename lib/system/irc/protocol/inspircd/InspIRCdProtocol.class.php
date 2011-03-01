@@ -30,6 +30,12 @@ class InspIRCdProtocol implements Protocol {
 	protected $isAlive = false;
 	
 	/**
+	 * Contains true if the connection is ready for msgs and other funny things
+	 * @var boolean
+	 */
+	protected $isReady = false;
+	
+	/**
 	 * Contains a reference to supportedTypes array
 	 * @var array
 	 */
@@ -98,6 +104,27 @@ class InspIRCdProtocol implements Protocol {
 		// set connection flag
 		$this->isAlive = true;
 		
+		// set message prefix
+		Services::getConnection()->setMessagePrefix(':'.Services::getConfiguration()->connection->numeric." ");
+		
+		// start burst
+		Services::getConnection()->sendLine("BURST ".time());
+		
+		// fire burst event
+		Services::getEvent()->fire($this, 'burst');
+		
+		// yes! end burst my friend ;-D
+		Services::getConnection()->sendLine("ENDBURST");
+		
+		// fire endburst event
+		Services::getEvent()->fire($this, 'endburst');
+		
+		// fire protocol independent event
+		Services::getEevent()->fire($this, 'connected');
+		
+		// set ready for messages
+		$this->isReady = true;
+		
 		// start main loop
 		$this->listen();
 	}
@@ -107,6 +134,13 @@ class InspIRCdProtocol implements Protocol {
 	 */
 	public function isAlive() {
 		return $this->isAlive;
+	}
+	
+	/**
+	 * @see Protocol::isReady()
+	 */
+	public function isReady() {
+		return $this->isReady;
 	}
 	
 	/**
