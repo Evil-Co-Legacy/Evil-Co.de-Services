@@ -48,14 +48,20 @@ class InspIRCdProtocolParser {
 		// explode string
 		$lineEx = explode(" ", $line);
 		
+		// get correct command
+		if (!preg_match('~^:[0-9][A-Z0-9][A-Z0-9]~i', $lineEx[0]))
+			$command = $lineEx[0];
+		else
+			$command = $lineEx[1];
+		
 		// try to find a command handler
-		if (!file_exists(SDIR.'lib/irc/protocol/inspircd/command/'.strtoupper($lineEx[1])).'.class.php') throw new RecoverableException("No command parser for link command '".strtoupper($lineEx[1])."' found! Maybe the protocol definition is outdated!");
+		if (!file_exists(SDIR.'lib/irc/protocol/inspircd/command/'.strtoupper($command)).'.class.php') throw new RecoverableException("No command parser for link command '".strtoupper($command)."' found! Maybe the protocol definition is outdated!");
 		
 		// load command handler
-		require_once(SDIR.'lib/irc/protocol/inspircd/command/'.strtoupper($lineEx[1]).'.class.php');
+		require_once(SDIR.'lib/irc/protocol/inspircd/command/'.strtoupper($command).'.class.php');
 		
 		// generate instance
-		$instance = call_user_func(array(strtoupper($lineEx[1]), 'getInstance'));
+		$instance = call_user_func(array(strtoupper($command), 'getInstance'));
 		
 		// parse command
 		$instance->parse($line, $lineEx);
