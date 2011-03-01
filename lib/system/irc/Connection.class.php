@@ -167,7 +167,7 @@ class Connection {
 		$line = str_replace("\n", "", $line);
 			
 		// debug information
-		if (strlen($line)) Services::getLog()->debug("[-->] ".$line);
+		if (strlen($line)) Services::getLog()->ircdebug("[-->] ".$line);
 			
 		// return line
 		return $line;
@@ -190,7 +190,7 @@ class Connection {
 			throw new ConnectionException("An error occoured while write to socket: ".socket_strerror(socket_last_error($this->socket)), socket_last_error($this->socket));
 		
 		// send log message
-		Services::getLog()->debug("[<--] ".preg_replace("%(\r\n)|(\r)%", "", $message));
+		Services::getLog()->ircdebug("[<--] ".preg_replace("%(\r\n)|(\r)%", "", $message));
 			
 		return $bytes;
 	}
