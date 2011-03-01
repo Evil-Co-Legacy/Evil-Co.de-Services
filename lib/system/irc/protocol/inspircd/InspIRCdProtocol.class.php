@@ -53,6 +53,14 @@ class InspIRCdProtocol implements Protocol {
 	}
 	
 	/**
+	 * @see Protocol::handleException()
+	 */
+	public function handleException(ProtocolException $ex) {
+		// send error message to server
+		if ($this->isAlive()) Services::getConnection()->sendLine("ERROR :".$ex->getMessage());
+	}
+	
+	/**
 	 * @see Protocol::initConnection()
 	 */
 	public function initConnection() {
@@ -63,7 +71,7 @@ class InspIRCdProtocol implements Protocol {
 		Services::getConnection()->sendLine("CAPAB START");
 		
 		// send information about this server
-		Services::getConnection()->sendLine("CAPAB CAPABILITIES PROTOCOL=".self::PROTOCOL_VERSION.(Services::getConfiguration()->connection->hmac != 'none' ? "CHALLENGE=".$this->generateHMACKey() : ""));
+		Services::getConnection()->sendLine("CAPAB CAPABILITIES PROTOCOL=".self::PROTOCOL_VERSION.(Services::getConfiguration()->connection->hmac != 'none' ? " CHALLENGE=".$this->generateHMACKey() : ""));
 		
 		// end capab
 		Services::getConnection()->sendLine("CAPAB END");
@@ -74,7 +82,7 @@ class InspIRCdProtocol implements Protocol {
 		do {
 			if (Services::getConnection()->check() > 0) { // we'll only read here if lines are available at socket
 				// handle connection commands
-				$synched = InspIRCdProtocolParser::handleConnectionCommand($line);
+				$synched = InspIRCdProtocolParser::handleConnectionCommand(Services::getConnection()->readLine());
 			}
 		} while(!$synched);
 		
