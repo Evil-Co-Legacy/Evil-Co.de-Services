@@ -13,6 +13,6 @@ class ENDBURST extends CommandParser {
 	/**
 	 * @see CommandParser::parse()
 	 */
-	public function parse($line, $lineEx) { }
+	public function parse($line, $lineEx, $source = null) { }
 }
 ?>

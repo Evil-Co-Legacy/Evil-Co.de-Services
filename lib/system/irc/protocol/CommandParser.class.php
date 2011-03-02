@@ -18,6 +18,6 @@ abstract class CommandParser {
 	 * @param	string	$line
 	 * @param	string	$lineEx
 	 */
-	abstract public function parse($line, $lineEx);
+	abstract public function parse($line, $lineEx, $source = null);
 }
 ?>

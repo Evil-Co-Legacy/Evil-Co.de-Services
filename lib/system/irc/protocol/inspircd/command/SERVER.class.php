@@ -20,7 +20,7 @@ class SERVER extends CommandParser {
 	/**
 	 * @see CommandParser::parse()
 	 */
-	public function parse($line, $lineEx) {
+	public function parse($line, $lineEx, $source = null) {
 		// add server to list
 		$this->serverList[] = $lineEx[1];
 		

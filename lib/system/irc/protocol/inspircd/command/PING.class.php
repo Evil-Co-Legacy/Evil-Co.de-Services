@@ -13,7 +13,7 @@ class PING extends CommandParser {
 	/**
 	 * @see CommandParser::parse()
 	 */
-	public function parse($line, $lineEx) {
+	public function parse($line, $lineEx, $source = null) {
 		// send ping
 		Services::getProtocol()->sendPong($lineEx[1]);
 		
