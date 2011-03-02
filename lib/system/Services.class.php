@@ -515,6 +515,9 @@ class Services {
 			// call connection shutdown method
 			if (self::getConnection() !== null && self::$protocolObj !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage());
 		}
+		
+		// kill services :>
+		if (!($ex instanceof RecoverableException)) exit;
 	}
 }
 ?>
