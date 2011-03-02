@@ -21,7 +21,11 @@ class SERVER extends CommandParser {
 	 * @see CommandParser::parse()
 	 */
 	public function parse($line, $lineEx) {
+		// add server to list
 		$this->serverList[] = $lineEx[1];
+		
+		// send log line
+		Services::getLog()->debug("Introduced server: ".$lineEx[1]);
 	}
 }
 ?>
