@@ -39,6 +39,7 @@ class InspIRCdProtocolParser {
 	/**
 	 * Handles commands while the connection is still alive and synched
 	 * @param	string	$line
+	 * @return string
 	 * @throws RecoverableException
 	 */
 	public static function handleCommand($line) {
@@ -65,6 +66,9 @@ class InspIRCdProtocolParser {
 		
 		// parse command
 		$instance->parse($line, $lineEx);
+		
+		// return command name
+		return $command;
 	}
 	
 	/**
