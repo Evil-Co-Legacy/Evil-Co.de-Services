@@ -296,9 +296,9 @@ class Services {
 		self::$loggerObj->addWriter(self::$logWriterObj);
 		
 		// add irc writer
-		/* self::$logIrcWriterObj = new IRCLogWriter();
+		self::$logIrcWriterObj = new IRCLogWriter();
 		self::$logIrcWriterObj->setFormatter(self::$logWriterFormatter);
-		self::$loggerObj->addWriter(self::$logIrcWriterObj); */
+		self::$loggerObj->addWriter(self::$logIrcWriterObj);
 		
 		// create debug log instances
 		if (DEBUG) {
@@ -313,7 +313,7 @@ class Services {
 		
 		// add special filter
 		self::$logWriterIrcFilterObj = new Zend_Log_Filter_Priority(8, '<');
-		/* self::$logIrcWriterObj->addFilter(self::$logWriterIrcFilterObj); */
+		self::$logIrcWriterObj->addFilter(self::$logWriterIrcFilterObj);
 		
 		// add log entry
 		self::$loggerObj->info("Evil-Co.de Services ".SERVICES_VERSION." running on PHP ".phpversion());
