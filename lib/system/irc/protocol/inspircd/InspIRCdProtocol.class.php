@@ -140,6 +140,9 @@ class InspIRCdProtocol implements Protocol {
 		// fire burst event
 		Services::getEvent()->fire($this, 'burst');
 		
+		// send version
+		Services::getConnection()->sendLine("VERSION :Evil-Co.de Services ".SERVICES_VERSION." running on ".PHP_OS);
+		
 		// yes! end burst my friend ;-D
 		Services::getConnection()->sendLine("ENDBURST");
 		
