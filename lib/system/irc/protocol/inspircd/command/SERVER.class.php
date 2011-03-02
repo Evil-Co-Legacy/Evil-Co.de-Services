@@ -11,21 +11,11 @@ require_once(SDIR.'lib/system/irc/protocol/CommandParser.class.php');
 class SERVER extends CommandParser {
 	
 	/**
-	 * Contains a complete list of all servers
-	 * @todo Add a central array for this
-	 * @var array<string>
-	 */
-	protected $serverList = array();
-	
-	/**
 	 * @see CommandParser::parse()
 	 */
 	public function parse($line, $lineEx, $source = null) {
 		// add server to list
-		$this->serverList[] = $lineEx[1];
-		
-		// send log line
-		Services::getLog()->debug("Introduced server: ".$lineEx[1]);
+		Services::getServerManager()->registerServer($lineEx[1], $lineEx[4]);
 	}
 }
 ?>
