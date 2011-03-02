@@ -131,8 +131,17 @@ class InspIRCdProtocol implements Protocol {
 		// fire protocol independent event
 		Services::getEvent()->fire($this, 'connected');
 		
-		// set ready for messages
-		$this->isReady = true;
+		// wait for burst
+		do {
+			if (Services::getConnection()->check()) {
+				// parse command
+				$line = Services::getConnection()->readLine();
+				$command = InspIRCdProtocolParser::handleCommand($line);
+				
+				// check for endburst command
+				if ($command == 'ENDBURST') $this->isReady = true;
+			}
+		} while(!$this->isReady);
 		
 		// start main loop
 		$this->listen();
