@@ -317,6 +317,9 @@ class Services {
 		
 		self::$loggerObj = new Zend_Log();
 		
+		// set timestamp format
+		self::$loggerObj->setTimestampFormat('H:i:s:u');
+		
 		// add irc debug level
 		self::$loggerObj->addPriority('IRCDEBUG', 8);
 		
