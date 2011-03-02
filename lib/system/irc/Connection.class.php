@@ -112,10 +112,7 @@ class Connection {
 	 */
 	public function getProtocol() {
 		// log this shit!
-		Services::getLog()->debug("Use of deprecated method Connection::getProtocol():" . PHP_EOL . implode(PHP_EOL, debug_backtrace()));
-		
-		// call alias
-		return Services::getProtocol();
+		throw new SystemException("Use of deprecated method Connection::getProtocol() detected!");
 	}
 	
 	/**
