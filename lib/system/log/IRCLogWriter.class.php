@@ -34,7 +34,6 @@ class IRCLogWriter extends Zend_Log_Writer_Abstract {
 	 * @return void
 	 */
 	protected function _write($event) {
-		// FIXME: This sends infinite lines of nonsense to server ..
 		if (Services::getConnection() !== null and Services::getConnection()->isAlive() and Services::getProtocol() !== null and Services::getProtocol()->isAlive() and Services::getProtocol()->isReady()) {
 			// get log string
 			$line = $this->_formatter->format($event);
