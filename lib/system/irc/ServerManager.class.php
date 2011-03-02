@@ -90,6 +90,9 @@ class ServerManager implements Iterator {
 		// add to list
 		$this->serverList[$identifier] = new ConnectedServer($serverName, $identifier);
 		
+		// fire event
+		Services::getEvent()->fire($this, 'registerServer', array('serverName' => $serverName, 'identifier' => $identifier));
+		
 		// return identifier
 		return $identifier;
 	}
@@ -113,6 +116,9 @@ class ServerManager implements Iterator {
 		
 		// unregister
 		unset($this->serverList[$identifier]);
+		
+		// fire event
+		Services::getEvent()->fire($this, 'unregisteredServer', array('identifier' => $identifier));
 	}
 	
 	/**
