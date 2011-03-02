@@ -54,7 +54,6 @@ class IRCLogWriter extends Zend_Log_Writer_Abstract {
 				
 				// send each line to service channel
 				foreach($lineEx as $newline) {
-					var_dump($newline);
 					// trim message
 					$newline = StringUtil::trim($newline);
 					
