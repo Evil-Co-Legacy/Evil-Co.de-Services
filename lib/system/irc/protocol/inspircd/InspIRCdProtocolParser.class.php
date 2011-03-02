@@ -104,7 +104,7 @@ class InspIRCdProtocolParser {
 			
 			// resort
 			$lineEx = array_merge(array(), $lineEx);
-		} else throw new SuccessException("What the fuck is going on? The source isn't an UUID and not a numeric ...");
+		};
 		
 		// generate instance
 		$instance = self::getCommandParserInstance($command);
