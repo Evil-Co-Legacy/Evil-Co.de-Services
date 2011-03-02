@@ -125,6 +125,9 @@ class ModuleManager {
 		// write module information
 		$this->moduleInformation[$name] = array('type' => $info['type']);
 		
+		// add info log entry
+		Services::getLog()->info("Loaded module '".$name."'");
+		
 		// return namespace
 		return $namespace;
 		
