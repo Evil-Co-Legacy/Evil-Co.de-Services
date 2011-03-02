@@ -29,8 +29,11 @@ class EventHandler {
 		if (!isset($this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))])) $this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))] = array();
 		if (!isset($this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))][$targetEvent])) $this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))][$targetEvent] = array();
 		
-		// ad event
+		// add event
 		$this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))][$targetEvent][] = array('class' => $class, 'method' => $method);
+		
+		// send debug line
+		Services::getLog()->debug("Registered event ".$targetEvent."@".(is_string($targetClass) ? $targetClass : get_class($targetClass))." with callback ".(is_string($class) ? $class : get_class($class))."::".$method);
 	}
 	
 	/**
@@ -59,6 +62,9 @@ class EventHandler {
 				}
 			}
 		}
+		
+		// send debug line
+		Services::getLog()->debug("Fired event ".$eventName."@".(is_string($eventObj) ? $eventObj : get_class($eventObj)));
 	}
 }
 ?>
