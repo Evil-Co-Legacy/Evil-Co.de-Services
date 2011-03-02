@@ -37,5 +37,11 @@ interface Protocol {
 	 * @return boolean
 	 */
 	public function isReady();
+	
+	/**
+	 * Shuts the connection down
+	 * @return void
+	 */
+	public function shutdown();
 }
 ?>
