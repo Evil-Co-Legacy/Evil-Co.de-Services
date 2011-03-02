@@ -47,6 +47,36 @@ class LineManager implements Iterator {
 	}
 	
 	/**
+	 * @see Iterator::current()
+	 */
+	public function current() {
+		// get keys
+		$keys = array_keys($this->lines);
+		
+		// get key
+		$key = $keys[$this->linePointer];
+		
+		return $this->lines[$key];
+	}
+	
+	/**
+	 * @see Iterator::key()
+	 */
+	public function key() {
+		// get keys
+		$keys = array_keys($this->lines);
+		
+		return $keys[$this->linePointer];
+	}
+	
+	/**
+	 * @see Iterator::next()
+	 */
+	public function next() {
+		++$this->linePointer;
+	}
+	
+	/**
 	 * Removes a line from manager
 	 * @param	integer	$lineID
 	 * @return void
@@ -64,6 +94,24 @@ class LineManager implements Iterator {
 		
 		// remove line
 		unset($this->lines[$lineID]);
+	}
+	
+	/**
+	 * @see Iterator::rewind()
+	 */
+	public function rewind() {
+		$this->linePointer = 0;
+	}
+	
+	/**
+	 * @see Iterator::valid()
+	 */
+	public function valid() {
+		// get keys
+		$keys = array_keys($this->lines);
+		
+		// search for pointer
+		return (isset($keys[$this->linePointer]));
 	}
 	
 	// TODO: Add a timer for removing expired lines
