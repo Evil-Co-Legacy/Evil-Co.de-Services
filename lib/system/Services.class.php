@@ -15,6 +15,7 @@ require_once(SDIR.'lib/core.functions.php');
 require_once(SDIR.'lib/system/event/EventHandler.class.php');
 require_once(SDIR.'lib/system/irc/ChannelManager.class.php');
 require_once(SDIR.'lib/system/irc/Connection.class.php');
+require_once(SDIR.'lib/system/irc/LineManager.class.php');
 require_once(SDIR.'lib/system/irc/ProtocolManager.class.php');
 require_once(SDIR.'lib/system/irc/ServerManager.class.php');
 require_once(SDIR.'lib/system/language/LanguageManager.class.php');
@@ -86,6 +87,12 @@ class Services {
 	 * @var	LanguageManager
 	 */
 	protected static $languageObj = null;
+	
+	/**
+	 * Contains the LineManager object
+	 * @var LineManager
+	 */
+	protected static $lineManagerObj = null;
 	
 	/**
 	 * Contains the logger object
@@ -182,6 +189,7 @@ class Services {
 		$this->initBotManager();
 		$this->initChannelManager();
 		$this->initServerManager();
+		$this->initLineManager();
 		$this->initModules();
 		$this->initConnection();
 		$this->initProtocol();
@@ -285,7 +293,16 @@ class Services {
 	}
 	
 	/**
+	 * Creates a new LineManager instance
+	 * @return void
+	 */
+	protected function initLineManager() {
+		self::$lineManagerObj = new LineManager();
+	}
+	
+	/**
 	 * Creates a new Zend_Log_Writer_Stream and Zend_Log instance
+	 * @return void
 	 */
 	protected function initLog() {
 		// open file
@@ -434,6 +451,14 @@ class Services {
 	 */
 	public static function getLanguage() {
 		return self::$languageObj;
+	}
+	
+	/**
+	 * Returnes the current LineManager
+	 * @return LineManager
+	 */
+	public static function getLineManager() {
+		return self::$lineManagerObj;
 	}
 	
 	/**
