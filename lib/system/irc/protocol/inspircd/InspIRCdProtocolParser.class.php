@@ -15,6 +15,12 @@ class InspIRCdProtocolParser {
 	const NUMERIC_PATTERN = '~^:[0-9][A-Z0-9][A-Z0-9]$~i';
 	
 	/**
+	 * Contains a pattern for user numerics
+	 * @var string
+	 */
+	const UUID_PATTERN = '~^:[A-Z][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9]$~i';
+	
+	/**
 	 * Contains information about the server connection (
 	 * @var array
 	 */
@@ -87,8 +93,13 @@ class InspIRCdProtocolParser {
 		
 		// remove numeric
 		if (preg_match(self::NUMERIC_PATTERN, $lineEx[0])) {
+			var_dump($lineEx[0]);
+			
 			// get source
-			$source = Services::getServerManager()->getServerByIdentifier($lineEx[0]);
+			$source = Services::getServerManager()->getServerByIdentifier(substr($lineEx[0], 1));
+			
+			// validate
+			if ($source === null) throw new RecoverableException("Received message from non-existant server '".$lineEx[0]."'");
 			
 			// delete first position in array
 			unset($lineEx[0]);
@@ -97,7 +108,10 @@ class InspIRCdProtocolParser {
 			$lineEx = array_merge(array(), $lineEx);
 		} elseif (preg_match(self::UUID_PATTERN, $lineEx[0])) {
 			// get source
-			$source = Services::getUserManager()->getUser($lineEx[0]);
+			$source = Services::getUserManager()->getUser(substr($lineEx[0], 1));
+			
+			// validate
+			if ($source === null) throw new RecoverableException("Received message from non-existant user '".$lineEx[0]."'");
 			
 			// delete first position in array
 			unset($lineEx[0]);
@@ -110,7 +124,7 @@ class InspIRCdProtocolParser {
 		$instance = self::getCommandParserInstance($command);
 		
 		// parse command
-		$instance->parse($line, $lineEx, $source);
+		$instance->parse($line, $lineEx, (isset($source) ? $source : null));
 		
 		// return command name
 		return $command;
