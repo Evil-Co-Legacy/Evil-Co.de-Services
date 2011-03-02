@@ -188,6 +188,11 @@ class InspIRCdProtocol implements Protocol {
 	 * @see Protocol::shutdown()
 	 */
 	public function shutdown() {
+		// set variables
+		$this->isAlive = false;
+		$this->isReady = false;
+		
+		// send SQUIT
 		Services::getConnection()->sendLine("SQUIT ".Services::getConfiguration()->connection->name." :Shutting down");
 	}
 	
