@@ -93,6 +93,9 @@ class ServerManager implements Iterator {
 		// fire event
 		Services::getEvent()->fire($this, 'registerServer', array('serverName' => $serverName, 'identifier' => $identifier));
 		
+		// log
+		Services::getLog()->info("Introduced new server '".$serverName."' with identifier '".$identifier."'");
+		
 		// return identifier
 		return $identifier;
 	}
@@ -113,6 +116,9 @@ class ServerManager implements Iterator {
 	public function unregisterServer($identifier) {
 		// validate
 		if (!isset($this->serverList[$identifier])) throw new RecoverableException("Tried to unregister unknown server '".$identifier."'");
+		
+		// log
+		Services::getLog()->info("Removing server '".$this->serverList[$identifier]->getServerName()."' with identifier '".$identifier."'");
 		
 		// unregister
 		unset($this->serverList[$identifier]);
