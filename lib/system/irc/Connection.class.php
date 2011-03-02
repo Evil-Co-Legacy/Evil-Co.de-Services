@@ -128,10 +128,10 @@ class Connection {
 		if (!isset($this->configuration->ipversion) or !isset($this->configuration->hostname) or !isset($this->configuration->port)) throw new ConnectionException("Invalid configuration. Please recheck your configuration ... NOOB!");
 		
 		// create socket
-		$this->socket = socket_create(($this->configuration->ipversion == '4' ? AF_INET : AF_INET6), SOCK_STREAM, getprotobyname('tcp'));
+		$this->socket = socket_create(($this->configuration->ipversion < 5 ? AF_INET : AF_INET6), SOCK_STREAM, getprotobyname('tcp'));
 		
 		// send debug log
-		Services::getLog()->debug("Created IPv".($this->configuration->ipversion == '4' ? '4' : '6')." socket");
+		Services::getLog()->debug("Created IPv".($this->configuration->ipversion > 5 ? '6' : '4')." socket");
 		
 		// check created socket
 		if ($this->socket === false)
