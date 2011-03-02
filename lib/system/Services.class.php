@@ -184,10 +184,10 @@ class Services {
 	 */
 	public static function destruct() {
 		// call protocol shutdown method
-		if (self::getProtocol() !== null && self::getProtocol()->isAlive()) self::getProtocol()->shutdown();
+		if (self::getProtocol() !== null && self::getProtocol()->isAlive() && self::getConnection()->isAlive()) self::getProtocol()->shutdown();
 		
 		// call connection shutdown method
-		if (self::getConnection() !== null) self::getConnection()->shutdown();
+		if (self::getConnection() !== null && self::getConnection()->isAlive()) self::getConnection()->shutdown();
 		
 		// remove pidfile (if any)
 		if (file_exists(SDIR.'services.pid')) @unlink(SDIR.'services.pid');
