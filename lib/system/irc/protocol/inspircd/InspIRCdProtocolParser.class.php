@@ -93,8 +93,6 @@ class InspIRCdProtocolParser {
 		
 		// remove numeric
 		if (preg_match(self::NUMERIC_PATTERN, $lineEx[0])) {
-			var_dump($lineEx[0]);
-			
 			// get source
 			$source = Services::getServerManager()->getServerByIdentifier(substr($lineEx[0], 1));
 			
