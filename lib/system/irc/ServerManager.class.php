@@ -37,6 +37,28 @@ class ServerManager implements Iterator {
 	}
 	
 	/**
+	 * Returnes the server with the given identifier
+	 * @param	string	$identifier
+	 */
+	public function getServerByIdentifier($identifier) {
+		foreach($this as $server) {
+			if ($server->getIdentifier() == $identifier) return $server;
+		}
+		return null;
+	}
+	
+	/**
+	 * Returnes the server with the given name
+	 * @param	string	$serverName
+	 */
+	public function getServerByName($serverName) {
+		foreach($this as $server) {
+			if ($server->getServerName() == $serverName) return $server;
+		}
+		return null;
+	}
+	
+	/**
 	 * @see Iterator::key()
 	 */
 	public function key() {
