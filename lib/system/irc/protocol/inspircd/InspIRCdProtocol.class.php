@@ -145,7 +145,7 @@ class InspIRCdProtocol implements Protocol {
 					Services::handleException($ex);
 				}
 			}
-		} while(!$this->isReady);
+		} while(!$this->isReady and Services::getConnection()->isAlive() and $this->isAlive());
 		
 		// send info log message
 		Services::getLog()->info('Finished bursting! Synched completely with target server');
