@@ -54,17 +54,25 @@ class InspIRCdProtocol implements Protocol {
 	 * @param	string	$message
 	 */
 	public function formatMessage($target, $message) {
-		return Services::getConnection()->sendLine("PRIVMSG ".$target." :".$message);
+		return "PRIVMSG ".$target." :".$message;
 	}
 	
 	/**
 	 * Formates the ping command
-	 * @param	string	$source
 	 * @param	string	$target
 	 * @return void
 	 */
-	public function formatPing($source, $target) {
-		return Services::getConnection()->sendLine("PING ".$source." ".$target);
+	public function formatPing($target) {
+		return "PING ".Services::getConfiguration()->connection->numeric." ".$target;
+	}
+	
+	/**
+	 * Formates the pong command
+	 * @param	string	$target
+	 * @return void
+	 */
+	public function formatPong($target) {
+		return "PONG ".Services::getConfiguration()->connection->numeric." ".$target;
 	}
 	
 	/**
