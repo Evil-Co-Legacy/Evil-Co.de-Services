@@ -185,9 +185,9 @@ class Connection {
 		// send message
 		if (($bytes = socket_write($this->socket, $message, ($length !== null ? $length : strlen($message)))) === false)
 			throw new ConnectionException("An error occoured while write to socket: ".socket_strerror(socket_last_error($this->socket)), socket_last_error($this->socket));
-		
+			
 		// send log message
-		Services::getLog()->ircdebug("[<--] ".preg_replace("%(\r\n)|(\r)%", "", $message));
+		Services::getLog()->ircdebug("[<--] ".str_replace("\n", "", $message));
 			
 		return $bytes;
 	}
