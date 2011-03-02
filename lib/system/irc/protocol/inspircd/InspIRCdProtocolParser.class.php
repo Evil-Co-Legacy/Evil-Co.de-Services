@@ -87,18 +87,30 @@ class InspIRCdProtocolParser {
 		
 		// remove numeric
 		if (preg_match(self::NUMERIC_PATTERN, $lineEx[0])) {
+			// get source
+			$source = Services::getServerManager()->getServerByIdentifier($lineEx[0]);
+			
 			// delete first position in array
 			unset($lineEx[0]);
 			
 			// resort
 			$lineEx = array_merge(array(), $lineEx);
-		}
+		} elseif (preg_match(self::UUID_PATTERN, $lineEx[0])) {
+			// get source
+			$source = Services::getUserManager()->getUser($lineEx[0]);
+			
+			// delete first position in array
+			unset($lineEx[0]);
+			
+			// resort
+			$lineEx = array_merge(array(), $lineEx);
+		} else throw new SuccessException("What the fuck is going on? The source isn't an UUID and not a numeric ...");
 		
 		// generate instance
 		$instance = self::getCommandParserInstance($command);
 		
 		// parse command
-		$instance->parse($line, $lineEx);
+		$instance->parse($line, $lineEx, $source);
 		
 		// return command name
 		return $command;
