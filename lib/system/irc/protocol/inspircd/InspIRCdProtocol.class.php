@@ -58,6 +58,16 @@ class InspIRCdProtocol implements Protocol {
 	}
 	
 	/**
+	 * Formates the ping command
+	 * @param	string	$source
+	 * @param	string	$target
+	 * @return void
+	 */
+	public function formatPing($source, $target) {
+		return Services::getConnection()->sendLine("PING ".$source." ".$target);
+	}
+	
+	/**
 	 * Generates a hmac key
 	 */
 	protected function generateHMACKey() {
