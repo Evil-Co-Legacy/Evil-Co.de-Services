@@ -134,12 +134,16 @@ class InspIRCdProtocol implements Protocol {
 		// wait for burst
 		do {
 			if (Services::getConnection()->check()) {
-				// parse command
-				$line = Services::getConnection()->readLine();
-				$command = InspIRCdProtocolParser::handleCommand($line);
-				
-				// check for endburst command
-				if ($command == 'ENDBURST') $this->isReady = true;
+				try {
+					// parse command
+					$line = Services::getConnection()->readLine();
+					$command = InspIRCdProtocolParser::handleCommand($line);
+					
+					// check for endburst command
+					if ($command == 'ENDBURST') $this->isReady = true;
+				} catch (Exception $ex) {
+					Services::handleException($ex);
+				}
 			}
 		} while(!$this->isReady);
 		
