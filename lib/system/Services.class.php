@@ -16,6 +16,7 @@ require_once(SDIR.'lib/system/event/EventHandler.class.php');
 require_once(SDIR.'lib/system/irc/ChannelManager.class.php');
 require_once(SDIR.'lib/system/irc/Connection.class.php');
 require_once(SDIR.'lib/system/irc/ProtocolManager.class.php');
+require_once(SDIR.'lib/system/irc/ServerManager.class.php');
 require_once(SDIR.'lib/system/language/LanguageManager.class.php');
 require_once(SDIR.'lib/system/log/IRCLogWriter.class.php');
 require_once(SDIR.'lib/system/module/ModuleManager.class.php');
@@ -149,6 +150,12 @@ class Services {
 	protected static $protocolObj = null;
 	
 	/**
+	 * Contains the ServerManager object
+	 * @var ServerManager
+	 */
+	protected static $serverManagerObj = null;
+	
+	/**
 	 * Contains the TimerManager object
 	 * @var TimerManager
 	 */
@@ -174,6 +181,7 @@ class Services {
 		$this->initUserManager();
 		$this->initBotManager();
 		$this->initChannelManager();
+		$this->initServerManager();
 		$this->initModules();
 		$this->initConnection();
 		$this->initProtocol();
@@ -341,6 +349,14 @@ class Services {
 	}
 
 	/**
+	 * Creates a new ServerManager instance
+	 * @return void
+	 */
+	protected function initServerManager() {
+		self::$serverManagerObj = new ServerManager();
+	}
+	
+	/**
 	 * Creates a new TimerManager instance
 	 * @return void
 	 */
@@ -444,6 +460,14 @@ class Services {
 	 */
 	public static function getProtocol() {
 		return self::$protocolObj;
+	}
+	
+	/**
+	 * Returnes the current ServerManager object
+	 * @return ServerManager
+	 */
+	public static function getServerManager() {
+		return self::$serverManagerObj;
 	}
 	
 	/**
