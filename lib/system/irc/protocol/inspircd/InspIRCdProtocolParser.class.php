@@ -9,16 +9,40 @@
 class InspIRCdProtocolParser {
 	
 	/**
+	 * Contains a pattern for server numerics
+	 * @var string
+	 */
+	const NUMERIC_PATTERN = '~^:[0-9][A-Z0-9][A-Z0-9]$~i';
+	
+	/**
 	 * Contains information about the server connection (
 	 * @var array
 	 */
 	protected static $connectionInformation = array();
 	
 	/**
+	 * Contains all loaded command parsers
+	 * @var array<CommandParser>
+	 */
+	protected static $loadedCommandParsers = array();
+	
+	/**
 	 * Contains an array with all loaded modules
 	 * @var array
 	 */
 	protected static $loadedModules = array();
+	
+	/**
+	 * Returnes the given command parser
+	 * @param	string	$parser
+	 */
+	protected static function getCommandParserInstance($parser) {
+		if (!isset(self::$loadedCommandParsers[$parser])) {
+			self::$loadedCommandParsers[$parser] = new $parser();
+		}
+		
+		return self::$loadedCommandParsers[$parser];
+	}
 	
 	/**
 	 * Returnes information about the connection
@@ -50,7 +74,7 @@ class InspIRCdProtocolParser {
 		$lineEx = explode(" ", $line);
 		
 		// get correct command
-		if (!preg_match('~^:[0-9][A-Z0-9][A-Z0-9]~i', $lineEx[0]))
+		if (!preg_match(self::NUMERIC_PATTERN, $lineEx[0]))
 			$command = $lineEx[0];
 		else
 			$command = $lineEx[1];
@@ -61,8 +85,17 @@ class InspIRCdProtocolParser {
 		// load command handler
 		require_once(SDIR.'lib/system/irc/protocol/inspircd/command/'.strtoupper($command).'.class.php');
 		
+		// remove numeric
+		if (preg_match(self::NUMERIC_PATTERN, $lineEx[0])) {
+			// delete first position in array
+			unset($lineEx[0]);
+			
+			// resort
+			$lineEx = array_merge(array(), $lineEx);
+		}
+		
 		// generate instance
-		$instance = call_user_func(array(strtoupper($command), 'getInstance'));
+		$instance = self::getCommandParserInstance($command);
 		
 		// parse command
 		$instance->parse($line, $lineEx);
