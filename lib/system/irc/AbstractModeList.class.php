@@ -91,7 +91,7 @@ abstract class AbstractModeList implements ModeList, Iterator {
 			foreach($data['children'] as $child) {
 				if (!isset($child['cdata']) or !isset($child['attrs']['attribute'])) throw new RecoverableException("Invalid mode definition in file '".Services::getProtocol()->getProtocolDir().'modes/'.self::$modeInformationFilename.'.xml'."'");
 				
-				if ($child['cdata'] == $modeCar) static::$loadedModeInformation[$modeChar] = (bool) intval($child['attrs']['attribute']);
+				if ($child['cdata'] == $modeChar) static::$loadedModeInformation[$modeChar] = (bool) intval($child['attrs']['attribute']);
 			}
 			
 			// destroy elements
