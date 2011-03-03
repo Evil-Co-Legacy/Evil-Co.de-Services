@@ -120,7 +120,7 @@ abstract class AbstractModeList implements ModeList, Iterator {
 				case '-':
 					$currentFunction = '-';
 				default:
-					switch($currentFunciton) {
+					switch($currentFunction) {
 						case '+':
 							$argument = $argumentList->getArgument($i);
 							$this->addMode($string{$i}, $argument);
