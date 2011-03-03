@@ -1,5 +1,6 @@
 <?php
 // imports
+require_once(SDIR.'lib/system/irc/Mode.class.php');
 require_once(SDIR.'lib/system/irc/ModeList.class.php');
 require_once(SDIR.'lib/system/irc/ModeArgumentList.class.php');
 
@@ -157,7 +158,7 @@ abstract class AbstractModeList implements ModeList, Iterator {
 		
 		foreach($this->modes as $mode) {
 			$string .= $mode->__toString();
-			$string = $string." ".$mode->getArgument();
+			$string .= " ".$mode->getArgument();
 		}
 		
 		return $string;
