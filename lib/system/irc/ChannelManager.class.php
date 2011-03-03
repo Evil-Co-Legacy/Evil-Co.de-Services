@@ -51,6 +51,9 @@ class ChannelManager implements Iterator {
 		
 		// add channel
 		$this->channelList[$channelName] = new Channel($channelName, $data);
+		
+		// log
+		Services::getLog()->info("Created channel ".$channelName);
 	}
 	
 	/**
@@ -82,7 +85,11 @@ class ChannelManager implements Iterator {
 		// validate
 		if (!$this->channelExists($channelName)) throw new RecoverableException("The channel '".$channelName."' does not exist!");
 		
+		// remove channel
 		unset($this->channelList[$channelName]);
+		
+		// log
+		Services::getLog()->info("Deleted channel ".$channelName);
 	}
 	
 	// ITERATOR METHODS
