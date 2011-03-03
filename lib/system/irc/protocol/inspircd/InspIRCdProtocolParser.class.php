@@ -12,13 +12,13 @@ class InspIRCdProtocolParser {
 	 * Contains a pattern for server numerics
 	 * @var string
 	 */
-	const NUMERIC_PATTERN = '~^:[0-9][A-Z0-9][A-Z0-9]$~i';
+	const NUMERIC_PATTERN = '~^:[0-9]([A-Z0-9]{2})$~';
 	
 	/**
 	 * Contains a pattern for user numerics
 	 * @var string
 	 */
-	const UUID_PATTERN = '~^:[A-Z][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9]$~i';
+	const UUID_PATTERN = '~^:[0-9]([A-Z0-9]{8})$~';
 	
 	/**
 	 * Contains information about the server connection (
@@ -80,7 +80,7 @@ class InspIRCdProtocolParser {
 		$lineEx = explode(" ", $line);
 		
 		// get correct command
-		if (!preg_match(self::NUMERIC_PATTERN, $lineEx[0]))
+		if (!preg_match(self::NUMERIC_PATTERN, $lineEx[0]) and !preg_match(self::UUID_PATTERN, $lineEx[0]))
 			$command = $lineEx[0];
 		else
 			$command = $lineEx[1];
