@@ -80,7 +80,7 @@ abstract class AbstractArgumentList implements ArgumentList, Iterator {
 	 * @return	string
 	 */
 	protected function stripDisallowedChars($argumentString) {
-		$argumentString = str_replace('+', '', $argumentString);
+		// $argumentString = str_replace('+', '', $argumentString); // replace +
 		$argumentString = preg_replace('~-[A-Z]+~i', '', $argumentString);
 		return $argumentString;
 	}
