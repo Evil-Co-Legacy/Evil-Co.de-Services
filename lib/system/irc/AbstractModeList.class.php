@@ -83,7 +83,7 @@ abstract class AbstractModeList implements ModeList, Iterator {
 			try {
 				$xml = new XML(Services::getProtocol()->getProtocolDir().'modes/'.self::$modeInformationFilename.'.xml');
 			} catch (SystemException $ex) {
-				throw new RecoverableException($ex->getMessage, $ex->getCode());
+				throw new RecoverableException($ex->getMessage(), $ex->getCode());
 			}
 			
 			$data = $xml->getElementTree('information');
