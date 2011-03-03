@@ -52,6 +52,10 @@ abstract class AbstractArgumentList implements ArgumentList, Iterator {
 	 * @return	string
 	 */
 	public function getArgument($index) {
+		// return an empty string on error
+		if (!isset($this->argumentList[$index])) return "";
+		
+		// return argument
 		return $this->argumentList[$index];
 	}
 	
@@ -80,7 +84,7 @@ abstract class AbstractArgumentList implements ArgumentList, Iterator {
 	 * @return	string
 	 */
 	protected function stripDisallowedChars($argumentString) {
-		// $argumentString = str_replace('+', '', $argumentString); // replace +
+		$argumentString = str_replace('+', '', $argumentString); // replace +
 		$argumentString = preg_replace('~-[A-Z]+~i', '', $argumentString);
 		return $argumentString;
 	}
