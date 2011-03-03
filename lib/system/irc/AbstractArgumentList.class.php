@@ -52,7 +52,7 @@ abstract class AbstractArgumentList implements ArgumentList, Iterator {
 	 * @return	string
 	 */
 	public function getArgument($index) {
-		return $this->argumentList[$i];
+		return $this->argumentList[$index];
 	}
 	
 	/**
