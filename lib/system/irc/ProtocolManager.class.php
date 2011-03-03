@@ -19,6 +19,12 @@ class ProtocolManager {
 	 * @var Protocol
 	 */
 	protected $protocol = null;
+	
+	/**
+	 * Contains the dir for protocol files
+	 * @var string
+	 */
+	protected $protocolDir = '';
 
 	/**
 	 * Contains additional information for protocol
@@ -48,6 +54,9 @@ class ProtocolManager {
 		// validate protocol path
 		if (!is_dir(SDIR.self::PROTOCOL_PATH.$protocol.'/')) throw new ProtocolException("Cannot find protocol location");
 
+		// set protocol dir
+		$this->protocolDir = SDIR.self::PROTOCOL_PATH.$protocol.'/';
+		
 		// get protocol information
 		$this->readProtocolInformation($protocol);
 
@@ -97,6 +106,14 @@ class ProtocolManager {
 
 		// create new instance
 		$this->protocol = new $className($this->supportedTypes);
+	}
+	
+	/**
+	 * Returnes the dir of current protocol
+	 * @return string
+	 */
+	public function getProtocolDir() {
+		return $this->protocolDir;
 	}
 
 	/**
