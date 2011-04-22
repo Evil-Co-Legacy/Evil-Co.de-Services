@@ -13,3 +13,7 @@ msgstr ""
 # Use of this files:
 # msgid "name.of.variable"
 # msgstr "yeah ... content!"
+
+# Dummy
+msgid "dummy"
+msgstr "dummy"
