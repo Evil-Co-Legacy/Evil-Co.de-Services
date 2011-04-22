@@ -1,0 +1,15 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0.0\n"
+"Last-Translator: Johannes Donath\n"
+"Report-Msgid-Bugs-To: webmaster@evil-co.de\n"
+"Language-Team: Evil-Co.de Translation Team <translation@evil-co.de>\n"
+"PO-Revision-Date: 2011-04-22\n"
+"POT-Creation-Date: 2011-04-22\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"MIME-Version: 1.0\n"
+
+# Use of this files:
+# msgid "name.of.variable"
+# msgstr "yeah ... content!"
