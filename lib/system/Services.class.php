@@ -29,6 +29,7 @@ require_once(SDIR.'lib/system/user/UserManager.class.php');
 require_once('Zend/Config/Xml.php');
 require_once('Zend/Log.php');
 require_once('Zend/Log/Writer/Stream.php');
+require_once('Zend/Memory.php');
 
 /**
  * Manages all needed core instances
@@ -38,6 +39,12 @@ require_once('Zend/Log/Writer/Stream.php');
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class Services {
+	
+	/**
+	 * Contains the dir where our services should store cached information
+	 * @var string
+	 */
+	const MEMORY_CACHE_DIR = './tmp/';
 	
 	/**
 	 * Contains the BotManager object
@@ -141,6 +148,12 @@ class Services {
 	 * @var resource
 	 */
 	protected static $logWriterStream = null;
+	
+	/**
+	 * Contains the MemoryManager instance
+	 * @var Zend_Memory
+	 */
+	protected static $memoryManagerObj = null;
 
 	/**
 	 * Contains the ModuleManager object
@@ -179,11 +192,16 @@ class Services {
 	 * Creates a new instance of Services
 	 */
 	public function __construct() {
+		// correct dir
+		@chdir(SDIR);
+		
+		// init components
 		$this->initLog();
 		$this->initConfiguration();
 		$this->initEvents();
 		$this->initTimerManager();
 		$this->initDB();
+		$this->initMemoryManager();
 		$this->initLanguage();
 		$this->initUserManager();
 		$this->initBotManager();
@@ -193,6 +211,8 @@ class Services {
 		$this->initModules();
 		$this->initConnection();
 		$this->initProtocol();
+		
+		// start connection
 		self::$protocolObj->initConnection();
 	}
 
@@ -351,6 +371,14 @@ class Services {
 	}
 	
 	/**
+	 * Creates a new Zend_Memory instance
+	 * @return void
+	 */
+	protected function initMemoryManager() {
+		self::$memoryManagerObj = Zend_Memory::factory('File', array('cache_dir' => self::MEMORY_CACHE_DIR));
+	}
+	
+	/**
 	 * Creates a new ModuleManager instance
 	 *
 	 * @return	void
@@ -470,6 +498,14 @@ class Services {
 	 */
 	public static function getLog() {
 		return self::$loggerObj;
+	}
+	
+	/**
+	 * Returnes the current Zend_Memory object
+	 * @return Zend_Memory
+	 */
+	public static function getMemoryManager() {
+		return self::$memoryManagerObj;
 	}
 	
 	/**
