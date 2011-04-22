@@ -1,4 +1,7 @@
 <?php
+// Zend imports
+require_once('Zend/Translate.php');
+
 /**
  * Manages all language variables
  *
@@ -34,17 +37,12 @@ class LanguageManager {
 
 		while($row = Services::getDB()->fetchArray($result)) {
 			$this->availableLanguages[] = $row;
-			$this->items[intval($row['languageID'])] = array();
-		}
-
-		$sql = "SELECT
-					*
-				FROM
-					language_item";
-		$result = Services::getDB()->sendQuery($sql);
-
-		while($row = Services::getDB()->fetchArray($result)) {
-			$this->items[intval($row['languageID'])][$row['name']] = $row['value'];
+			$this->items[intval($row['languageID'])] = new Zend_Translate(array(
+					'adapter' => 'gettext',
+					'content' => SDIR.'language/'.$row['code'].'.mo',
+					'locale'  => $row['code']
+    				)
+			);
 		}
 	}
 
@@ -57,16 +55,13 @@ class LanguageManager {
 	 */
 	public function get($languageID, $variable) {
 		// whohoo hardcoded shit
-		if ($languageID == null)
+		if ($languageID == null or !isset($this->items[$languageID]))
 			$languageID = 1;
 		else
 			$languageID = intval($languageID);
 
-		// handle missing vars
-		if (!isset($this->items[$languageID][$variable])) return $variable;
-
 		// create needed vars
-		$value = $this->items[$languageID][$variable];
+		$value = $this->items[$languageID]->_($variable);
 		$arguments = func_get_args();
 
 		// kick languageID and variable from argument list
