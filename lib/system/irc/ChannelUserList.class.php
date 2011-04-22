@@ -46,7 +46,7 @@ class ChannelUserList extends AbstractUserTypeManager {
 		parent::addUser($userID, $data);
 		
 		// set modes
-		$this->userList[$userID]->setModes($userModes);
+		$this->getUser($userID)->setModes($userModes);
 	}
 	
 	/**

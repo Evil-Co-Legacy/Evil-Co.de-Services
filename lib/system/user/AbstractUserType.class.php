@@ -50,5 +50,13 @@ class AbstractUserType implements UserType {
 		if (isset($this->data[$property])) return $this->data[$property];
 		return null;
 	}
+	
+	/**
+	 * Converts this object to serialized string (Used for memory manager)
+	 * @return string
+	 */
+	public function __toString() {
+		return serialize($this);
+	}
 }
 ?>

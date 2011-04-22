@@ -38,7 +38,7 @@ abstract class AbstractUserTypeManager implements UserTypeManager, Iterator {
 	 */
 	public function addUser($userID, $data = array()) {
 		// add user
-		$this->userList[$userID] = new $this->userType($userID, $data);
+		$this->userList[$userID] = Services::getMemoryManager()->create(new $this->userType($userID, $data));
 		
 		// debug log
 		Services::getLog()->debug("Added a new user with ID ".$userID." to ".get_class($this));
@@ -48,7 +48,7 @@ abstract class AbstractUserTypeManager implements UserTypeManager, Iterator {
 	 * @see UserTypeManager::getUser()
 	 */
 	public function getUser($userID) {
-		if (isset($this->userList[$userID])) return $this->userList[$userID];
+		if (isset($this->userList[$userID])) return unserialize($this->userList[$userID]->value);
 		return null;
 	}
 	
