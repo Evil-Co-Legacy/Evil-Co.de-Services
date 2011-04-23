@@ -149,9 +149,6 @@ class InspIRCdProtocol implements Protocol {
 		// fire endburst event
 		Services::getEvent()->fire($this, 'endburst');
 		
-		// fire protocol independent event
-		Services::getEvent()->fire($this, 'connected');
-		
 		// wait for burst
 		do {
 			if (Services::getConnection()->check()) {
@@ -170,6 +167,9 @@ class InspIRCdProtocol implements Protocol {
 		
 		// send info log message
 		Services::getLog()->info('Finished bursting! Synched completely with target server');
+		
+		// fire protocol independent event
+		Services::getEvent()->fire($this, 'connected');
 		
 		// start main loop
 		$this->listen();
