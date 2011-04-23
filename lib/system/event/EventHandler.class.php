@@ -52,18 +52,22 @@ class EventHandler {
 		
 		// get parent classes
 		$familyTree = array();
-		$member = (is_object($eventObj) ? get_class($eventObj) : $eventObj);
+		$member = $className = (is_object($eventObj) ? get_class($eventObj) : $eventObj);
 		
 		while ($member != false) {
 			$familyTree[] = $member;
 			$member = get_parent_class($member);
 		}
 		
-		var_dump($familyTree);
+		// add interfaces
+		// this is a little workaround ...
+		$reflection = new ReflectionClass($className);
+		$familyTree = array_merge($familyTree, $reflection->getInterfaceNames());
 
 		foreach ($familyTree as $member) {
 			if (isset($this->events[$member])) {
 				$actions = $this->events[$member];
+				
 				if (isset($actions[$eventName]) and count($actions[$eventName]) > 0) {                        
 					foreach ($actions[$eventName] as $action) {
 						call_user_func_array($action, $data);
