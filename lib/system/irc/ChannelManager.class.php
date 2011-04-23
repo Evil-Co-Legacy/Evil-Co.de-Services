@@ -50,7 +50,7 @@ class ChannelManager implements Iterator {
 		if ($this->channelExists($channelName)) throw new RecoverableException("The channel '".$channelName."' does already exist!");
 		
 		// add channel
-		$this->channelList[$channelName] = new Channel($channelName, $data);
+		$this->channelList[$channelName] = Services::getMemoryManager()->create(serialize(new Channel($channelName, $data)));
 		
 		// log
 		Services::getLog()->info("Created channel ".$channelName);
@@ -69,7 +69,7 @@ class ChannelManager implements Iterator {
 		// try to find
 		if (!$this->channelExists($channelName)) return null;
 		
-		return $this->channelList[$channelName];
+		return unserialize($this->channelList[$channelName]->value);
 	}
 	
 	/**
@@ -104,7 +104,7 @@ class ChannelManager implements Iterator {
 	 * @see Iterator::current()
 	 */
 	public function current() {
-		return $this->channelList[$this->key()];
+		return $this->getChannel($this->key());
 	}
 	
 	/**
