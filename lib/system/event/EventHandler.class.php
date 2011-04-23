@@ -47,13 +47,19 @@ class EventHandler {
 	 * @return	void
 	 */
 	public function fire($eventObj, $eventName, $data = array()) {
+		// log
+		Services::getLog()->debug("Fireing event ".$eventName."@".(is_string($eventObj) ? $eventObj : get_class($eventObj)));
+		
 		// get parent classes
 		$familyTree = array();
 		$member = (is_object($eventObj) ? get_class($eventObj) : $eventObj);
+		
 		while ($member != false) {
 			$familyTree[] = $member;
 			$member = get_parent_class($member);
 		}
+		
+		var_dump($familyTree);
 
 		foreach ($familyTree as $member) {
 			if (isset($this->events[$member])) {
