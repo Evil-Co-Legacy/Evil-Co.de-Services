@@ -24,16 +24,19 @@ class EventHandler {
 	 * @param	string	$targetEvent
 	 * @return	void
 	 */
-	public function registerEvent($class, $method, $targetClass, $targetEvent) {
+	public function registerEvent($callback, $targetClass, $targetEvent) {
+		// validate callback
+		if (!is_callable($callback)) throw new RecoverableException("Passed invalid callback to registerEvent()");
+		
 		// create arrays
 		if (!isset($this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))])) $this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))] = array();
 		if (!isset($this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))][$targetEvent])) $this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))][$targetEvent] = array();
 		
 		// add event
-		$this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))][$targetEvent][] = array('class' => $class, 'method' => $method);
+		$this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))][$targetEvent][] = $callback;
 		
 		// send debug line
-		Services::getLog()->debug("Registered event ".$targetEvent."@".(is_string($targetClass) ? $targetClass : get_class($targetClass))." with callback ".(is_string($class) ? $class : get_class($class))."::".$method);
+		Services::getLog()->debug("Registered event ".$targetEvent."@".(is_string($targetClass) ? $targetClass : get_class($targetClass)));
 	}
 	
 	/**
@@ -57,7 +60,7 @@ class EventHandler {
 				$actions = $this->events[$member];
 				if (isset($actions[$eventName]) and count($actions[$eventName]) > 0) {                        
 					foreach ($actions[$eventName] as $action) {
-						$action['class']->{$action['method']}($data);
+						call_user_func_array($action, $data);
 					}
 				}
 			}
