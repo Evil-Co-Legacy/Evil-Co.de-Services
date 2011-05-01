@@ -1,152 +1,279 @@
 <?php
-// imports
-require_once(SDIR.'lib/system/module/ModuleHandler.class.php');
-require_once(SDIR.'lib/system/module/ModuleParser.class.php');
+// services imports
+require_once(SDIR.'lib/system/module/LoadedModule.class.php');
+require_once(SDIR.'lib/system/module/ModuleInstance.class.php');
+require_once(SDIR.'lib/system/module/ModuleStore.class.php');
+
+// Zend imports
+require_once('Zend/CodeGenerator/Php/Class.php');
+require_once('Zend/Reflection/Class.php');
 
 /**
- * Manages module instances
- *
+ * Manages modules
  * @author		Johannes Donath
- * @copyright		2010 DEVel Fusion
+ * @copyright		2011 DEVel Fusion
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class ModuleManager {
+class ModuleManager implements Iterator {
 	
 	/**
-	 * Contains a relative path from SDIR to location where module classes are stored
-	 *
-	 * @var string
+	 * This is a little workaround. We'll return references to modules in this class. But we can't create a pointer to 'null'
+	 * @var null
 	 */
-	const MODULE_DIR = 'lib/modules/';
+	const NONEXISTANT_MODULE_INSTANCE = null;
 	
 	/**
-	 * Contains a relative path from SDIR to location where module information are stored
-	 *
-	 * @var string
+	 * Contains the pointer for iterator methods
+	 * @var integer
 	 */
-	const MODULE_INFO_DIR = 'lib/modules/info/';
+	protected $instancePointer = 0;
 	
 	/**
-	 * Contains all known namespaces in the following format:
-	 * array (
-	 * 	[moduleName] => namespace
-	 * 	...
-	 * )
-	 *
-	 * @var array<string>
+	 * Contains information about loaded modules
+	 * @var LoadedModule
 	 */
 	protected $loadedModules = array();
 	
 	/**
-	 * Contains information about loaded modules
-	 *
-	 * @var array<string>
+	 * Contains stored module instances
+	 * @var ModuleInstance
 	 */
-	protected $moduleInformation = array();
-	
-	/**
-	 * Contains dependencies for modules. The array contains the following layout:
-	 * array(
-	 * 	[module1] => array(
-	 * 		[module2]
-	 * 		[module3]
-	 * 		[module4]
-	 * 	)
-	 * 	[module2] => array(
-	 * 		...
-	 * 	)
-	 * )
-	 *
-	 * @var array<array>
-	 */
-	protected $moduleDependencyTree = array();
+	protected $moduleInstances = array();
 	
 	/**
 	 * Creates a new instance of ModuleManager
 	 */
 	public function __construct() {
-		ModuleHandler::getInstance()->setModuleInformation($this->moduleInformation);
+		// register connected event
+		Services::getEvent()->registerEvent(array($this, 'initBots'), 'Protocol', 'connected');
+		Services::getEvent()->registerEvent(array($this, 'initCommands'), 'Protocol', 'connected');
+		Services::getEvent()->registerEvent(array($this, 'assignCommands'), 'Protocol', 'connected');
+		Services::getEvent()->registerEvent(array($this, 'initExtensions'), 'Protocol', 'connected');
+		
+		// load modules
+		$this->loadModules(LoadedModule::LOAD_STORE);
 	}
 	
 	/**
-	 * Loads a module to memory
-	 *
-	 * @param	string	$name
-	 * @return 	string
+	 * Assigns all commands to bots
+	 * @return void
 	 */
-	public function loadModule($name) {
-		// try to find module information
-		if (!file_exists(SDIR.self::MODULE_INFO_DIR.$name.'.xml')) throw new ModuleException("Cannot find module information for module '".$name."'");
+	public function assignCommands() {
+		// add debug log
+		Services::getLog()->debug("Assigning commands ...");
 		
-		// read module information
-		$xml = new XML(SDIR.self::MODULE_INFO_DIR.$name.'.xml');
-		$info = $xml->getElementTree('information');
-		
-		// try to find module information
-		if (!file_exists(SDIR.$info['filename'])) throw new ModuleException("Cannot find defined module file for module '".$name."'");
-		
-		// create needed dependency array
-		$dependencyMap = array();
-		
-		// create known namespace array
-		$knownNamespaces = array();
-		
-		// loop through given requirements
-		foreach($info['requirements'] as $requirement) {
-			if (!in_array($requirement, array_keys($this->loadedModules)))
-				throw new ModuleException("Cannot load module '".$name."'! Required module '".$requirement."' isn't loaded");
-			else {
-				foreach($this->moduleDependencyTree[$requirement] as $dependency) {
-					if (!in_array($dependency, $dependencyMap)) $dependencyMap[] = $dependency;
-				}
-			}
-			if (!in_array($requirement, $dependencyMap)) $dependencyMap[] = $requirement;
-		}
-		
-		if (isset($info['parentExtension'])) {
-			// try to find parent package
-			if (!in_array($info['parentExtension'], array_keys($this->loadedModules))) throw new ModuleException("What the hell? You should really add the parent package to requirement list my friend ...");
+		// assign each command
+		foreach($this as $module) {
+			// skip loop if module isn't a command
+			if ($module->type != ModuleInstance::TYPE_COMMAND) continue;
 			
-			$namespace = $this->loadedModules[$info['parentExtension']];
+			// assign command
+			Services::getCommandManager()->assignCommand($module->instance, CommandManager::ASSIGN_AUTOMATIC);
+		}
+	}
+	
+	/**
+	 * @see Iterator::current()
+	 */
+	public function &current() {
+		// get keys
+		$keys = array_keys($this->moduleInstances);
+		
+		return $this->moduleInstances[$keys[$this->instancePointer]];
+	}
+	
+	/**
+	 * Returnes the instance of given module
+	 * @param	string	$moduleName
+	 */
+	public function &getModuleInstance($moduleName) {
+		foreach($this as $module) {
+			if ($module->moduleName == $moduleName) return $moduleName;
 		}
 		
-		// start parser
-		$namespace = ModuleParser::parseModule(SDIR.$info['filename'], (isset($namespace) ? $namespace : null));
-		
-		// load parsed file
-		require_once(SDIR.ModuleParser::PARSER_DIR.$namespace."/".basename($info['filename']));
-		
-		// add to loaded module list
-		$this->loadedModules[$name] = $namespace;
-		
-		// write dependency map
-		$this->moduleDependencyTree[$name] = $dependencyMap;
-		
-		// write module information
-		$this->moduleInformation[$name] = array('type' => $info['type']);
-		
-		// add info log entry
-		Services::getLog()->info("Loaded module '".$name."'");
-		
-		// return namespace
-		return $namespace;
-		
-		// whoops?!
-		throw new SuccessException("Something went terrible wrong ... :-X");
+		return self::NONEXISTANT_MODULE_INSTANCE;
 	}
 	
 	/**
-	 * @see ModuleHandler::getModuleInstances()
+	 * Returnes the information object for given module
+	 * @param	string	$moduleName
 	 */
-	public function getModuleInstances($moduleName) {
-		return ModuleHandler::getInstance()->getModuleInstances($moduleName);
+	public function &getModule($moduleName) {
+		if (($key = $this->getModuleKey($moduleName)) !== null) return $this->loadedModules[$key];
+		return self::NONEXISTANT_MODULE_INSTANCE;
 	}
 	
 	/**
-	 * @see ModuleHandler::getFirstModuleInstance()
+	 * Returnes the key of loaded module information element
+	 * @param	string	$moduleName
 	 */
-	public function getFirstModuleInstance($moduleName) {
-		return ModuleHandler::getInstance()->getFirstModuleInstance($moduleName);
+	public function getModuleKey($moduleName) {
+		foreach($this->loadedModules as $key => $module) {
+			if ($module->moduleName == $moduleName) return $key;
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Starts up all bots after connection was successfully started
+	 * @return void
+	 */
+	public function initBots() {
+		// add debug log
+		Services::getLog()->debug("Starting Bots ...");
+		
+		// register each bot
+		foreach($this as $module) {
+			// skip this loop if module isn't a bot
+			if ($module->type != ModuleInstance::TYPE_BOT) continue;
+			
+			// register bot at botmanager
+			Services::getBotManager()->registerBot($module->instance, BotManager::REGISTER_AUTOMATIC);
+			
+			// register bot at commandmanager
+			Services::getCommandManager()->registerBot($module->instance);
+		}
+	}
+	
+	/**
+	 * Registeres all commands after connection was successfully started
+	 * @return void
+	 */
+	public function initCommands() {
+		// add debug log
+		Services::getLog()->debug("Registering commands ...");
+		
+		// register each command
+		foreach($this as $module) {
+			// skip this loop if module isn't a command
+			if ($module->type != ModuleInstance::TYPE_COMMAND) continue;
+			
+			// register at command manager
+			Services::getCommandManager()->registerCommand($module->instance);
+		}
+	}
+	
+	/**
+	 * Starts all extensions
+	 * @return void
+	 */
+	public function initExtensions() {
+		// add debug log
+		Services::getLog()->debug('Starting extensions ...');
+		
+		// start each extension
+		foreach($this as $module) {
+			// skip loop if module isn't an extension
+			if ($module->type != ModuleInstance::TYPE_EXTENSION) continue;
+			
+			// init extension
+			$module->instance->init();
+		}
+	}
+	
+	/**
+	 * @see Iterator::key()
+	 */
+	public function key() {
+		// get keys
+		$keys = array_keys($this->moduleInstances);
+		
+		return $keys[$this->instancePointer];
+	}
+	
+	/**
+	 * Loads a module at runtime
+	 * @param	string	$moduleName
+	 * @param	boolean	$save
+	 */
+	public function loadModule($moduleName, $save = false) {
+		// check for existing modules
+		if ($this->getModuleInstance($moduleName) !== null) throw new ModuleException("Module %s is already loaded", $moduleName);
+		
+		// load module
+		$this->loadedModules[] = new LoadedModule($moduleName, LoadedModule::LOAD_MANUAL);
+		
+		// log
+		Services::getLog()->info("Loaded module %s with identifier %s", $moduleName, $this->getModule($moduleName)->getModuleHash());
+		
+		// fire event
+		Services::getEvent()->fire($this, 'moduleLoaded', array('module' => $this->getModule($moduleName)));
+		
+		// save
+		if ($save) {
+			ModuleStore::getInstance()->add($this->loadedModules[(count($this->loadedModules) - 1)]);
+		}
+	}
+	
+	/**
+	 * Loads modules
+	 * @param	integer	$loadType
+	 */
+	protected function loadModules($loadType = LoadedModule::LOAD_NONE) {
+		// Modules disabled?
+		if ($loadType == LoadedModule::LOAD_NONE) return;
+		
+		// load modules
+		switch($loadType) {
+			/**
+			 * Automatic load
+			 * Loades all modules stored in databases (Saved from last session)
+			 */
+			case LoadedModule::LOAD_STORE:
+				// start ModuleStore to load all modules
+				$this->moduleInstances = ModuleStore::getInstance()->getReference();
+				break;
+		}
+	}
+	
+	/**
+	 * @see Iterator::next()
+	 */
+	public function next() {
+		++$this->instancePointer;
+	}
+	
+	/**
+	 * @see Iterator::rewind()
+	 */
+	public function rewind() {
+		$this->instancePointer = 0;
+	}
+	
+	/**
+	 * Unloads a module
+	 * @param	string	$moduleName
+	 * @param	boolean	$save
+	 * @throws ModuleException
+	 */
+	public function unloadModule($moduleName, $save = false) {
+		// check for existing modules
+		if ($this->getModuleInstance($moduleName) === null) throw new ModuleException("Module %s is not loaded", $moduleName);
+		
+		$identifier = $this->getModule($moduleName)->getModuleHash();
+		
+		// unload module
+		$this->getModuleInstance($moduleName)->unload();
+		unset($this->loadedModules[$this->getModuleKey($moduleName)]);
+		
+		// log
+		Services::getLog()->info("Unloaded module %s with identifier %s", $moduleName, $identifier);
+		
+		// save information
+		if ($save) {
+			ModuleStore::getInstance()->remove($moduleName);
+		}
+	}
+	
+	/**
+	 * @see Iterator::valid()
+	 */
+	public function valid() {
+		// get keys
+		$keys = array_keys($this->moduleInstances);
+		
+		return (isset($keys[$this->instancePointer]));
 	}
 }
 ?>
