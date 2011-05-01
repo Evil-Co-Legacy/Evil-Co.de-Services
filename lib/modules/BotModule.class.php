@@ -158,7 +158,7 @@ abstract class BotModule implements Module {
 	}
 
 	/**
-	 * Checks for needed permissions and returnes true if correct permissions are set
+	 * Checks for needed permissions and returns true if correct permissions are set
 	 *
 	 * @param 	UserType	$user
 	 * @param	integer		$neededPermissions

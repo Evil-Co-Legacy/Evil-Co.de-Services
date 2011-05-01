@@ -265,7 +265,7 @@ class ModuleManager {
 	}
 
 	/**
-	 * Looks up a module and returnes its address
+	 * Looks up a module and returns its address
 	 * @param	string	$moduleName
 	 */
 	public function lookupModule($moduleName) {

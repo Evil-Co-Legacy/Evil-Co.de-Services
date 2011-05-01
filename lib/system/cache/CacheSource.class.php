@@ -128,7 +128,7 @@ class CacheSource extends Memcache {
 	}
 	
 	/**
-	 * Tries to write and read cache from memcache source and returnes true if connection is still alive
+	 * Tries to write and read cache from memcache source and returns true if connection is still alive
 	 *
 	 * @return boolean
 	 */
