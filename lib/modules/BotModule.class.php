@@ -53,7 +53,7 @@ abstract class BotModule implements Module {
 	}
 
 	/**
-	 * Returnes the bot reference
+	 * Returns the bot reference
 	 *
 	 * @return	UserType
 	 */
@@ -178,7 +178,7 @@ abstract class BotModule implements Module {
 	}
 
 	/**
-	 * Returnes bot's trigger
+	 * Returns bot's trigger
 	 *
 	 * @return	string
 	 */

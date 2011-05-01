@@ -23,61 +23,61 @@ interface UserType {
 	public function __construct($uuid, $timestamp, $nick, $hostname, $displayedHostname, $ident, $ip, $signonTimestamp, $modes, $gecos);
 
 	/**
-	 * Returnes the uuid of this user type instance
+	 * Returns the uuid of this user type instance
 	 * @return	string
 	 */
 	public function getUuid();
 
 	/**
-	 * Returnes the creation timestamp of this user type instance
+	 * Returns the creation timestamp of this user type instance
 	 * @return	integer
 	 */
 	public function getTimestamp();
 
 	/**
-	 * Returnes the nickname of this user type instance
+	 * Returns the nickname of this user type instance
 	 * @return	string
 	 */
 	public function getNick();
 
 	/**
-	 * Returnes the hostname of this user type instance
+	 * Returns the hostname of this user type instance
 	 * @return	string
 	 */
 	public function getHostname();
 
 	/**
-	 * Returnes the displayed-hostname for this user type instance
+	 * Returns the displayed-hostname for this user type instance
 	 * @return	string
 	 */
 	public function getDisplayedHostname();
 
 	/**
-	 * Returnes the ident of this user type instance
+	 * Returns the ident of this user type instance
 	 * @return	string
 	 */
 	public function getIdent();
 
 	/**
-	 * Returnes the ip of this user type instance
+	 * Returns the ip of this user type instance
 	 * @return	string
 	 */
 	public function getIP();
 
 	/**
-	 * Returnes the signon timestamp of this user type instance
+	 * Returns the signon timestamp of this user type instance
 	 * @return	string
 	 */
 	public function getSignonTimestamp();
 
 	/**
-	 * Returnes the modes of this user type instance
+	 * Returns the modes of this user type instance
 	 * @return	ModeList
 	 */
 	public function getModes();
 
 	/**
-	 * Returnes the gecos of this user type instance
+	 * Returns the gecos of this user type instance
 	 * @return	string
 	 */
 	public function getGecos();

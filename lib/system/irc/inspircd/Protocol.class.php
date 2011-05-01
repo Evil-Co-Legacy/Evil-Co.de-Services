@@ -90,7 +90,7 @@ class Protocol {
 	public $servicechannel = '';
 
 	/**
-	 * Returnes an instance of Protocol
+	 * Returns an instance of Protocol
 	 *
 	 * @return	Protocol
 	 */
@@ -103,7 +103,7 @@ class Protocol {
 	}
 
 	/**
-	 * Returnes server's numeric
+	 * Returns server's numeric
 	 *
 	 * @return	int
 	 */
@@ -316,7 +316,7 @@ class Protocol {
 	}
 
 	/**
-	 * Returnes the service channel
+	 * Returns the service channel
 	 *
 	 * @return string
 	 */

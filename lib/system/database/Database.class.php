@@ -35,7 +35,7 @@ abstract class Database {
 	protected $lastQuery = "";
 
 	/**
-	 * Returnes the first row
+	 * Returns the first row
 	 *
 	 * @param	    string	$query
 	 * @param	    integer	$limit

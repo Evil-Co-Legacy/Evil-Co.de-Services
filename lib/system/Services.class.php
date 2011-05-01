@@ -194,35 +194,35 @@ class Services {
 	}
 
 	/**
-	 * Returnes the current configuration object
+	 * Returns the current configuration object
 	 */
 	public static function getConfiguration() {
 		return self::$configObj;
 	}
 
 	/**
-	 * Returnes the current EventHandler object
+	 * Returns the current EventHandler object
 	 */
 	public static function getEvent() {
 		return self::$eventObj;
 	}
 
 	/**
-	 * Returnes the current database connection
+	 * Returns the current database connection
 	 */
 	public static function getDB() {
 		return self::$dbObj;
 	}
 
 	/**
-	 * Returnes the current language manager
+	 * Returns the current language manager
 	 */
 	public static function getLanguage() {
 		return self::$languageObj;
 	}
 
 	/**
-	 * Returnes the current irc connection
+	 * Returns the current irc connection
 	 */
 	public static function getConnection() {
 		return self::$ircObj;
@@ -237,28 +237,28 @@ class Services {
 	}
 
 	/**
-	 * Returnes the current user manager object
+	 * Returns the current user manager object
 	 */
 	public static function getUserManager() {
 		return self::$userManagerObj;
 	}
 
 	/**
-	 * Returnes the current bot manager object
+	 * Returns the current bot manager object
 	 */
 	public static function getBotManager() {
 		return self::$botManagerObj;
 	}
 
 	/**
-	 * Returnes the current channel manager object
+	 * Returns the current channel manager object
 	 */
 	public static function getChannelManager() {
 		return self::$channelManagerObj;
 	}
 
 	/**
-	 * Returnes the current ModuleManager object
+	 * Returns the current ModuleManager object
 	 */
 	public static function getModuleManager() {
 		return self::$moduleManagerObj;
@@ -317,14 +317,14 @@ class Services {
 	}
 
 	/**
-	 * Returnes true if memcache is available
+	 * Returns true if memcache is available
 	 */
 	public static function memcacheLoaded() {
 		return (self::$memcacheObj instanceof Memcache);
 	}
 
 	/**
-	 * Returnes the current memcache instance
+	 * Returns the current memcache instance
 	 */
 	public static function getMemcache() {
 		return self::$memcacheObj;

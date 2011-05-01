@@ -93,7 +93,7 @@ class IRCConnection {
 	}
 	
 	/**
-	 * Returnes the protocol instance
+	 * Returns the protocol instance
 	 */
 	public function getProtocol() {
 		return $this->protocol;
@@ -117,7 +117,7 @@ class IRCConnection {
 	}
 	
 	/**
-	 * Returnes true if the connection is alive
+	 * Returns true if the connection is alive
 	 */
 	public function isAlive() {
 		return !feof($this->socket);

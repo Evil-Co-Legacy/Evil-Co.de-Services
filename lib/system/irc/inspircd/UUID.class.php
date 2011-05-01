@@ -29,7 +29,7 @@ class UUID {
 	protected static $charmap = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	
 	/**
-	 * Returnes an instance of type UUID
+	 * Returns an instance of type UUID
 	 *
 	 * @return	UUID
 	 */

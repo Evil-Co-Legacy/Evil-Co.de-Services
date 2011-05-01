@@ -273,7 +273,7 @@ class ModuleManager {
 	}
 	
 	/**
-	 * Returnes a running bot instance
+	 * Returns a running bot instance
 	 * @param	string	$moduleAddress
 	 */
 	public function getBot($moduleAddress) {
@@ -282,7 +282,7 @@ class ModuleManager {
 	}
 
 	/**
-	 * Returnes true if a module with given address exists
+	 * Returns true if a module with given address exists
 	 * @param	string	$moduleAddress
 	 */
 	public function moduleLoaded($moduleAddress) {

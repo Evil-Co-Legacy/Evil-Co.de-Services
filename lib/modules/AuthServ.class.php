@@ -17,7 +17,7 @@ class AuthServ extends BotModule {
 	protected $accountToUser = array();
 
 	/**
-	 * Returnes true if a user is authed
+	 * Returns true if a user is authed
 	 *
 	 * @param	string	$uuid
 	 * @return	boolean
@@ -135,7 +135,7 @@ class AuthServ extends BotModule {
 	}
 
 	/**
-	 * Returnes true if the given accountname exists
+	 * Returns true if the given accountname exists
 	 *
 	 * @param	string	$accountname
 	 * @return	boolean
@@ -153,7 +153,7 @@ class AuthServ extends BotModule {
 	}
 
 	/**
-	 * Returnes true if the given email address already exists
+	 * Returns true if the given email address already exists
 	 *
 	 * @param	string	$email
 	 * @return	boolean
@@ -171,7 +171,7 @@ class AuthServ extends BotModule {
 	}
 
 	/**
-	 * Returnes the userID of the account with name $accountname
+	 * Returns the userID of the account with name $accountname
 	 *
 	 * @param	string	$accountname
 	 * @return	integer
@@ -189,7 +189,7 @@ class AuthServ extends BotModule {
 	}
 
 	/**
-	 * Returnes the access level of $accountname
+	 * Returns the access level of $accountname
 	 *
 	 * @param	string	$accountname
 	 * @return	integer

@@ -29,14 +29,14 @@ interface UserTypeManager {
 	public function removeUser($uuid);
 
 	/**
-	 * Returnes the user object with given uuid
+	 * Returns the user object with given uuid
 	 * @param	string	$uuid
 	 * @return	UserType
 	 */
 	public function getUser($uuid);
 
 	/**
-	 * Returnes the user object with given nickname
+	 * Returns the user object with given nickname
 	 * @param	string	$nickname
 	 * @return UserType
 	 */

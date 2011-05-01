@@ -52,7 +52,7 @@ class Configuration {
 	}
 	
 	/**
-	 * Returnes a configuration variable
+	 * Returns a configuration variable
 	 *
 	 * @param	string	$name
 	 * @return	mixed

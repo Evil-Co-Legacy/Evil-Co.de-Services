@@ -113,7 +113,7 @@ abstract class AbstractModeList implements ModeList {
 	}
 
 	/**
-	 * Returnes the mode type (upper or lower)
+	 * Returns the mode type (upper or lower)
 	 * @param	string	$char
 	 */
 	public function getModeType($char) {

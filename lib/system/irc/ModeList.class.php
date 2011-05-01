@@ -21,15 +21,15 @@ interface ModeList {
 	public function setMode($mode, $argument = null);
 	
 	/**
-	 * Returnes true if the given mode is set
+	 * Returns true if the given mode is set
 	 * @param	string	$mode
 	 * @return	boolean
 	 */
 	public function hasMode($mode);
 	
 	/**
-	 * Returnes the argument for the given mode
-	 * Note: Returnes false if the mode can't have an argument
+	 * Returns the argument for the given mode
+	 * Note: Returns false if the mode can't have an argument
 	 * @param	string	$mode
 	 * @return	mixed
 	 */

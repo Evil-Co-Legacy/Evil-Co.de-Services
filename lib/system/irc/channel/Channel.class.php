@@ -38,7 +38,7 @@ class Channel {
 	}
 
 	/**
-	 * Returnes the name of this channel
+	 * Returns the name of this channel
 	 *
 	 * @return	string
 	 */
@@ -47,7 +47,7 @@ class Channel {
 	}
 
 	/**
-	 * Returnes the timestamp of this channel
+	 * Returns the timestamp of this channel
 	 *
 	 * @return	integer
 	 */
@@ -56,7 +56,7 @@ class Channel {
 	}
 
 	/**
-	 * Returnes the modes of this channel
+	 * Returns the modes of this channel
 	 *
 	 * @return	ModeList
 	 */
@@ -110,7 +110,7 @@ class Channel {
 	}
 
 	/**
-	 * Returnes whether the $uuid joined this channel
+	 * Returns whether the $uuid joined this channel
 	 *
 	 * @param	string	$uuid
 	 * @return	boolean

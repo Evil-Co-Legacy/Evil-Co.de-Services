@@ -61,7 +61,7 @@ abstract class CommandModule implements Module {
 	abstract public function execute($user, $target, $message);
 
 	/**
-	 * Returnes true if the given line matches command
+	 * Returns true if the given line matches command
 	 * @param	string	$input
 	 * @return	boolean
 	 */
