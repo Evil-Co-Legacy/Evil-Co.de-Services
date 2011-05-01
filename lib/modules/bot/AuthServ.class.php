@@ -91,7 +91,7 @@ class AuthServ extends BotModule {
 	 * @return	void
 	 */
 	public function create($accountname, $password, $email) {
-		$salt = StringUtil::getRandomID();
+		$salt = Services::getRandomString();
 		$password = sha1($salt.sha1($salt.$password));
 		
 		$sql = "INSERT INTO authserv_users 	(accountname, password, email, salt, time) 

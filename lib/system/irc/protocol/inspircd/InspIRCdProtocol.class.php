@@ -80,7 +80,7 @@ class InspIRCdProtocol implements Protocol {
 	 */
 	protected function generateHMACKey() {
 		// generate hmac key
-		if ($this->hmacKey === null) $this->hmacKey = StringUtil::getRandomID();
+		if ($this->hmacKey === null) $this->hmacKey = Services::getRandomString();
 		
 		return $this->hmacKey;
 	}

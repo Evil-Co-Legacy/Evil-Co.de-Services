@@ -610,5 +610,13 @@ class Services {
 		// kill services :>
 		if (!($ex instanceof RecoverableException)) exit;
 	}
+	
+	public static function getRandomString() {
+		return sha1(rand().microtime());
+	}
+	
+	public function removeCR($string) {
+		return str_replace(array("\r\n", "\r"), "\n", $string);
+	}
 }
 ?>

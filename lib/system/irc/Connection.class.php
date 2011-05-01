@@ -158,7 +158,7 @@ class Connection {
 			throw new ConnectionException("An error occoured while reading from socket: ".socket_strerror(socket_last_error($this->socket)), socket_last_error($this->socket));
 		
 		// unify newlines
-		$line = StringUtil::unifyNewlines($line);
+		$line = Services::removeCR($line);
 			
 		// remove newlines
 		$line = str_replace("\n", "", $line);
@@ -180,7 +180,7 @@ class Connection {
 	 */
 	protected function __send($message, $length = null) {
 		// unify newlines
-		$message = StringUtil::unifyNewlines($message);
+		$message = Services::removeCR($message);
 		
 		// send message
 		if (($bytes = socket_write($this->socket, $message, ($length !== null ? $length : strlen($message)))) === false)

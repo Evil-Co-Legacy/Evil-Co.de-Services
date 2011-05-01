@@ -102,7 +102,7 @@ class XML {
 		if (!($xmlObj instanceof SimpleXMLElement)) {
 			$xmlObj = $this->xmlObj;	
 		}
-		if (StringUtil::trim((string)$xmlObj) != '') {
+		if (trim((string)$xmlObj) != '') {
 			return (string)$xmlObj;	
 		}
 		else {

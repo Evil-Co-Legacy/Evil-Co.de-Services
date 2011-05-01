@@ -157,7 +157,7 @@ class ChanServ extends BotModule {
 		$userID = call_user_func(array($authServ, 'getUserID'), $accountname);
 		
 		$sql = "INSERT INTO chanserv_channels 	(channel, modes, time, registrar, unregistercode) 
-			VALUES 				('".escapeString($channel)."', '+tnr', ".time().", ".$userID.", '".StringUtil::getRandomID()."')";
+			VALUES 				('".escapeString($channel)."', '+tnr', ".time().", ".$userID.", '".Services::getRandomString()."')";
 		Services::getDB()->sendQuery($sql);
 
 		$sql = "INSERT INTO chanserv_channels_to_users 	(channel, userID, accessLevel) 
