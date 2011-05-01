@@ -39,7 +39,7 @@ class InspIRCdProtocolParser {
 	protected static $loadedModules = array();
 	
 	/**
-	 * Returnes the given command parser
+	 * Returns the given command parser
 	 * @param	string	$parser
 	 */
 	protected static function getCommandParserInstance($parser) {
@@ -51,7 +51,7 @@ class InspIRCdProtocolParser {
 	}
 	
 	/**
-	 * Returnes information about the connection
+	 * Returns information about the connection
 	 * @return array
 	 */
 	public static function getConnectionInformation() {
@@ -59,7 +59,7 @@ class InspIRCdProtocolParser {
 	}
 	
 	/**
-	 * Returnes all loaded modules for current connection
+	 * Returns all loaded modules for current connection
 	 * @return array
 	 */
 	public static function getLoadedModules() {

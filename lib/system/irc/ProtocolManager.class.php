@@ -109,7 +109,7 @@ class ProtocolManager {
 	}
 	
 	/**
-	 * Returnes the dir of current protocol
+	 * Returns the dir of current protocol
 	 * @return string
 	 */
 	public function getProtocolDir() {
@@ -117,7 +117,7 @@ class ProtocolManager {
 	}
 
 	/**
-	 * Returnes true if the protocol is alive
+	 * Returns true if the protocol is alive
 	 * @return boolean
 	 */
 	public function isAlive() {
@@ -126,7 +126,7 @@ class ProtocolManager {
 	}
 
 	/**
-	 * Returnes true if the given type (or function) is supported in current protocol
+	 * Returns true if the given type (or function) is supported in current protocol
 	 * @param	string	$type
 	 * @return boolean
 	 */

@@ -53,7 +53,7 @@ class Channel {
 	}
 	
 	/**
-	 * Returnes the name of this channel
+	 * Returns the name of this channel
 	 *
 	 * @return string
 	 */
@@ -62,7 +62,7 @@ class Channel {
 	}
 	
 	/**
-	 * Returnes the ChannelUserList object for this channel
+	 * Returns the ChannelUserList object for this channel
 	 *
 	 * @return	ChannelUserList
 	 */

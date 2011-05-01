@@ -27,13 +27,13 @@ interface Protocol {
 	public function initConnection();
 	
 	/**
-	 * Returnes true if the current connection to server is alive
+	 * Returns true if the current connection to server is alive
 	 * @return boolean
 	 */
 	public function isAlive();
 	
 	/**
-	 * Returnes true if the current connection to server is ready for msgs and other funny things
+	 * Returns true if the current connection to server is ready for msgs and other funny things
 	 * @return boolean
 	 */
 	public function isReady();

@@ -59,7 +59,7 @@ abstract class BotModule extends AbstractModule {
 	}
 
 	/**
-	 * Returnes the bot reference
+	 * Returns the bot reference
 	 *
 	 * @return	UserType
 	 */

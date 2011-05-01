@@ -71,7 +71,7 @@ class Line {
 	}
 	
 	/**
-	 * Returnes the mask of this line
+	 * Returns the mask of this line
 	 * @return string
 	 */
 	public function getMask() {
@@ -79,7 +79,7 @@ class Line {
 	}
 	
 	/**
-	 * Returnes the setter of this line
+	 * Returns the setter of this line
 	 * @return string
 	 */
 	public function getSetter() {
@@ -87,7 +87,7 @@ class Line {
 	}
 	
 	/**
-	 * Returnes the timestamp of this line
+	 * Returns the timestamp of this line
 	 * @return integer
 	 */
 	public function getTimestamp() {
@@ -95,7 +95,7 @@ class Line {
 	}
 	
 	/**
-	 * Returnes the duration of this line
+	 * Returns the duration of this line
 	 * @return integer
 	 */
 	public function getDuration() {
@@ -103,7 +103,7 @@ class Line {
 	}
 	
 	/**
-	 * Returnes the reason of this line
+	 * Returns the reason of this line
 	 * @return string
 	 */
 	public function getReason() {
@@ -111,7 +111,7 @@ class Line {
 	}
 	
 	/**
-	 * Returnes true if this line is expired
+	 * Returns true if this line is expired
 	 * @return boolean
 	 */
 	public function isExpired() {

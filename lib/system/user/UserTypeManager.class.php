@@ -17,7 +17,7 @@ interface UserTypeManager {
 	public function addUser($userID, $data = array());
 	
 	/**
-	 * Returnes the user with ID $userID
+	 * Returns the user with ID $userID
 	 *
 	 * @param	mixed	$userID
 	 */

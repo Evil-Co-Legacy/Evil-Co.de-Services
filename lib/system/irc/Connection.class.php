@@ -63,7 +63,7 @@ class Connection {
 	}
 	
 	/**
-	 * Returnes a count of modified sockets
+	 * Returns a count of modified sockets
 	 * Note: This returnes 0 if no sockets modified
 	 *
 	 * @return integer
@@ -97,7 +97,7 @@ class Connection {
 	}
 	
 	/**
-	 * Returnes the current connection state
+	 * Returns the current connection state
 	 *
 	 * @return string
 	 */
@@ -138,7 +138,7 @@ class Connection {
 	}
 	
 	/**
-	 * Returnes true if the connection is still alive
+	 * Returns true if the connection is still alive
 	 */
 	public function isAlive() {
 		// socket errors

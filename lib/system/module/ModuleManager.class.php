@@ -83,7 +83,7 @@ class ModuleManager implements Iterator {
 	}
 	
 	/**
-	 * Returnes the instance of given module
+	 * Returns the instance of given module
 	 * @param	string	$moduleName
 	 */
 	public function &getModuleInstance($moduleName) {
@@ -95,7 +95,7 @@ class ModuleManager implements Iterator {
 	}
 	
 	/**
-	 * Returnes the information object for given module
+	 * Returns the information object for given module
 	 * @param	string	$moduleName
 	 */
 	public function &getModule($moduleName) {
@@ -104,7 +104,7 @@ class ModuleManager implements Iterator {
 	}
 	
 	/**
-	 * Returnes the key of loaded module information element
+	 * Returns the key of loaded module information element
 	 * @param	string	$moduleName
 	 */
 	public function getModuleKey($moduleName) {

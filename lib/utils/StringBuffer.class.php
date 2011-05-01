@@ -42,7 +42,7 @@ class StringBuffer {
 	}
 	
 	/**
-	 * Returnes the current buffer and clears it
+	 * Returns the current buffer and clears it
 	 *
 	 * @return	string
 	 */

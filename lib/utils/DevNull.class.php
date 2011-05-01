@@ -9,7 +9,7 @@
 class DevNull {
 	
 	/**
-	 * Returnes the answer of life, the universe and everything
+	 * Returns the answer of life, the universe and everything
 	 * @return integer
 	 */
 	public function getTheAnswerOfLifeTheUniverseAndEverything() {

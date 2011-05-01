@@ -31,7 +31,7 @@ class Mode {
 	}
 	
 	/**
-	 * Returnes the argument of this mode
+	 * Returns the argument of this mode
 	 * @var string
 	 */
 	public function getArgument() {

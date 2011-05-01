@@ -30,7 +30,7 @@ class UserException extends RecoverableException {
 	}
 	
 	/**
-	 * Returnes a user object
+	 * Returns a user object
 	 *
 	 * @return UserType
 	 */

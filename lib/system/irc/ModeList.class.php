@@ -16,14 +16,14 @@ interface ModeList {
 	public function __construct($modeString);
 	
 	/**
-	 * Returnes true if the given mode char has an argument
+	 * Returns true if the given mode char has an argument
 	 *
 	 * @param	string(1) $modeChar
 	 */
 	public static function hasArgument($modeChar);
 	
 	/**
-	 * Returnes true if the specified mode is set
+	 * Returns true if the specified mode is set
 	 *
 	 * @param	string(1)	$modeChar
 	 */

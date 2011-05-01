@@ -26,7 +26,7 @@ class ChannelManager implements Iterator {
 	protected $channelPointer = 0;
 	
 	/**
-	 * Returnes true if a channel already exists in list
+	 * Returns true if a channel already exists in list
 	 *
 	 * @param	string	$channelName
 	 * @return 	boolean
@@ -57,7 +57,7 @@ class ChannelManager implements Iterator {
 	}
 	
 	/**
-	 * Returnes the channel object for given channel name
+	 * Returns the channel object for given channel name
 	 *
 	 * @param	string	$channelName
 	 * @return 	Channel

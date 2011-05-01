@@ -46,7 +46,7 @@ abstract class AbstractArgumentList implements ArgumentList, Iterator {
 	}
 	
 	/**
-	 * Returnes the argument at given index
+	 * Returns the argument at given index
 	 *
 	 * @param	integer	$index
 	 * @return	string
