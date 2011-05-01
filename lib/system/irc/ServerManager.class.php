@@ -37,7 +37,7 @@ class ServerManager implements Iterator {
 	}
 	
 	/**
-	 * Returnes the server with the given identifier
+	 * Returns the server with the given identifier
 	 * @param	string	$identifier
 	 */
 	public function getServerByIdentifier($identifier) {
@@ -48,7 +48,7 @@ class ServerManager implements Iterator {
 	}
 	
 	/**
-	 * Returnes the server with the given name
+	 * Returns the server with the given name
 	 * @param	string	$serverName
 	 */
 	public function getServerByName($serverName) {

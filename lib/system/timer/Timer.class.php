@@ -43,7 +43,7 @@ class Timer {
 	}
 	
 	/**
-	 * Returnes true if an execution is needed
+	 * Returns true if an execution is needed
 	 * @return boolean
 	 */
 	public function needsExecution() {

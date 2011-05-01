@@ -424,7 +424,7 @@ class Services {
 	}
 	
 	/**
-	 * Returnes the current bot manager object
+	 * Returns the current bot manager object
 	 * 
 	 * @return	BotManager
 	 */
@@ -433,7 +433,7 @@ class Services {
 	}
 	
 	/**
-	 * Returnes the current channel manager object
+	 * Returns the current channel manager object
 	 *
 	 * @return	ChannelManager
 	 */
@@ -442,7 +442,7 @@ class Services {
 	}
 
 	/**
-	 * Returnes the current configuration object
+	 * Returns the current configuration object
 	 *
 	 * @return	Configuration
 	 */
@@ -451,7 +451,7 @@ class Services {
 	}
 	
 	/**
-	 * Returnes the current irc connection
+	 * Returns the current irc connection
 	 *
 	 * @return	Connection
 	 */
@@ -460,7 +460,7 @@ class Services {
 	}
 
 	/**
-	 * Returnes the current database connection
+	 * Returns the current database connection
 	 *
 	 * @return	DataBase
 	 */
@@ -469,7 +469,7 @@ class Services {
 	}
 	
 	/**
-	 * Returnes the current EventHandler object
+	 * Returns the current EventHandler object
 	 *
 	 * @return	EventHandler
 	 */
@@ -478,7 +478,7 @@ class Services {
 	}
 
 	/**
-	 * Returnes the current language manager
+	 * Returns the current language manager
 	 *
 	 * @return	LanguageManager
 	 */
@@ -487,7 +487,7 @@ class Services {
 	}
 	
 	/**
-	 * Returnes the current LineManager
+	 * Returns the current LineManager
 	 * @return LineManager
 	 */
 	public static function getLineManager() {
@@ -495,7 +495,7 @@ class Services {
 	}
 	
 	/**
-	 * Returnes the current Zend_Log instance
+	 * Returns the current Zend_Log instance
 	 * @return Zend_Log
 	 */
 	public static function getLog() {
@@ -503,7 +503,7 @@ class Services {
 	}
 	
 	/**
-	 * Returnes the current Zend_Memory object
+	 * Returns the current Zend_Memory object
 	 * @return Zend_Memory
 	 */
 	public static function getMemoryManager() {
@@ -511,7 +511,7 @@ class Services {
 	}
 	
 	/**
-	 * Returnes the current ModuleManager object
+	 * Returns the current ModuleManager object
 	 *
 	 * @return	ModuleManager
 	 */
@@ -520,7 +520,7 @@ class Services {
 	}
 	
 	/**
-	 * Returnes the current Protocol object
+	 * Returns the current Protocol object
 	 *
 	 * @return	Protocol
 	 */
@@ -529,7 +529,7 @@ class Services {
 	}
 	
 	/**
-	 * Returnes the current ServerManager object
+	 * Returns the current ServerManager object
 	 * @return ServerManager
 	 */
 	public static function getServerManager() {
@@ -537,7 +537,7 @@ class Services {
 	}
 	
 	/**
-	 * Returnes the current TimerManager object
+	 * Returns the current TimerManager object
 	 * @return TimerManager
 	 */
 	public static function getTimerManager() {
@@ -545,7 +545,7 @@ class Services {
 	}
 
 	/**
-	 * Returnes the current user manager object
+	 * Returns the current user manager object
 	 *
 	 * @return	UserManager
 	 */
@@ -611,6 +611,14 @@ class Services {
 		
 		// kill services :>
 		if (!($ex instanceof RecoverableException)) exit;
+	}
+	
+	public static function getRandomString() {
+		return sha1(rand().microtime());
+	}
+	
+	public function removeCR($string) {
+		return str_replace(array("\r\n", "\r"), "\n", $string);
 	}
 }
 ?>

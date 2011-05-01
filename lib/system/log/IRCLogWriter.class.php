@@ -39,10 +39,10 @@ class IRCLogWriter extends Zend_Log_Writer_Abstract {
 			$line = $this->_formatter->format($event);
 			
 			// trim message
-			$line = StringUtil::trim($line);
+			$line = trim($line);
 			
 			// unify newlines
-			$line = StringUtil::unifyNewlines($line);
+			$line = Services::removeCR($line);
 			
 			// remove tabs
 			$line = str_replace("\t", "        ", $line);
@@ -55,7 +55,7 @@ class IRCLogWriter extends Zend_Log_Writer_Abstract {
 				// send each line to service channel
 				foreach($lineEx as $newline) {
 					// trim message
-					$newline = StringUtil::trim($newline);
+					$newline = trim($newline);
 					
 					// send
 					if (!empty($newline)) Services::getProtocol()->sendMessage(Services::getConfiguration()->connection->servicechannel, $newline);

@@ -37,7 +37,7 @@ class ConnectedServer {
 	}
 	
 	/**
-	 * Returnes the identifier of this server
+	 * Returns the identifier of this server
 	 * @return mixed
 	 */
 	public function getIdentifier() {
@@ -45,7 +45,7 @@ class ConnectedServer {
 	}
 	
 	/**
-	 * Returnes the server name of this server
+	 * Returns the server name of this server
 	 * @return string
 	 */
 	public function getServerName() {
@@ -53,7 +53,7 @@ class ConnectedServer {
 	}
 	
 	/**
-	 * Returnes additional data of this server
+	 * Returns additional data of this server
 	 * @param	string	$variable
 	 */
 	public function __get($variable) {

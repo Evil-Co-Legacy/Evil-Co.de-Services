@@ -17,7 +17,7 @@ interface ArgumentList {
 	public function __construct($modeSource, $argumentString);
 	
 	/**
-	 * Returnes the argument for given index
+	 * Returns the argument for given index
 	 *
 	 * @param	integer	$index
 	 */

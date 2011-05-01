@@ -26,7 +26,7 @@ class FJOIN extends CommandParser {
 		$userList = substr($line, (stripos($line, ':') + 1));
 		
 		// trim message
-		$userList = StringUtil::trim($userList);
+		$userList = trim($userList);
 		
 		// little workaround for permanent channels
 		if (!empty($userList)) {
