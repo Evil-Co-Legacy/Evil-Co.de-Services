@@ -64,7 +64,7 @@ class Connection {
 	
 	/**
 	 * Returns a count of modified sockets
-	 * Note: This returnes 0 if no sockets modified
+	 * Note: This returns 0 if no sockets modified
 	 *
 	 * @return integer
 	 */

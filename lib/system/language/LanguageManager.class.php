@@ -47,7 +47,7 @@ class LanguageManager {
 	}
 
 	/**
-	 * Returns the content of the given language var (This method returnes the name of the variable if no matching variable exists)
+	 * Returns the content of the given language var (This method returns the name of the variable if no matching variable exists)
 	 *
 	 * @param	integer	$languageID
 	 * @param	string	$variable
