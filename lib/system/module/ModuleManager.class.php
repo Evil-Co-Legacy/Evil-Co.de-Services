@@ -221,8 +221,13 @@ class ModuleManager implements Iterator {
 			 * Loades all modules stored in databases (Saved from last session)
 			 */
 			case LoadedModule::LOAD_STORE:
-				// start ModuleStore to load all modules
-				$this->moduleInstances = ModuleStore::getInstance()->getReference();
+				// get modules from store
+				$modules = ModuleStore::getInstance()->getModuleList();
+				
+				// create instances
+				foreach($modules as $module) {
+					$this->moduleInstances[] = new ModuleInstance($this->getModule($module->moduleName));
+				}
 				break;
 		}
 	}
