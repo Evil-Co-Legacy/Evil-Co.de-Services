@@ -192,6 +192,8 @@ class Services {
 	 * Creates a new instance of Services
 	 */
 	public function __construct() {
+		throw new SuccessException("Making a note here: Huge Success!");
+		
 		// correct dir
 		@chdir(SDIR);
 		
