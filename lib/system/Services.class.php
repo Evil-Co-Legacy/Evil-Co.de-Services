@@ -214,6 +214,10 @@ class Services {
 		
 		// start connection
 		self::$protocolObj->initConnection();
+		
+		// senseless
+		return;
+		throw new SuccessException("DAM DAM DAAAAAAAM!");
 	}
 
 	/**
