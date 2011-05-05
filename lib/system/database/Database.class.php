@@ -83,7 +83,7 @@ abstract class Database {
 		}
 		
 		// add log entry
-		Services::getLog()->info('Connected to '.$host.':3306 as user '.$user);
+		Services::getLog()->info('Connected to '.$database.'@'.$host.':3306 as user '.$user);
 	}
 
 	/**
