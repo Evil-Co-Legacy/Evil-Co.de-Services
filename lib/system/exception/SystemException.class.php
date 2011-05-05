@@ -12,6 +12,37 @@ require_once('Zend/Exception.php');
 class SystemException extends Zend_Exception {
 	
 	/**
+	 * Creates a new instance of type SystemEception
+	 * @param	string	$message
+	 * @param	string	$variable1
+	 * @param	string	$variable2
+	 * @param	string	...
+	 */
+	public function __construct() {
+		// get arguments
+		$arguments = func_get_args();
+		
+		// validate
+		if (count($arguments) < 1) trigger_error("The minimal argument count for ".get_class($this)."::__construct() is 1", E_USER_ERROR);
+		
+		// get message
+		$message = $arguments[0];
+		
+		// generate code
+		$code = 1;
+		
+		for($i = 0; $i < strlen($message); $i++) {
+			$code += ord($message{$i});
+		}
+		
+		// get message
+		$message = call_user_func_array('sprintf', $arguments);
+		
+		// call parent constructor
+		parent::__construct($message, $code);
+	}
+	
+	/**
 	 * @see Exception::getTraceAsString
 	 */
 	public function __getTraceAsString() {
