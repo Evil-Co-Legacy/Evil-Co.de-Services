@@ -39,42 +39,15 @@ INSERT INTO language (languageID, name, code) VALUES(2, 'Deutsch', 'de');
 -- Tabellenstruktur für Tabelle 'module'
 --
 
-CREATE TABLE module (
+CREATE TABLE module_instance (
   moduleID int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  address varchar(255) NOT NULL,
-  `timestamp` int(11) NOT NULL,
-  PRIMARY KEY (moduleID),
-  UNIQUE KEY (address)
+  moduleName varchar(255) NOT NULL,
+  PRIMARY KEY (moduleID)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Daten für Tabelle 'module'
 --
-
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(1, 'OpServ', 'OxF02D', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(2, 'CommandLoadModule', 'Ox52D96D20', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(3, 'CommandJoin', 'Ox45B196', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(4, 'CommandPart', 'Ox477B6E', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(5, 'AuthServ', 'Ox21A7E885', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(6, 'CommandAuth', 'Ox439D030291B', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(7, 'CommandShutdown', 'Ox1BAFEA1F', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(8, 'ChanServ', 'Ox1337', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(9, 'CommandRegister', 'OxAD47D1AF9', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(10, 'CommandPass', 'Ox18D46C95', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(11, 'CommandEmail', 'Ox11571D3EE', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(12, 'CommandMode', 'Ox23DD5B189BBAB2E', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(13, 'CommandBind', 'OxED6A84A0', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(14, 'CommandAccess', 'Ox25067B81', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(15, 'CommandCregister', 'OxB494EC43B6AA', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(16, 'CommandKick', 'Ox24AA79F6', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(17, 'CommandChangeuser', 'OxAD663DBFC', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(18, 'CommandListuser', 'Ox63D0FC', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(19, 'CommandCinfo', 'Ox71A35', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(20, 'KickRevengeExtension', 'Ox75A57AFDB160', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(21, 'CommandCunregister', 'Ox221D0E2529', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(22, 'CommandUnregister', 'Ox75A615CEDF20', 1);
-INSERT INTO module (moduleID, name, address, timestamp) VALUES(23, 'JoinModeExtension', 'Ox75A637483520', 1);
 
 -- --------------------------------------------------------
 
@@ -84,67 +57,30 @@ INSERT INTO module (moduleID, name, address, timestamp) VALUES(23, 'JoinModeExte
 
 CREATE TABLE module_instance_bot (
   instanceID int(10) unsigned NOT NULL AUTO_INCREMENT,
-  moduleAddress varchar(255) NOT NULL,
-  `trigger` varchar(100) NOT NULL,
-  nick varchar(255) NOT NULL,
+  moduleName varchar(255) NOT NULL,
+  publicTrigger varchar(100) NOT NULL,
+  nickname varchar(255) NOT NULL,
   hostname text NOT NULL,
   ident varchar(255) NOT NULL,
   ip varchar(255) NOT NULL DEFAULT '127.0.0.1',
   modes varchar(255) NOT NULL DEFAULT '+Ik',
   gecos text NOT NULL,
   PRIMARY KEY (instanceID),
-  UNIQUE KEY (moduleAddress)
+  UNIQUE KEY (moduleName)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Daten für Tabelle 'module_instance_bot'
 --
 
-INSERT INTO module_instance_bot (instanceID, moduleAddress, `trigger`, nick, hostname, ident, ip, modes, gecos) VALUES(1, 'OxF02D', '?', 'OpServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Oper Service');
-INSERT INTO module_instance_bot (instanceID, moduleAddress, `trigger`, nick, hostname, ident, ip, modes, gecos) VALUES(2, 'Ox21A7E885', '=', 'AuthServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Auth Service');
-INSERT INTO module_instance_bot (instanceID, moduleAddress, `trigger`, nick, hostname, ident, ip, modes, gecos) VALUES(3, 'Ox1337', '!', 'ChanServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Channel Service');
+INSERT INTO
+	module_instance_bot (instanceID, moduleName, publicTrigger, nickname, hostname, ident, ip, modes, gecos)
+VALUES
+	(1, 'OpServ', '?', 'OpServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Oper Service'),
+	(2, 'AuthServ', '=', 'AuthServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Auth Service'),
+	(3, 'ChanServ', '!', 'ChanServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Channel Service');
 
 -- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle 'module_instance_command'
---
-
-CREATE TABLE module_instance_command (
-  instanceID int(10) unsigned NOT NULL AUTO_INCREMENT,
-  address varchar(255) NOT NULL,
-  commandName varchar(255) NOT NULL,
-  appearInHelp tinyint(1) NOT NULL DEFAULT '1',
-  parentAddress varchar(255) NOT NULL,
-  PRIMARY KEY (instanceID)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Daten für Tabelle 'module_instance_command'
---
-
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(1, 'Ox52D96D20', 'LOADMODULE', 1, 'OxF02D');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(2, 'Ox45B196', 'JOIN', 1, 'OxF02D');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(3, 'Ox477B6E', 'PART', 1, 'OxF02D');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(4, 'Ox439D030291B', 'AUTH', 1, 'Ox21A7E885');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(5, 'Ox1BAFEA1F', 'SHUTDOWN', 1, 'OxF02D');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(6, 'OxAD47D1AF9', 'REGISTER', 1, 'Ox21A7E885');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(7, 'Ox18D46C95', 'PASS', 1, 'Ox21A7E885');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(8, 'Ox11571D3EE', 'EMAIL', 1, 'Ox21A7E885');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(9, 'Ox45B196', 'JOIN', 1, 'Ox21A7E885');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(10, 'Ox23DD5B189BBAB2E', 'MODE', 1, 'Ox1337');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(11, 'Ox45B196', 'JOIN', 1, 'Ox1337');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(12, 'OxED6A84A0', 'BIND', 1, 'OxF02D');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(13, 'Ox477B6E', 'PART', 1, 'Ox1337');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(14, 'Ox477B6E', 'PART', 1, 'Ox21A7E885');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(15, 'Ox25067B81', 'ACCESS', 1, 'Ox1337');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(16, 'OxB494EC43B6AA', 'REGISTER', 1, 'Ox1337');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(17, 'Ox24AA79F6', 'KICK', 1, 'Ox1337');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(18, 'OxAD663DBFC', 'CHANGEUSER', 1, 'Ox1337');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(19, 'Ox63D0FC', 'LISTUSER', 1, 'Ox1337');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(20, 'Ox71A35', 'INFO', 1, 'Ox1337');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(21, 'Ox221D0E2529', 'UNREGISTER', 1, 'Ox1337');
-INSERT INTO module_instance_command (instanceID, address, commandName, appearInHelp, parentAddress) VALUES(22, 'Ox75A615CEDF20', 'UNREGISTER', 1, 'Ox21A7E885');
 
 
 CREATE TABLE authserv_users (
