@@ -68,7 +68,7 @@ class Services {
 	 * Contains the IRCLogWriter object
 	 * @var IRCLogWriter
 	 */
-	protected static $IrcLogWriter= null;
+	protected static $IrcLogWriter = null;
 	
 	/**
 	 * Contains the log writer
