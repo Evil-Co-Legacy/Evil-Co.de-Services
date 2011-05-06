@@ -45,10 +45,10 @@ class ModuleManager implements Iterator {
 	 */
 	public function __construct() {
 		// register connected event
-		Services::getEvent()->registerEvent(array($this, 'initBots'), 'Protocol', 'connected');
-		Services::getEvent()->registerEvent(array($this, 'initCommands'), 'Protocol', 'connected');
-		Services::getEvent()->registerEvent(array($this, 'assignCommands'), 'Protocol', 'connected');
-		Services::getEvent()->registerEvent(array($this, 'initExtensions'), 'Protocol', 'connected');
+		Services::getEventHandler()->registerEvent(array($this, 'initBots'), 'Protocol', 'connected');
+		Services::getEventHandler()->registerEvent(array($this, 'initCommands'), 'Protocol', 'connected');
+		Services::getEventHandler()->registerEvent(array($this, 'assignCommands'), 'Protocol', 'connected');
+		Services::getEventHandler()->registerEvent(array($this, 'initExtensions'), 'Protocol', 'connected');
 		
 		// load modules
 		$this->loadModules(LoadedModule::LOAD_STORE);
@@ -198,7 +198,7 @@ class ModuleManager implements Iterator {
 		Services::getLog()->info("Loaded module %s with identifier %s", $moduleName, $this->getModule($moduleName)->getModuleHash());
 		
 		// fire event
-		Services::getEvent()->fire($this, 'moduleLoaded', array('module' => $this->getModule($moduleName)));
+		Services::getEventHandler()->fire($this, 'moduleLoaded', array('module' => $this->getModule($moduleName)));
 		
 		// save
 		if ($save) {
@@ -221,6 +221,9 @@ class ModuleManager implements Iterator {
 			 * Loades all modules stored in databases (Saved from last session)
 			 */
 			case LoadedModule::LOAD_STORE:
+				// send log
+				Services::getLog()->info("Loading modules from store ...");
+				
 				// get modules from store
 				$modules = ModuleStore::getInstance()->getModuleList();
 				
