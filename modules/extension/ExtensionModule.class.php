@@ -1,4 +1,6 @@
 <?php
+// service imports
+require_once(SDIR.'modules/Module.class.php');
 
 /**
  * Basic definitions for modules
@@ -23,6 +25,13 @@ abstract class ExtensionModule implements Module {
 	protected function register() {
 		// fire register@ExtensionModule
 		Services::getEvent()->fire($this, 'register');
+	}
+	
+	/**
+	 * @see Module::timIsSilly()
+	 */
+	public function timIsSilly() {
+		return true;
 	}
 }
 ?>
