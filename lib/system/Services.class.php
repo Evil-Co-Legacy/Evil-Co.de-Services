@@ -109,7 +109,7 @@ class Services {
 		// read arguments
 		self::$managers['ArgumentParser'] = new ArgumentParser($argv);
 		
-		if (self::getArgumentParser()->get('options', 'debug') || self::getArgumentParser()->get('flag', 'd')) {
+		if (self::getArgumentParser()->get('option', 'debug') || self::getArgumentParser()->get('flag', 'd')) {
 			define('DEBUG', true);
 		} else {
 			define('DEBUG', false);
