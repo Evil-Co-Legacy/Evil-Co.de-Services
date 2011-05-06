@@ -37,7 +37,7 @@ require_once('Zend/Text/Figlet.php');
  * @copyright	2010 DEVel Fusion
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class Services {
+final class Services {
 	
 	/**
 	 * Contains the dir where our services should store cached information
