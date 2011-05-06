@@ -130,7 +130,7 @@ class Services {
 		// start connection
 		self::getProtocolManager()->initConnection();
 		
-		// senseless
+		// not senseless
 		return;
 		throw new SuccessException("DAM DAM DAAAAAAAM!");
 	}
