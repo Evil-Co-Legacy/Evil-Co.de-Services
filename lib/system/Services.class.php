@@ -193,6 +193,11 @@ class Services {
 			
 			$file->addFilter(new Zend_Log_Filter_Priority(Zend_Log::DEBUG, '<'));
 		}
+		else {
+			$filter = new Zend_Log_Filter_Priority(Zend_Log::DEBUG, '<=');
+			$inline->addFilter($filter);
+			$file->addFilter($filter);
+		}
 				
 		// add log entry
 		self::getLogger()->info("Evil-Co.de Services ".SERVICES_VERSION." running on PHP ".phpversion());
