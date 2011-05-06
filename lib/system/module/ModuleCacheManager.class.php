@@ -46,6 +46,9 @@ class ModuleCacheManager {
 		// no path found
 		if (!isset($path)) throw new ModuleException("Cannot find module '%s'", $moduleName);
 		
+		// debug
+		Services::getLogger()->debug("Creating first cache file  for module '".$moduleName."'");
+		
 		// let's have some fun with namespaces
 		$tempFile = file_get_contents($path);
 		$tempFile = str_replace("<?php", "<?php\nnamespace Cached".$loadedModuleInstance->getModuleHash().";", $tempFile);
@@ -54,14 +57,23 @@ class ModuleCacheManager {
 		$tempFile = preg_replace("~([A-Z]([A-Z0-9_\-]+))::([A-Z0-9]+)\((.*)\)~i", "\\$1::$2($3)", $tempFile);
 		file_put_contents(SDIR.'cache/load.'.$moduleName.'.cache', $tempFile);
 		
+		// debug
+		Services::getLogger()->debug("Getting module information from cache ...");
+		
 		// get module information
 		$generator = Zend_CodeGenerator_Php_File::fromReflectedFileName(SDIR.'cache/load.'.$moduleName.'.cache');
 		
 		// delete cache file
 		unlink(SDIR.'cache/load.'.$moduleName.'.cache');
 		
+		// debug
+		Services::getLogger()->debug("Preparing new file ...");
+		
 		// set new classname
 		$generator->getClass(basename($path, '.class.php'))->setName("Cache".$loadedModuleInstance->getModuleHash());
+		
+		// debug
+		Services::getLogger()->debug("Generating second cache file ...");
 		
 		// write cache file
 		file_put_contents(SDIR.'cache/'.$loadedModuleInstance->getModuleHash().'.php', $generator->generate());
@@ -71,6 +83,9 @@ class ModuleCacheManager {
 		
 		// eval code
 		/* eval('?>'.$file->generate()); */
+		
+		// debug
+		Services::getLogger()->debug("Successfully loaded second cache file");
 		
 		// return class name
 		return $loadedModuleInstance->getModuleHash();
