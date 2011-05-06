@@ -18,7 +18,7 @@ class UserUserType extends AbstractUserType {
 		parent::__set($property, $value);
 		
 		// fire event
-		Services::getEvent()->fire($this, 'propertyModified', array('property' => $property, 'value' => $value));
+		Services::getEventHandler()->fire($this, 'propertyModified', array('property' => $property, 'value' => $value));
 	}
 }
 ?>
