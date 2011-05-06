@@ -109,7 +109,7 @@ class Services {
 		
 		// read arguments
 		self::$managers['Arguments'] = new Zend_Console_Getopt(array('debug' => 'Enables debug mode', 'quiet|q' => 'Prints less output', 'config=s' => 'Define a config-file'));
-		self::getArgument()->parse();
+		self::getArguments()->parse();
 		
 		define('DEBUG', isset(self::getArguments()->debug));
 		
