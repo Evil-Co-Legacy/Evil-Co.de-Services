@@ -142,10 +142,10 @@ class Services {
 	 */
 	public static function destruct() {
 		// call protocol shutdown method
-		if (self::$managers['ProtocolManager'] !== null && self::$managers['ProtocolManager']->isAlive() && self::$managers['Connection']->isAlive()) self::$managers['ProtocolManager']->shutdown();
+		if (self::$managers['ProtocolManager'] !== null && self::$managers['ProtocolManager']->isAlive() && self::$managers['IRC']->isAlive()) self::$managers['ProtocolManager']->shutdown();
 		
 		// call connection shutdown method
-		if (self::$managers['Connection'] !== null && self::$managers['Connection']->isAlive()) self::$managers['Connection']->shutdown();
+		if (self::$managers['IRC'] !== null && self::$managers['IRC']->isAlive()) self::$managers['IRC']->shutdown();
 		
 		// remove pidfile (if any)
 		if (file_exists(SDIR.'services.pid')) @unlink(SDIR.'services.pid');
