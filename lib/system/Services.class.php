@@ -50,6 +50,8 @@ class Services {
 	
 	protected static $managers = array();
 	
+	private static $instanciated = false;
+	
 	/**
 	 * Contains the LanguageManager object
 	 *
@@ -61,6 +63,12 @@ class Services {
 	 * Creates a new instance of Services
 	 */
 	public function __construct() {
+		if (self::$instanciated) {
+			throw new SystemException('Tried to instanciate Services twice');
+			return;
+		}
+		
+		self::$instanciated = true;
 		// correct dir
 		@chdir(SDIR);
 		
