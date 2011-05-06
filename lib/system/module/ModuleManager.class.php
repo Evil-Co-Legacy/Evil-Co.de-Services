@@ -60,7 +60,7 @@ class ModuleManager implements Iterator {
 	 */
 	public function assignCommands() {
 		// add debug log
-		Services::getLog()->debug("Assigning commands ...");
+		Services::getLogger()->debug("Assigning commands ...");
 		
 		// assign each command
 		foreach($this as $module) {
@@ -121,7 +121,7 @@ class ModuleManager implements Iterator {
 	 */
 	public function initBots() {
 		// add debug log
-		Services::getLog()->debug("Starting Bots ...");
+		Services::getLogger()->debug("Starting Bots ...");
 		
 		// register each bot
 		foreach($this as $module) {
@@ -142,7 +142,7 @@ class ModuleManager implements Iterator {
 	 */
 	public function initCommands() {
 		// add debug log
-		Services::getLog()->debug("Registering commands ...");
+		Services::getLogger()->debug("Registering commands ...");
 		
 		// register each command
 		foreach($this as $module) {
@@ -160,7 +160,7 @@ class ModuleManager implements Iterator {
 	 */
 	public function initExtensions() {
 		// add debug log
-		Services::getLog()->debug('Starting extensions ...');
+		Services::getLogger()->debug('Starting extensions ...');
 		
 		// start each extension
 		foreach($this as $module) {
@@ -195,7 +195,7 @@ class ModuleManager implements Iterator {
 		$this->loadedModules[] = new LoadedModule($moduleName, LoadedModule::LOAD_MANUAL);
 		
 		// log
-		Services::getLog()->info("Loaded module %s with identifier %s", $moduleName, $this->getModule($moduleName)->getModuleHash());
+		Services::getLogger()->info("Loaded module %s with identifier %s", $moduleName, $this->getModule($moduleName)->getModuleHash());
 		
 		// fire event
 		Services::getEventHandler()->fire($this, 'moduleLoaded', array('module' => $this->getModule($moduleName)));
@@ -222,7 +222,7 @@ class ModuleManager implements Iterator {
 			 */
 			case LoadedModule::LOAD_STORE:
 				// send log
-				Services::getLog()->info("Loading modules from store ...");
+				Services::getLogger()->info("Loading modules from store ...");
 				
 				// get modules from store
 				$modules = ModuleStore::getInstance()->getModuleList();
@@ -266,7 +266,7 @@ class ModuleManager implements Iterator {
 		unset($this->loadedModules[$this->getModuleKey($moduleName)]);
 		
 		// log
-		Services::getLog()->info("Unloaded module %s with identifier %s", $moduleName, $identifier);
+		Services::getLogger()->info("Unloaded module %s with identifier %s", $moduleName, $identifier);
 		
 		// save information
 		if ($save) {
