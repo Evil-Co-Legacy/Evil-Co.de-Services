@@ -68,9 +68,9 @@
 		<!-- 
 			[REQUIRED] Database Driver
 			The driver that should used
-			Available are:  MSAccess, MSSQL, MySQL, MySQLi, PostgreSQL, SQLite2
+			Available are:  pdo_ibm, pdo_mysql, pdo_dblib, pdo_oci, pdo_pgsql, pdo_sqlite, mysqli, oci8, ibm_db2, php_interbase
 		 -->
-		<driver>MySQL</driver>
+		<driver>pdo_mysql</driver>
 		
 		<!-- 
 			[REQUIRED] Database Hostname
