@@ -111,5 +111,6 @@ CREATE TABLE external_actions (
 CREATE TABLE external_action_log (
 	actionID int(10) NOT NULL,
 	data mediumtext NOT NULL,
+	exception mediumtext NOT NULL,
 	PRIMARY KEY (actionID)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
