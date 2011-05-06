@@ -8,5 +8,5 @@ require_once(SDIR.'modules/bot/BotModule.class.php');
  * @copyright		2011 DEVel Fusion
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class TestBotModule extends BotModule implements SenselessInterfaceOne, SenselessInterfaceTwo { }
+class TestBotModule extends BotModule implements \SenselessInterfaceOne, \SenselessInterfaceTwo { }
 ?>

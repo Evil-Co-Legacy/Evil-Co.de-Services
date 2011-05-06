@@ -16,12 +16,12 @@ set_error_handler(array('Services', 'handleError'), E_ALL);
 register_shutdown_function(array('Services', 'destruct'));
 
 // register signals
-
-pcntl_signal(SIGTERM, array('Services', 'signalHandler'));
-pcntl_signal(SIGUSR1, array('Services', 'signalHandler'));
-pcntl_signal(SIGUSR2, array('Services', 'signalHandler'));
-pcntl_signal(SIGHUP, array('Services', 'signalHandler'));
-
+if (function_exists('pcntl_signal')) {
+	pcntl_signal(SIGTERM, array('Services', 'signalHandler'));
+	pcntl_signal(SIGUSR1, array('Services', 'signalHandler'));
+	pcntl_signal(SIGUSR2, array('Services', 'signalHandler'));
+	pcntl_signal(SIGHUP, array('Services', 'signalHandler'));
+}
 		
 /**
  * Autoloads default classes
