@@ -58,7 +58,7 @@ class ModuleCacheManager {
 		file_put_contents(SDIR.'cache/load.'.$moduleName.'.cache', $tempFile);
 		
 		// debug
-		Services::getLogger()->debug("Getting module information from cache ...");
+		Services::getLogger()->debug("Getting module information from cache file '".SDIR.'cache/load.'.$moduleName.'.cache'."'");
 		
 		// get module information
 		$generator = Zend_CodeGenerator_Php_File::fromReflectedFileName(SDIR.'cache/load.'.$moduleName.'.cache');
