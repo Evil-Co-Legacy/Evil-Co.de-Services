@@ -30,7 +30,7 @@ require_once('Zend/Log.php');
 require_once('Zend/Log/Writer/Stream.php');
 require_once('Zend/Memory.php');
 require_once('Zend/Console/Getopt.php');
-require_once('Zend/Text/Figlet');
+require_once('Zend/Text/Figlet.php');
 /**
  * Manages all needed core instances
  *
