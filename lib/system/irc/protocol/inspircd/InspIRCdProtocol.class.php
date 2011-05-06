@@ -90,7 +90,7 @@ class InspIRCdProtocol implements Protocol {
 	 */
 	public function handleException(ProtocolException $ex) {
 		// send error message to server
-		if ($this->isAlive()) Services::getConnection()->sendLine("ERROR :".$ex->getMessage());
+		if ($this->isAlive()) Services::getIRC()->sendLine("ERROR :".$ex->getMessage());
 	}
 	
 	/**
@@ -101,21 +101,21 @@ class InspIRCdProtocol implements Protocol {
 		if (Services::getConfiguration()->connection->hmac != 'none' and !function_exists('hash_hmac')) throw new ProtocolException("HMAC isn't supported by php installation");
 		
 		// send CAPAB
-		Services::getConnection()->sendLine("CAPAB START");
+		Services::getIRC()->sendLine("CAPAB START");
 		
 		// send information about this server
-		Services::getConnection()->sendLine("CAPAB CAPABILITIES :PROTOCOL=".self::PROTOCOL_VERSION.(Services::getConfiguration()->connection->hmac != 'none' ? " CHALLENGE=".$this->generateHMACKey() : ""));
+		Services::getIRC()->sendLine("CAPAB CAPABILITIES :PROTOCOL=".self::PROTOCOL_VERSION.(Services::getConfiguration()->connection->hmac != 'none' ? " CHALLENGE=".$this->generateHMACKey() : ""));
 		
 		// end capab
-		Services::getConnection()->sendLine("CAPAB END");
+		Services::getIRC()->sendLine("CAPAB END");
 		
 		// start connection loop
 		$synched = false;
 		
 		do {
-			if (Services::getConnection()->check() > 0) { // we'll only read here if lines are available at socket
+			if (Services::getIRC()->check() > 0) { // we'll only read here if lines are available at socket
 				// handle connection commands
-				$synched = InspIRCdProtocolParser::handleConnectionCommand(Services::getConnection()->readLine());
+				$synched = InspIRCdProtocolParser::handleConnectionCommand(Services::getIRC()->readLine());
 			}
 		} while(!$synched);
 		
@@ -124,37 +124,37 @@ class InspIRCdProtocol implements Protocol {
 		
 		// send server information
 		if (Services::getConfiguration()->connection->hmac != 'none')
-			Services::getConnection()->sendLine("SERVER ".Services::getConfiguration()->connection->name." HMAC-".strtoupper(Services::getConfiguration()->connection->hmac).":".hash_hmac(Services::getConfiguration()->connection->hmac, Services::getConfiguration()->connection->password, $this->generateHMACKey())." 0 ".Services::getConfiguration()->connection->numeric." :Evil-Co.de Services");
+			Services::getIRC()->sendLine("SERVER ".Services::getConfiguration()->connection->name." HMAC-".strtoupper(Services::getConfiguration()->connection->hmac).":".hash_hmac(Services::getConfiguration()->connection->hmac, Services::getConfiguration()->connection->password, $this->generateHMACKey())." 0 ".Services::getConfiguration()->connection->numeric." :Evil-Co.de Services");
 		else
-			Services::getConnection()->sendLine("SERVER ".Services::getConfiguration()->connection->name." ".Services::getConfiguration()->connection->password." 0 ".Services::getConfiguration()->connection->numeric." :Evil-Co.de Services");
+			Services::getIRC()->sendLine("SERVER ".Services::getConfiguration()->connection->name." ".Services::getConfiguration()->connection->password." 0 ".Services::getConfiguration()->connection->numeric." :Evil-Co.de Services");
 			
 		// set connection flag
 		$this->isAlive = true;
 		
 		// set message prefix
-		Services::getConnection()->setMessagePrefix(':'.Services::getConfiguration()->connection->numeric." ");
+		Services::getIRC()->setMessagePrefix(':'.Services::getConfiguration()->connection->numeric." ");
 		
 		// start burst
-		Services::getConnection()->sendLine("BURST ".time());
+		Services::getIRC()->sendLine("BURST ".time());
 		
 		// fire burst event
-		Services::getEvent()->fire($this, 'burst');
+		Services::getEventHandler()->fire($this, 'burst');
 		
 		// send version
-		Services::getConnection()->sendLine("VERSION :Evil-Co.de Services ".SERVICES_VERSION." running on ".PHP_OS);
+		Services::getIRC()->sendLine("VERSION :Evil-Co.de Services ".SERVICES_VERSION." running on ".PHP_OS);
 		
 		// yes! end burst my friend ;-D
-		Services::getConnection()->sendLine("ENDBURST");
+		Services::getIRC()->sendLine("ENDBURST");
 		
 		// fire endburst event
-		Services::getEvent()->fire($this, 'endburst');
+		Services::getEventHandler()->fire($this, 'endburst');
 		
 		// wait for burst
 		do {
-			if (Services::getConnection()->check()) {
+			if (Services::getIRC()->check()) {
 				try {
 					// parse command
-					$line = Services::getConnection()->readLine();
+					$line = Services::getIRC()->readLine();
 					$command = InspIRCdProtocolParser::handleCommand($line);
 					
 					// check for endburst command
@@ -163,13 +163,13 @@ class InspIRCdProtocol implements Protocol {
 					Services::handleException($ex);
 				}
 			}
-		} while(!$this->isReady and Services::getConnection()->isAlive() and $this->isAlive());
+		} while(!$this->isReady and Services::getIRC()->isAlive() and $this->isAlive());
 		
 		// send info log message
 		Services::getLog()->info('Finished bursting! Synched completely with target server');
 		
 		// fire protocol independent event
-		Services::getEvent()->fire($this, 'connected');
+		Services::getEventHandler()->fire($this, 'connected');
 		
 		// start main loop
 		$this->listen();
@@ -193,11 +193,11 @@ class InspIRCdProtocol implements Protocol {
 	 * Connection main loop
 	 */
 	protected function listen() {
-		while($this->isAlive() and Services::getConnection()->isAlive()) {
+		while($this->isAlive() and Services::getIRC()->isAlive()) {
 			try {
 				// handle server commands
-				if (Services::getConnection()->check()) { // we'll only parse new lines if there are changes at socket
-					$line = Services::getConnection()->readLine();
+				if (Services::getIRC()->check()) { // we'll only parse new lines if there are changes at socket
+					$line = Services::getIRC()->readLine();
 					InspIRCdProtocolParser::handleCommand($line);
 				}
 				
@@ -221,7 +221,7 @@ class InspIRCdProtocol implements Protocol {
 		$this->isReady = false;
 		
 		// send SQUIT
-		Services::getConnection()->sendLine("SQUIT ".Services::getConfiguration()->connection->name." :Shutting down");
+		Services::getIRC()->sendLine("SQUIT ".Services::getConfiguration()->connection->name." :Shutting down");
 	}
 	
 	/**
@@ -234,7 +234,7 @@ class InspIRCdProtocol implements Protocol {
 	public function __call($methodName, $arguments) {
 		if (substr($methodName, 0, 4) == 'send') {
 			// try to find correct format method
-			if (method_exists($this, 'format'.substr($methodName, 4))) return Services::getConnection()->sendLine(call_user_func_array(array($this, 'format'.substr($methodName, 4)), $arguments));
+			if (method_exists($this, 'format'.substr($methodName, 4))) return Services::getIRC()->sendLine(call_user_func_array(array($this, 'format'.substr($methodName, 4)), $arguments));
 		}
 		
 		// throw exception ...
