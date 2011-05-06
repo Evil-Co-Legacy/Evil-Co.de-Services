@@ -178,9 +178,8 @@ class Services {
 		self::getLogger()->addWriter($file);
 
 		// add irc writer
-		$irc = new irc();
+		$irc = new IRCLogWriter();
 		$irc->setFormatter($formatter);
-		$irc->addFilter(new Zend_Log_Filter_Priority(8, '<'));
 		self::getLogger()->addWriter($irc);
 		
 		$inline = new Zend_Log_Writer_Stream(STDOUT);
