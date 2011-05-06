@@ -35,7 +35,7 @@ class ArgumentParser {
 					$this->data['option'][$option[0]] = $option[1];
 				}
 				else {
-					$this->data['option'][$option[0]] = true;
+					$this->data['option'][$option] = true;
 				}
 			}
 			else if (substr($arg, 0, 1) == '-') {
