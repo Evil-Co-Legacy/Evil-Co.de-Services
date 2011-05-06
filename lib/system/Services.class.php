@@ -4,7 +4,6 @@ if (!version_compare(PHP_VERSION, '5.3.0', '>=')) die("This application requires
 
 // defines
 define('IRCD', 'inspircd');
-define('SERVICES_VERSION', '2.0.0-eatsChildren');
 // set this to your location
 date_default_timezone_set('Europe/Berlin');
 
@@ -47,6 +46,7 @@ class Services {
 	 */
 	const MEMORY_CACHE_DIR = './cache/';
 	
+	const VERSION = '2.0.0-eatsChildren';
 	
 	protected static $managers = array();
 	
@@ -200,7 +200,7 @@ class Services {
 		}
 				
 		// add log entry
-		self::getLogger()->info("Evil-Co.de Services ".SERVICES_VERSION." running on PHP ".phpversion());
+		self::getLogger()->info("Evil-Co.de Services ".self::VERSION." running on PHP ".phpversion());
 	}
 	
 	public static function __callStatic($function, $args) {

@@ -141,7 +141,7 @@ class InspIRCdProtocol implements Protocol {
 		Services::getEventHandler()->fire($this, 'burst');
 		
 		// send version
-		Services::getIRC()->sendLine("VERSION :Evil-Co.de Services ".SERVICES_VERSION." running on ".PHP_OS);
+		Services::getIRC()->sendLine("VERSION :Evil-Co.de Services ".Services::VERSION." running on ".PHP_OS);
 		
 		// yes! end burst my friend ;-D
 		Services::getIRC()->sendLine("ENDBURST");
