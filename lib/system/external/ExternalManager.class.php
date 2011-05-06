@@ -32,9 +32,8 @@ class ExternalManager {
 		}
 		
 		foreach ($finished as $tmp) {
-			$sql = "DELETE FROM external_actions 
-				WHERE ";
-			throw new SystemException('ToDo');
+			Services::getDB()->insert('external_action_log', array('actionID' => $tmp->actionID, 'data' => serialize($tmp)));
+			Services::getDB()->delete('external_actions', 'actionID = '.Services::getDB()->quote($tmp->actionID, 'INTEGER'));
 		}
 	}
 }

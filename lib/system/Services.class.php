@@ -122,6 +122,9 @@ final class Services {
 		// call connection shutdown method
 		if (isset(self::$managers['IRC']) && self::$managers['IRC'] !== null && self::$managers['IRC']->isAlive()) self::$managers['IRC']->shutdown();
 		
+		// close database-connection
+		if (isset(self::$managers['DB']) && self::$managers['DB'] !== null) self::$managers['DB']->closeConnection();
+		
 		if (!defined('DEBUG') || !DEBUG) {
 			$cacheFiles = glob(SDIR.'cache/*');
 			foreach ($cacheFiles as $file) {
@@ -213,6 +216,7 @@ final class Services {
 	
 	public static function __callStatic($function, $args) {
 		if (!isset(self::$managers[substr($function, 3)])) return null;
+		
 		return self::$managers[substr($function, 3)];
 	}
 
@@ -290,7 +294,10 @@ final class Services {
 			case SIGUSR2:
 			break;
 			case SIGHUP:
-				if (!isset(self::$managers['ExternalManager'])) self::$managers['ExternalManager'] = new ExternalManager();
+				if (!isset(self::$managers['ExternalManager'])) {
+					require_once(SDIR.'lib/system/external/ExternalManager.class.php');
+					self::$managers['ExternalManager'] = new ExternalManager();
+				}
 				self::$managers['ExternalManager']->fire();
 		}
 	}
