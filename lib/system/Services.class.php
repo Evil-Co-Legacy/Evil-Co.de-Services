@@ -205,8 +205,8 @@ class Services {
 		self::$logWriterFormatter = new Zend_Log_Formatter_Simple('[%timestamp%] %priorityName% (%priority%): %message%' . PHP_EOL);
 		 
 		// create log instances
-		self::$logWriterObj = new Zend_Log_Writer_Stream(self::$logWriterStream);
-		self::$logWriterObj->setFormatter(self::$logWriterFormatter);
+		self::$LogWriter = new Zend_Log_Writer_Stream(self::$logWriterStream);
+		self::$LogWriter->setFormatter(self::$logWriterFormatter);
 		
 		self::$managers['Logger'] = new Zend_Log();
 		
@@ -217,27 +217,27 @@ class Services {
 		self::getLogger()->addPriority('IRCDEBUG', 8);
 		
 		// add file writer
-		self::getLogger()->addWriter(self::$logWriterObj);
+		self::getLogger()->addWriter(self::$LogWriter);
 		
 		// add irc writer
-		self::$logIrcWriterObj = new IRCLogWriter();
-		self::$logIrcWriterObj->setFormatter(self::$logWriterFormatter);
-		self::getLogger()->addWriter(self::$logIrcWriterObj);
+		self::$IrcLogWriter = new IRCLogWriter();
+		self::$IrcLogWriter->setFormatter(self::$logWriterFormatter);
+		self::getLogger()->addWriter(self::$IrcLogWriter);
 		
 		// create debug log instances
 		if (DEBUG) {
-			self::$logWriterDebugObj = new Zend_Log_Writer_Stream('php://output');
-			self::$logWriterDebugObj->setFormatter(self::$logWriterFormatter);
-			self::getLogger()->addWriter(self::$logWriterDebugObj);
+			self::$DebugLogWriter = new Zend_Log_Writer_Stream('php://output');
+			self::$DebugLogWriter->setFormatter(self::$logWriterFormatter);
+			self::getLogger()->addWriter(self::$DebugLogWriter);
 		} else {
-			self::$logWriterFilterObj = new Zend_Log_Filter_Priority(Zend_LOG::DEBUG, '<');
-			self::$logWriterObj->addFilter(self::$logWriterFilterObj);
-			self::$logIrcWriterObj->addFilter(self::$logWriterFilterObj);
+			self::$logWriterFilter = new Zend_Log_Filter_Priority(Zend_LOG::DEBUG, '<');
+			self::$LogWriter->addFilter(self::$logWriterFilter);
+			self::$IrcLogWriter->addFilter(self::$logWriterFilter);
 		}
 		
 		// add special filter
-		self::$logWriterIrcFilterObj = new Zend_Log_Filter_Priority(8, '<');
-		self::$logIrcWriterObj->addFilter(self::$logWriterIrcFilterObj);
+		self::$logWriterIrcFilter = new Zend_Log_Filter_Priority(8, '<');
+		self::$IrcLogWriter->addFilter(self::$logWriterIrcFilter);
 		
 		// add log entry
 		self::getLogger()->info("Evil-Co.de Services ".SERVICES_VERSION." running on PHP ".phpversion());
@@ -251,6 +251,10 @@ class Services {
 		if (!isset(self::$languages[$language])) self::$languages[$language] = new LanguageManager($language);
 		
 		return self::$languages[$language];
+	}
+	
+	public static function getLog() {
+		return self::$LogWriter;
 	}
 
 	/**
@@ -292,10 +296,10 @@ class Services {
 		if ($ex instanceof SystemException && self::getProtocolManager() !== null && self::getProtocolManager()->isAlive()) $ex->sendDebugLog();
 		
 		// Call Zend_Log::err()
-		if ($ex instanceof Zend_Exception) self::getLogger()->err($ex);
+		if ($ex instanceof Zend_Exception) self::getLog()->err($ex);
 		
 		// send stacktrace
-		if ($ex instanceof SystemException) self::getLogger()->err($ex->__getTraceAsString());
+		if ($ex instanceof SystemException) self::getLog()->err($ex->__getTraceAsString());
 		
 		// Call Protocol::handleException()
 		if ($ex instanceof ProtocolException && self::getProtocolManager() !== null && self::getProtocolManager()->isAlive()) self::getProtocolManager()->handleException($ex);
