@@ -306,7 +306,7 @@ class Services {
 		// Call shutdown methods if the given exception isn't recoverable (UserExceptions and RecoverableExceptions)
 		if (!($ex instanceof RecoverableException)) {
 			// call connection shutdown method
-			if (self::getConnection() !== null && self::getProtocolManager() !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage())
+			if (self::getConnection() !== null && self::getProtocolManager() !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage());
 		
 			// kill services :>
 			exit;
