@@ -2,3 +2,6 @@ gource.x264.avi
 language/*.mo
 .settings/
 .settings/*
+.buildpath
+.classpath
+.project
