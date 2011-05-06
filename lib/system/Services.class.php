@@ -151,7 +151,7 @@ class Services {
 		
 		if (!defined('DEBUG') || !DEBUG) {
 			$cacheFiles = glob(SDIR.'cache/*');
-			foreach ($cachesFiles as $file) {
+			foreach ($cacheFiles as $file) {
 				unlink($file);
 			}
 		}
