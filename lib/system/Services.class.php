@@ -166,7 +166,7 @@ class Services {
 	 * @return	void
 	 */
 	protected function initConfiguration() {
-		$config = self::$argumentParser->get('argument', 'config');
+		$config = self::getArgumentParser()->get('argument', 'config');
 		self::getLogger()->info("Reading configuration file '".$config."'");
 		self::$managers['Configuration'] = new Zend_Config_Xml($config);
 	}
