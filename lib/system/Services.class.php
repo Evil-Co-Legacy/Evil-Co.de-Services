@@ -165,7 +165,7 @@ class Services {
 	 */
 	protected function initConfiguration() {
 		// get from argumentList
-		$config = self::getArgumentParser()->get('argument', 'config');
+		$config = self::getArgumentParser()->get('option', 'config');
 		
 		// fallback
 		if ($config === null) $config = SDIR.'config/config.xml';
