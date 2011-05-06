@@ -10,7 +10,6 @@
  
 class ExternalManager {
 	
-	
 	public function __construct() {
 	
 	}

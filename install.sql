@@ -1,62 +1,25 @@
--- phpMyAdmin SQL Dump
--- version 3.2.4
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Erstellungszeit: 27. Dezember 2010 um 11:21
--- Server Version: 5.1.41
--- PHP-Version: 5.3.1
-
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
---
--- Datenbank: 'evilcode_services'
---
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle 'language'
---
-
 CREATE TABLE `language` (
-  languageID int(10) unsigned NOT NULL AUTO_INCREMENT,
+  languageID int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `code` varchar(255) NOT NULL,
   PRIMARY KEY (languageID)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Daten für Tabelle 'language'
---
-
 INSERT INTO language (languageID, name, code) VALUES(1, 'English', 'en');
 INSERT INTO language (languageID, name, code) VALUES(2, 'Deutsch', 'de');
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle 'module'
---
 
 CREATE TABLE module_instance (
-  moduleID int(10) unsigned NOT NULL AUTO_INCREMENT,
+  moduleID int(10) NOT NULL AUTO_INCREMENT,
   moduleName varchar(255) NOT NULL,
   PRIMARY KEY (moduleID)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Daten für Tabelle 'module'
---
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle 'module_instance_bot'
---
 
 CREATE TABLE module_instance_bot (
-  instanceID int(10) unsigned NOT NULL AUTO_INCREMENT,
+  instanceID int(10) NOT NULL AUTO_INCREMENT,
   moduleName varchar(255) NOT NULL,
   publicTrigger varchar(100) NOT NULL,
   nickname varchar(255) NOT NULL,
@@ -69,9 +32,6 @@ CREATE TABLE module_instance_bot (
   UNIQUE KEY (moduleName)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Daten für Tabelle 'module_instance_bot'
---
 
 INSERT INTO
 	module_instance_bot (instanceID, moduleName, publicTrigger, nickname, hostname, ident, ip, modes, gecos)
@@ -80,11 +40,8 @@ VALUES
 	(2, 'AuthServ', '=', 'AuthServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Auth Service'),
 	(3, 'ChanServ', '!', 'ChanServ', 'services.evil-co.de', 'services', '127.0.0.1', '+Ik', 'Channel Service');
 
--- --------------------------------------------------------
-
-
 CREATE TABLE authserv_users (
-	userID int(10) unsigned NOT NULL AUTO_INCREMENT,
+	userID int(10) NOT NULL AUTO_INCREMENT,
 	accountname varchar(255) NOT NULL,
 	password char(40) NOT NULL,
 	salt char(40) NOT NULL,
@@ -111,7 +68,7 @@ CREATE TABLE chanserv_channels (
 
 CREATE TABLE chanserv_channels_to_users (
 	channel varchar(255) NOT NULL,
-	userID int(10) unsigned NOT NULL,
+	userID int(10) NOT NULL,
 	accessLevel int(10) NOT NULL,
 	PRIMARY KEY (channel, userID),
 	KEY (userID)
@@ -143,3 +100,16 @@ INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('kick',
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('giveVoice', 	100);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('invite', 	 50);
 INSERT INTO chanserv_default_accessLevel (function, accessLevel) VALUES ('getVoice', 	 10);
+
+CREATE TABLE external_actions (
+	actionID int(10) NOT NULL AUTO_INCREMENT,
+	handler varchar(255) NOT NULL,
+	data mediumtext NOT NULL,
+	PRIMARY KEY (actionID)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+CREATE TABLE external_action_log (
+	actionID int(10) NOT NULL,
+	data mediumtext NOT NULL,
+	PRIMARY KEY (actionID)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
