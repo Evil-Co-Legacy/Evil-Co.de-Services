@@ -253,10 +253,6 @@ class Services {
 		
 		return self::$languages[$language];
 	}
-	
-	public static function getLog() {
-		return self::$LogWriter;
-	}
 
 	/**
 	 * Handles errors
@@ -297,10 +293,10 @@ class Services {
 		if ($ex instanceof SystemException && self::getProtocolManager() !== null && self::getProtocolManager()->isAlive()) $ex->sendDebugLog();
 		
 		// Call Zend_Log::err()
-		if ($ex instanceof Zend_Exception) self::getLog()->err($ex);
+		if ($ex instanceof Zend_Exception) self::getLogger()->err($ex);
 		
 		// send stacktrace
-		if ($ex instanceof SystemException) self::getLog()->err($ex->__getTraceAsString());
+		if ($ex instanceof SystemException) self::getLogger()->err($ex->__getTraceAsString());
 		
 		// Call Protocol::handleException()
 		if ($ex instanceof ProtocolException && self::getProtocolManager() !== null && self::getProtocolManager()->isAlive()) self::getProtocolManager()->handleException($ex);
