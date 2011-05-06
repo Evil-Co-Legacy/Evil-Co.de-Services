@@ -180,6 +180,7 @@ class Services {
 	 */
 	protected function initDB() {
 		self::$managers['DB'] = Zend_Db::factory(self::getConfiguration()->database);
+		self::$managers['DB']->setFetchMode(Zend_Db::FETCH_OBJ);
 	}
 	
 	/**
