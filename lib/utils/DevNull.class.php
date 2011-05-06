@@ -2,7 +2,7 @@
 /**
  * Does nothing with sense
  *
- * @author		Johannes Donath, Tim Düsterhus
+ * @author		Johannes Donath, Tim DÃ¼sterhus
  * @copyright		2011 DEVel Fusion
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
