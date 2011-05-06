@@ -90,10 +90,10 @@ class IRC {
 			$this->connectionState = 'connected';
 		
 		// log
-		Services::getLog()->info('Connected to '.$this->configuration->hostname.':'.intval($this->configuration->port));
+		Services::getLogger()->info('Connected to '.$this->configuration->hostname.':'.intval($this->configuration->port));
 			
 		// fire event
-		Services::getEvent()->fire($this, 'connected');
+		Services::getEventHandler()->fire($this, 'connected');
 	}
 	
 	/**
@@ -128,7 +128,7 @@ class IRC {
 		$this->socket = socket_create(($this->configuration->ipversion < 5 ? AF_INET : AF_INET6), SOCK_STREAM, getprotobyname('tcp'));
 		
 		// send debug log
-		Services::getLog()->debug("Created IPv".($this->configuration->ipversion > 5 ? '6' : '4')." socket");
+		Services::getLogger()->debug("Created IPv".($this->configuration->ipversion > 5 ? '6' : '4')." socket");
 		
 		// check created socket
 		if ($this->socket === false)
@@ -164,7 +164,7 @@ class IRC {
 		$line = str_replace("\n", "", $line);
 			
 		// debug information
-		if (strlen($line)) Services::getLog()->ircdebug("[-->] ".$line);
+		if (strlen($line)) Services::getLogger()->ircdebug("[-->] ".$line);
 			
 		// return line
 		return $line;
@@ -187,7 +187,7 @@ class IRC {
 			throw new ConnectionException("An error occoured while write to socket: ".socket_strerror(socket_last_error($this->socket)), socket_last_error($this->socket));
 			
 		// send log message
-		Services::getLog()->ircdebug("[<--] ".str_replace("\n", "", $message));
+		Services::getLogger()->ircdebug("[<--] ".str_replace("\n", "", $message));
 			
 		return $bytes;
 	}
