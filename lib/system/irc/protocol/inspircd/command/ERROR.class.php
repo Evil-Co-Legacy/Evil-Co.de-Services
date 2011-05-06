@@ -18,7 +18,7 @@ class ERROR extends CommandParser {
 		$line = substr($line, 1);
 		
 		// send log line with error message
-		Services::getLog()->err("Received error from server: ".substr($line, (stripos($line, ':') + 1)));
+		Services::getLogger()->err("Received error from server: ".substr($line, (stripos($line, ':') + 1)));
 		
 		// shut down services
 		exit;
