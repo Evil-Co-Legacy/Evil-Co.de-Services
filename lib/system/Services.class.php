@@ -17,7 +17,7 @@ require_once(SDIR.'lib/system/irc/LineManager.class.php');
 require_once(SDIR.'lib/system/irc/ProtocolManager.class.php');
 require_once(SDIR.'lib/system/irc/ServerManager.class.php');
 require_once(SDIR.'lib/system/language/LanguageManager.class.php');
-require_once(SDIR.'lib/system/log/irc.class.php');
+require_once(SDIR.'lib/system/log/IRCLogWriter.class.php');
 require_once(SDIR.'lib/system/module/ModuleManager.class.php');
 require_once(SDIR.'lib/system/timer/TimerManager.class.php');
 require_once(SDIR.'lib/system/user/BotManager.class.php');
@@ -192,7 +192,7 @@ class Services {
 			$inline->addFilter($filter);
 			$irc->addFilter($filter);
 			
-			$file->addFilter(new Zend_Log_Filter_Priority(Zend_Log::DEBUG, '<');
+			$file->addFilter(new Zend_Log_Filter_Priority(Zend_Log::DEBUG, '<'));
 		}
 				
 		// add log entry
