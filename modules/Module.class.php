@@ -7,11 +7,6 @@
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 interface Module {
-	
-	/**
-	 * YEP! HE IS!
-	 * @return RETURNS THE FUCK TRUE!!!!
-	 */
-	public function timIsSilly();
+
 }
 ?>
