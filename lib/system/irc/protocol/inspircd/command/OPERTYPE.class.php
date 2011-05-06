@@ -18,7 +18,7 @@ class OPERTYPE extends CommandParser {
 		$source->operType = $lineEx[1];
 		
 		// send info log
-		Services::getLog()->info("User ".$source->nickname." is now operator of type ".$lineEx[1]);
+		Services::getLogger()->info("User ".$source->nickname." is now operator of type ".$lineEx[1]);
 	}
 }
 ?>
