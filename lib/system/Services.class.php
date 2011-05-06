@@ -243,7 +243,7 @@ class Services {
 		self::getLogger()->info("Evil-Co.de Services ".SERVICES_VERSION." running on PHP ".phpversion());
 	}
 	
-	public static function __callStatic($function, $args) {
+	public static function __callStatic($function, $args) {
 		return self::$managers[substr($function, 3)];
 	}
 
