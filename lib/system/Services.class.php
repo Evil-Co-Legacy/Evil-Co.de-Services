@@ -14,7 +14,7 @@ date_default_timezone_set('Europe/Berlin');
 require_once(SDIR.'lib/core.functions.php');
 require_once(SDIR.'lib/system/event/EventHandler.class.php');
 require_once(SDIR.'lib/system/irc/ChannelManager.class.php');
-require_once(SDIR.'lib/system/irc/Connection.class.php');
+require_once(SDIR.'lib/system/irc/IRC.class.php');
 require_once(SDIR.'lib/system/irc/LineManager.class.php');
 require_once(SDIR.'lib/system/irc/ProtocolManager.class.php');
 require_once(SDIR.'lib/system/irc/ServerManager.class.php');
@@ -47,96 +47,52 @@ class Services {
 	 */
 	const MEMORY_CACHE_DIR = './cache/';
 	
-	/**
-	 * Contains the BotManager object
-	 *
-	 * @var	BotManager
-	 */
-	protected static $botManagerObj = null;
-
-	/**
-	 * Contains the ChannelManager object
-	 *
-	 * @var	ChannelManager
-	 */
-	protected static $channelManagerObj = null;
+	
+	protected static $managers = array();
 	
 	/**
 	 * Contains the Configuration object
 	 *
 	 * @var Configuration
 	 */
-	protected static $configObj = null;
-
-	/**
-	 * Contains the database connection
-	 *
-	 * @var	Database
-	 */
-	protected static $dbObj = null;
-	
-	/**
-	 * Contains the EventHandler object
-	 *
-	 * @var	EventHandler
-	 */
-	protected static $eventObj = null;
-
-	/**
-	 * Contains the IRCConnection object
-	 *
-	 * @var	Connection
-	 */
-	protected static $ircObj = null;
+	protected static $Config = null;
 	
 	/**
 	 * Contains the LanguageManager object
 	 *
-	 * @var	LanguageManager
+	 * @var	array<LanguageManager>
 	 */
-	protected static $languageObj = null;
-	
-	/**
-	 * Contains the LineManager object
-	 * @var LineManager
-	 */
-	protected static $lineManagerObj = null;
-	
-	/**
-	 * Contains the logger object
-	 * @var Zend_Log
-	 */
-	protected static $loggerObj = null;
+	protected static $languages = array();
 	
 	/**
 	 * Contains the IRCLogWriter object
 	 * @var IRCLogWriter
 	 */
-	protected static $logIrcWriterObj = null;
+	protected static $IrcLogWriter= null;
 	
 	/**
 	 * Contains the log writer
 	 * @var Zend_Log_Writer_Stream
 	 */
-	protected static $logWriterObj = null;
+	protected static $LogWriter = null;
 	
 	/**
 	 * Contains the log writer for debug outputs
 	 * @var Zend_Log_Writer_Stream
 	 */
-	protected static $logWriterDebugObj = null;
+	protected static $DebugLogWriter = null;
 	
 	/**
 	 * Contains the log filter for debugging inputs
 	 * @var Zend_Log_Filter_Priority
 	 */
-	protected static $logWriterFilterObj = null;
+	protected static $logWriterFilter = null;
 	
 	/**
 	 * Contains the log filter for irc debug outputs
 	 * @var Zend_Log_Filter_Priority
 	 */
-	protected static $logWriterIrcFilterObj = null;
+	protected static $logWriterIrcFilter = null;
 	
 	/**
 	 * Contains the log writer formatter for log outputs
@@ -149,52 +105,6 @@ class Services {
 	 * @var resource
 	 */
 	protected static $logWriterStream = null;
-	
-	/**
-	 * Contains the MemoryManager instance
-	 * @var Zend_Memory
-	 */
-	protected static $memoryManagerObj = null;
-
-	/**
-	 * Contains the ModuleManager object
-	 *
-	 * @var	ModuleManager
-	 */
-	protected static $moduleManagerObj = null;
-	
-	/**
-	 * Contains the Protocol object
-	 *
-	 * @var	Protocol
-	 */
-	protected static $protocolObj = null;
-	
-	/**
-	 * Contains the ServerManager object
-	 * @var ServerManager
-	 */
-	protected static $serverManagerObj = null;
-	
-	/**
-	 * Contains the TimerManager object
-	 * @var TimerManager
-	 */
-	protected static $timerManagerObj = null;
-	
-	/**
-	 * Contains the UserManager object
-	 *
-	 * @var	UserManager
-	 */
-	protected static $userManagerObj = null;
-	
-	/**
-	 * Contains the ArgumentParser
-	 *
-	 * @var	ArgumentParser
-	 */
-	protected static $argumentParser = null;
 
 	/**
 	 * Creates a new instance of Services
@@ -205,27 +115,26 @@ class Services {
 		@chdir(SDIR);
 		
 		// read arguments
-		self::$argumentParser = new ArgumentParser($argv);
+		self::$managers['ArgumentParser'] = new ArgumentParser($argv);
 		
 		// init components
 		$this->initLog();
 		$this->initConfiguration();
-		$this->initEvents();
-		$this->initTimerManager();
+		self::$managers['EventHandler'] = new EventHandler();
+		self::$managers['TimerManager'] = new TimerManager();
 		$this->initDB();
-		$this->initMemoryManager();
-		$this->initLanguage();
-		$this->initUserManager();
-		$this->initBotManager();
-		$this->initChannelManager();
-		$this->initServerManager();
-		$this->initLineManager();
-		$this->initModules();
-		$this->initConnection();
-		$this->initProtocol();
+		self::$managers['MemoryManager'] = Zend_Memory::factory('File', array('cache_dir' => self::MEMORY_CACHE_DIR));
+		self::$managers['UserManager'] = new UserManager();
+		self::$managers['BotManager'] = new BotManager();
+		self::$managers['ChannelManager'] = new ChannelManager();
+		self::$managers['ServerManager'] = new ServerManager();
+		self::$managers['LineManager'] = new LineManager();
+		self::$managers['ModuleManager'] = new ModuleManager();
+		self::$managers['IRC'] = new IRC();
+		self::$managers['ProtocolManager'] = new ProtocolManager();
 		
 		// start connection
-		self::$protocolObj->initConnection();
+		self::getProtocolManager()->initConnection();
 		
 		// senseless
 		return;
@@ -239,34 +148,16 @@ class Services {
 	 */
 	public static function destruct() {
 		// call protocol shutdown method
-		if (self::getProtocol() !== null && self::getProtocol()->isAlive() && self::getConnection()->isAlive()) self::getProtocol()->shutdown();
+		if (self::$managers['ProtocolManager'] !== null && self::$managers['ProtocolManager']->isAlive() && self::$managers['Connection']->isAlive()) self::$managers['ProtocolManager']->shutdown();
 		
 		// call connection shutdown method
-		if (self::getConnection() !== null && self::getConnection()->isAlive()) self::getConnection()->shutdown();
+		if (self::$managers['Connection'] !== null && self::$managers['Connection']->isAlive()) self::$managers['Connection']->shutdown();
 		
 		// remove pidfile (if any)
 		if (file_exists(SDIR.'services.pid')) @unlink(SDIR.'services.pid');
 		
 		// add shutdown log entry
-		self::$loggerObj->info("Shutting down ...");
-	}
-	
-	/**
-	 * Creates a new BotManager instance
-	 *
-	 * @return	void
-	 */
-	protected function initBotManager() {
-		self::$botManagerObj = new BotManager();
-	}
-	
-	/**
-	 * Creates an new ChannelManager instance
-	 *
-	 * @return	void
-	 */
-	protected function initChannelManager() {
-		self::$channelManagerObj = new ChannelManager();
+		self::getLogger()->info("Shutting down ...");
 	}
 
 	/**
@@ -276,17 +167,8 @@ class Services {
 	 */
 	protected function initConfiguration() {
 		$config = self::$argumentParser->get('argument', 'config');
-		self::$loggerObj->info("Reading configuration file '".$config."'");
-		self::$configObj = new Zend_Config_Xml($config);
-	}
-	
-	/**
-	 * Creates a new IRCConnection instance
-	 *
-	 * @return	void
-	 */
-	protected function initConnection() {
-		self::$ircObj = new Connection();
+		self::getLogger()->info("Reading configuration file '".$config."'");
+		self::$managers['Configuration'] = new Zend_Config_Xml($config);
 	}
 	
 	/**
@@ -308,33 +190,7 @@ class Services {
 		require_once(SDIR.'lib/system/database/'.$className.'.class.php');
 
 		// create new instance
-		self::$dbObj = new $className(self::getConfiguration()->database->hostname, self::getConfiguration()->database->username, self::getConfiguration()->database->password, self::getConfiguration()->database->dbname, 'UTF-8');
-	}
-
-	/**
-	 * Creates a new EventHandler object
-	 *
-	 * @return	void
-	 */
-	protected function initEvents() {
-		self::$eventObj = new EventHandler();
-	}
-
-	/**
-	 * Creates a new LanguageManager instance
-	 *
-	 * @return	void
-	 */
-	protected function initLanguage() {
-		self::$languageObj = new LanguageManager(self::$argumentParser->get('argument', 'language'));
-	}
-	
-	/**
-	 * Creates a new LineManager instance
-	 * @return void
-	 */
-	protected function initLineManager() {
-		self::$lineManagerObj = new LineManager();
+		self::$managers['DB'] = new $className(self::getConfiguration()->database->hostname, self::getConfiguration()->database->username, self::getConfiguration()->database->password, self::getConfiguration()->database->dbname, 'UTF-8');
 	}
 	
 	/**
@@ -352,27 +208,27 @@ class Services {
 		self::$logWriterObj = new Zend_Log_Writer_Stream(self::$logWriterStream);
 		self::$logWriterObj->setFormatter(self::$logWriterFormatter);
 		
-		self::$loggerObj = new Zend_Log();
+		self::$managers['Logger'] = new Zend_Log();
 		
 		// set timestamp format
-		self::$loggerObj->setTimestampFormat('H:i:s');
+		self::getLogger()->setTimestampFormat('H:i:s');
 		
 		// add irc debug level
-		self::$loggerObj->addPriority('IRCDEBUG', 8);
+		self::getLogger()->addPriority('IRCDEBUG', 8);
 		
 		// add file writer
-		self::$loggerObj->addWriter(self::$logWriterObj);
+		self::getLogger()->addWriter(self::$logWriterObj);
 		
 		// add irc writer
 		self::$logIrcWriterObj = new IRCLogWriter();
 		self::$logIrcWriterObj->setFormatter(self::$logWriterFormatter);
-		self::$loggerObj->addWriter(self::$logIrcWriterObj);
+		self::getLogger()->addWriter(self::$logIrcWriterObj);
 		
 		// create debug log instances
 		if (DEBUG) {
 			self::$logWriterDebugObj = new Zend_Log_Writer_Stream('php://output');
 			self::$logWriterDebugObj->setFormatter(self::$logWriterFormatter);
-			self::$loggerObj->addWriter(self::$logWriterDebugObj);
+			self::getLogger()->addWriter(self::$logWriterDebugObj);
 		} else {
 			self::$logWriterFilterObj = new Zend_Log_Filter_Priority(Zend_LOG::DEBUG, '<');
 			self::$logWriterObj->addFilter(self::$logWriterFilterObj);
@@ -384,188 +240,17 @@ class Services {
 		self::$logIrcWriterObj->addFilter(self::$logWriterIrcFilterObj);
 		
 		// add log entry
-		self::$loggerObj->info("Evil-Co.de Services ".SERVICES_VERSION." running on PHP ".phpversion());
+		self::getLogger()->info("Evil-Co.de Services ".SERVICES_VERSION." running on PHP ".phpversion());
 	}
 	
-	/**
-	 * Creates a new Zend_Memory instance
-	 * @return void
-	 */
-	protected function initMemoryManager() {
-		self::$memoryManagerObj = Zend_Memory::factory('File', array('cache_dir' => self::MEMORY_CACHE_DIR));
-	}
-	
-	/**
-	 * Creates a new ModuleManager instance
-	 *
-	 * @return	void
-	 */
-	protected function initModules() {
-		self::$moduleManagerObj = new ModuleManager();
-	}
-	
-	/**
-	 * Creates a new Protocol instance
-	 *
-	 * @return	void
-	 */
-	protected function initProtocol() {
-		self::$protocolObj = new ProtocolManager();
+	public static function __callStatic($function, $args) {
+		return self::$managers[substr($function, 3)];
 	}
 
-	/**
-	 * Creates a new ServerManager instance
-	 * @return void
-	 */
-	protected function initServerManager() {
-		self::$serverManagerObj = new ServerManager();
-	}
-	
-	/**
-	 * Creates a new TimerManager instance
-	 * @return void
-	 */
-	protected function initTimerManager() {
-		self::$timerManagerObj = new TimerManager();
-	}
-	
-	/**
-	 * Creates a new UserManager instance
-	 *
-	 * @return	void
-	 */
-	protected function initUserManager() {
-		self::$userManagerObj = new UserManager();
-	}
-	
-	/**
-	 * Returns the current bot manager object
-	 * 
-	 * @return	BotManager
-	 */
-	public static function getBotManager() {
-		return self::$botManagerObj;
-	}
-	
-	/**
-	 * Returns the current channel manager object
-	 *
-	 * @return	ChannelManager
-	 */
-	public static function getChannelManager() {
-		return self::$channelManagerObj;
-	}
-
-	/**
-	 * Returns the current configuration object
-	 *
-	 * @return	Configuration
-	 */
-	public static function getConfiguration() {
-		return self::$configObj;
-	}
-	
-	/**
-	 * Returns the current irc connection
-	 *
-	 * @return	Connection
-	 */
-	public static function getConnection() {
-		return self::$ircObj;
-	}
-
-	/**
-	 * Returns the current database connection
-	 *
-	 * @return	DataBase
-	 */
-	public static function getDB() {
-		return self::$dbObj;
-	}
-	
-	/**
-	 * Returns the current EventHandler object
-	 *
-	 * @return	EventHandler
-	 */
-	public static function getEvent() {
-		return self::$eventObj;
-	}
-
-	/**
-	 * Returns the current language manager
-	 *
-	 * @return	LanguageManager
-	 */
-	public static function getLanguage() {
-		return self::$languageObj;
-	}
-	
-	/**
-	 * Returns the current LineManager
-	 * @return LineManager
-	 */
-	public static function getLineManager() {
-		return self::$lineManagerObj;
-	}
-	
-	/**
-	 * Returns the current Zend_Log instance
-	 * @return Zend_Log
-	 */
-	public static function getLog() {
-		return self::$loggerObj;
-	}
-	
-	/**
-	 * Returns the current Zend_Memory object
-	 * @return Zend_Memory
-	 */
-	public static function getMemoryManager() {
-		return self::$memoryManagerObj;
-	}
-	
-	/**
-	 * Returns the current ModuleManager object
-	 *
-	 * @return	ModuleManager
-	 */
-	public static function getModuleManager() {
-		return self::$moduleManagerObj;
-	}
-	
-	/**
-	 * Returns the current Protocol object
-	 *
-	 * @return	Protocol
-	 */
-	public static function getProtocol() {
-		return self::$protocolObj;
-	}
-	
-	/**
-	 * Returns the current ServerManager object
-	 * @return ServerManager
-	 */
-	public static function getServerManager() {
-		return self::$serverManagerObj;
-	}
-	
-	/**
-	 * Returns the current TimerManager object
-	 * @return TimerManager
-	 */
-	public static function getTimerManager() {
-		return self::$timerManagerObj;
-	}
-
-	/**
-	 * Returns the current user manager object
-	 *
-	 * @return	UserManager
-	 */
-	public static function getUserManager() {
-		return self::$userManagerObj;
+	public static function getLanguage($language) {
+		if (!isset(self::$languages[$language])) self::$languages[$language] = new LanguageManager($language);
+		
+		return self::$languages[$language];
 	}
 
 	/**
@@ -604,24 +289,24 @@ class Services {
 	 */
 	public static function handleException(Exception $ex) {
 		// Call SystemException::sendDebugLog()
-		if ($ex instanceof SystemException && self::$protocolObj !== null && self::$protocolObj->isAlive()) $ex->sendDebugLog();
+		if ($ex instanceof SystemException && self::getProtocolManager() !== null && self::getProtocolManager()->isAlive()) $ex->sendDebugLog();
 		
 		// Call Zend_Log::err()
-		if ($ex instanceof Zend_Exception) self::$loggerObj->err($ex);
+		if ($ex instanceof Zend_Exception) self::getLogger()->err($ex);
 		
 		// send stacktrace
-		if ($ex instanceof SystemException) self::$loggerObj->err($ex->__getTraceAsString());
+		if ($ex instanceof SystemException) self::getLogger()->err($ex->__getTraceAsString());
 		
 		// Call Protocol::handleException()
-		if ($ex instanceof ProtocolException && self::$protocolObj !== null && self::$protocolObj->isAlive()) self::$protocolObj->handleException($ex);
+		if ($ex instanceof ProtocolException && self::getProtocolManager() !== null && self::getProtocolManager()->isAlive()) self::getProtocolManager()->handleException($ex);
 		
 		// Call Connection::handleException()
-		if ($ex instanceof ConnectionException) self::$ircObj->handleException($ex);
+		if ($ex instanceof ConnectionException) self::getIRC()->handleException($ex);
 		 
 		// Call shutdown methods if the given exception isn't recoverable (UserExceptions and RecoverableExceptions)
 		if (!($ex instanceof RecoverableException)) {
 			// call connection shutdown method
-			if (self::getConnection() !== null && self::$protocolObj !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage())
+			if (self::getConnection() !== null && self::getProtocolManager() !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage())
 		
 			// kill services :>
 			exit;
