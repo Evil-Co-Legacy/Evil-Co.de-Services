@@ -166,7 +166,7 @@ class InspIRCdProtocol implements Protocol {
 		} while(!$this->isReady and Services::getIRC()->isAlive() and $this->isAlive());
 		
 		// send info log message
-		Services::getLog()->info('Finished bursting! Synched completely with target server');
+		Services::getLogger()->info('Finished bursting! Synched completely with target server');
 		
 		// fire protocol independent event
 		Services::getEventHandler()->fire($this, 'connected');
