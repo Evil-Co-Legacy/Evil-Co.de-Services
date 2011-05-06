@@ -30,7 +30,7 @@ require_once('Zend/Log.php');
 require_once('Zend/Log/Writer/Stream.php');
 require_once('Zend/Memory.php');
 require_once('Zend/Console/Getopt.php');
-
+require_once('Zend/Text/Figlet');
 /**
  * Manages all needed core instances
  *
@@ -116,6 +116,8 @@ class Services {
 			echo $e->getUsageMessage();
 			exit;
 		}
+		$f = new Zend_Text_Figlet(array('smushMode' => 7));
+		echo $f->render('Services');
 		
 		define('DEBUG', isset(self::getArguments()->debug));
 		
