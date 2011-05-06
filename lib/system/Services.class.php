@@ -313,6 +313,18 @@ class Services {
 		}
 	}
 	
+	public static function signalHandler($signal) {
+		switch($signal) {
+			case SIGTERM:
+			
+			case SIGUSR1:
+			
+			case SIGUSR2:
+			
+			case SIGHUP:
+		}
+	}
+	
 	public static function getRandomString() {
 		return sha1(rand().microtime());
 	}
