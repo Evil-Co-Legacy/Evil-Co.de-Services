@@ -185,20 +185,7 @@ class Services {
 	 * @return	void
 	 */
 	protected function initDB() {
-		// validate
-		if (!isset(self::getConfiguration()->database->driver) or !isset(self::getConfiguration()->database->hostname) or !isset(self::getConfiguration()->database->username) or !isset(self::getConfiguration()->database->password) or !isset(self::getConfiguration()->database->dbname)) throw new SystemException("Invalid Database configuration!");
-		
-		// try to find database driver
-		if (!file_exists(SDIR.'lib/system/database/'.self::getConfiguration()->database->driver.'Database.class.php')) throw new SystemException("Invalid database driver: ".$db['driver']);
-
-		// get drivers classname
-		$className = self::getConfiguration()->database->driver.'Database';
-
-		// include driver
-		require_once(SDIR.'lib/system/database/'.$className.'.class.php');
-
-		// create new instance
-		self::$managers['DB'] = new $className(self::getConfiguration()->database->hostname, self::getConfiguration()->database->username, self::getConfiguration()->database->password, self::getConfiguration()->database->dbname, 'UTF-8');
+		self::$managers['DB'] = Zend_Db::factory(self::$Config->database);
 	}
 	
 	/**
