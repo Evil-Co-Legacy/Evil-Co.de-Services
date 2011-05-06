@@ -244,6 +244,7 @@ class Services {
 	}
 	
 	public static function __callStatic($function, $args) {
+		if (!isset(self::$managers[substr($function, 3)])) return null;
 		return self::$managers[substr($function, 3)];
 	}
 
