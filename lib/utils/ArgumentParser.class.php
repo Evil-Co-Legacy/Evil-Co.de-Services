@@ -29,11 +29,13 @@ class ArgumentParser {
 				$option = substr($arg, 2);
 
 				// is it the syntax '--option=argument'?
+				
 				if (strpos($option, '=') !== false) {
-					array_push($this->data['option'], explode('=', $option, 2));
+					$option = explode('=', $option, 2);
+					$this->data['option'][$option[0]] = $option[1];
 				}
 				else {
-					array_push($this->data['option'], $option);
+					$this->data['option'][$option[0]] = true;
 				}
 			}
 			else if (substr($arg, 0, 1) == '-') {
@@ -43,7 +45,7 @@ class ArgumentParser {
 				}
 			}
 			else {
-				$this->data['argument'][] = $arg;
+				$this->data['argument'][$arg] = $arg;
 			}
 		}
 	}
