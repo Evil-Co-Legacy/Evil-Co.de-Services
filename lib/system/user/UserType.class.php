@@ -7,7 +7,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 interface UserType {
-	
+
 	/**
 	 * Creates a new instance of UserType
 	 *
@@ -15,7 +15,7 @@ interface UserType {
 	 * @param	array	$data
 	 */
 	public function __construct($userID, $data = array());
-	
+
 	/**
 	 * Sets a user property
 	 *
@@ -23,7 +23,7 @@ interface UserType {
 	 * @param	mixed	$value
 	 */
 	public function __set($property, $value);
-	
+
 	/**
 	 * Gets a user property
 	 *

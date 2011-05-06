@@ -8,7 +8,7 @@
  */
 class DevNull {
 	const HALF_ANSWER = 21;
-	
+
 	/**
 	 * Returns the answer of life, the universe and everything
 	 *

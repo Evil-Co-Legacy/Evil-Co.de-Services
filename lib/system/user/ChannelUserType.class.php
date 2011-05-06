@@ -11,14 +11,14 @@ require_once(SDIR.'lib/system/user/ChannelUserModeList.class.php');
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class ChannelUserType extends AbstractUserType {
-	
+
 	/**
 	 * Contains all user modes in the parent channel
 	 *
 	 * @var ModeList
 	 */
 	protected $modes = null;
-	
+
 	/**
 	 * Sets new modes to user
 	 *

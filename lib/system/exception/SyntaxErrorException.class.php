@@ -7,7 +7,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class SyntaxErrorException extends UserException {
-	
+
 	/**
 	 * @see UserException::sendMessage()
 	 */

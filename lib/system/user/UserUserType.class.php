@@ -10,13 +10,13 @@ require_once(SDIR.'lib/system/user/AbstractUserType.class.php');
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class UserUserType extends AbstractUserType {
-	
+
 	/**
 	 * @see AbstractUserType::__set()
 	 */
 	public function __set($property, $value) {
 		parent::__set($property, $value);
-		
+
 		// fire event
 		Services::getEventHandler()->fire($this, 'propertyModified', array('property' => $property, 'value' => $value));
 	}

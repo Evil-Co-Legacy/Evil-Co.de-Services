@@ -10,7 +10,7 @@ require_once(SDIR.'lib/system/user/UserModeList.class.php');
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class UID extends CommandParser {
-	
+
 	/**
 	 * @see CommandParser::parse()
 	 */
@@ -18,13 +18,13 @@ class UID extends CommandParser {
 		// get realname
 		$line = substr($line, 1);
 		$realname = substr($line, (stripos($line, ':') + 1));
-		
+
 		// get modes
 		$modes = substr($line, (stripos($line, '+')));
 		$modes = substr($modes, 0, (stripos($modes, ':')));
-		
+
 		$modes = new UserModeList($modes);
-		
+
 		// add user
 		Services::getUserManager()->addUser($lineEx[1], array('timestamp' => $lineEx[2], 'nickname' => $lineEx[3], 'hostname' => $lineEx[4], 'displayedHostname' => $lineEx[5], 'ident' => $lineEx[6], 'ip' => $lineEx[7], 'signon' => $lineEx[8], 'modes' => $modes));
 	}

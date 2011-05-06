@@ -9,7 +9,7 @@ require_once(SDIR.'lib/system/irc/protocol/CommandParser.class.php');
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class VERSION extends CommandParser {
-	
+
 	/**
 	 * @see CommandParser::parse()
 	 */
@@ -17,7 +17,7 @@ class VERSION extends CommandParser {
 		// get version string
 		$line = substr($line, 1);
 		$version = substr($line, (stripos($line, ':') + 1));
-		
+
 		// set version metadata
 		$source->version = $version;
 	}

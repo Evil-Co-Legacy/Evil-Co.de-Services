@@ -9,7 +9,7 @@ require_once(SDIR.'lib/system/irc/protocol/CommandParser.class.php');
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class ENDBURST extends CommandParser {
-	
+
 	/**
 	 * @see CommandParser::parse()
 	 */

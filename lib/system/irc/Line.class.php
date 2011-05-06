@@ -7,43 +7,43 @@
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class Line {
-	
+
 	/**
 	 * Contains the type of this line
 	 * @var string
 	 */
 	protected $type = '';
-	
+
 	/**
 	 * Contains the mask of this line
 	 * @var string
 	 */
 	protected $mask = '';
-	
+
 	/**
 	 * Contains the setter of this line
 	 * @var string
 	 */
 	protected $setter = '';
-	
+
 	/**
 	 * Contains the timestamp of this line
 	 * @var integer
 	 */
 	protected $timestamp = 0;
-	
+
 	/**
 	 * Contains the duration of this line
 	 * @var integer
 	 */
 	protected $duration = 0;
-	
+
 	/**
 	 * Contains the reason of this line
 	 * @var string
 	 */
 	protected $reason = '';
-	
+
 	/**
 	 * Creates a new instance of type Line
 	 * @param	string	$type
@@ -61,7 +61,7 @@ class Line {
 		$this->duration = intval($duration);
 		$this->reason = $reason;
 	}
-	
+
 	/**
 	 * Returns the type of this line
 	 * @return string
@@ -69,7 +69,7 @@ class Line {
 	public function getType() {
 		return $this->type;
 	}
-	
+
 	/**
 	 * Returns the mask of this line
 	 * @return string
@@ -77,7 +77,7 @@ class Line {
 	public function getMask() {
 		return $this->mask;
 	}
-	
+
 	/**
 	 * Returns the setter of this line
 	 * @return string
@@ -85,7 +85,7 @@ class Line {
 	public function getSetter() {
 		return $this->setter;
 	}
-	
+
 	/**
 	 * Returns the timestamp of this line
 	 * @return integer
@@ -93,7 +93,7 @@ class Line {
 	public function getTimestamp() {
 		return $this->timestamp;
 	}
-	
+
 	/**
 	 * Returns the duration of this line
 	 * @return integer
@@ -101,7 +101,7 @@ class Line {
 	public function getDuration() {
 		return $this->duration;
 	}
-	
+
 	/**
 	 * Returns the reason of this line
 	 * @return string
@@ -109,7 +109,7 @@ class Line {
 	public function getReason() {
 		return $this->reason;
 	}
-	
+
 	/**
 	 * Returns true if this line is expired
 	 * @return boolean
@@ -117,10 +117,10 @@ class Line {
 	public function isExpired() {
 		// handle lines without expire period
 		if ($this->duration == 0) return false;
-		
+
 		// handle duration property
 		if (($this->timestamp + $this->duration) > time()) return false;
-		
+
 		return false;
 	}
 }

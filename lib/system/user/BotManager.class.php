@@ -11,7 +11,7 @@ require_once(SDIR.'lib/system/user/BotUserType.class.php');
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class BotManager extends AbstractUserTypeManager {
-	
+
 	/**
 	 * @see AbstractUserTypeManager::$userType
 	 */

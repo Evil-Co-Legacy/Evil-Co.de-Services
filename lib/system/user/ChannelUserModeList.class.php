@@ -10,7 +10,7 @@ require_once(SDIR.'lib/system/irc/AbstractModeList.class.php');
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class ChannelUserModeList extends AbstractModeList {
-	
+
 	/**
 	 * @see AbstractModeList::$modeInformationFilename
 	 */

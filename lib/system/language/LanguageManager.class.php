@@ -8,13 +8,13 @@
  */
 class LanguageManager {
 	protected $items = array();
-	
+
 	public function __construct($languageCode) {
 		if (!$this->load($languageCode)) {
 			throw new SystemException('Could not find language '.$languageCode);
 		}
 	}
-	
+
 	/**
 	 * Loads the given language
 	 *
@@ -28,14 +28,14 @@ class LanguageManager {
 		$this->items = parse_ini_file(SDIR.'language/'.$languageCode.'.lng');
 		return true;
 	}
-	
+
 	/**
 	 * @see Language::get();
 	 */
 	public function __get($name) {
 		return $this->get($name);
 	}
-	
+
 	/**
 	 * Returns the languageitem
 	 *

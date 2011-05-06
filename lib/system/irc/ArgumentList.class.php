@@ -7,7 +7,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 interface ArgumentList {
-	
+
 	/**
 	 * Creates a new instance of type ArgumentList
 	 *
@@ -15,7 +15,7 @@ interface ArgumentList {
 	 * @param	string	$argumentString
 	 */
 	public function __construct($modeSource, $argumentString);
-	
+
 	/**
 	 * Returns the argument for given index
 	 *

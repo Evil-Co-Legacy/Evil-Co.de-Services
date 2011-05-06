@@ -10,14 +10,14 @@ require_once('Zend/Log/Formatter/Simple.php');
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class IRCLogWriter extends Zend_Log_Writer_Abstract {
-	
+
 	/**
 	 * Creates a new instance of IRCLogWriter
 	 */
 	public function __construct() {
 		$this->_formatter = new Zend_Log_Formatter_Simple();
 	}
-	
+
 	/**
 	 * Create a new instance of Zend_Log_Writer_Mock
 	 *
@@ -27,7 +27,7 @@ class IRCLogWriter extends Zend_Log_Writer_Abstract {
 	public static function factory($config) {
 		return new self();
 	}
-	
+
 	/**
 	 * Writes an event to log
 	 * @param	array	$event
@@ -37,26 +37,26 @@ class IRCLogWriter extends Zend_Log_Writer_Abstract {
 		if (Services::getIRC() !== null and Services::getIRC()->isAlive() and Services::getProtocolManager() !== null and Services::getProtocolManager()->isAlive() and Services::getProtocolManager()->isReady()) {
 			// get log string
 			$line = $this->_formatter->format($event);
-			
+
 			// trim message
 			$line = trim($line);
-			
+
 			// unify newlines
 			$line = Services::removeCR($line);
-			
+
 			// remove tabs
 			$line = str_replace("\t", "        ", $line);
-			
+
 			// detect newlines
 			if (stripos($line, "\n") !== null) {
 				// split
 				$lineEx = explode("\n", $line);
-				
+
 				// send each line to service channel
 				foreach($lineEx as $newline) {
 					// trim message
 					$newline = trim($newline);
-					
+
 					// send
 					if (!empty($newline)) Services::getProtocolManager()->sendMessage(Services::getConfiguration()->connection->servicechannel, $newline);
 				}

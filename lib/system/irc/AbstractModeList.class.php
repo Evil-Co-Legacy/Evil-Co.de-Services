@@ -12,35 +12,35 @@ require_once(SDIR.'lib/system/irc/ModeArgumentList.class.php');
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 abstract class AbstractModeList implements ModeList, Iterator {
-	
+
 	/**
 	 * TODO: Add description
 	 *
 	 * @var array<boolean>
 	 */
 	protected static $loadedModeInformation = array();
-	
+
 	/**
 	 * Contains the name of the file that contains mode information
 	 *
 	 * @var string
 	 */
 	protected static $modeInformationFilename = '';
-	
+
 	/**
 	 * Contains a list of modes
 	 *
 	 * @var array<Mode>
 	 */
 	protected $modes = array();
-	
+
 	/**
 	 * Contains a pointer to current iterator element
 	 *
 	 * @var integer
 	 */
 	protected $modePointer = 0;
-	
+
 	/**
 	 * @see ModeList::__construct($modeString)
 	 */
@@ -48,34 +48,34 @@ abstract class AbstractModeList implements ModeList, Iterator {
 		// parse modes
 		$this->parseModeString($modeString);
 	}
-	
+
 	/**
 	 * @see ModeList::addMode()
 	 */
 	public function addMode($modeChar, $argument = null) {
 		if (!$this->hasMode($modeChar)) $this->modes[] = new Mode($modeChar, $argument);
 	}
-	
+
 	/**
 	 * @see ModeList::hasArgument()
 	 */
 	public static function hasArgument($modeChar) {
 		// try to load information
 		if (!isset(static::$loadedModeInformation[$modeChar])) self::loadMode($modeChar);
-		
+
 		// validate
 		if (!isset(static::$loadedModeInformation[$modeChar])) throw new RecoverableException("Unknown mode char '".$modeChar."'");
-		
+
 		return static::$loadedModeInformation[$modeChar];
 	}
-	
+
 	/**
 	 * @see ModeList::hasMode()
 	 */
 	public function hasMode($modeChar) {
 		return (stripos($this->__toString(), $modeChar) !== false ? true : false);
 	}
-	
+
 	/**
 	 * @see ModeList::loadMode()
 	 */
@@ -86,21 +86,21 @@ abstract class AbstractModeList implements ModeList, Iterator {
 			} catch (SystemException $ex) {
 				throw new RecoverableException($ex->getMessage(), $ex->getCode());
 			}
-			
+
 			$data = $xml->getElementTree('information');
-			
+
 			foreach($data['children'] as $child) {
 				if (!isset($child['cdata']) or !isset($child['attrs']['attribute'])) throw new RecoverableException("Invalid mode definition in file '".Services::getProtocol()->getProtocolDir().'modes/'.self::$modeInformationFilename.'.xml'."'");
-				
+
 				if ($child['cdata'] == $modeChar) static::$loadedModeInformation[$modeChar] = (bool) intval($child['attrs']['attribute']);
 			}
-			
+
 			// destroy elements
 			unset($xml);
 			unset($data);
 		}
 	}
-	
+
 	/**
 	 * @see ModeList::parseModeString()
 	 */
@@ -108,11 +108,11 @@ abstract class AbstractModeList implements ModeList, Iterator {
 		// get arguments
 		$argumentList = new ModeArgumentList(get_class($this), $string);
 		$string = substr($string, 0, (stripos($string, ' ') ? stripos($string, ' ') : 0));
-		
+
 		// get needed variables
 		$currentFunction = '+';
 		$length = strlen($string);
-		
+
 		for($i = 0; $i < $length; $i++) {
 			switch($string{$i}) {
 				case '+':
@@ -133,7 +133,7 @@ abstract class AbstractModeList implements ModeList, Iterator {
 			}
 		}
 	}
-	
+
 	/**
 	 * @see ModeList::removeString()
 	 */
@@ -142,58 +142,58 @@ abstract class AbstractModeList implements ModeList, Iterator {
 			if ($mode->__toString() == $modeChar) unset($this->mode[$modeChar]);
 		}
 	}
-	
+
 	/**
 	 * @see ModeList::updateModes()
 	 */
 	public function updateModes($modeString) {
 		$this->parseModeString($modeString);
 	}
-	
+
 	/**
 	 * @see ModeList::__toString
 	 */
 	public function __toString() {
 		$string = "";
-		
+
 		foreach($this->modes as $mode) {
 			$string .= $mode->__toString();
 			$string .= " ".$mode->getArgument();
 		}
-		
+
 		return $string;
 	}
-	
+
 	// ITERATOR METHODS
-	
+
 	/**
 	 * @see Iterator::rewind()
 	 */
 	public function rewind() {
 		$this->modePointer = 0;
 	}
-	
+
 	/**
 	 * @see Iterator::current()
 	 */
 	public function current() {
 		return $this->modes[$this->modePointer];
 	}
-	
+
 	/**
 	 * @see Iterator::key()
 	 */
 	public function key() {
 		return $this->modePointer;
 	}
-	
+
 	/**
 	 * @see Iterator::next()
 	 */
 	public function next() {
 		$this->modePointer++;
 	}
-	
+
 	/**
 	 * @see Iterator::valid()
 	 */

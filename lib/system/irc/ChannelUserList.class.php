@@ -11,19 +11,19 @@ require_once(SDIR.'lib/system/user/ChannelUserType.class.php');
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class ChannelUserList extends AbstractUserTypeManager {
-	
+
 	/**
 	 * @see AbstractUserTypeManager::$userType
 	 */
 	protected $userType = 'ChannelUserType';
-	
+
 	/**
 	 * Contains the parent channel
 	 *
 	 * @var	Channel
 	 */
 	protected $channel = null;
-	
+
 	/**
 	 * Creates a new instance of type ChannelUserList
 	 *
@@ -33,7 +33,7 @@ class ChannelUserList extends AbstractUserTypeManager {
 	public function __construct(&$channel) {
 		$this->channel = $channel;
 	}
-	
+
 	/**
 	 * Adds a new user to a channel
 	 *
@@ -44,11 +44,11 @@ class ChannelUserList extends AbstractUserTypeManager {
 	 */
 	public function addUser($userID, $data = array(), $userModes = '') {
 		parent::addUser($userID, $data);
-		
+
 		// set modes
 		$this->getUser($userID)->setModes($userModes);
 	}
-	
+
 	/**
 	 * Alias for ChannelUserList::addUser()
 	 *
@@ -58,7 +58,7 @@ class ChannelUserList extends AbstractUserTypeManager {
 	public function join($userID, $userModes, $data = array()) {
 		$this->addUser($userID, $userModes, $data);
 	}
-	
+
 	/**
 	 * Alias for ChannelUserList::removeUser()
 	 *

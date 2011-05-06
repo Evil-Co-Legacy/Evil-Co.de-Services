@@ -1,25 +1,25 @@
 <?php
 
 class Timer {
-	
+
 	/**
 	 * Contains the callback that should executed
 	 * @var callback
 	 */
 	protected $callback = array();
-	
+
 	/**
 	 * Contains the interval for timer
 	 * @var integer
 	 */
 	protected $interval = 0;
-	
+
 	/**
 	 * Contains the timestamp of last execution
 	 * @var integer
 	 */
 	protected $lastExecutionTimestamp = 0;
-	
+
 	/**
 	 * Creates a new instance of type Timer
 	 * @param	callback	$callback
@@ -29,7 +29,7 @@ class Timer {
 		$this->callback = $callback;
 		$this->interval = $interval;
 	}
-	
+
 	/**
 	 * Executes the callback and sets the new last execution timestamp
 	 * @return void
@@ -37,11 +37,11 @@ class Timer {
 	public function execute() {
 		// execute callback
 		call_user_func($this->callback, $this->lastExecutionTimestamp);
-		
+
 		// set last execution timestamp
 		$this->lastExecutionTimestamp = time();
 	}
-	
+
 	/**
 	 * Returns true if an execution is needed
 	 * @return boolean

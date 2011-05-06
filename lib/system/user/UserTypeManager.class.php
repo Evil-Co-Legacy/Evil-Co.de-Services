@@ -7,7 +7,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 interface UserTypeManager {
-	
+
 	/**
 	 * Adds a new user to userlist
 	 *
@@ -15,14 +15,14 @@ interface UserTypeManager {
 	 * @param	array<mixed>	$data
 	 */
 	public function addUser($userID, $data = array());
-	
+
 	/**
 	 * Returns the user with ID $userID
 	 *
 	 * @param	mixed	$userID
 	 */
 	public function getUser($userID);
-	
+
 	/**
 	 * Removes a user from userlist
 	 *

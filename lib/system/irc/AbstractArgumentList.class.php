@@ -10,41 +10,41 @@ require_once(SDIR.'lib/system/irc/ArgumentList.class.php');
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 abstract class AbstractArgumentList implements ArgumentList, Iterator {
-	
+
 	/**
 	 * Contains a list of arguments
 	 *
 	 * @var array<mixed>
 	 */
 	protected $argumentList = array();
-	
+
 	/**
 	 * Points to the current argument
 	 *
 	 * @var integer
 	 */
 	protected $argumentPointer = 0;
-	
+
 	/**
 	 * Contains the source for modes
 	 *
 	 * @var string
 	 */
 	protected $modeSource = '';
-	
+
 	/**
 	 * @see ArgumentList::__construct($argumentString)
 	 */
 	public function __construct($modeSource, $argumentString) {
 		// handle arguments
 		$this->modeSource = $modeSource;
-		
+
 		$argumentString = $this->stripDisallowedChars($argumentString);
-		
+
 		// parse arguments
 		$this->parseArgumentString($argumentString);
 	}
-	
+
 	/**
 	 * Returns the argument at given index
 	 *
@@ -54,11 +54,11 @@ abstract class AbstractArgumentList implements ArgumentList, Iterator {
 	public function getArgument($index) {
 		// return an empty string on error
 		if (!isset($this->argumentList[$index])) return "";
-		
+
 		// return argument
 		return $this->argumentList[$index];
 	}
-	
+
 	/**
 	 * @see ArgumentList::parseArgumentString()
 	 */
@@ -66,7 +66,7 @@ abstract class AbstractArgumentList implements ArgumentList, Iterator {
 		// get variables
 		$stringArray = explode(' ', $argumentString);
 		$activeArgumentIndex = 1;
-		
+
 		for($i = 0; $i < strlen($stringArray[0]); $i++) {
 			if (call_user_func(array($this->modeSource, 'hasArgument'), $stringArray[0]{$i})) {
 				// get argument
@@ -76,7 +76,7 @@ abstract class AbstractArgumentList implements ArgumentList, Iterator {
 				$this->argumentList[$i] = '';
 		}
 	}
-	
+
 	/**
 	 * Strips disallowed chars from argument string
 	 *
@@ -84,11 +84,11 @@ abstract class AbstractArgumentList implements ArgumentList, Iterator {
 	 * @return	string
 	 */
 	protected function stripDisallowedChars($argumentString) {
-		$argumentString = str_replace('+', '', $argumentString); // replace +
+		$argumentString = str_replace('+', '', $argumentString); // replace
 		$argumentString = preg_replace('~-[A-Z]+~i', '', $argumentString);
 		return $argumentString;
 	}
-	
+
 	// ITERATOR METHODS
 	/**
 	 * @see Iterator::rewind()
@@ -96,28 +96,28 @@ abstract class AbstractArgumentList implements ArgumentList, Iterator {
 	public function rewind() {
 		$this->argumentPointer = 0;
 	}
-	
+
 	/**
 	 * @see Iterator::current()
 	 */
 	public function current() {
 		return $this->argumentList[$this->argumentPointer];
 	}
-	
+
 	/**
 	 * @see Iterator::key()
 	 */
 	public function key() {
 		return $this->argumentPointer;
 	}
-	
+
 	/**
 	 * @see Iterator::next()
 	 */
 	public function next() {
 		$this->argumentPointer++;
 	}
-	
+
 	/**
 	 * @see Iterator::valid()
 	 */

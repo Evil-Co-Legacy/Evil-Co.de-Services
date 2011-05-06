@@ -12,7 +12,7 @@ interface Protocol {
 	 * Creates a new instance of type Protocol
 	 */
 	public function __construct(&$supportedTypes);
-	
+
 	/**
 	 * Handles exceptions in protocol system
 	 * @param	ProtocolException	$ex
@@ -25,19 +25,19 @@ interface Protocol {
 	 * @return void
 	 */
 	public function initConnection();
-	
+
 	/**
 	 * Returns true if the current connection to server is alive
 	 * @return boolean
 	 */
 	public function isAlive();
-	
+
 	/**
 	 * Returns true if the current connection to server is ready for msgs and other funny things
 	 * @return boolean
 	 */
 	public function isReady();
-	
+
 	/**
 	 * Shuts the connection down
 	 * @return void

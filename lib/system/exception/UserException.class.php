@@ -7,14 +7,14 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class UserException extends RecoverableException {
-	
+
 	/**
 	 * Contains a user object
 	 *
 	 * @var UserType
 	 */
 	protected $user = null;
-	
+
 	/**
 	 * Creates a new instance of type UserException
 	 *
@@ -25,10 +25,10 @@ class UserException extends RecoverableException {
 	 */
 	public function __construct($user, $message, $code = 0) {
 		parent::__construct($message, $code);
-		
+
 		$this->user = $user;
 	}
-	
+
 	/**
 	 * Returns a user object
 	 *
@@ -37,7 +37,7 @@ class UserException extends RecoverableException {
 	public function getUser() {
 		return $this->user;
 	}
-	
+
 	/**
 	 * Sends the given message to user
 	 *
@@ -46,13 +46,13 @@ class UserException extends RecoverableException {
 	public function sendMessage() {
 		$this->user->sendMessage($this->message);
 	}
-	
+
 	/**
 	 * @see SystemException::sendDebugLog()
 	 */
 	public function sendDebugLog() {
 		parent::sendDebugLog();
-		
+
 		Services::getIRC()->sendLogLine("User: ".$this->user);
 	}
 }

@@ -19,7 +19,7 @@ class ProtocolManager {
 	 * @var Protocol
 	 */
 	protected $protocol = null;
-	
+
 	/**
 	 * Contains the dir for protocol files
 	 * @var string
@@ -56,7 +56,7 @@ class ProtocolManager {
 
 		// set protocol dir
 		$this->protocolDir = SDIR.self::PROTOCOL_PATH.$protocol.'/';
-		
+
 		// get protocol information
 		$this->readProtocolInformation($protocol);
 
@@ -84,7 +84,7 @@ class ProtocolManager {
 		// get protocol string
 		return strtolower($connectionConfiguration->protocol);
 	}
-	
+
 	/**
 	 * Inits the IRC-Connection
 	 * @return void
@@ -107,7 +107,7 @@ class ProtocolManager {
 		// create new instance
 		$this->protocol = new $className($this->supportedTypes);
 	}
-	
+
 	/**
 	 * Returns the dir of current protocol
 	 * @return string

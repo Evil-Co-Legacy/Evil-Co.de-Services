@@ -10,7 +10,7 @@ require_once(SDIR.'lib/system/user/AbstractUserType.class.php');
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class BotUserType extends AbstractUserType {
-	
+
 	/**
 	 * This is just set to true. It will used to identify bots
 	 *
