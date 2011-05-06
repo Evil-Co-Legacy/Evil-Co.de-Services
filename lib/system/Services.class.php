@@ -277,12 +277,13 @@ class Services {
 	public static function signalHandler($signal) {
 		switch($signal) {
 			case SIGTERM:
-			
+				exit;
 			case SIGUSR1:
 			
 			case SIGUSR2:
 			
 			case SIGHUP:
+			
 		}
 	}
 	
