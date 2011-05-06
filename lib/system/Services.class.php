@@ -42,9 +42,10 @@ class Services {
 	
 	/**
 	 * Contains the dir where our services should store cached information
+	 *
 	 * @var string
 	 */
-	const MEMORY_CACHE_DIR = './tmp/';
+	const MEMORY_CACHE_DIR = './cache/';
 	
 	/**
 	 * Contains the BotManager object
@@ -187,13 +188,24 @@ class Services {
 	 * @var	UserManager
 	 */
 	protected static $userManagerObj = null;
+	
+	/**
+	 * Contains the ArgumentParser
+	 *
+	 * @var	ArgumentParser
+	 */
+	protected static $argumentParser = null;
 
 	/**
 	 * Creates a new instance of Services
 	 */
 	public function __construct() {
+		global $argv;
 		// correct dir
 		@chdir(SDIR);
+		
+		// read arguments
+		self::$argumentParser = new ArgumentParser($argv);
 		
 		// init components
 		$this->initLog();
@@ -313,7 +325,7 @@ class Services {
 	 * @return	void
 	 */
 	protected function initLanguage() {
-		self::$languageObj = new LanguageManager();
+		self::$languageObj = new LanguageManager(self::$argumentParser->get('argument', 'language'));
 	}
 	
 	/**
@@ -608,11 +620,11 @@ class Services {
 		// Call shutdown methods if the given exception isn't recoverable (UserExceptions and RecoverableExceptions)
 		if (!($ex instanceof RecoverableException)) {
 			// call connection shutdown method
-			if (self::getConnection() !== null && self::$protocolObj !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage());
-		}
+			if (self::getConnection() !== null && self::$protocolObj !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage())
 		
-		// kill services :>
-		if (!($ex instanceof RecoverableException)) exit;
+			// kill services :>
+			exit;
+		}
 	}
 	
 	public static function getRandomString() {
