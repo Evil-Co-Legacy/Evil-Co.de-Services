@@ -287,11 +287,11 @@ final class Services {
 			case SIGTERM:
 				exit;
 			case SIGUSR1:
-			
 			case SIGUSR2:
-			
+			break;
 			case SIGHUP:
-			
+				if (!isset(self::$managers['ExternalManager'])) self::$managers['ExternalManager'] = new ExternalManager();
+				self::$managers['ExternalManager']->fire();
 		}
 	}
 	
