@@ -107,9 +107,15 @@ class Services {
 		// correct dir
 		@chdir(SDIR);
 		
-		// read arguments
-		self::$managers['Arguments'] = new Zend_Console_Getopt(array('debug' => 'Enables debug mode', 'quiet|q' => 'Prints less output', 'config=s' => 'Define a config-file'));
-		self::getArguments()->parse();
+		try {
+			// read arguments
+			self::$managers['Arguments'] = new Zend_Console_Getopt(array('debug' => 'Enables debug mode', 'quiet|q' => 'Prints less output', 'config=s' => 'Define a config-file'));
+			self::getArguments()->parse();
+		}
+		catch (Zend_Console_Getopt_Exception $e) {
+			echo $e->getUsageMessage();
+			exit;
+		}
 		
 		define('DEBUG', isset(self::getArguments()->debug));
 		
