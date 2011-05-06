@@ -267,9 +267,6 @@ final class Services {
 		// Call Zend_Log::err()
 		if ($ex instanceof Zend_Exception && self::getLogger() !== null) self::getLogger()->err($ex);
 		
-		// send stacktrace
-		if ($ex instanceof SystemException && self::getLogger() !== null) self::getLogger()->err($ex->__getTraceAsString());
-		
 		// Call Protocol::handleException()
 		if ($ex instanceof ProtocolException && self::getProtocolManager() !== null && self::getProtocolManager()->isAlive()) self::getProtocolManager()->handleException($ex);
 		
