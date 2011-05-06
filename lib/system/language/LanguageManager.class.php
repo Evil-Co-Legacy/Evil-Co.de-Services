@@ -1,78 +1,53 @@
 <?php
-// Zend imports
-require_once('Zend/Translate.php');
-
 /**
- * Manages all language variables
+ * Parses language-files
  *
- * @author	Johannes Donath
- * @copyright	2010 DEVel Fusion
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author	Tim Düsterhus
+ * @copyright	2010 - 2011 Tim Düsterhus
+ * @licence	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class LanguageManager {
-
-	/**
-	 * Contains all
-	 *
-	 * @var array<mixed>
-	 */
-	protected $availableLanguages = array();
-
-	/**
-	 * Contains all items
-	 *
-	 * @var	array<array>
-	 */
 	protected $items = array();
-
-	/**
-	 * Creates a new instance of LanguageManager
-	 */
-	public function __construct() {
-		$sql = "SELECT
-					*
-				FROM
-					language";
-		$result = Services::getDB()->sendQuery($sql);
-
-		while($row = Services::getDB()->fetchArray($result)) {
-			$this->availableLanguages[] = $row;
-			$this->items[intval($row['languageID'])] = new Zend_Translate(array(
-					'adapter' => 'gettext',
-					'content' => SDIR.'language/'.$row['code'].'.mo',
-					'locale'  => $row['code']
-    				)
-			);
+	
+	public function __construct($languageCode) {
+		if (!$this->load($languageCode)) {
+			throw new SystemException('Could not find language '.$languageCode);
 		}
 	}
-
+	
 	/**
-	 * Returns the content of the given language var (This method returns the name of the variable if no matching variable exists)
+	 * Loads the given language
 	 *
-	 * @param	integer	$languageID
-	 * @param	string	$variable
-	 * @return	string
+	 * @param	string		$languageCode	language to load
+	 * @return	boolean				success
 	 */
-	public function get($languageID, $variable) {
-		// whohoo hardcoded shit
-		if ($languageID == null or !isset($this->items[$languageID]))
-			$languageID = 1;
-		else
-			$languageID = intval($languageID);
-
-		// create needed vars
-		$value = $this->items[$languageID]->_($variable);
-		$arguments = func_get_args();
-
-		// kick languageID and variable from argument list
-		$arguments[0] = $value;
-		unset($arguments[1]);
-
-		// resort array
-		$arguments = array_merge(array(), $arguments);
-
-		// return correct value
-		return call_user_func_array('sprintf', $arguments);
+	public function load($languageCode) {
+		if (!file_exists(SDIR.'language/'.$languageCode.'.lng')) {
+			return false;
+		}
+		$this->items = parse_ini_file(SDIR.'language/'.$languageCode.'.lng');
+		return true;
+	}
+	
+	/**
+	 * @see Language::get();
+	 */
+	public function __get($name) {
+		return $this->get($name);
+	}
+	
+	/**
+	 * Returns the languageitem
+	 *
+	 * @param	string		$name	item-name
+	 * @param	array<mixed>	$vars	variables to replace
+	 * @return	string			item
+	 */
+	public function get($name, array $vars = array()) {
+		if (isset($this->items[$name])) {
+			return str_replace(array_keys($vars), array_values($vars), $this->items[$name]);
+		}
+		return '';
 	}
 }
 ?>
