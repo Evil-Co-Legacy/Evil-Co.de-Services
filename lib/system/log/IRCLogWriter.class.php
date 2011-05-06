@@ -34,7 +34,7 @@ class IRCLogWriter extends Zend_Log_Writer_Abstract {
 	 * @return void
 	 */
 	protected function _write($event) {
-		if (Services::getConnection() !== null and Services::getConnection()->isAlive() and Services::getProtocol() !== null and Services::getProtocol()->isAlive() and Services::getProtocol()->isReady()) {
+		if (Services::getIRC() !== null and Services::getIRC()->isAlive() and Services::getProtocolManager() !== null and Services::getProtocolManager()->isAlive() and Services::getProtocolManager()->isReady()) {
 			// get log string
 			$line = $this->_formatter->format($event);
 			
@@ -58,10 +58,10 @@ class IRCLogWriter extends Zend_Log_Writer_Abstract {
 					$newline = trim($newline);
 					
 					// send
-					if (!empty($newline)) Services::getProtocol()->sendMessage(Services::getConfiguration()->connection->servicechannel, $newline);
+					if (!empty($newline)) Services::getProtocolManager()->sendMessage(Services::getConfiguration()->connection->servicechannel, $newline);
 				}
 			} else {
-				Services::getProtocol()->sendMessage(Services::getConfiguration()->connection->servicechannel, $line);
+				Services::getProtocolManager()->sendMessage(Services::getConfiguration()->connection->servicechannel, $line);
 			}
 		}
 	}
