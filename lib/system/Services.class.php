@@ -17,7 +17,7 @@ require_once(SDIR.'lib/system/irc/LineManager.class.php');
 require_once(SDIR.'lib/system/irc/ProtocolManager.class.php');
 require_once(SDIR.'lib/system/irc/ServerManager.class.php');
 require_once(SDIR.'lib/system/language/LanguageManager.class.php');
-require_once(SDIR.'lib/system/log/IRCLogWriter.class.php');
+require_once(SDIR.'lib/system/log/irc.class.php');
 require_once(SDIR.'lib/system/module/ModuleManager.class.php');
 require_once(SDIR.'lib/system/timer/TimerManager.class.php');
 require_once(SDIR.'lib/system/user/BotManager.class.php');
@@ -56,60 +56,17 @@ class Services {
 	 * @var	array<LanguageManager>
 	 */
 	protected static $languages = array();
-	
-	/**
-	 * Contains the IRCLogWriter object
-	 * @var IRCLogWriter
-	 */
-	protected static $IrcLogWriter = null;
-	
-	/**
-	 * Contains the log writer
-	 * @var Zend_Log_Writer_Stream
-	 */
-	protected static $LogWriter = null;
-	
-	/**
-	 * Contains the log writer for debug outputs
-	 * @var Zend_Log_Writer_Stream
-	 */
-	protected static $DebugLogWriter = null;
-	
-	/**
-	 * Contains the log filter for debugging inputs
-	 * @var Zend_Log_Filter_Priority
-	 */
-	protected static $logWriterFilter = null;
-	
-	/**
-	 * Contains the log filter for irc debug outputs
-	 * @var Zend_Log_Filter_Priority
-	 */
-	protected static $logWriterIrcFilter = null;
-	
-	/**
-	 * Contains the log writer formatter for log outputs
-	 * @var Zend_Log_Formatter_Simple
-	 */
-	protected static $logWriterFormatter = null;
-	
-	/**
-	 * Contains a file stream
-	 * @var resource
-	 */
-	protected static $logWriterStream = null;
 
 	/**
 	 * Creates a new instance of Services
 	 */
 	public function __construct() {
-		global $argv;
 		// correct dir
 		@chdir(SDIR);
 		
 		try {
 			// read arguments
-			self::$managers['Arguments'] = new Zend_Console_Getopt(array('debug' => 'Enables debug mode', 'quiet|q' => 'Prints less output', 'config=s' => 'Define a config-file'));
+			self::$managers['Arguments'] = new Zend_Console_Getopt(array('debug' => 'Enables debug mode', 'quiet|q-i' => 'Prints less output',  'verbose|v-i' => 'Prints more output', 'config=s' => 'Define a config-file'));
 			self::getArguments()->parse();
 		}
 		catch (Zend_Console_Getopt_Exception $e) {
@@ -205,47 +162,39 @@ class Services {
 	 * @return void
 	 */
 	protected function initLog() {
-		// open file
-		self::$logWriterStream = fopen(SDIR.'logs/services-'.gmdate('M-d-Y').'.log', 'a', false);
-		
-		// create formatter
-		self::$logWriterFormatter = new Zend_Log_Formatter_Simple('[%timestamp%] %priorityName% (%priority%): %message%' . PHP_EOL);
-		 
-		// create log instances
-		self::$LogWriter = new Zend_Log_Writer_Stream(self::$logWriterStream);
-		self::$LogWriter->setFormatter(self::$logWriterFormatter);
-		
 		self::$managers['Logger'] = new Zend_Log();
-		
 		// set timestamp format
 		self::getLogger()->setTimestampFormat('H:i:s');
 		
 		// add irc debug level
 		self::getLogger()->addPriority('IRCDEBUG', 8);
 		
+		// create formatter
+		$formatter = new Zend_Log_Formatter_Simple('[%timestamp%] %priorityName% (%priority%): %message%' . PHP_EOL);
+		
 		// add file writer
-		self::getLogger()->addWriter(self::$LogWriter);
-		
+		$file = new Zend_Log_Writer_Stream(fopen(SDIR.'logs/services-'.gmdate('M-d-Y').'.log', 'a', false));
+		$file->setFormatter($formatter);
+		self::getLogger()->addWriter($file);
+
 		// add irc writer
-		self::$IrcLogWriter = new IRCLogWriter();
-		self::$IrcLogWriter->setFormatter(self::$logWriterFormatter);
-		self::getLogger()->addWriter(self::$IrcLogWriter);
+		$irc = new irc();
+		$irc->setFormatter($formatter);
+		$irc->addFilter(new Zend_Log_Filter_Priority(8, '<'));
+		self::getLogger()->addWriter($irc);
 		
-		// create debug log instances
-		if (DEBUG) {
-			self::$DebugLogWriter = new Zend_Log_Writer_Stream('php://output');
-			self::$DebugLogWriter->setFormatter(self::$logWriterFormatter);
-			self::getLogger()->addWriter(self::$DebugLogWriter);
-		} else {
-			self::$logWriterFilter = new Zend_Log_Filter_Priority(Zend_LOG::DEBUG, '<');
-			self::$LogWriter->addFilter(self::$logWriterFilter);
-			self::$IrcLogWriter->addFilter(self::$logWriterFilter);
+		$inline = new Zend_Log_Writer_Stream(STDOUT);
+		$inline->setFormatter($formatter);
+		self::getLogger()->addWriter($inline);
+		
+		if (!DEBUG) {
+			$filter = new Zend_Log_Filter_Priority(Zend_Log::ERR - (int) self::getArguments()->quiet + (int) self::getArguments()->verbose, '<=');
+			$inline->addFilter($filter);
+			$irc->addFilter($filter);
+			
+			$file->addFilter(new Zend_Log_Filter_Priority(Zend_Log::DEBUG, '<');
 		}
-		
-		// add special filter
-		self::$logWriterIrcFilter = new Zend_Log_Filter_Priority(8, '<');
-		self::$IrcLogWriter->addFilter(self::$logWriterIrcFilter);
-		
+				
 		// add log entry
 		self::getLogger()->info("Evil-Co.de Services ".SERVICES_VERSION." running on PHP ".phpversion());
 	}
