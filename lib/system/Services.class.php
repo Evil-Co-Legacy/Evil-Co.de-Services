@@ -5,8 +5,6 @@ if (!version_compare(PHP_VERSION, '5.3.0', '>=')) die("This application requires
 // defines
 define('IRCD', 'inspircd');
 define('SERVICES_VERSION', '2.0.0-eatsChildren');
-// Uncomment the following to enable debugging
-define('DEBUG', true);
 // set this to your location
 date_default_timezone_set('Europe/Berlin');
 
@@ -110,6 +108,10 @@ class Services {
 		
 		// read arguments
 		self::$managers['ArgumentParser'] = new ArgumentParser($argv);
+		
+		if (self::getArgumentParser()->get('argument', 'debug') || self::getArgumentParser()->get('flag', 'd')) {
+			define('DEBUG', true);
+		}
 		
 		// init components
 		$this->initLog();
