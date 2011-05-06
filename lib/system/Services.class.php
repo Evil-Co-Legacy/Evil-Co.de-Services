@@ -198,7 +198,7 @@ final class Services {
 		self::getLogger()->addWriter($inline);
 		
 		if (!DEBUG) {
-			$filter = new Zend_Log_Filter_Priority(min(0, max((Zeng_LOG::DEBUG - 1), Zend_Log::ERR - (int) self::getArguments()->quiet + (int) self::getArguments()->verbose)), '<=');
+			$filter = new Zend_Log_Filter_Priority(min(0, max((Zend_LOG::DEBUG - 1), Zend_Log::ERR - (int) self::getArguments()->quiet + (int) self::getArguments()->verbose)), '<=');
 			$inline->addFilter($filter);
 			$irc->addFilter($filter);
 			
