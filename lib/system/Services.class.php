@@ -33,7 +33,7 @@ require_once('Zend/Memory.php');
 /**
  * Manages all needed core instances
  *
- * @author	Johannes Donath, Tim Düsterhus
+ * @author	Johannes Donath, Tim Dï¿½sterhus
  * @copyright	2010 DEVel Fusion
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
@@ -111,6 +111,8 @@ class Services {
 		
 		if (self::getArgumentParser()->get('argument', 'debug') || self::getArgumentParser()->get('flag', 'd')) {
 			define('DEBUG', true);
+		} else {
+			define('DEBUG', false);
 		}
 		
 		// init components
