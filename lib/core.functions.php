@@ -41,11 +41,4 @@ function __autoload($className) {
 		return;
 	}
 }
-
-/**
- * @see Database::escapeString()
- */
-function escapeString($str) {
-	return Services::getDB()->escapeString($str);
-}
 ?>

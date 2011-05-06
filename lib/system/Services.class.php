@@ -109,7 +109,7 @@ class Services {
 		// read arguments
 		self::$managers['ArgumentParser'] = new ArgumentParser($argv);
 		
-		if (self::getArgumentParser()->get('argument', 'debug') || self::getArgumentParser()->get('flag', 'd')) {
+		if (self::getArgumentParser()->get('option', 'debug') || self::getArgumentParser()->get('flag', 'd')) {
 			define('DEBUG', true);
 		} else {
 			define('DEBUG', false);
@@ -165,7 +165,7 @@ class Services {
 	 */
 	protected function initConfiguration() {
 		// get from argumentList
-		$config = self::getArgumentParser()->get('argument', 'config');
+		$config = self::getArgumentParser()->get('option', 'config');
 		
 		// fallback
 		if ($config === null) $config = SDIR.'config/config.xml';
