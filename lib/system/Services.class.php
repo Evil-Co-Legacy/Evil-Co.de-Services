@@ -160,7 +160,7 @@ class Services {
 		if (file_exists(SDIR.'services.pid')) @unlink(SDIR.'services.pid');
 		
 		// add shutdown log entry
-		self::getLogger()->info("Shutting down ...");
+		if (isset(self::$managers['Logger']) && self::$managers['Logger'] !== null) self::self::$managers['Logger']->info("Shutting down ...");
 	}
 
 	/**
