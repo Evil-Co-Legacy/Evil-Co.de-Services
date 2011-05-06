@@ -53,7 +53,7 @@ class UserException extends RecoverableException {
 	public function sendDebugLog() {
 		parent::sendDebugLog();
 		
-		Services::getConnection()->sendLogLine("User: ".$this->user);
+		Services::getIRC()->sendLogLine("User: ".$this->user);
 	}
 }
 ?>
