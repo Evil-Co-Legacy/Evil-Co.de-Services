@@ -41,7 +41,7 @@ abstract class AbstractUserTypeManager implements UserTypeManager, Iterator {
 		$this->userList[$userID] = Services::getMemoryManager()->create(new $this->userType($userID, $data));
 		
 		// debug log
-		Services::getLog()->debug("Added a new user with ID ".$userID." to ".get_class($this));
+		Services::getLogger()->debug("Added a new user with ID ".$userID." to ".get_class($this));
 	}
 	
 	/**
@@ -60,7 +60,7 @@ abstract class AbstractUserTypeManager implements UserTypeManager, Iterator {
 		if (isset($this->userList[$userID])) unset($this->userList[$userID]);
 		
 		// debug log
-		Services::getLog()->debug("Removed the user with ID ".$userID." from ".get_class($this));
+		Services::getLogger()->debug("Removed the user with ID ".$userID." from ".get_class($this));
 	}
 	
 	// ITERATOR METHODS
