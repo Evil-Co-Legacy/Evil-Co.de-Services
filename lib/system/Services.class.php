@@ -151,9 +151,11 @@ class Services {
 		// call connection shutdown method
 		if (isset(self::$managers['IRC']) && self::$managers['IRC'] !== null && self::$managers['IRC']->isAlive()) self::$managers['IRC']->shutdown();
 		
-		$cacheFiles = glob(SDIR.'cache/*');
-		foreach ($cachesFiles as $file) {
-			unlink($file);
+		if (!DEBUG) {
+			$cacheFiles = glob(SDIR.'cache/*');
+			foreach ($cachesFiles as $file) {
+				unlink($file);
+			}
 		}
 		
 		// remove pidfile (if any)
