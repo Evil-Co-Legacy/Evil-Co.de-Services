@@ -29,11 +29,12 @@ require_once('Zend/Db.php');
 require_once('Zend/Log.php');
 require_once('Zend/Log/Writer/Stream.php');
 require_once('Zend/Memory.php');
+require_once('Zend/Console/Getopt.php');
 
 /**
  * Manages all needed core instances
  *
- * @author	Johannes Donath, Tim D�sterhus
+ * @author	Johannes Donath, Tim Düsterhus
  * @copyright	2010 DEVel Fusion
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
@@ -107,13 +108,10 @@ class Services {
 		@chdir(SDIR);
 		
 		// read arguments
-		self::$managers['ArgumentParser'] = new ArgumentParser($argv);
+		self::$managers['Arguments'] = new Zend_Console_Getopt(array('debug' => 'Enables debug mode', 'quiet|q' => 'Prints less output', 'config=s' => 'Define a config-file'));
+		self::getArgument()->parse();
 		
-		if (self::getArgumentParser()->get('option', 'debug') || self::getArgumentParser()->get('flag', 'd')) {
-			define('DEBUG', true);
-		} else {
-			define('DEBUG', false);
-		}
+		define('DEBUG', isset(self::getArguments()->debug));
 		
 		// init components
 		$this->initLog();
@@ -172,7 +170,7 @@ class Services {
 	 */
 	protected function initConfiguration() {
 		// get from argumentList
-		$config = self::getArgumentParser()->get('option', 'config');
+		$config = self::getArguments()->config;
 		
 		// fallback
 		if ($config === null) $config = SDIR.'config/config.xml';
