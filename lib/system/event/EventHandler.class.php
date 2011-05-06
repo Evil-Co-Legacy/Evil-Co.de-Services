@@ -36,7 +36,7 @@ class EventHandler {
 		$this->events[(is_string($targetClass) ? $targetClass : get_class($targetClass))][$targetEvent][] = $callback;
 		
 		// send debug line
-		Services::getLog()->debug("Registered event ".$targetEvent."@".(is_string($targetClass) ? $targetClass : get_class($targetClass)));
+		Services::getLogger()->debug("Registered event ".$targetEvent."@".(is_string($targetClass) ? $targetClass : get_class($targetClass)));
 	}
 	
 	/**
@@ -48,7 +48,7 @@ class EventHandler {
 	 */
 	public function fire($eventObj, $eventName, $data = array()) {
 		// log
-		Services::getLog()->debug("Firing event ".$eventName."@".(is_string($eventObj) ? $eventObj : get_class($eventObj)));
+		Services::getLogger()->debug("Firing event ".$eventName."@".(is_string($eventObj) ? $eventObj : get_class($eventObj)));
 		
 		// get parent classes
 		$familyTree = array();
@@ -77,7 +77,7 @@ class EventHandler {
 		}
 		
 		// send debug line
-		Services::getLog()->debug("Fired event ".$eventName."@".(is_string($eventObj) ? $eventObj : get_class($eventObj)));
+		Services::getLogger()->debug("Fired event ".$eventName."@".(is_string($eventObj) ? $eventObj : get_class($eventObj)));
 	}
 }
 ?>

@@ -37,10 +37,10 @@ class LineManager implements Iterator {
 		$this->lines[] = new Line($type, $mask, $setter, $timestamp, $duration, $reason);
 		
 		// fire event
-		Services::getEvent()->fire($this, 'lineAdded', array('type' => $type, 'mask' => $mask, 'setter' => $setter, 'timestamp' => $timestamp, 'duration' => $duration, 'reason' => $reason, 'lineID' => (count($this->lines) - 1)));
+		Services::getEventHandler()->fire($this, 'lineAdded', array('type' => $type, 'mask' => $mask, 'setter' => $setter, 'timestamp' => $timestamp, 'duration' => $duration, 'reason' => $reason, 'lineID' => (count($this->lines) - 1)));
 		
 		// send debug line
-		Services::getLog()->debug("Added line of type ".$type." for mask ".$mask." (Set by ".$setter." at ".$timestamp.") expiring in ".$duration." seconds with reason '".$reason."'");
+		Services::getLogger()->debug("Added line of type ".$type." for mask ".$mask." (Set by ".$setter." at ".$timestamp.") expiring in ".$duration." seconds with reason '".$reason."'");
 		
 		// return ID
 		return (count($this->lines) - 1);
@@ -87,10 +87,10 @@ class LineManager implements Iterator {
 		if (!isset($this->lines[$lineID])) throw new RecoverableException("Tried to remove an unknown line with ID '".$lineID."'");
 		
 		// fire event
-		Services::getEvent()->fire($this, 'lineRemoved', array('lineID' => $lineID));
+		Services::getEventHandler()->fire($this, 'lineRemoved', array('lineID' => $lineID));
 		
 		// send debug line
-		Services::getLog()->debug("Removed line with ID ".$lineID);
+		Services::getLogger()->debug("Removed line with ID ".$lineID);
 		
 		// remove line
 		unset($this->lines[$lineID]);

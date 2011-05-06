@@ -82,7 +82,7 @@ abstract class AbstractModeList implements ModeList, Iterator {
 	public static function loadMode($modeChar) {
 		if (!isset(self::$loadedModeInformation[$modeChar])) {
 			try {
-				$xml = new XML(Services::getProtocol()->getProtocolDir().'modes/'.static::$modeInformationFilename.'.xml');
+				$xml = new XML(Services::getProtocolManager()->getProtocolDir().'modes/'.static::$modeInformationFilename.'.xml');
 			} catch (SystemException $ex) {
 				throw new RecoverableException($ex->getMessage(), $ex->getCode());
 			}

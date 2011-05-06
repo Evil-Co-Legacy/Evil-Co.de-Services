@@ -68,33 +68,35 @@
 		<!-- 
 			[REQUIRED] Database Driver
 			The driver that should used
-			Available are:  MSAccess, MSSQL, MySQL, MySQLi, PostgreSQL, SQLite2
+			Available are:  pdo_ibm, pdo_mysql, pdo_dblib, pdo_oci, pdo_pgsql, pdo_sqlite, mysqli, oci8, ibm_db2, php_interbase
 		 -->
-		<driver>MySQL</driver>
+		<adapter>pdo_mysql</adapter>
 		
-		<!-- 
-			[REQUIRED] Database Hostname
-			The hostname where Database (e.g. MySQL) runs.
-		 -->
-		<hostname>localhost</hostname>
-		
-		<!-- 
-			[REQUIRED) Database Username
-			The username that should used for database connection (e.g. root)
-		 -->
-		<username>root</username>
-		
-		<!-- 
-			[REQUIRED) Database Password
-			The password of user that should used for database connection
-		 -->
-		<password></password>
-		
-		<!-- 
-			[REQUIRED] Database Name
-			The name of database that contains service data layout
-		 -->
-		<dbname>evilcode_services</dbname>
+		<params>
+			<!-- 
+				[REQUIRED] Database Hostname
+				The hostname where Database (e.g. MySQL) runs.
+			 -->
+			<host>localhost</host>
+			
+			<!-- 
+				[REQUIRED) Database Username
+				The username that should used for database connection (e.g. root)
+			 -->
+			<username>root</username>
+			
+			<!-- 
+				[REQUIRED) Database Password
+				The password of user that should used for database connection
+			 -->
+			<password></password>
+			
+			<!-- 
+				[REQUIRED] Database Name
+				The name of database that contains service data layout
+			 -->
+			<dbname>evilcode_services</dbname>
+		</params>
 	</database>
 	
 	<!-- 

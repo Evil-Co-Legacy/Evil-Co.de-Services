@@ -27,6 +27,7 @@ require_once(SDIR.'lib/system/user/UserManager.class.php');
 
 // Zend imports
 require_once('Zend/Config/Xml.php');
+require_once('zend/Db.php');
 require_once('Zend/Log.php');
 require_once('Zend/Log/Writer/Stream.php');
 require_once('Zend/Memory.php');
@@ -51,13 +52,6 @@ class Services {
 	protected static $managers = array();
 	
 	/**
-	 * Contains the Configuration object
-	 *
-	 * @var Configuration
-	 */
-	protected static $Config = null;
-	
-	/**
 	 * Contains the LanguageManager object
 	 *
 	 * @var	array<LanguageManager>
@@ -68,7 +62,7 @@ class Services {
 	 * Contains the IRCLogWriter object
 	 * @var IRCLogWriter
 	 */
-	protected static $IrcLogWriter= null;
+	protected static $IrcLogWriter = null;
 	
 	/**
 	 * Contains the log writer
@@ -148,10 +142,10 @@ class Services {
 	 */
 	public static function destruct() {
 		// call protocol shutdown method
-		if (self::$managers['ProtocolManager'] !== null && self::$managers['ProtocolManager']->isAlive() && self::$managers['Connection']->isAlive()) self::$managers['ProtocolManager']->shutdown();
+		if (self::$managers['ProtocolManager'] !== null && self::$managers['ProtocolManager']->isAlive() && self::$managers['IRC']->isAlive()) self::$managers['ProtocolManager']->shutdown();
 		
 		// call connection shutdown method
-		if (self::$managers['Connection'] !== null && self::$managers['Connection']->isAlive()) self::$managers['Connection']->shutdown();
+		if (self::$managers['IRC'] !== null && self::$managers['IRC']->isAlive()) self::$managers['IRC']->shutdown();
 		
 		// remove pidfile (if any)
 		if (file_exists(SDIR.'services.pid')) @unlink(SDIR.'services.pid');
@@ -166,8 +160,16 @@ class Services {
 	 * @return	void
 	 */
 	protected function initConfiguration() {
+		// get from argumentList
 		$config = self::getArgumentParser()->get('argument', 'config');
+		
+		// fallback
+		if ($config === null) $config = SDIR.'config/config.xml';
+		
+		// log event
 		self::getLogger()->info("Reading configuration file '".$config."'");
+		
+		// start config manager
 		self::$managers['Configuration'] = new Zend_Config_Xml($config);
 	}
 	
@@ -177,20 +179,8 @@ class Services {
 	 * @return	void
 	 */
 	protected function initDB() {
-		// validate
-		if (!isset(self::getConfiguration()->database->driver) or !isset(self::getConfiguration()->database->hostname) or !isset(self::getConfiguration()->database->username) or !isset(self::getConfiguration()->database->password) or !isset(self::getConfiguration()->database->dbname)) throw new SystemException("Invalid Database configuration!");
-		
-		// try to find database driver
-		if (!file_exists(SDIR.'lib/system/database/'.self::getConfiguration()->database->driver.'Database.class.php')) throw new SystemException("Invalid database driver: ".$db['driver']);
-
-		// get drivers classname
-		$className = self::getConfiguration()->database->driver.'Database';
-
-		// include driver
-		require_once(SDIR.'lib/system/database/'.$className.'.class.php');
-
-		// create new instance
-		self::$managers['DB'] = new $className(self::getConfiguration()->database->hostname, self::getConfiguration()->database->username, self::getConfiguration()->database->password, self::getConfiguration()->database->dbname, 'UTF-8');
+		self::$managers['DB'] = Zend_Db::factory(self::getConfiguration()->database);
+		self::$managers['DB']->setFetchMode(Zend_Db::FETCH_OBJ);
 	}
 	
 	/**
@@ -205,8 +195,8 @@ class Services {
 		self::$logWriterFormatter = new Zend_Log_Formatter_Simple('[%timestamp%] %priorityName% (%priority%): %message%' . PHP_EOL);
 		 
 		// create log instances
-		self::$logWriterObj = new Zend_Log_Writer_Stream(self::$logWriterStream);
-		self::$logWriterObj->setFormatter(self::$logWriterFormatter);
+		self::$LogWriter = new Zend_Log_Writer_Stream(self::$logWriterStream);
+		self::$LogWriter->setFormatter(self::$logWriterFormatter);
 		
 		self::$managers['Logger'] = new Zend_Log();
 		
@@ -217,33 +207,34 @@ class Services {
 		self::getLogger()->addPriority('IRCDEBUG', 8);
 		
 		// add file writer
-		self::getLogger()->addWriter(self::$logWriterObj);
+		self::getLogger()->addWriter(self::$LogWriter);
 		
 		// add irc writer
-		self::$logIrcWriterObj = new IRCLogWriter();
-		self::$logIrcWriterObj->setFormatter(self::$logWriterFormatter);
-		self::getLogger()->addWriter(self::$logIrcWriterObj);
+		self::$IrcLogWriter = new IRCLogWriter();
+		self::$IrcLogWriter->setFormatter(self::$logWriterFormatter);
+		self::getLogger()->addWriter(self::$IrcLogWriter);
 		
 		// create debug log instances
 		if (DEBUG) {
-			self::$logWriterDebugObj = new Zend_Log_Writer_Stream('php://output');
-			self::$logWriterDebugObj->setFormatter(self::$logWriterFormatter);
-			self::getLogger()->addWriter(self::$logWriterDebugObj);
+			self::$DebugLogWriter = new Zend_Log_Writer_Stream('php://output');
+			self::$DebugLogWriter->setFormatter(self::$logWriterFormatter);
+			self::getLogger()->addWriter(self::$DebugLogWriter);
 		} else {
-			self::$logWriterFilterObj = new Zend_Log_Filter_Priority(Zend_LOG::DEBUG, '<');
-			self::$logWriterObj->addFilter(self::$logWriterFilterObj);
-			self::$logIrcWriterObj->addFilter(self::$logWriterFilterObj);
+			self::$logWriterFilter = new Zend_Log_Filter_Priority(Zend_LOG::DEBUG, '<');
+			self::$LogWriter->addFilter(self::$logWriterFilter);
+			self::$IrcLogWriter->addFilter(self::$logWriterFilter);
 		}
 		
 		// add special filter
-		self::$logWriterIrcFilterObj = new Zend_Log_Filter_Priority(8, '<');
-		self::$logIrcWriterObj->addFilter(self::$logWriterIrcFilterObj);
+		self::$logWriterIrcFilter = new Zend_Log_Filter_Priority(8, '<');
+		self::$IrcLogWriter->addFilter(self::$logWriterIrcFilter);
 		
 		// add log entry
 		self::getLogger()->info("Evil-Co.de Services ".SERVICES_VERSION." running on PHP ".phpversion());
 	}
 	
-	public static function __callStatic($function, $args) {
+	public static function __callStatic($function, $args) {
+		if (!isset(self::$managers[substr($function, 3)])) return null;
 		return self::$managers[substr($function, 3)];
 	}
 
@@ -306,7 +297,7 @@ class Services {
 		// Call shutdown methods if the given exception isn't recoverable (UserExceptions and RecoverableExceptions)
 		if (!($ex instanceof RecoverableException)) {
 			// call connection shutdown method
-			if (self::getConnection() !== null && self::getProtocolManager() !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage())
+			if (self::getConnection() !== null && self::getProtocolManager() !== null) self::getConnection()->getProtocol()->shutdownConnection($ex->getMessage());
 		
 			// kill services :>
 			exit;

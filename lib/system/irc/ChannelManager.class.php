@@ -53,7 +53,7 @@ class ChannelManager implements Iterator {
 		$this->channelList[$channelName] = Services::getMemoryManager()->create(serialize(new Channel($channelName, $data)));
 		
 		// log
-		Services::getLog()->info("Created channel ".$channelName);
+		Services::getLogger()->info("Created channel ".$channelName);
 	}
 	
 	/**
@@ -89,7 +89,7 @@ class ChannelManager implements Iterator {
 		unset($this->channelList[$channelName]);
 		
 		// log
-		Services::getLog()->info("Deleted channel ".$channelName);
+		Services::getLogger()->info("Deleted channel ".$channelName);
 	}
 	
 	// ITERATOR METHODS

@@ -21,7 +21,7 @@ class METADATA extends CommandParser {
 		Services::getUserManager()->getUser($lineEx[1])->__set($lineEx[2], substr($line, (stripos($line, ':') + 1)));
 		
 		// log
-		Services::getLog()->debug("Set metadata '".$lineEx[2]."' for user ".Services::getUserManager()->getUser($lineEx[1])->nickname);
+		Services::getLogger()->debug("Set metadata '".$lineEx[2]."' for user ".Services::getUserManager()->getUser($lineEx[1])->nickname);
 	}
 }
 ?>
