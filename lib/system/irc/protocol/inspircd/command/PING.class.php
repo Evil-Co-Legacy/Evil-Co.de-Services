@@ -15,10 +15,10 @@ class PING extends CommandParser {
 	 */
 	public function parse($line, $lineEx, $source = null) {
 		// send ping
-		Services::getProtocol()->sendPong($lineEx[1]);
+		Services::getProtocolManager()->sendPong($lineEx[1]);
 		
 		// send log line
-		Services::getLog()->debug("Ping from ".$lineEx[1]." -> Pong");
+		Services::getLogger()->debug("Ping from ".$lineEx[1]." -> Pong");
 	}
 }
 ?>
