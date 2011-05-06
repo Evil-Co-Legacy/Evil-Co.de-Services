@@ -52,13 +52,6 @@ class Services {
 	protected static $managers = array();
 	
 	/**
-	 * Contains the Configuration object
-	 *
-	 * @var Configuration
-	 */
-	protected static $Config = null;
-	
-	/**
 	 * Contains the LanguageManager object
 	 *
 	 * @var	array<LanguageManager>
@@ -186,7 +179,7 @@ class Services {
 	 * @return	void
 	 */
 	protected function initDB() {
-		self::$managers['DB'] = Zend_Db::factory(self::$Config->database);
+		self::$managers['DB'] = Zend_Db::factory(self::getConfiguration()->database);
 	}
 	
 	/**
