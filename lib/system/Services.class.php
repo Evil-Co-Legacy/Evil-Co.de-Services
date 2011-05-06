@@ -275,8 +275,9 @@ class Services {
 	 * @return	void
 	 */
 	protected function initConfiguration() {
-		self::$loggerObj->info("Reading configuration file '".SDIR.'config/config.xml'."'");
-		self::$configObj = new Zend_Config_Xml(SDIR.'config/config.xml');
+		$config = self::$argumentParser->get('argument', 'config');
+		self::$loggerObj->info("Reading configuration file '".$config."'");
+		self::$configObj = new Zend_Config_Xml($config);
 	}
 	
 	/**
