@@ -213,9 +213,10 @@ final class Services {
 			$file->addFilter(new Zend_Log_Filter_Priority(Zend_Log::DEBUG, '<'));
 		}
 		else {
-			$filter = new Zend_Log_Filter_Priority(Zend_Log::DEBUG, '<=');
+			$filter = new Zend_Log_Filter_Priority(8, '<=');
 			$inline->addFilter($filter);
 			$file->addFilter($filter);
+			$irc->addFilter(new Zend_Log_Filter_Priority(Zend_Log::DEBUG, '<='));
 		}
 
 		// add log entry
