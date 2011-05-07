@@ -1,18 +1,20 @@
 <?php
-
 /**
  * Manages external access
  *
  * @author	Tim Düsterhus
- * @copyright	2010 DEVel Fusion
+ * @copyright	2011 DEVel Fusion
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class ExternalManager {
 
-	public function __construct() {
+	public function __construct() { }
 
-	}
-
+	/**
+	 * Executes actions
+	 *
+	 * @return void
+	 */
 	public function fire() {
 		$sql = "SELECT *
 			FROM	external_actions";

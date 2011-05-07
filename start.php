@@ -2,8 +2,8 @@
 /**
  * Starts the services
  *
- * @author	Johannes Donath
- * @copyright	2010 DEVel Fusion
+ * @author	Johannes Donath, Tim Düsterhus
+ * @copyright	2010 - 2011 DEVel Fusion
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
  

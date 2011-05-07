@@ -2,15 +2,16 @@
 /**
  * Creates autoloader and error handlers
  *
- * @author	Johannes Donath
- * @copyright	2010 DEVel Fusion
+ * @author	Johannes Donath, Tim Düsterhus
+ * @copyright	2010 - 2011 DEVel Fusion
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
+ 
 // define exception handler
 set_exception_handler(array('Services', 'handleException'));
 
 // define error handler
-set_error_handler(array('Services', 'handleError'), E_ALL);
+set_error_handler(array('Services', 'handleError'), E_ALL | E_NOTICE | E_STRICT | E_DEPRECATED);
 
 // define shutdown method
 register_shutdown_function(array('Services', 'destruct'));
