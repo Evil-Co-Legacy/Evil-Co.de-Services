@@ -333,7 +333,7 @@ final class Services {
 	}
 	
 	public static function updateTitle() {
-		if (function_exists('setproctitle') setproctitle('Evil-Co.de - Services v'.self::VERSION);
+		if (function_exists('setproctitle')) setproctitle('Evil-Co.de - Services v'.self::VERSION);
 	}
 	
 	public static function getRandomString() {
