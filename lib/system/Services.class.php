@@ -22,17 +22,6 @@ require_once(SDIR.'lib/system/timer/TimerManager.class.php');
 require_once(SDIR.'lib/system/user/BotManager.class.php');
 require_once(SDIR.'lib/system/user/UserManager.class.php');
 
-// Zend imports
-require_once('Zend/Config/Xml.php');
-require_once('Zend/Db.php');
-require_once('Zend/Log.php');
-require_once('Zend/Log/Writer/Stream.php');
-require_once('Zend/Memory.php');
-require_once('Zend/Console/Getopt.php');
-require_once('Zend/Text/Figlet.php');
-require_once('Zend/ProgressBar.php');
-require_once('Zend/ProgressBar/Adapter/Console.php');
-
 /**
  * Manages all needed core instances
  *

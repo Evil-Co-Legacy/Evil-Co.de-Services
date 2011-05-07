@@ -24,6 +24,10 @@ if (function_exists('pcntl_signal')) {
 	pcntl_signal(SIGHUP, array('Services', 'signalHandler'));
 }
 
+// Zend loader
+require_once('Zend/Loader/Autoloader.php');
+Zend_Loader_Autoloader::getInstance();
+
 /**
  * Autoloads default classes
  *
