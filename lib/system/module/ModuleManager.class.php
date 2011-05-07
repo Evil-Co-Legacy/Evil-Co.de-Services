@@ -231,7 +231,7 @@ class ModuleManager implements Iterator {
 				// create instances
 				foreach($modules as $module) {
 					$place = $this->getModule($module->moduleName);
-					if ($place === null) $this->loadModule($module->moduleName);
+					if ($place === self::NONEXISTANT_MODULE_INSTANCE) $this->loadModule($module->moduleName);
 					$this->moduleInstances[] = new ModuleInstance($this->getModule($module->moduleName));
 				}
 			break;
