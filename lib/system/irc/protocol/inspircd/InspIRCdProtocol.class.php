@@ -212,6 +212,18 @@ class InspIRCdProtocol implements Protocol {
 		}
 	}
 
+	protected function parseSTDIN() {
+		$read = array();
+		$read[] = STDIN;
+		$write = $except = null;
+		$tv = 0;
+		stream_select($read, $write, $except, $tv);
+		if (count($read)) {
+			$data = @fread(STDIN, 1500);
+			// do sth
+		}
+	}
+	
 	/**
 	 * @see Protocol::shutdown()
 	 */
