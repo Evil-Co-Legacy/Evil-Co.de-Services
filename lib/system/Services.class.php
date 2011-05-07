@@ -88,7 +88,7 @@ final class Services {
 			exit;
 		}
 
-		$f = new Zend_Text_Figlet(array('smushMode' => 7));
+		$f = new Zend_Text_Figlet(array('smushMode' => 7, 'font' => SDIR.'font.gz'));
 		echo $f->render('Services');
 
 		define('DEBUG', isset(self::getArguments()->debug));
