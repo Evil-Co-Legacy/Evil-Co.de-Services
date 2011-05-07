@@ -89,7 +89,8 @@ final class Services {
 		}
 
 		$f = new Zend_Text_Figlet(array('smushMode' => 7, 'font' => SDIR.'font.gz'));
-		echo $f->render('Services');
+		echo $f->render('Evil-Co.de - Services');
+                echo $f->render('v'.self::VERSION);
 
 		define('DEBUG', isset(self::getArguments()->debug));
 
