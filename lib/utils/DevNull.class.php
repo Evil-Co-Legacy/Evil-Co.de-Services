@@ -14,7 +14,7 @@ class DevNull {
 	 *
 	 * @return integer
 	 */
-	public function getTheAnswerOfLifeTheUniverseAndEverything() {
+	public static final function getTheAnswerOfLifeTheUniverseAndEverything() {
 		return self::HALF_ANSWER * 2;
 	}
 }
