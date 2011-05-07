@@ -33,7 +33,7 @@ Zend_Loader_Autoloader::getInstance();
  *
  * @param	string	$className
  */
-function __autoload($className) {
+spl_autoload_register(function ($className) {
 	// autoload utils
 	if (file_exists(SDIR.'lib/utils/'.$className.'.class.php')) {
 		require_once(SDIR.'lib/utils/'.$className.'.class.php');
@@ -45,5 +45,5 @@ function __autoload($className) {
 		require_once(SDIR.'lib/system/exception/'.$className.'.class.php');
 		return;
 	}
-}
+});
 ?>
