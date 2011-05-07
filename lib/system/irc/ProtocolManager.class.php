@@ -142,22 +142,15 @@ class ProtocolManager {
 	 */
 	protected function readProtocolInformation($protocol) {
 		try {
-			$xml = new XML(SDIR.self::PROTOCOL_PATH.$protocol.'/protocol.xml');
-		} catch (SystemException $ex) {
+			$dom = new DOMDocument();
+			$dom->load(DIR.self::PROTOCOL_PATH.$protocol.'/protocol.xml');
+			
+			foreach($dom->documentElement->childNodes as $item) {
+				$this->protocolInformation[(string) $item->nodeName] = $item->textContent;
+			}
+		} catch (DOMException $ex) {
 			// replace SystemExceptions with correct ProtocolException
 			throw new ProtocolException("Cannot read protocol information: ".$ex->getMessage());
-		}
-
-		// get protocol tree
-		$data = $xml->getElementTree('protocol');
-
-		// read information
-		foreach($data['children'] as $child) {
-			// remove elements without content
-			if (!isset($child['cdata'])) continue;
-
-
-			$this->protocolInformation[$child['name']] = $child['cdata'];
 		}
 
 		// validate protocol information
@@ -170,21 +163,15 @@ class ProtocolManager {
 	 */
 	protected function readSupportedTypes($protocol) {
 		try {
-			$xml = new XML(SDIR.self::PROTOCOL_PATH.$protocol.'/types.xml');
-		} catch (SystemException $ex) {
+			$dom = new DOMDocument();
+			$dom->load(DIR.self::PROTOCOL_PATH.$protocol.'/types.xml');
+			
+			foreach($dom->documentElement->childNodes as $item) {
+				$this->supportedTypes[(string) $item->nodeName->attributes->getNamedItem('type')] = $item->textContent;
+			}
+		} catch (DOMException $ex) {
 			// replace SystemExceptions with correct ProtocolException
 			throw new ProtocolException("Cannot read protocol information: ".$ex->getMessage());
-		}
-
-		// get protocol tree
-		$data = $xml->getElementTree('types');
-
-		// read information
-		foreach($data['children'] as $child) {
-			// remove elements without content
-			if (!isset($child['cdata']) or !isset($child['attrs']['type'])) continue;
-
-			$this->supportedTypes[$child['attrs']['name']] = $child['cdata'];
 		}
 	}
 
