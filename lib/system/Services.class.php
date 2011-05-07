@@ -93,33 +93,53 @@ final class Services {
 		$f = new Zend_Text_Figlet(array('smushMode' => 7, 'font' => SDIR.'font.gz'));
 		echo $f->render('Evil-Co.de - Services');
                 echo $f->render('v'.self::VERSION);
-		$progressBar = new Zend_ProgressBar(new Zend_ProgressBar_Adapter_Console(array('elements' => array(Zend_Console_ProgressBar::ELEMENT_PERCENT, Zend_Console_ProgressBar::BAR))), 0, 14);
+		$progressBar = new Zend_ProgressBar(new Zend_ProgressBar_Adapter_Console(array('elements' => array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT, Zend_ProgressBar_Adapter_Console::BAR))), 0, 14);
 
 		define('DEBUG', isset(self::getArguments()->debug));
 
 		// init components
 		$this->initLog();
 		$progressBar->update(1);
-		sleep(1);
+		sleep(rand(1,3));
 		$this->initConfiguration();
 		$progressBar->update(2);
-		sleep(1);
+		sleep(rand(1,3));
 		self::$managers['EventHandler'] = new EventHandler();
 		$progressBar->update(3);
-		sleep(1);
+		sleep(rand(1,3));
 		self::$managers['TimerManager'] = new TimerManager();
 		$progressBar->update(4);
-		sleep(1);
+		sleep(rand(1,3));
 		$this->initDB();
+		$progressBar->update(5);
+		sleep(rand(1,3));
 		self::$managers['MemoryManager'] = Zend_Memory::factory('File', array('cache_dir' => self::MEMORY_CACHE_DIR));
+		$progressBar->update(6);
+		sleep(rand(1,3));
 		self::$managers['UserManager'] = new UserManager();
+		$progressBar->update(7);
+		sleep(rand(1,3));
 		self::$managers['BotManager'] = new BotManager();
+		$progressBar->update(8);
+		sleep(rand(1,3));
 		self::$managers['ChannelManager'] = new ChannelManager();
+		$progressBar->update(9);
+		sleep(rand(1,3));
 		self::$managers['ServerManager'] = new ServerManager();
+		$progressBar->update(10);
+		sleep(rand(1,3));
 		self::$managers['LineManager'] = new LineManager();
+		$progressBar->update(11);
+		sleep(rand(1,3));
 		self::$managers['ModuleManager'] = new ModuleManager();
+		$progressBar->update(12);
+		sleep(rand(1,3));
 		self::$managers['IRC'] = new IRC();
+		$progressBar->update(13);
+		sleep(rand(1,3));
 		self::$managers['ProtocolManager'] = new ProtocolManager();
+		$progressBar->update(14);
+		sleep(rand(1,3));
 		$progressBar->finish();
 		// start connection
 		self::getProtocolManager()->initConnection();
