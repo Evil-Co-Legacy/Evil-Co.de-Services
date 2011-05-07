@@ -42,53 +42,37 @@ class ModuleCacheManager {
 		if (!preg_match(self::MODULE_NAME_PATTERN, $moduleName)) throw new ModuleException("Invalid module name '%s'", $moduleName);
 
 		// get path
-		if (file_exists(SDIR.'modules/bot/'.ucfirst($moduleName).'BotModule.class.php')) $path = SDIR.'modules/bot/'.ucfirst($moduleName).'BotModule.class.php';
-		if (file_exists(SDIR.'modules/command/'.ucfirst($moduleName).'CommandModule.class.php')) $path = SDIR.'modules/command/'.ucfirst($moduleName).'CommandModule.class.php';
-		if (file_exists(SDIR.'modules/extension/'.ucfirst($moduleName).'ExtensionModule.class.php')) $path = SDIR.'modules/extension/'.ucfirst($moduleName).'ExtensionModule.class.php';
+		if (file_exists(SDIR.'modules/bot/'.ucfirst($moduleName).'.phar')) $path = SDIR.'modules/bot/'.ucfirst($moduleName).'BotModule.class.php';
+		if (file_exists(SDIR.'modules/command/'.ucfirst($moduleName).'.phar')) $path = SDIR.'modules/command/'.ucfirst($moduleName).'CommandModule.class.php';
+		if (file_exists(SDIR.'modules/extension/'.ucfirst($moduleName).'phar')) $path = SDIR.'modules/extension/'.ucfirst($moduleName).'ExtensionModule.class.php';
 
 		// no path found
 		if (!isset($path)) throw new ModuleException("Cannot find module '%s'", $moduleName);
 
 		// debug
-		Services::getLogger()->debug("Creating first cache file  for module '".$moduleName."'");
-
-		// let's have some fun with namespaces
-		$tempFile = file_get_contents($path);
-		$tempFile = str_replace("<?php", "<?php\nnamespace Cached".$loadedModuleInstance->getModuleHash().";", $tempFile);
-		$tempFile = str_replace("extends ", "extends \\", $tempFile);
-		$tempFile = str_replace("new ", "new \\", $tempFile);
-		$tempFile = preg_replace("~([A-Z]([A-Z0-9_\-]+))::([A-Z0-9]+)\((.*)\)~i", "\\$1::$2($3)", $tempFile);
-/*		file_put_contents(SDIR.'cache/load.'.$moduleName.'.cache', $tempFile);
-
-		// debug
-		Services::getLogger()->debug("Getting module information from cache file '".SDIR.'cache/load.'.$moduleName.'.cache'."'");
-
+		Services::getLogger()->debug("Loading module phar for module '".$moduleName."'");
+		
+		// no information files found ...
+		if (!file_exists('phar://'.$path.'/module.xml')) throw new ModuleException("Invalid module. You've forgotten the module.xml NUB!");
+		
 		// get module information
-		$generator = Zend_CodeGenerator_Php_File::fromReflectedFileName(SDIR.'cache/load.'.$moduleName.'.cache');
-
-		// delete cache file
-		unlink(SDIR.'cache/load.'.$moduleName.'.cache');
-
-		// debug
-		Services::getLogger()->debug("Preparing new file ...");
-
-		// set new classname
-		$generator->getClass(basename($path, '.class.php'))->setName("Cache".$loadedModuleInstance->getModuleHash());
-
-		// debug
-		Services::getLogger()->debug("Generating second cache file ...");
-*/
-		// write cache file
-		file_put_contents(SDIR.'cache/'.$loadedModuleInstance->getModuleHash().'.php', $tempFile);
-
-		// include file
-		require_once(SDIR.'cache/'.$loadedModuleInstance->getModuleHash().'.php');
-
-		// eval code
-		/* eval('?>'.$file->generate()); */
-
-		// debug
-		Services::getLogger()->debug("Successfully loaded second cache file");
+		try {
+			$moduleInformationContent = file_get_contents('phar://'.$path.'/module.xml');
+		} Catch (PharException $ex) {
+			throw new ModuleException($ex->getMessage());
+		} Catch (SystemException $ex) {
+			throw new ModuleException($ex->getMessage());
+		}
+		
+		try {
+			$moduleInformation = new Zend_Config_Xml($moduleInformationContent);
+		} Catch(Zend_Exception $ex) {
+			throw new ModuleException($ex->getMessage());
+		}
+		
+		unset($moduleInformationContent); // we'll safe memory here ...
+		
+		
 
 		// return class name
 		return $loadedModuleInstance->getModuleHash();
