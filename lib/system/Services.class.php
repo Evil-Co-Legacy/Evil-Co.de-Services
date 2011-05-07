@@ -93,7 +93,7 @@ final class Services {
 		$f = new Zend_Text_Figlet(array('smushMode' => 7, 'font' => SDIR.'font.gz'));
 		echo $f->render('Evil-Co.de - Services');
                 echo $f->render('v'.self::VERSION);
-		$progressBar = new Zend_ProgressBar(new Zend_ProgressBar_Adapter_Console(array('elements' => array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT, Zend_ProgressBar_Adapter_Console::BAR))), 0, 14);
+		$progressBar = new Zend_ProgressBar(new Zend_ProgressBar_Adapter_Console(array('elements' => array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT, Zend_ProgressBar_Adapter_Console::ELEMENT_BAR))), 0, 14);
 
 		define('DEBUG', isset(self::getArguments()->debug));
 
