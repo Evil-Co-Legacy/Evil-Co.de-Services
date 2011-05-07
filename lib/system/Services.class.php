@@ -340,7 +340,7 @@ final class Services {
 		return sha1(rand().microtime());
 	}
 
-	public function removeCR($string) {
+	public static function removeCR($string) {
 		return str_replace(array("\r\n", "\r"), "\n", $string);
 	}
 }
