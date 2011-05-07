@@ -75,7 +75,7 @@ class ModuleManager implements Iterator {
 	/**
 	 * @see Iterator::current()
 	 */
-	public function &current() {
+	public function current() {
 		// get keys
 		$keys = array_keys($this->moduleInstances);
 
@@ -86,7 +86,7 @@ class ModuleManager implements Iterator {
 	 * Returns the instance of given module
 	 * @param	string	$moduleName
 	 */
-	public function &getModuleInstance($moduleName) {
+	public function getModuleInstance($moduleName) {
 		foreach($this as $module) {
 			if ($module->moduleName == $moduleName) return $moduleName;
 		}
@@ -98,8 +98,9 @@ class ModuleManager implements Iterator {
 	 * Returns the information object for given module
 	 * @param	string	$moduleName
 	 */
-	public function &getModule($moduleName) {
+	public function getModule($moduleName) {
 		if (($key = $this->getModuleKey($moduleName)) !== null) return $this->loadedModules[$key];
+		
 		return self::NONEXISTANT_MODULE_INSTANCE;
 	}
 
