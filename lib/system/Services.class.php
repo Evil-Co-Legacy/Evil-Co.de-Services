@@ -61,6 +61,8 @@ final class Services {
 		}
 
 		self::$instanciated = true;
+		self::updateTitle();
+		
 		// correct dir
 		@chdir(DIR);
 
@@ -329,7 +331,11 @@ final class Services {
 				self::$managers['ExternalManager']->fire();
 		}
 	}
-
+	
+	public static function updateTitle() {
+		if (function_exists('setproctitle') setproctitle('Evil-Co.de - Services v'.self::VERSION);
+	}
+	
 	public static function getRandomString() {
 		return sha1(rand().microtime());
 	}
