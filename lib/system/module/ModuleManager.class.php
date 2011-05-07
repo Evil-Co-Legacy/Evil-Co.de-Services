@@ -20,7 +20,7 @@ class ModuleManager implements Iterator {
 	 * This is a little workaround. We'll return references to modules in this class. But we can't create a pointer to 'null'
 	 * @var null
 	 */
-	const NONEXISTANT_MODULE_INSTANCE = null;
+	const NONEXISTANT_MODULE_INSTANCE = 1;
 
 	/**
 	 * Contains the pointer for iterator methods
@@ -230,9 +230,11 @@ class ModuleManager implements Iterator {
 
 				// create instances
 				foreach($modules as $module) {
+					$place = $this->getModule($module->moduleName);
+					if ($place === null) $this->loadModule($module->moduleName);
 					$this->moduleInstances[] = new ModuleInstance($this->getModule($module->moduleName));
 				}
-				break;
+			break;
 		}
 	}
 
