@@ -27,6 +27,8 @@ class ModuleCacheManager {
 	 * Constructor is marked as protected for factory pattern
 	 */
 	protected function __construct() { }
+	
+	private function __clone() { }
 
 	/**
 	 * Generates and loades a new module cache
@@ -93,11 +95,12 @@ class ModuleCacheManager {
 
 	/**
 	 * Returnes an instance of ModuleCacheManager
+	 *
 	 * @return ModuleCacheManager
 	 */
 	public static function getInstance() {
 		if (self::$instance === null) {
-			self::$instance = new ModuleCacheManager();
+			self::$instance = new static();
 		}
 
 		return self::$instance;
