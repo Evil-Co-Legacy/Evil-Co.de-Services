@@ -4,10 +4,6 @@ require_once(SDIR.'lib/system/module/LoadedModule.class.php');
 require_once(SDIR.'lib/system/module/ModuleInstance.class.php');
 require_once(SDIR.'lib/system/module/ModuleStore.class.php');
 
-// Zend imports
-require_once('Zend/CodeGenerator/Php/Class.php');
-require_once('Zend/Reflection/Class.php');
-
 /**
  * Manages modules
  * @author		Johannes Donath

@@ -1,7 +1,4 @@
 <?php
-// Zend imports
-require_once('Zend/Exception.php');
-
 /**
  * Exception for system errors
  *

@@ -1,8 +1,4 @@
 <?php
-// zend imports
-require_once('Zend/CodeGenerator/Php/File.php');
-require_once('Zend/Reflection/File.php');
-
 /**
  * Generates cache files for modules
  *
