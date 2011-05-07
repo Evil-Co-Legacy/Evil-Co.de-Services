@@ -15,8 +15,8 @@
 
 	<!-- [OPTIONAL] Dependencies -->
 	<dependencies>
-		<dependency value="AuthServ" /> <!-- Requires AuthServ ... -->
-		<dependency value="ChanServ" /> <!-- Requires ChanServ ... -->
-		<dependency value="OpServ" /> <!-- Required OpServ ... -->
+		<dependencyOne value="AuthServ" /> <!-- Requires AuthServ ... -->
+		<dependencyTwo value="ChanServ" /> <!-- Requires ChanServ ... -->
+		<dependencyThree value="OpServ" /> <!-- Required OpServ ... -->
 	</dependencies>
 </module>
