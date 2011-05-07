@@ -24,7 +24,7 @@ class ModuleCacheManager {
 	 * Constructor is marked as protected for factory pattern
 	 */
 	protected function __construct() { }
-	
+
 	private function __clone() { }
 
 	/**

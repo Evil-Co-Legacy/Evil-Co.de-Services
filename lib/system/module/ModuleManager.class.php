@@ -96,7 +96,7 @@ class ModuleManager implements Iterator {
 	 */
 	public function getModule($moduleName) {
 		if (($key = $this->getModuleKey($moduleName)) !== null) return $this->loadedModules[$key];
-		
+
 		return self::NONEXISTANT_MODULE_INSTANCE;
 	}
 

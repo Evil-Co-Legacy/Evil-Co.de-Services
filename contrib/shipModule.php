@@ -2,7 +2,7 @@
 /**
  * This is a little php script that makes it easy to ship modules (You'll need to set the ini variable 'phar.readonly' to zero!)
  * @author	Johannes Donath
- * @copyright	
+ * @copyright
  */
 
 // check configuration

@@ -200,9 +200,9 @@ class InspIRCdProtocol implements Protocol {
 					$line = Services::getIRC()->readLine();
 					InspIRCdProtocolParser::handleCommand($line);
 				}
-			
+
 				$this->parseSTDIN();
-				
+
 				// handle timers
 				Services::getTimerManager()->execute();
 
@@ -226,7 +226,7 @@ class InspIRCdProtocol implements Protocol {
 			// do sth
 		}
 	}
-	
+
 	/**
 	 * @see Protocol::shutdown()
 	 */

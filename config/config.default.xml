@@ -2,44 +2,44 @@
 <!DOCTYPE config SYSTEM "http://www.evil-co.de/irc/DTDs/config.dtd">
 <config>
 	<connection>
-		<!-- 
+		<!--
 			[REQUIRED]] Services name
 			This will used to identify at IRCd
 		 -->
 		<name>test.antaresirc.de</name>
-		
-		<!-- 
+
+		<!--
 			[REQUIRED] Hostname
 			The hostname where the IRCd runs
 		 -->
 		<hostname>antaresirc.de</hostname>
-		
-		<!-- 
+
+		<!--
 			[REQUIRED] Port
 			The port where services should connect
 		 -->
 		<port>7000</port>
-		
-		<!-- 
+
+		<!--
 			[REQUIRED] Password
 			The password for link connection
 		 -->
 		<password>foobar</password>
-		
+
 		<!--
 			[REQUIRED] Numeric
 			The numeric for services
 			If you don't know what this is leave it at default!
 		 -->
 		 <numeric>00B</numeric>
-	 	 
-	 	 <!-- 
+
+	 	 <!--
 	 	 	[REQUIRED] Protocol
 	 	 	The protocol that should used
 	 	 	Available are: inspircd
 	 	 -->
 	 	 <protocol>inspircd</protocol>
-	 	 
+
 	 	 <!--
 	 	 	[EXPERIMENTAL] HMAC
 	 	 	The type of HMAC that should used.
@@ -50,48 +50,48 @@
 	 	 		<other by php supported types>
 	 	  -->
 	 	 <hmac>none</hmac>
-	 	 
-	 	 <!-- 
+
+	 	 <!--
 	 	 	[REQUIRED] IP Protocol Version
-	 	 	Sets the 
+	 	 	Sets the
 	 	  -->
 	 	 <ipversion>4</ipversion>
-	 	 
-	 	 <!-- 
+
+	 	 <!--
 	 	 	[REQUIRED] Logchan
 	 	 	The channel where services should announce log messages
 	 	  -->
 	 	 <servicechannel><![CDATA[#Services]]></servicechannel>
 	</connection>
-	
+
 	<database>
-		<!-- 
+		<!--
 			[REQUIRED] Database Driver
 			The driver that should used
 			Available are:  pdo_ibm, pdo_mysql, pdo_dblib, pdo_oci, pdo_pgsql, pdo_sqlite, mysqli, oci8, ibm_db2, php_interbase
 		 -->
 		<adapter>pdo_mysql</adapter>
-		
+
 		<params>
-			<!-- 
+			<!--
 				[REQUIRED] Database Hostname
 				The hostname where Database (e.g. MySQL) runs.
 			 -->
 			<host>localhost</host>
-			
-			<!-- 
+
+			<!--
 				[REQUIRED) Database Username
 				The username that should used for database connection (e.g. root)
 			 -->
 			<username>root</username>
-			
-			<!-- 
+
+			<!--
 				[REQUIRED) Database Password
 				The password of user that should used for database connection
 			 -->
 			<password></password>
-			
-			<!-- 
+
+			<!--
 				[REQUIRED] Database Name
 				The name of database that contains service data layout
 			 -->
