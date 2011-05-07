@@ -5,6 +5,7 @@ require_once('Zend/Log/Formatter/Simple.php');
 
 /**
  * Custom log writer that logs to service-channel
+ *
  * @author		Johannes Donath
  * @copyright		2011 DEVel Fusion
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

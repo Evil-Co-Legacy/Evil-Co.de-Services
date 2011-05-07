@@ -5,9 +5,10 @@ require_once('Zend/Reflection/File.php');
 
 /**
  * Generates cache files for modules
- * @author		Johannes Donath
- * @copyright		2011 DEVel Fusion
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @author	Johannes Donath, Tim Düsterhus
+ * @copyright	2010 - 2011 DEVel Fusion
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class ModuleCacheManager {
 
