@@ -1,6 +1,6 @@
 <?php
 // imports
-require_once(SDIR.'lib/system/irc/AbstractArgumentList.class.php');
+require_once(DIR.'lib/system/irc/AbstractArgumentList.class.php');
 
 /**
  * Default argument list

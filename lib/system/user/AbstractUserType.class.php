@@ -1,6 +1,6 @@
 <?php
 // imports
-require_once(SDIR.'lib/system/user/UserType.class.php');
+require_once(DIR.'lib/system/user/UserType.class.php');
 
 /**
  * Defines defaults for user types

@@ -8,30 +8,19 @@ define('IRCD', 'inspircd');
 date_default_timezone_set('Europe/Berlin');
 
 // imports
-require_once(SDIR.'lib/core.functions.php');
-require_once(SDIR.'lib/system/event/EventHandler.class.php');
-require_once(SDIR.'lib/system/irc/ChannelManager.class.php');
-require_once(SDIR.'lib/system/irc/IRC.class.php');
-require_once(SDIR.'lib/system/irc/LineManager.class.php');
-require_once(SDIR.'lib/system/irc/ProtocolManager.class.php');
-require_once(SDIR.'lib/system/irc/ServerManager.class.php');
-require_once(SDIR.'lib/system/language/LanguageManager.class.php');
-require_once(SDIR.'lib/system/log/IRCLogWriter.class.php');
-require_once(SDIR.'lib/system/module/ModuleManager.class.php');
-require_once(SDIR.'lib/system/timer/TimerManager.class.php');
-require_once(SDIR.'lib/system/user/BotManager.class.php');
-require_once(SDIR.'lib/system/user/UserManager.class.php');
-
-// Zend imports
-require_once('Zend/Config/Xml.php');
-require_once('Zend/Db.php');
-require_once('Zend/Log.php');
-require_once('Zend/Log/Writer/Stream.php');
-require_once('Zend/Memory.php');
-require_once('Zend/Console/Getopt.php');
-require_once('Zend/Text/Figlet.php');
-require_once('Zend/ProgressBar.php');
-require_once('Zend/ProgressBar/Adapter/Console.php');
+require_once(DIR.'lib/core.functions.php');
+require_once(DIR.'lib/system/event/EventHandler.class.php');
+require_once(DIR.'lib/system/irc/ChannelManager.class.php');
+require_once(DIR.'lib/system/irc/IRC.class.php');
+require_once(DIR.'lib/system/irc/LineManager.class.php');
+require_once(DIR.'lib/system/irc/ProtocolManager.class.php');
+require_once(DIR.'lib/system/irc/ServerManager.class.php');
+require_once(DIR.'lib/system/language/LanguageManager.class.php');
+require_once(DIR.'lib/system/log/IRCLogWriter.class.php');
+require_once(DIR.'lib/system/module/ModuleManager.class.php');
+require_once(DIR.'lib/system/timer/TimerManager.class.php');
+require_once(DIR.'lib/system/user/BotManager.class.php');
+require_once(DIR.'lib/system/user/UserManager.class.php');
 
 /**
  * Manages all needed core instances
@@ -72,8 +61,10 @@ final class Services {
 		}
 
 		self::$instanciated = true;
+		self::updateTitle();
+		
 		// correct dir
-		@chdir(SDIR);
+		@chdir(DIR);
 
 		try {
 			// read arguments
@@ -90,55 +81,57 @@ final class Services {
 			exit;
 		}
 
-		$f = new Zend_Text_Figlet(array('smushMode' => 7, 'font' => SDIR.'font.gz'));
+		$f = new Zend_Text_Figlet(array('smushMode' => 7, 'font' => DIR.'font.gz'));
 		echo $f->render('Evil-Co.de - Services');
                 echo $f->render('v'.self::VERSION);
-		$progressBar = new Zend_ProgressBar(new Zend_ProgressBar_Adapter_Console(array('elements' => array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT, Zend_ProgressBar_Adapter_Console::ELEMENT_BAR, Zend_ProgressBar_Adapter_Console::ELEMENT_ETA))), 0, 14);
+		$progressBar = new Zend_ProgressBar(new Zend_ProgressBar_Adapter_Console(array('textWidth' => 30, 'elements' => array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT, Zend_ProgressBar_Adapter_Console::ELEMENT_BAR, Zend_ProgressBar_Adapter_Console::ELEMENT_TEXT, Zend_ProgressBar_Adapter_Console::ELEMENT_ETA))), 0, 14);
 
 		define('DEBUG', isset(self::getArguments()->debug));
 
 		// init components
+		$progressBar->update(0, 'Initialising Logging');
+		sleep(rand(1,3));
 		$this->initLog();
-		$progressBar->update(1);
+		$progressBar->update(1, 'Initialising Configuration');
 		sleep(rand(1,3));
 		$this->initConfiguration();
-		$progressBar->update(2);
+		$progressBar->update(2, 'Initialising Events');
 		sleep(rand(1,3));
 		self::$managers['EventHandler'] = new EventHandler();
-		$progressBar->update(3);
+		$progressBar->update(3, 'Initialising Timers');
 		sleep(rand(1,3));
 		self::$managers['TimerManager'] = new TimerManager();
-		$progressBar->update(4);
+		$progressBar->update(4, 'Connecting to DataBase');
 		sleep(rand(1,3));
 		$this->initDB();
-		$progressBar->update(5);
+		$progressBar->update(5, 'Initialising MemoryManager');
 		sleep(rand(1,3));
 		self::$managers['MemoryManager'] = Zend_Memory::factory('File', array('cache_dir' => self::MEMORY_CACHE_DIR));
-		$progressBar->update(6);
+		$progressBar->update(6, 'Initialising UserManager');
 		sleep(rand(1,3));
 		self::$managers['UserManager'] = new UserManager();
-		$progressBar->update(7);
+		$progressBar->update(7, 'Initialising BotManager');
 		sleep(rand(1,3));
 		self::$managers['BotManager'] = new BotManager();
-		$progressBar->update(8);
+		$progressBar->update(8, 'Initialising ChannelManager');
 		sleep(rand(1,3));
 		self::$managers['ChannelManager'] = new ChannelManager();
-		$progressBar->update(9);
+		$progressBar->update(9, 'Initialising ServerManager');
 		sleep(rand(1,3));
 		self::$managers['ServerManager'] = new ServerManager();
-		$progressBar->update(10);
+		$progressBar->update(10, 'Initialising LineManager');
 		sleep(rand(1,3));
 		self::$managers['LineManager'] = new LineManager();
 		$progressBar->update(11);
 		sleep(rand(1,3));
 		self::$managers['ModuleManager'] = new ModuleManager();
-		$progressBar->update(12);
+		$progressBar->update(12, 'Initialising IRC');
 		sleep(rand(1,3));
 		self::$managers['IRC'] = new IRC();
-		$progressBar->update(13);
+		$progressBar->update(13, 'Initialising ProtocolManager');
 		sleep(rand(1,3));
 		self::$managers['ProtocolManager'] = new ProtocolManager();
-		$progressBar->update(14);
+		$progressBar->update(14, 'Connecting');
 		sleep(rand(1,3));
 		$progressBar->finish();
 		// start connection
@@ -165,14 +158,14 @@ final class Services {
 		if (isset(self::$managers['DB']) && self::$managers['DB'] !== null) self::$managers['DB']->closeConnection();
 
 		if (!defined('DEBUG') || !DEBUG) {
-			$cacheFiles = glob(SDIR.'cache/*');
+			$cacheFiles = glob(DIR.'cache/*');
 			foreach ($cacheFiles as $file) {
 				unlink($file);
 			}
 		}
 
 		// remove pidfile (if any)
-		if (file_exists(SDIR.'services.pid')) @unlink(SDIR.'services.pid');
+		if (file_exists(DIR.'services.pid')) @unlink(DIR.'services.pid');
 
 		// add shutdown log entry
 		if (isset(self::$managers['Logger']) && self::$managers['Logger'] !== null) self::$managers['Logger']->info("Shutting down ...");
@@ -188,7 +181,7 @@ final class Services {
 		$config = self::getArguments()->config;
 
 		// fallback
-		if ($config === null) $config = SDIR.'config/config.xml';
+		if ($config === null) $config = DIR.'config/config.xml';
 
 		// log event
 		self::getLogger()->info("Reading configuration file '".$config."'");
@@ -223,7 +216,7 @@ final class Services {
 		$formatter = new Zend_Log_Formatter_Simple('[%timestamp%] %priorityName% (%priority%): %message%' . PHP_EOL);
 
 		// add file writer
-		$file = new Zend_Log_Writer_Stream(fopen(SDIR.'logs/services-'.gmdate('M-d-Y').'.log', 'a', false));
+		$file = new Zend_Log_Writer_Stream(fopen(DIR.'logs/services-'.gmdate('M-d-Y').'.log', 'a', false));
 		$file->setFormatter($formatter);
 		self::getLogger()->addWriter($file);
 
@@ -332,13 +325,17 @@ final class Services {
 			break;
 			case SIGHUP:
 				if (!isset(self::$managers['ExternalManager'])) {
-					require_once(SDIR.'lib/system/external/ExternalManager.class.php');
+					require_once(DIR.'lib/system/external/ExternalManager.class.php');
 					self::$managers['ExternalManager'] = new ExternalManager();
 				}
 				self::$managers['ExternalManager']->fire();
 		}
 	}
-
+	
+	public static function updateTitle() {
+		if (function_exists('setproctitle') setproctitle('Evil-Co.de - Services v'.self::VERSION);
+	}
+	
 	public static function getRandomString() {
 		return sha1(rand().microtime());
 	}

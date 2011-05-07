@@ -1,6 +1,6 @@
 <?php
 // imports
-require_once(SDIR.'lib/system/irc/Channel.class.php');
+require_once(DIR.'lib/system/irc/Channel.class.php');
 
 /**
  * Manages channels and their user lists

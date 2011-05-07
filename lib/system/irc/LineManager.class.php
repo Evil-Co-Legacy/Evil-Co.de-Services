@@ -1,6 +1,6 @@
 <?php
 // service imports
-require_once(SDIR.'lib/system/irc/Line.class.php');
+require_once(DIR.'lib/system/irc/Line.class.php');
 
 /**
  * Manages global server lines (Such as g-lines)

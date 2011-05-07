@@ -1,12 +1,8 @@
 <?php
 // services imports
-require_once(SDIR.'lib/system/module/LoadedModule.class.php');
-require_once(SDIR.'lib/system/module/ModuleInstance.class.php');
-require_once(SDIR.'lib/system/module/ModuleStore.class.php');
-
-// Zend imports
-require_once('Zend/CodeGenerator/Php/Class.php');
-require_once('Zend/Reflection/Class.php');
+require_once(DIR.'lib/system/module/LoadedModule.class.php');
+require_once(DIR.'lib/system/module/ModuleInstance.class.php');
+require_once(DIR.'lib/system/module/ModuleStore.class.php');
 
 /**
  * Manages modules
@@ -100,7 +96,7 @@ class ModuleManager implements Iterator {
 	 */
 	public function getModule($moduleName) {
 		if (($key = $this->getModuleKey($moduleName)) !== null) return $this->loadedModules[$key];
-		
+
 		return self::NONEXISTANT_MODULE_INSTANCE;
 	}
 

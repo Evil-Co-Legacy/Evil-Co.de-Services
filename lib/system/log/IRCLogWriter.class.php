@@ -1,8 +1,4 @@
 <?php
-// Zend imports
-require_once('Zend/Log/Writer/Abstract.php');
-require_once('Zend/Log/Formatter/Simple.php');
-
 /**
  * Custom log writer that logs to service-channel
  *

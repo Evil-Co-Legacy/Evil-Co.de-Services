@@ -1,7 +1,7 @@
 <?php
 // imports
-require_once(SDIR.'lib/system/user/AbstractUserTypeManager.class.php');
-require_once(SDIR.'lib/system/user/BotUserType.class.php');
+require_once(DIR.'lib/system/user/AbstractUserTypeManager.class.php');
+require_once(DIR.'lib/system/user/BotUserType.class.php');
 
 /**
  * Manages all service bots

@@ -10,7 +10,7 @@ if [ test $1 ]; then
 			echo "Started!"
 		fi
 	fi
-	
+
 	if [ "$1" == "stop" ]; then
 		if [ test -e ./services.pid ]; then
 			echo "Stopping services ..."
@@ -22,7 +22,7 @@ if [ test $1 ]; then
 			echo "No pidfile found!"
 		fi
 	fi
-	
+
 	if [ "$1" == "restart" ]; then
 		./$0 stop
 		./$0 start

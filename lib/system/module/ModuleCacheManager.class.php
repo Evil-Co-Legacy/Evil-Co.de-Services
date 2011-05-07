@@ -1,8 +1,4 @@
 <?php
-// zend imports
-require_once('Zend/CodeGenerator/Php/File.php');
-require_once('Zend/Reflection/File.php');
-
 /**
  * Generates cache files for modules
  *
@@ -28,7 +24,7 @@ class ModuleCacheManager {
 	 * Constructor is marked as protected for factory pattern
 	 */
 	protected function __construct() { }
-	
+
 	private function __clone() { }
 
 	/**
@@ -42,14 +38,14 @@ class ModuleCacheManager {
 		if (!preg_match(self::MODULE_NAME_PATTERN, $moduleName)) throw new ModuleException("Invalid module name '%s'", $moduleName);
 
 		// get path
-		if (file_exists(SDIR.'modules/bot/'.ucfirst($moduleName).'.phar')) $path = SDIR.'modules/bot/'.ucfirst($moduleName).'BotModule.class.php';
-		if (file_exists(SDIR.'modules/command/'.ucfirst($moduleName).'.phar')) $path = SDIR.'modules/command/'.ucfirst($moduleName).'CommandModule.class.php';
-		if (file_exists(SDIR.'modules/extension/'.ucfirst($moduleName).'phar')) $path = SDIR.'modules/extension/'.ucfirst($moduleName).'ExtensionModule.class.php';
+		if (file_exists(DIR.'modules/bot/'.ucfirst($moduleName).'.phar')) $path = DIR.'modules/bot/'.ucfirst($moduleName).'.phar';
+		if (file_exists(DIR.'modules/command/'.ucfirst($moduleName).'.phar')) $path = DIR.'modules/command/'.ucfirst($moduleName).'.phar';
+		if (file_exists(DIR.'modules/extension/'.ucfirst($moduleName).'.phar')) $path = DIR.'modules/extension/'.ucfirst($moduleName).'.phar';
 
 		// no path found
 		if (!isset($path)) throw new ModuleException("Cannot find module '%s'", $moduleName);
 
-		// debug
+		// let's go
 		Services::getLogger()->debug("Loading module phar for module '".$moduleName."'");
 		
 		// no information files found ...
@@ -71,8 +67,7 @@ class ModuleCacheManager {
 		}
 		
 		unset($moduleInformationContent); // we'll safe memory here ...
-		
-		
+
 
 		// return class name
 		return $loadedModuleInstance->getModuleHash();

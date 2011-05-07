@@ -7,12 +7,12 @@
 		<mainfile><![CDATA[TestBot.class.php]]></mainfile> <!-- [REQUIRED] Main class (This will used to load module) -->
 		<version><![CDATA[1.0.0]]></version> <!-- [REQUIRED] Version that will appear in ... -->
 	</general>
-	
+
 	<!-- [REQUIRED] Author information -->
 	<authorinformation>
 		<author><![CDATA[Johannes "Akkarin" Donath]]></author> <!-- [REQUIRED] Author's name (Will appear ...) -->
 	</authorinformation>
-	
+
 	<!-- [OPTIONAL] Dependencies -->
 	<dependencies>
 		<authserv /> <!-- Requires authserv ... -->

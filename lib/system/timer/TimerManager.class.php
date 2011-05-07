@@ -1,6 +1,6 @@
 <?php
 // service imports
-require_once(SDIR.'lib/system/timer/Timer.class.php');
+require_once(DIR.'lib/system/timer/Timer.class.php');
 
 /**
  * Manages registered timers

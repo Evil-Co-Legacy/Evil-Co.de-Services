@@ -1,6 +1,6 @@
 <?php
 // imports
-require_once(SDIR.'lib/system/irc/ArgumentList.class.php');
+require_once(DIR.'lib/system/irc/ArgumentList.class.php');
 
 /**
  * Defines default methods and properties for argument lists

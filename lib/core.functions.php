@@ -6,7 +6,7 @@
  * @copyright	2010 - 2011 DEVel Fusion
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
- 
+
 // define exception handler
 set_exception_handler(array('Services', 'handleException'));
 
@@ -24,22 +24,26 @@ if (function_exists('pcntl_signal')) {
 	pcntl_signal(SIGHUP, array('Services', 'signalHandler'));
 }
 
+// Zend loader
+require_once('Zend/Loader/Autoloader.php');
+Zend_Loader_Autoloader::getInstance();
+
 /**
  * Autoloads default classes
  *
  * @param	string	$className
  */
-function __autoload($className) {
+spl_autoload_register(function ($className) {
 	// autoload utils
-	if (file_exists(SDIR.'lib/utils/'.$className.'.class.php')) {
-		require_once(SDIR.'lib/utils/'.$className.'.class.php');
+	if (file_exists(DIR.'lib/utils/'.$className.'.class.php')) {
+		require_once(DIR.'lib/utils/'.$className.'.class.php');
 		return;
 	}
 
 	// autoload exceptions
-	if (file_exists(SDIR.'lib/system/exception/'.$className.'.class.php')) {
-		require_once(SDIR.'lib/system/exception/'.$className.'.class.php');
+	if (file_exists(DIR.'lib/system/exception/'.$className.'.class.php')) {
+		require_once(DIR.'lib/system/exception/'.$className.'.class.php');
 		return;
 	}
-}
+});
 ?>

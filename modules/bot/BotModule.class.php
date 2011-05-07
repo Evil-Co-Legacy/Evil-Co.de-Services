@@ -1,6 +1,6 @@
 <?php
 // service imports
-require_once(SDIR.'modules/extension/ExtensionModule.class.php');
+require_once(DIR.'modules/extension/ExtensionModule.class.php');
 
 /**
  * Defines default methods for bots

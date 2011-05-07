@@ -9,7 +9,7 @@
 class ProtocolManager {
 
 	/**
-	 * Contains a relative path from SDIR to location where protocol classes are located
+	 * Contains a relative path from DIR to location where protocol classes are located
 	 * @var string
 	 */
 	const PROTOCOL_PATH = 'lib/system/irc/protocol/';
@@ -52,10 +52,10 @@ class ProtocolManager {
 		$protocol = self::getCorrectProtocol();
 
 		// validate protocol path
-		if (!is_dir(SDIR.self::PROTOCOL_PATH.$protocol.'/')) throw new ProtocolException("Cannot find protocol location");
+		if (!is_dir(DIR.self::PROTOCOL_PATH.$protocol.'/')) throw new ProtocolException("Cannot find protocol location");
 
 		// set protocol dir
-		$this->protocolDir = SDIR.self::PROTOCOL_PATH.$protocol.'/';
+		$this->protocolDir = DIR.self::PROTOCOL_PATH.$protocol.'/';
 
 		// get protocol information
 		$this->readProtocolInformation($protocol);
@@ -99,7 +99,7 @@ class ProtocolManager {
 	 */
 	protected function initProtocol() {
 		// include protocol
-		require_once(SDIR.$this->protocolInformation['file']);
+		require_once(DIR.$this->protocolInformation['file']);
 
 		// generate class name
 		$className = basename($this->protocolInformation['file'], '.class.php');

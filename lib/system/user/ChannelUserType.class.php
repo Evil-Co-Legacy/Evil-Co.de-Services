@@ -1,7 +1,7 @@
 <?php
 // imports
-require_once(SDIR.'lib/system/user/AbstractUserType.class.php');
-require_once(SDIR.'lib/system/user/ChannelUserModeList.class.php');
+require_once(DIR.'lib/system/user/AbstractUserType.class.php');
+require_once(DIR.'lib/system/user/ChannelUserModeList.class.php');
 
 /**
  * Represents a user in a channel

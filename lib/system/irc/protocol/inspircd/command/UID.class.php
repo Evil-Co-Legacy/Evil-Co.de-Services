@@ -1,7 +1,7 @@
 <?php
 // service imports
-require_once(SDIR.'lib/system/irc/protocol/CommandParser.class.php');
-require_once(SDIR.'lib/system/user/UserModeList.class.php');
+require_once(DIR.'lib/system/irc/protocol/CommandParser.class.php');
+require_once(DIR.'lib/system/user/UserModeList.class.php');
 
 /**
  * Parses the UID command

@@ -1,6 +1,6 @@
 <?php
 // services imports
-require_once(SDIR.'lib/system/module/ModuleCacheManager.class.php');
+require_once(DIR.'lib/system/module/ModuleCacheManager.class.php');
 
 /**
  * Represents a loaded module

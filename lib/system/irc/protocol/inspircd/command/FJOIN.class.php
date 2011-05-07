@@ -1,6 +1,6 @@
 <?php
 // service imports
-require_once(SDIR.'lib/system/irc/protocol/CommandParser.class.php');
+require_once(DIR.'lib/system/irc/protocol/CommandParser.class.php');
 
 /**
  * Parses the FJOIN command

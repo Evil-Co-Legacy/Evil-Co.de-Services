@@ -1,5 +1,5 @@
 <?php
-require_once(SDIR.'lib/system/external/Handler.class.php');
+require_once(DIR.'lib/system/external/Handler.class.php');
 
 /**
  * Basic implementation of a handler
@@ -10,7 +10,7 @@ require_once(SDIR.'lib/system/external/Handler.class.php');
  */
 abstract class AbstractHandler implements Handler {
 	public $manager, $data;
-	
+
 	public function __construct(ExternalManager $manager, $data) {
 		$this->manager = $manager;
 		$this->data = $data;

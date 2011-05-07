@@ -1,7 +1,7 @@
 <?php
 // imports
-require_once(SDIR.'lib/system/irc/protocol/Protocol.class.php');
-require_once(SDIR.'lib/system/irc/protocol/inspircd/InspIRCdProtocolParser.class.php');
+require_once(DIR.'lib/system/irc/protocol/Protocol.class.php');
+require_once(DIR.'lib/system/irc/protocol/inspircd/InspIRCdProtocolParser.class.php');
 
 /**
  * Contains methods for IRCd linking protocols (Communicating with connected server)
@@ -200,9 +200,9 @@ class InspIRCdProtocol implements Protocol {
 					$line = Services::getIRC()->readLine();
 					InspIRCdProtocolParser::handleCommand($line);
 				}
-			
+
 				$this->parseSTDIN();
-				
+
 				// handle timers
 				Services::getTimerManager()->execute();
 
@@ -226,7 +226,7 @@ class InspIRCdProtocol implements Protocol {
 			// do sth
 		}
 	}
-	
+
 	/**
 	 * @see Protocol::shutdown()
 	 */

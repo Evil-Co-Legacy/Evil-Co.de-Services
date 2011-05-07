@@ -1,6 +1,6 @@
 <?php
 // service imports
-require_once(SDIR.'modules/Module.class.php');
+require_once(DIR.'modules/Module.class.php');
 
 /**
  * Basic definitions for modules
@@ -9,7 +9,7 @@ require_once(SDIR.'modules/Module.class.php');
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 abstract class ExtensionModule implements Module {
-	
+
 	/**
 	 * Init event for extensions
 	 */
@@ -17,7 +17,7 @@ abstract class ExtensionModule implements Module {
 		// fire init@ExtensionModule
 		Services::getEvent()->fire($this, 'init');
 	}
-	
+
 	/**
 	 * Register event for extensions
 	 * @return	void
@@ -26,7 +26,7 @@ abstract class ExtensionModule implements Module {
 		// fire register@ExtensionModule
 		Services::getEvent()->fire($this, 'register');
 	}
-	
+
 	/**
 	 * @see Module::timIsSilly()
 	 */

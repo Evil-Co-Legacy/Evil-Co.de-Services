@@ -1,6 +1,6 @@
 <?php
 // imports
-require_once(SDIR.'lib/system/irc/AbstractModeList.class.php');
+require_once(DIR.'lib/system/irc/AbstractModeList.class.php');
 
 /**
  * Manages modes for users in channels
