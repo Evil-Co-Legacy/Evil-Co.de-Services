@@ -55,7 +55,7 @@ class ModuleCacheManager {
 		$tempFile = str_replace("extends ", "extends \\", $tempFile);
 		$tempFile = str_replace("new ", "new \\", $tempFile);
 		$tempFile = preg_replace("~([A-Z]([A-Z0-9_\-]+))::([A-Z0-9]+)\((.*)\)~i", "\\$1::$2($3)", $tempFile);
-		file_put_contents(SDIR.'cache/load.'.$moduleName.'.cache', $tempFile);
+/*		file_put_contents(SDIR.'cache/load.'.$moduleName.'.cache', $tempFile);
 
 		// debug
 		Services::getLogger()->debug("Getting module information from cache file '".SDIR.'cache/load.'.$moduleName.'.cache'."'");
@@ -74,9 +74,9 @@ class ModuleCacheManager {
 
 		// debug
 		Services::getLogger()->debug("Generating second cache file ...");
-
+*/
 		// write cache file
-		file_put_contents(SDIR.'cache/'.$loadedModuleInstance->getModuleHash().'.php', $generator->generate());
+		file_put_contents(SDIR.'cache/'.$loadedModuleInstance->getModuleHash().'.php', $tempFile);
 
 		// include file
 		require_once(SDIR.'cache/'.$loadedModuleInstance->getModuleHash().'.php');
