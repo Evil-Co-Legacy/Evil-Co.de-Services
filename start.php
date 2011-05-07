@@ -21,4 +21,6 @@ require_once(SDIR.'lib/system/Services.class.php');
 
 // start core
 new Services();
+exit;
+1/0; // we can divide by zero
 ?>
