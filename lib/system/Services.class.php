@@ -30,6 +30,8 @@ require_once('Zend/Log/Writer/Stream.php');
 require_once('Zend/Memory.php');
 require_once('Zend/Console/Getopt.php');
 require_once('Zend/Text/Figlet.php');
+require_once('Zend/ProgressBar.php');
+require_once('Zend/ProgressBar/Adapter/Console.php');
 
 /**
  * Manages all needed core instances
@@ -91,14 +93,23 @@ final class Services {
 		$f = new Zend_Text_Figlet(array('smushMode' => 7, 'font' => SDIR.'font.gz'));
 		echo $f->render('Evil-Co.de - Services');
                 echo $f->render('v'.self::VERSION);
+		$progressBar = new Zend_ProgressBar(new Zend_ProgressBar_Adapter_Console(array('elements' => array(Zend_Console_ProgressBar::ELEMENT_PERCENT, Zend_Console_ProgressBar::BAR))), 0, 14);
 
 		define('DEBUG', isset(self::getArguments()->debug));
 
 		// init components
 		$this->initLog();
+		$progressBar->update(1);
+		sleep(1);
 		$this->initConfiguration();
+		$progressBar->update(2);
+		sleep(1);
 		self::$managers['EventHandler'] = new EventHandler();
+		$progressBar->update(3);
+		sleep(1);
 		self::$managers['TimerManager'] = new TimerManager();
+		$progressBar->update(4);
+		sleep(1);
 		$this->initDB();
 		self::$managers['MemoryManager'] = Zend_Memory::factory('File', array('cache_dir' => self::MEMORY_CACHE_DIR));
 		self::$managers['UserManager'] = new UserManager();
@@ -109,7 +120,7 @@ final class Services {
 		self::$managers['ModuleManager'] = new ModuleManager();
 		self::$managers['IRC'] = new IRC();
 		self::$managers['ProtocolManager'] = new ProtocolManager();
-
+		$progressBar->finish();
 		// start connection
 		self::getProtocolManager()->initConnection();
 
