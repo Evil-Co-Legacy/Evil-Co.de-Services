@@ -20,7 +20,7 @@ if (file_exists(DIR.'services.pid')) {
 	exit;
 }
 // write pidfile
-file_put_contents(DIR.'services.pid"', getmypid());
+file_put_contents(DIR.'services.pid', getmypid());
 
 // imports
 require_once(DIR.'lib/system/Services.class.php');
