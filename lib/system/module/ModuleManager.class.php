@@ -1,8 +1,8 @@
 <?php
 // services imports
-require_once(SDIR.'lib/system/module/LoadedModule.class.php');
-require_once(SDIR.'lib/system/module/ModuleInstance.class.php');
-require_once(SDIR.'lib/system/module/ModuleStore.class.php');
+require_once(DIR.'lib/system/module/LoadedModule.class.php');
+require_once(DIR.'lib/system/module/ModuleInstance.class.php');
+require_once(DIR.'lib/system/module/ModuleStore.class.php');
 
 /**
  * Manages modules

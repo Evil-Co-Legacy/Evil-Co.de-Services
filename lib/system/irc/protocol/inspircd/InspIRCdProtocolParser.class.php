@@ -86,10 +86,10 @@ class InspIRCdProtocolParser {
 			$command = $lineEx[1];
 
 		// try to find a command handler
-		if (!file_exists(SDIR.'lib/system/irc/protocol/inspircd/command/'.strtoupper($command).'.class.php')) throw new RecoverableException("No command parser for link command '".strtoupper($command)."' found! Maybe the protocol definition is outdated!");
+		if (!file_exists(DIR.'lib/system/irc/protocol/inspircd/command/'.strtoupper($command).'.class.php')) throw new RecoverableException("No command parser for link command '".strtoupper($command)."' found! Maybe the protocol definition is outdated!");
 
 		// load command handler
-		require_once(SDIR.'lib/system/irc/protocol/inspircd/command/'.strtoupper($command).'.class.php');
+		require_once(DIR.'lib/system/irc/protocol/inspircd/command/'.strtoupper($command).'.class.php');
 
 		// remove numeric
 		if (preg_match(self::NUMERIC_PATTERN, $lineEx[0])) {

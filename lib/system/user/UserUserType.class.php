@@ -1,6 +1,6 @@
 <?php
 // imports
-require_once(SDIR.'lib/system/user/AbstractUserType.class.php');
+require_once(DIR.'lib/system/user/AbstractUserType.class.php');
 
 /**
  * Represents a user

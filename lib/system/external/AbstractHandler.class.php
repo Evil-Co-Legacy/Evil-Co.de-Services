@@ -1,5 +1,5 @@
 <?php
-require_once(SDIR.'lib/system/external/Handler.class.php');
+require_once(DIR.'lib/system/external/Handler.class.php');
 
 /**
  * Basic implementation of a handler

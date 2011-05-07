@@ -38,9 +38,9 @@ class ModuleCacheManager {
 		if (!preg_match(self::MODULE_NAME_PATTERN, $moduleName)) throw new ModuleException("Invalid module name '%s'", $moduleName);
 
 		// get path
-		if (file_exists(SDIR.'modules/bot/'.ucfirst($moduleName).'BotModule.class.php')) $path = SDIR.'modules/bot/'.ucfirst($moduleName).'BotModule.class.php';
-		if (file_exists(SDIR.'modules/command/'.ucfirst($moduleName).'CommandModule.class.php')) $path = SDIR.'modules/command/'.ucfirst($moduleName).'CommandModule.class.php';
-		if (file_exists(SDIR.'modules/extension/'.ucfirst($moduleName).'ExtensionModule.class.php')) $path = SDIR.'modules/extension/'.ucfirst($moduleName).'ExtensionModule.class.php';
+		if (file_exists(DIR.'modules/bot/'.ucfirst($moduleName).'BotModule.class.php')) $path = DIR.'modules/bot/'.ucfirst($moduleName).'BotModule.class.php';
+		if (file_exists(DIR.'modules/command/'.ucfirst($moduleName).'CommandModule.class.php')) $path = DIR.'modules/command/'.ucfirst($moduleName).'CommandModule.class.php';
+		if (file_exists(DIR.'modules/extension/'.ucfirst($moduleName).'ExtensionModule.class.php')) $path = DIR.'modules/extension/'.ucfirst($moduleName).'ExtensionModule.class.php';
 
 		// no path found
 		if (!isset($path)) throw new ModuleException("Cannot find module '%s'", $moduleName);
@@ -54,16 +54,16 @@ class ModuleCacheManager {
 		$tempFile = str_replace("extends ", "extends \\", $tempFile);
 		$tempFile = str_replace("new ", "new \\", $tempFile);
 		$tempFile = preg_replace("~([A-Z]([A-Z0-9_\-]+))::([A-Z0-9]+)\((.*)\)~i", "\\$1::$2($3)", $tempFile);
-/*		file_put_contents(SDIR.'cache/load.'.$moduleName.'.cache', $tempFile);
+/*		file_put_contents(DIR.'cache/load.'.$moduleName.'.cache', $tempFile);
 
 		// debug
-		Services::getLogger()->debug("Getting module information from cache file '".SDIR.'cache/load.'.$moduleName.'.cache'."'");
+		Services::getLogger()->debug("Getting module information from cache file '".DIR.'cache/load.'.$moduleName.'.cache'."'");
 
 		// get module information
-		$generator = Zend_CodeGenerator_Php_File::fromReflectedFileName(SDIR.'cache/load.'.$moduleName.'.cache');
+		$generator = Zend_CodeGenerator_Php_File::fromReflectedFileName(DIR.'cache/load.'.$moduleName.'.cache');
 
 		// delete cache file
-		unlink(SDIR.'cache/load.'.$moduleName.'.cache');
+		unlink(DIR.'cache/load.'.$moduleName.'.cache');
 
 		// debug
 		Services::getLogger()->debug("Preparing new file ...");
@@ -75,10 +75,10 @@ class ModuleCacheManager {
 		Services::getLogger()->debug("Generating second cache file ...");
 */
 		// write cache file
-		file_put_contents(SDIR.'cache/'.$loadedModuleInstance->getModuleHash().'.php', $tempFile);
+		file_put_contents(DIR.'cache/'.$loadedModuleInstance->getModuleHash().'.php', $tempFile);
 
 		// include file
-		require_once(SDIR.'cache/'.$loadedModuleInstance->getModuleHash().'.php');
+		require_once(DIR.'cache/'.$loadedModuleInstance->getModuleHash().'.php');
 
 		// eval code
 		/* eval('?>'.$file->generate()); */

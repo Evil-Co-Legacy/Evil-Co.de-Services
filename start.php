@@ -12,18 +12,18 @@
 declare(ticks = 1);
 
 // defines
-define('SDIR', dirname(__FILE__).'/');
+define('DIR', dirname(__FILE__).'/');
 
-if (file_exists(SDIR.'services.pid')) {
-	echo 'Services is already running with PID '.file_get_contents(SDIR.'services.pid')."\n";
-	echo 'Delete the file '.SDIR.'services.pid is you want to start it anyway'."\n";
+if (file_exists(DIR.'services.pid')) {
+	echo 'Services is already running with PID '.file_get_contents(DIR.'services.pid')."\n";
+	echo 'Delete the file '.DIR.'services.pid is you want to start it anyway'."\n";
 	exit;
 }
 // write pidfile
-file_put_contents(SDIR.'services.pid"', getmypid());
+file_put_contents(DIR.'services.pid"', getmypid());
 
 // imports
-require_once(SDIR.'lib/system/Services.class.php');
+require_once(DIR.'lib/system/Services.class.php');
 
 // start core
 new Services();

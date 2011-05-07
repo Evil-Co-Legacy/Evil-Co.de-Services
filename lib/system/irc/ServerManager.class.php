@@ -1,6 +1,6 @@
 <?php
 // service imports
-require_once(SDIR.'lib/system/irc/ConnectedServer.class.php');
+require_once(DIR.'lib/system/irc/ConnectedServer.class.php');
 
 /**
  * Manages servers

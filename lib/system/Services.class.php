@@ -8,19 +8,19 @@ define('IRCD', 'inspircd');
 date_default_timezone_set('Europe/Berlin');
 
 // imports
-require_once(SDIR.'lib/core.functions.php');
-require_once(SDIR.'lib/system/event/EventHandler.class.php');
-require_once(SDIR.'lib/system/irc/ChannelManager.class.php');
-require_once(SDIR.'lib/system/irc/IRC.class.php');
-require_once(SDIR.'lib/system/irc/LineManager.class.php');
-require_once(SDIR.'lib/system/irc/ProtocolManager.class.php');
-require_once(SDIR.'lib/system/irc/ServerManager.class.php');
-require_once(SDIR.'lib/system/language/LanguageManager.class.php');
-require_once(SDIR.'lib/system/log/IRCLogWriter.class.php');
-require_once(SDIR.'lib/system/module/ModuleManager.class.php');
-require_once(SDIR.'lib/system/timer/TimerManager.class.php');
-require_once(SDIR.'lib/system/user/BotManager.class.php');
-require_once(SDIR.'lib/system/user/UserManager.class.php');
+require_once(DIR.'lib/core.functions.php');
+require_once(DIR.'lib/system/event/EventHandler.class.php');
+require_once(DIR.'lib/system/irc/ChannelManager.class.php');
+require_once(DIR.'lib/system/irc/IRC.class.php');
+require_once(DIR.'lib/system/irc/LineManager.class.php');
+require_once(DIR.'lib/system/irc/ProtocolManager.class.php');
+require_once(DIR.'lib/system/irc/ServerManager.class.php');
+require_once(DIR.'lib/system/language/LanguageManager.class.php');
+require_once(DIR.'lib/system/log/IRCLogWriter.class.php');
+require_once(DIR.'lib/system/module/ModuleManager.class.php');
+require_once(DIR.'lib/system/timer/TimerManager.class.php');
+require_once(DIR.'lib/system/user/BotManager.class.php');
+require_once(DIR.'lib/system/user/UserManager.class.php');
 
 /**
  * Manages all needed core instances
@@ -62,7 +62,7 @@ final class Services {
 
 		self::$instanciated = true;
 		// correct dir
-		@chdir(SDIR);
+		@chdir(DIR);
 
 		try {
 			// read arguments
@@ -79,7 +79,7 @@ final class Services {
 			exit;
 		}
 
-		$f = new Zend_Text_Figlet(array('smushMode' => 7, 'font' => SDIR.'font.gz'));
+		$f = new Zend_Text_Figlet(array('smushMode' => 7, 'font' => DIR.'font.gz'));
 		echo $f->render('Evil-Co.de - Services');
                 echo $f->render('v'.self::VERSION);
 		$progressBar = new Zend_ProgressBar(new Zend_ProgressBar_Adapter_Console(array('textWidth' => 30, 'elements' => array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT, Zend_ProgressBar_Adapter_Console::ELEMENT_BAR, Zend_ProgressBar_Adapter_Console::ELEMENT_TEXT, Zend_ProgressBar_Adapter_Console::ELEMENT_ETA))), 0, 14);
@@ -156,14 +156,14 @@ final class Services {
 		if (isset(self::$managers['DB']) && self::$managers['DB'] !== null) self::$managers['DB']->closeConnection();
 
 		if (!defined('DEBUG') || !DEBUG) {
-			$cacheFiles = glob(SDIR.'cache/*');
+			$cacheFiles = glob(DIR.'cache/*');
 			foreach ($cacheFiles as $file) {
 				unlink($file);
 			}
 		}
 
 		// remove pidfile (if any)
-		if (file_exists(SDIR.'services.pid')) @unlink(SDIR.'services.pid');
+		if (file_exists(DIR.'services.pid')) @unlink(DIR.'services.pid');
 
 		// add shutdown log entry
 		if (isset(self::$managers['Logger']) && self::$managers['Logger'] !== null) self::$managers['Logger']->info("Shutting down ...");
@@ -179,7 +179,7 @@ final class Services {
 		$config = self::getArguments()->config;
 
 		// fallback
-		if ($config === null) $config = SDIR.'config/config.xml';
+		if ($config === null) $config = DIR.'config/config.xml';
 
 		// log event
 		self::getLogger()->info("Reading configuration file '".$config."'");
@@ -214,7 +214,7 @@ final class Services {
 		$formatter = new Zend_Log_Formatter_Simple('[%timestamp%] %priorityName% (%priority%): %message%' . PHP_EOL);
 
 		// add file writer
-		$file = new Zend_Log_Writer_Stream(fopen(SDIR.'logs/services-'.gmdate('M-d-Y').'.log', 'a', false));
+		$file = new Zend_Log_Writer_Stream(fopen(DIR.'logs/services-'.gmdate('M-d-Y').'.log', 'a', false));
 		$file->setFormatter($formatter);
 		self::getLogger()->addWriter($file);
 
@@ -323,7 +323,7 @@ final class Services {
 			break;
 			case SIGHUP:
 				if (!isset(self::$managers['ExternalManager'])) {
-					require_once(SDIR.'lib/system/external/ExternalManager.class.php');
+					require_once(DIR.'lib/system/external/ExternalManager.class.php');
 					self::$managers['ExternalManager'] = new ExternalManager();
 				}
 				self::$managers['ExternalManager']->fire();

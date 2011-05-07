@@ -24,7 +24,7 @@ class ExternalManager {
 		foreach ($actions as $action) {
 			try {
 				$class = $action->handler;
-				require_once(SDIR.'lib/system/external/handlers/'.$class.'.class.php');
+				require_once(DIR.'lib/system/external/handlers/'.$class.'.class.php');
 				$handler = new $class($this, $action);
 				$handler->execute();
 				$finished[] = $handler;

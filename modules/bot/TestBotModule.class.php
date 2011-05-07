@@ -1,6 +1,6 @@
 <?php
 // services imports
-require_once(SDIR.'modules/bot/BotModule.class.php');
+require_once(DIR.'modules/bot/BotModule.class.php');
 
 /**
  * This class implements a senseless bot that does nothing  ...

@@ -22,10 +22,10 @@ class LanguageManager {
 	 * @return	boolean				success
 	 */
 	public function load($languageCode) {
-		if (!file_exists(SDIR.'language/'.$languageCode.'.lng')) {
+		if (!file_exists(DIR.'language/'.$languageCode.'.lng')) {
 			return false;
 		}
-		$this->items = parse_ini_file(SDIR.'language/'.$languageCode.'.lng');
+		$this->items = parse_ini_file(DIR.'language/'.$languageCode.'.lng');
 		return true;
 	}
 

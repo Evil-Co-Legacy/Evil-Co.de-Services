@@ -1,7 +1,7 @@
 <?php
 // imports
-require_once(SDIR.'lib/system/user/AbstractUserTypeManager.class.php');
-require_once(SDIR.'lib/system/user/UserUserType.class.php');
+require_once(DIR.'lib/system/user/AbstractUserTypeManager.class.php');
+require_once(DIR.'lib/system/user/UserUserType.class.php');
 
 /**
  * Manages all network users
