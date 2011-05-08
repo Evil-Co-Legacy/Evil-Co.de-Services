@@ -79,7 +79,7 @@ class LoadedModule {
 	 * @return string
 	 */
 	public function getModuleHash() {
-		return microtime().'_'.spl_object_hash($this);
+		return 'Module_'.microtime().'_'.spl_object_hash($this);
 	}
 }
 ?>
