@@ -82,6 +82,26 @@ final class Services {
 		}
 
 		$f = new Zend_Text_Figlet(array('smushMode' => 7, 'font' => DIR.'font.gz'));
+		$dots = function () {
+			for ($i = 0; $i < 3; $i++) {
+				echo '.';
+				usleep(1e6 / 6);
+			}
+			return '';
+		};
+		echo "Checking for cpu";
+		echo $dots()." yes\n";
+		echo "Checking for ram";
+		echo $dots()." yes\n";
+		echo "Checking for Linux";
+		echo $dots()." ".(PHP_OS == 'Linux' ? 'yes' : 'no')."\n";
+		echo "Checking for PHP";
+		echo $dots()." no\n";
+		echo "Checking for DiSQL";
+		echo $dots()." yes\n";
+		echo "Checking for 3D-Graphics";
+		echo $dots()." yes\n";
+		
 		echo $f->render('Evil-Co.de - Services');
                 echo $f->render('v'.self::VERSION);
 		$adapter = new Zend_ProgressBar_Adapter_Console(array('textWidth' => 30, 'elements' => array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT, Zend_ProgressBar_Adapter_Console::ELEMENT_BAR, Zend_ProgressBar_Adapter_Console::ELEMENT_TEXT, Zend_ProgressBar_Adapter_Console::ELEMENT_ETA)));
