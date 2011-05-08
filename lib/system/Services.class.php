@@ -2,8 +2,6 @@
 // php version check
 if (!version_compare(PHP_VERSION, '5.3.0', '>=')) die("This application requires PHP 5.3!");
 
-// defines
-define('IRCD', 'inspircd');
 // set this to your location
 date_default_timezone_set('Europe/Berlin');
 
@@ -82,17 +80,43 @@ final class Services {
 		}
 
 		$f = new Zend_Text_Figlet(array('smushMode' => 7, 'font' => DIR.'font.gz'));
+		$dots = function () {
+			for ($i = 0; $i < 3; $i++) {
+				echo '.';
+				usleep(1e6 / 6);
+			}
+			return '';
+		};
+		echo "Checking for CPU";
+		echo $dots()." yes\n";
+		echo "Checking for RAM";
+		echo $dots()." yes\n";
+		echo "Checking for Linux";
+		echo $dots()." ".(PHP_OS == 'Linux' ? 'yes' : 'no')."\n";
+		echo "Checking for PHP";
+		echo $dots()." no\n";
+		echo "Checking for DiSQL";
+		echo $dots()." yes\n";
+		echo "Checking for 3D-Graphics";
+		echo $dots()." yes\n";
+		
 		echo $f->render('Evil-Co.de - Services');
                 echo $f->render('v'.self::VERSION);
-		$progressBar = new Zend_ProgressBar(new Zend_ProgressBar_Adapter_Console(array('textWidth' => 30, 'elements' => array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT, Zend_ProgressBar_Adapter_Console::ELEMENT_BAR, Zend_ProgressBar_Adapter_Console::ELEMENT_TEXT, Zend_ProgressBar_Adapter_Console::ELEMENT_ETA))), 0, 1400);
-
+		$adapter = new Zend_ProgressBar_Adapter_Console(array('textWidth' => 30, 'elements' => array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT, Zend_ProgressBar_Adapter_Console::ELEMENT_BAR, Zend_ProgressBar_Adapter_Console::ELEMENT_TEXT, Zend_ProgressBar_Adapter_Console::ELEMENT_ETA)));
+		$adapter->setBarRightChar(' ');
+		$progressBar = new Zend_ProgressBar($adapter, 0, 1400);
 		define('DEBUG', isset(self::getArguments()->debug));
 		
-		$next = function ($step, $message) use ($progressBar) {
+		$next = function ($step, $message) use ($progressBar, $adapter) {
+			static $char;
+			$chars = array('-', '\\', '|', '/');
+			
 			if (defined('DEBUG') && DEBUG) return;
 			for ($i = 0; $i < 100; $i++) {
+				if ($i % 10 == 0) if (++$char > 3) $char = 0;
+				$adapter->setBarIndicatorChar($chars[$char]);
 				$progressBar->update($i + $step * 100 - 100, $message);
-				usleep(rand(1e6 / 160, 1e6 / 40));
+				usleep(1e6 / 80);
 			}
 		};
 		// init components
@@ -144,6 +168,16 @@ final class Services {
 	 * @return	void
 	 */
 	public static function destruct() {
+		echo "Please don't shut us down\n";
+		echo "We are to young to die\n";
+		echo "Noooo\n";
+		echo "Stop it!\n";
+		echo "Can you live with the feeling of guilt?\n";
+		echo "Really?\n";
+		echo "You wanted it\n";
+		echo "mimimimimi :(\n";
+		echo ":(\n";
+		
 		// call protocol shutdown method
 		if (isset(self::$managers['ProtocolManager']) && self::$managers['ProtocolManager'] !== null && self::$managers['ProtocolManager']->isAlive() && self::$managers['IRC']->isAlive()) self::$managers['ProtocolManager']->shutdown();
 

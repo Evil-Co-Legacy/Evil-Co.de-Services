@@ -75,7 +75,7 @@ class IRC {
 		if (($state = socket_select($read, $write, $except, self::SOCKET_CHECK_TIMEOUT, self::SOCKET_CHECK_TIMEOUT)) === false)
 			throw new ConnectionException("An error occoured: ".socket_strerror(socket_last_error($this->socket)), socket_last_error($this->socket));
 
-		return $state;
+		return count($read);
 	}
 
 	/**
