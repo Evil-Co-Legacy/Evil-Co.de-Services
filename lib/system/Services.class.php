@@ -84,64 +84,56 @@ final class Services {
 		$f = new Zend_Text_Figlet(array('smushMode' => 7, 'font' => DIR.'font.gz'));
 		echo $f->render('Evil-Co.de - Services');
                 echo $f->render('v'.self::VERSION);
-		$progressBar = new Zend_ProgressBar(new Zend_ProgressBar_Adapter_Console(array('textWidth' => 30, 'elements' => array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT, Zend_ProgressBar_Adapter_Console::ELEMENT_BAR, Zend_ProgressBar_Adapter_Console::ELEMENT_TEXT, Zend_ProgressBar_Adapter_Console::ELEMENT_ETA))), 0, 14);
+		$progressBar = new Zend_ProgressBar(new Zend_ProgressBar_Adapter_Console(array('textWidth' => 30, 'elements' => array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT, Zend_ProgressBar_Adapter_Console::ELEMENT_BAR, Zend_ProgressBar_Adapter_Console::ELEMENT_TEXT, Zend_ProgressBar_Adapter_Console::ELEMENT_ETA))), 0, 1400);
 
 		define('DEBUG', isset(self::getArguments()->debug));
-
+		
+		$next = function ($step, $message) use ($progressBar) {
+			if (defined('DEBUG') && DEBUG) return;
+			for ($i = 0; $i < 100; $i++) {
+				$progressBar->update($i + $step * 100 - 100, $message);
+				usleep(rand(1e6 / 160, 1e6 / 40));
+			}
+		};
 		// init components
-		$progressBar->update(0, 'Initialising Logging');
-		if (!defined('DEBUG') || !DEBUG) sleep(rand(1,3));
+		$next(0, 'Initialising Logging');
 		$this->initLog();
-		$progressBar->update(1, 'Initialising Configuration');
-		if (!defined('DEBUG') || !DEBUG) sleep(rand(1,3));
+		$next(1, 'Initialising Configuration');
 		$this->initConfiguration();
-		$progressBar->update(2, 'Initialising Events');
-		if (!defined('DEBUG') || !DEBUG) sleep(rand(1,3));
+		$next(2, 'Initialising Events');
 		self::$managers['EventHandler'] = new EventHandler();
-		$progressBar->update(3, 'Initialising Timers');
-		if (!defined('DEBUG') || !DEBUG) sleep(rand(1,3));
+		$next(3, 'Initialising Timers');
 		self::$managers['TimerManager'] = new TimerManager();
-		$progressBar->update(4, 'Connecting to DataBase');
-		if (!defined('DEBUG') || !DEBUG) sleep(rand(1,3));
+		$next(4, 'Connecting to DataBase');
 		$this->initDB();
-		$progressBar->update(5, 'Initialising MemoryManager');
-		if (!defined('DEBUG') || !DEBUG) sleep(rand(1,3));
+		$next(5, 'Initialising MemoryManager');
 		self::$managers['MemoryManager'] = Zend_Memory::factory('File', array('cache_dir' => self::MEMORY_CACHE_DIR));
-		$progressBar->update(6, 'Initialising UserManager');
-		if (!defined('DEBUG') || !DEBUG) sleep(rand(1,3));
+		$next(6, 'Initialising UserManager');
 		self::$managers['UserManager'] = new UserManager();
-		$progressBar->update(7, 'Initialising BotManager');
-		if (!defined('DEBUG') || !DEBUG) sleep(rand(1,3));
+		$next(7, 'Initialising BotManager');
 		self::$managers['BotManager'] = new BotManager();
-		$progressBar->update(8, 'Initialising ChannelManager');
-		if (!defined('DEBUG') || !DEBUG) sleep(rand(1,3));
+		$next(8, 'Initialising ChannelManager');
 		self::$managers['ChannelManager'] = new ChannelManager();
-		$progressBar->update(9, 'Initialising ServerManager');
-		if (!defined('DEBUG') || !DEBUG) sleep(rand(1,3));
+		$next(9, 'Initialising ServerManager');
 		self::$managers['ServerManager'] = new ServerManager();
-		$progressBar->update(10, 'Initialising LineManager');
-		if (!defined('DEBUG') || !DEBUG) sleep(rand(1,3));
+		$next(10, 'Initialising LineManager');
 		self::$managers['LineManager'] = new LineManager();
-		$progressBar->update(11);
-		if (!defined('DEBUG') || !DEBUG) sleep(rand(1,3));
+		$next(11, 'Initialising ModuleManager');
 		self::$managers['ModuleManager'] = new ModuleManager();
-		$progressBar->update(12, 'Initialising IRC');
-		if (!defined('DEBUG') || !DEBUG) sleep(rand(1,3));
+		$next(12, 'Initialising IRC');
 		self::$managers['IRC'] = new IRC();
-		$progressBar->update(13, 'Initialising ProtocolManager');
-		if (!defined('DEBUG') || !DEBUG) sleep(rand(1,3));
+		$next(13, 'Initialising ProtocolManager');
 		self::$managers['ProtocolManager'] = new ProtocolManager();
-		$progressBar->update(14, 'Connecting');
-		if (!defined('DEBUG') || !DEBUG) sleep(rand(1,3));
+		$next(14, 'Connecting');
 		$progressBar->finish();
 		// start connection
 		self::getProtocolManager()->initConnection();
 
 		// not senseless
 		return;
-		exec('beep -f 264 -l 250 -n -f 297 -l 250 -n -f 330 -l 250 -n -f 352 -l 250 -n -f 396 -l 500 -n -f 396 -l 500 -n -f 440'.
+		exec('beep  -f 264 -l 250 -n -f 297 -l 250 -n -f 330 -l 250 -n -f 352 -l 250 -n -f 396 -l 500 -n -f 396 -l 500 -n -f 440'.
 		' -l 250 -n -f 440 -l 250 -n -f 440 -l 250 -n -f 440 -l 250 -n -f 396 -l 1000 -n -f 440 -l 250 -n -f 440 -l 250 -n -f 440'.
-		' -l 250 -n -f 440 -l 250 -n -f 396 -l 1000 -n -f 352 -l 250 -n -f 352 -l 250 -n -f 352 -l 250 -n -f 352 -l 250 -n -f 330'.
+		'-l 250 -n -f 440 -l 250 -n -f 396 -l 1000 -n -f 352 -l 250 -n -f 352 -l 250 -n -f 352 -l 250 -n -f 352 -l 250 -n -f 330'.
 		' -l 500 -n -f 330 -l 500 -n -f 297 -l 250 -n -f 297 -l 250 -n -f 297 -l 250 -n -f 396 -l 250 -n -f 264 -l 1000');
 		throw new SuccessException("DAM DAM DAAAAAAAM!");
 	}
@@ -344,7 +336,7 @@ final class Services {
 		return sha1(rand().microtime());
 	}
 
-	public function removeCR($string) {
+	public static function removeCR($string) {
 		return str_replace(array("\r\n", "\r"), "\n", $string);
 	}
 }
