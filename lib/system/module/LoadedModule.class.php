@@ -75,6 +75,14 @@ class LoadedModule {
 	}
 
 	/**
+	 * Returnes the complete class name of module cache
+	 * @return		string
+	 */
+	public function getCacheClassName() {
+		return $this->cacheClassName;
+	}
+	
+	/**
 	 * Returnes an unique hash for this module
 	 * @return string
 	 */
