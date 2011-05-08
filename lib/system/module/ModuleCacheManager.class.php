@@ -140,7 +140,7 @@ class ModuleCacheManager {
 		}
 
 		// return class name
-		return 'services\\module\\'.$loadedModuleInstance->getModuleHash().'\\'.basename($moduleInformation->general->mainfile, '.class.php');
+		return 'services\\modules\\'.$loadedModuleInstance->getModuleHash().'\\'.basename($moduleInformation->general->mainfile, '.class.php');
 	}
 
 	/**
