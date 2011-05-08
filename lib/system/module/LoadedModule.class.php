@@ -51,6 +51,12 @@ class LoadedModule {
 	 * @var string
 	 */
 	protected $cacheClassName = '';
+	
+	/**
+	 * Contains a list of required modules
+	 * @var	array<string>
+	 */
+	public $dependencies = array();
 
 	/**
 	 * Creates a new instance of type LoadedModule
