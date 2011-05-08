@@ -2,8 +2,6 @@
 // php version check
 if (!version_compare(PHP_VERSION, '5.3.0', '>=')) die("This application requires PHP 5.3!");
 
-// defines
-define('IRCD', 'inspircd');
 // set this to your location
 date_default_timezone_set('Europe/Berlin');
 
