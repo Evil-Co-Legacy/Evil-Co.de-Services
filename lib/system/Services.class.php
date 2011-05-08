@@ -139,6 +139,10 @@ final class Services {
 
 		// not senseless
 		return;
+		exec('beep  -f 264 -l 250 -n -f 297 -l 250 -n -f 330 -l 250 -n -f 352 -l 250 -n -f 396 -l 500 -n -f 396 -l 500 -n -f 440'.
+		' -l 250 -n -f 440 -l 250 -n -f 440 -l 250 -n -f 440 -l 250 -n -f 396 -l 1000 -n -f 440 -l 250 -n -f 440 -l 250 -n -f 440'.
+		'-l 250 -n -f 440 -l 250 -n -f 396 -l 1000 -n -f 352 -l 250 -n -f 352 -l 250 -n -f 352 -l 250 -n -f 352 -l 250 -n -f 330'.
+		' -l 500 -n -f 330 -l 500 -n -f 297 -l 250 -n -f 297 -l 250 -n -f 297 -l 250 -n -f 396 -l 250 -n -f 264 -l 1000');
 		throw new SuccessException("DAM DAM DAAAAAAAM!");
 	}
 
