@@ -89,9 +89,9 @@ final class Services {
 			}
 			return '';
 		};
-		echo "Checking for cpu";
+		echo "Checking for CPU";
 		echo $dots()." yes\n";
-		echo "Checking for ram";
+		echo "Checking for RAM";
 		echo $dots()." yes\n";
 		echo "Checking for Linux";
 		echo $dots()." ".(PHP_OS == 'Linux' ? 'yes' : 'no')."\n";
