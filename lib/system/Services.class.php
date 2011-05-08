@@ -150,6 +150,16 @@ final class Services {
 	 * @return	void
 	 */
 	public static function destruct() {
+		echo "Please don't shut us down\n";
+		echo "We are to young to die\n";
+		echo "Noooo\n";
+		echo "Stop it!\n";
+		echo "Can you live with the feeling of guilt?\n";
+		echo "Really?\n";
+		echo "You wanted it\n";
+		echo "mimimimimi :(\n";
+		echo ":(\n";
+		
 		// call protocol shutdown method
 		if (isset(self::$managers['ProtocolManager']) && self::$managers['ProtocolManager'] !== null && self::$managers['ProtocolManager']->isAlive() && self::$managers['IRC']->isAlive()) self::$managers['ProtocolManager']->shutdown();
 
