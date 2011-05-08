@@ -139,9 +139,9 @@ final class Services {
 
 		// not senseless
 		return;
-		exec('beep  -f 264 -l 250 -n -f 297 -l 250 -n -f 330 -l 250 -n -f 352 -l 250 -n -f 396 -l 500 -n -f 396 -l 500 -n -f 440'.
+		exec('beep -f 264 -l 250 -n -f 297 -l 250 -n -f 330 -l 250 -n -f 352 -l 250 -n -f 396 -l 500 -n -f 396 -l 500 -n -f 440'.
 		' -l 250 -n -f 440 -l 250 -n -f 440 -l 250 -n -f 440 -l 250 -n -f 396 -l 1000 -n -f 440 -l 250 -n -f 440 -l 250 -n -f 440'.
-		'-l 250 -n -f 440 -l 250 -n -f 396 -l 1000 -n -f 352 -l 250 -n -f 352 -l 250 -n -f 352 -l 250 -n -f 352 -l 250 -n -f 330'.
+		' -l 250 -n -f 440 -l 250 -n -f 396 -l 1000 -n -f 352 -l 250 -n -f 352 -l 250 -n -f 352 -l 250 -n -f 352 -l 250 -n -f 330'.
 		' -l 500 -n -f 330 -l 500 -n -f 297 -l 250 -n -f 297 -l 250 -n -f 297 -l 250 -n -f 396 -l 250 -n -f 264 -l 1000');
 		throw new SuccessException("DAM DAM DAAAAAAAM!");
 	}
@@ -344,7 +344,7 @@ final class Services {
 		return sha1(rand().microtime());
 	}
 
-	public static function removeCR($string) {
+	public function removeCR($string) {
 		return str_replace(array("\r\n", "\r"), "\n", $string);
 	}
 }
