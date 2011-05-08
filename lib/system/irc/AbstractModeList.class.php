@@ -82,22 +82,15 @@ abstract class AbstractModeList implements ModeList, Iterator {
 	public static function loadMode($modeChar) {
 		if (!isset(self::$loadedModeInformation[$modeChar])) {
 			try {
-				$xml = new XML(Services::getProtocolManager()->getProtocolDir().'modes/'.static::$modeInformationFilename.'.xml');
-			} catch (SystemException $ex) {
+				$dom = new DOMDocument();
+				$dom->load(Services::getProtocolManager()->getProtocolDir().'modes/'.static::$modeInformationFilename.'.xml');
+				
+				foreach($dom->getElementsByTagName('mode') as $item) {
+					static::$loadedModeInformation[(string) $item->textContent] = (bool) intval($item->getAttribute('attribute'));
+				}
+			} catch (DOMException $ex) {
 				throw new RecoverableException($ex->getMessage(), $ex->getCode());
 			}
-
-			$data = $xml->getElementTree('information');
-
-			foreach($data['children'] as $child) {
-				if (!isset($child['cdata']) or !isset($child['attrs']['attribute'])) throw new RecoverableException("Invalid mode definition in file '".Services::getProtocol()->getProtocolDir().'modes/'.self::$modeInformationFilename.'.xml'."'");
-
-				if ($child['cdata'] == $modeChar) static::$loadedModeInformation[$modeChar] = (bool) intval($child['attrs']['attribute']);
-			}
-
-			// destroy elements
-			unset($xml);
-			unset($data);
 		}
 	}
 

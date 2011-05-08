@@ -166,8 +166,8 @@ class ProtocolManager {
 			$dom = new DOMDocument();
 			$dom->load(DIR.self::PROTOCOL_PATH.$protocol.'/types.xml');
 			
-			foreach($dom->documentElement->childNodes as $item) {
-				$this->supportedTypes[(string) $item->nodeName->attributes->getNamedItem('type')] = $item->textContent;
+			foreach($dom->getElementsByTagName('type') as $item) {
+				$this->supportedTypes[(string) $item->getAttribute('type')] = $item->textContent;
 			}
 		} catch (DOMException $ex) {
 			// replace SystemExceptions with correct ProtocolException
