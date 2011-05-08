@@ -84,15 +84,21 @@ final class Services {
 		$f = new Zend_Text_Figlet(array('smushMode' => 7, 'font' => DIR.'font.gz'));
 		echo $f->render('Evil-Co.de - Services');
                 echo $f->render('v'.self::VERSION);
-		$progressBar = new Zend_ProgressBar(new Zend_ProgressBar_Adapter_Console(array('textWidth' => 30, 'elements' => array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT, Zend_ProgressBar_Adapter_Console::ELEMENT_BAR, Zend_ProgressBar_Adapter_Console::ELEMENT_TEXT, Zend_ProgressBar_Adapter_Console::ELEMENT_ETA))), 0, 1400);
-
+		$adapter = new Zend_ProgressBar_Adapter_Console(array('textWidth' => 30, 'elements' => array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT, Zend_ProgressBar_Adapter_Console::ELEMENT_BAR, Zend_ProgressBar_Adapter_Console::ELEMENT_TEXT, Zend_ProgressBar_Adapter_Console::ELEMENT_ETA)));
+		$adapter->setBarRightChar(' ');
+		$progressBar = new Zend_ProgressBar($adapter, 0, 1400);
 		define('DEBUG', isset(self::getArguments()->debug));
 		
-		$next = function ($step, $message) use ($progressBar) {
+		$next = function ($step, $message) use ($progressBar, $adapter) {
+			static $char;
+			$chars = array('-', '\\', '|', '/');
+			
 			if (defined('DEBUG') && DEBUG) return;
 			for ($i = 0; $i < 100; $i++) {
+				if ($i % 10 == 0) if (++$char > 3) $char = 0;
+				$adapter->setBarIndicatorChar($chars[$char]);
 				$progressBar->update($i + $step * 100 - 100, $message);
-				usleep(rand(1e6 / 160, 1e6 / 40));
+				usleep(1e6 / 80);
 			}
 		};
 		// init components
