@@ -116,6 +116,9 @@ final class Services {
 		$progressBar = new Zend_ProgressBar($adapter, 0, 1500);
 		define('DEBUG', isset(self::getArguments()->debug));
 		
+		// disable assertions if needed
+		if (!DEBUG) assert_options(ASSERT_ACTIVE, 0);
+		
 		$next = function ($step, $message) use ($progressBar, $adapter) {
 			static $char;
 			$chars = array('-', '\\', '|', '/');
@@ -298,6 +301,16 @@ final class Services {
 		if (!isset(self::$languages[$language])) self::$languages[$language] = new LanguageManager($language);
 
 		return self::$languages[$language];
+	}
+	
+	/**
+	 * Handles assertions
+	 * @param		string		$file
+	 * @param		integer		$line,
+	 * @param		integer		$code
+	 */
+	public static function handleAssertion($file, $line, $code) {
+		if (self::$managers['Logger']) self::$managers['Logger']->emerg("Assertion failed in file ".$file." on line ".$line." with code ".$code);
 	}
 
 	/**
