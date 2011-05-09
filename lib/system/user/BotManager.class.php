@@ -63,7 +63,7 @@ class BotManager extends AbstractUserTypeManager {
 			Services::getProtocolManager()->sendJoin($instance->getInstance()->uuid, Services::getConfiguration()->connection->servicechannel);
 			
 			// set op
-			Services::getProtocolManager()->sendMode($instance->getInstance()->uuid, Services::getConfiguration()->connection->servicechannel, '+o '.$instance->getInstance()->uuid);
+			Services::getProtocolManager()->userSendMode($instance->getInstance()->uuid, Services::getConfiguration()->connection->servicechannel, '+o '.$instance->getInstance()->nickname);
 		} else {
 			Services::getLogger()->info("No login information for Module found '".$instance->getModuleInformation()->moduleName."'");
 		}
