@@ -72,7 +72,11 @@ class InspIRCdProtocol implements Protocol {
 	 * @param		string		$modes
 	 */
 	public function formatMode($target, $modes) {
-		return "MODE ".$target." ".time()." ".$modes;
+		// use FMODE for channels
+		if ($target{0} == '#') return 'FMODE '.$target.' '.time().' '.$modes;
+		
+		// mode for users
+		return "MODE ".$target." ".$modes;
 	}
 	
 	/**
@@ -281,7 +285,7 @@ class InspIRCdProtocol implements Protocol {
 	 */
 	public function __call($methodName, $arguments) {
 		// handle user commands
-		if (substr($methodName, 8, 'userSend')) {
+		if (substr($methodName, 0, 8) == 'userSend') {
 			// try to find correct format method
 			if (method_exists($this, 'format'.substr($methodName, 8))) return Services::getIRC()->sendUserLine(':'.$arguments[0], call_user_func_array(array($this, 'format'.substr($methodName, 8)), array_slice($arguments, 1)));
 		}
