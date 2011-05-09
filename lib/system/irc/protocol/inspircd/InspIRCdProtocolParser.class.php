@@ -110,7 +110,8 @@ class InspIRCdProtocolParser {
 			$source = Services::getUserManager()->getUser(substr($lineEx[0], 1));
 
 			// validate
-			if ($source === null) throw new RecoverableException("Received message from non-existant user '".$lineEx[0]."'");
+			assert($source);
+			if ($source === null) return;
 
 			// delete first position in array
 			unset($lineEx[0]);
