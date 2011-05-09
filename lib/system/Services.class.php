@@ -9,6 +9,7 @@ date_default_timezone_set('Europe/Berlin');
 require_once(DIR.'lib/core.functions.php');
 require_once(DIR.'lib/system/event/EventHandler.class.php');
 require_once(DIR.'lib/system/irc/ChannelManager.class.php');
+require_once(DIR.'lib/system/irc/CommandManager.class.php');
 require_once(DIR.'lib/system/irc/IRC.class.php');
 require_once(DIR.'lib/system/irc/LineManager.class.php');
 require_once(DIR.'lib/system/irc/ProtocolManager.class.php');
@@ -104,7 +105,7 @@ final class Services {
                 echo $f->render('v'.self::VERSION);
 		$adapter = new Zend_ProgressBar_Adapter_Console(array('textWidth' => 30, 'elements' => array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT, Zend_ProgressBar_Adapter_Console::ELEMENT_BAR, Zend_ProgressBar_Adapter_Console::ELEMENT_TEXT, Zend_ProgressBar_Adapter_Console::ELEMENT_ETA)));
 		$adapter->setBarRightChar(' ');
-		$progressBar = new Zend_ProgressBar($adapter, 0, 1400);
+		$progressBar = new Zend_ProgressBar($adapter, 0, 1500);
 		define('DEBUG', isset(self::getArguments()->debug));
 		
 		$next = function ($step, $message) use ($progressBar, $adapter) {
@@ -142,13 +143,15 @@ final class Services {
 		self::$managers['ServerManager'] = new ServerManager();
 		$next(10, 'Initialising LineManager');
 		self::$managers['LineManager'] = new LineManager();
-		$next(11, 'Initialising ModuleManager');
+		$next(11, 'Initialising CommandManager');
+		self::$managers['CommandManager'] = new CommandManager();
+		$next(12, 'Initialising ModuleManager');
 		self::$managers['ModuleManager'] = new ModuleManager();
-		$next(12, 'Initialising IRC');
+		$next(13, 'Initialising IRC');
 		self::$managers['IRC'] = new IRC();
-		$next(13, 'Initialising ProtocolManager');
+		$next(14, 'Initialising ProtocolManager');
 		self::$managers['ProtocolManager'] = new ProtocolManager();
-		$next(14, 'Connecting');
+		$next(15, 'Connecting');
 		$progressBar->finish();
 		// start connection
 		self::getProtocolManager()->initConnection();
