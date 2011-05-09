@@ -255,7 +255,7 @@ class InspIRCdProtocol implements Protocol {
 
 	protected function parseSTDIN() {
 		$read = array();
-		$read[] = fopen('php://stdin', 'r');
+		$read[] = STDIN;
 		$write = $except = null;
 		$tv = 0;
 		if (stream_select($read, $write, $except, $tv) !== false) {
