@@ -126,10 +126,10 @@ class ModuleManager implements Iterator {
 			if ($module->type != ModuleInstance::TYPE_BOT) continue;
 
 			// register bot at botmanager
-			Services::getBotManager()->registerBot($module->instance, BotManager::REGISTER_AUTOMATIC);
+			Services::getBotManager()->registerBot($module, BotManager::REGISTER_AUTOMATIC);
 
 			// register bot at commandmanager
-			Services::getCommandManager()->registerBot($module->instance);
+			Services::getCommandManager()->registerBot($module);
 		}
 	}
 
