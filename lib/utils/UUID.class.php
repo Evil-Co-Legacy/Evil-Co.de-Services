@@ -47,6 +47,9 @@ class UUID {
 	 * @return	string
 	 */
 	public function generate($prefix = null) {
+		// get server uuid if needed
+		if ($prefix === null) $prefix = Services::getProtocol(Services::getConfiguration()->connection->numeric);
+		
 		// get rest
 		$rest = self::$userID++;
 		$uuid = '';
@@ -58,7 +61,7 @@ class UUID {
 		$uuid = str_pad($uuid, 6, 'A', STR_PAD_LEFT);
 
 		// handle prefix
-		if ($prefix !== null) $uuid = $prefix.$uuid;
+		$uuid = $prefix.$uuid;
 
 		return $uuid;
 	}
