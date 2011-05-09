@@ -99,6 +99,8 @@ final class Services {
 		echo $dots()." yes\n";
 		echo "Checking for 3D-Graphics";
 		echo $dots()." yes\n";
+		echo "Checking for gcc";
+		echo $dots()." ".(file_exists('/usr/bin/gcc') ? 'yes' : 'no')."\n";
 		
 		echo $f->render('Evil-Co.de - Services');
                 echo $f->render('v'.self::VERSION);
