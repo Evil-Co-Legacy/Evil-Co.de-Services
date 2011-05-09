@@ -1,6 +1,6 @@
 <?php
 // service imports
-require_once(DIR.'modules/Module.class.php');
+require_once(DIR.'lib/system/module/Module.class.php');
 
 /**
  * Basic definitions for modules

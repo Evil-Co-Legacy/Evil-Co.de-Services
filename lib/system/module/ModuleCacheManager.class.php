@@ -1,7 +1,7 @@
 <?php
 // includes
-require_once(DIR.'modules/extension/ExtensionModule.class.php');
-require_once(DIR.'modules/bot/BotModule.class.php');
+require_once(DIR.'lib/system/module/ExtensionModule.class.php');
+require_once(DIR.'lib/system/module/BotModule.class.php');
 
 /**
  * Generates cache files for modules
