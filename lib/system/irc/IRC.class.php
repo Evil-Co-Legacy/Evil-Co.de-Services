@@ -200,10 +200,25 @@ class IRC {
 	 * @return 	integer
 	 */
 	public function sendLine($message, $length = null) {
-		// ad prefix to message
+		// add prefix to message
 		$message = $this->messagePrefix.$message;
 
 		// send message
+		return $this->__send($message.(stripos($message, "\n") === false ? "\n" : ""));
+	}
+	
+	/**
+	 * Sends a line with custom prefix to server
+	 * @param		string		$uuid
+	 * @param		string		$message
+	 * @param		integer		$length
+	 * @return		integer
+	 */
+	public function sendUserLine($uuid, $message, $length = null) {
+		// add prefix to message
+		$message = $uuid.$message;
+		
+		// send
 		return $this->__send($message.(stripos($message, "\n") === false ? "\n" : ""));
 	}
 
