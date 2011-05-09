@@ -310,7 +310,7 @@ final class Services {
 	 * @param		integer		$code
 	 */
 	public static function handleAssertion($file, $line, $code) {
-		if (self::$managers['Logger']) self::$managers['Logger']->emerg("Assertion failed in file ".$file." on line ".$line." with code ".$code);
+		if (self::$managers['Logger']) self::$managers['Logger']->emerg("Assertion failed in file ".$file." on line ".$line);
 	}
 
 	/**
