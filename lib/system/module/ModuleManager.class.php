@@ -147,7 +147,7 @@ class ModuleManager implements Iterator {
 			if ($module->type != ModuleInstance::TYPE_COMMAND) continue;
 
 			// register at command manager
-			Services::getCommandManager()->registerCommand($module->instance);
+			Services::getCommandManager()->registerCommand($module);
 		}
 	}
 
@@ -165,7 +165,7 @@ class ModuleManager implements Iterator {
 			if ($module->type != ModuleInstance::TYPE_EXTENSION) continue;
 
 			// init extension
-			$module->instance->init();
+			$module->getInstance()->init();
 		}
 	}
 
