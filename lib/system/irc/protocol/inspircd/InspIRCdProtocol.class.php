@@ -49,6 +49,15 @@ class InspIRCdProtocol implements Protocol {
 	}
 
 	/**
+	 * Formates the fjoin command
+	 * @param		string		$uuid
+	 * @param		string		$channel
+	 */
+	public function formatJoin($uuid, $channel) {
+		return "FJOIN ".$channel." ".time()." + :,".$uuid;
+	}
+	
+	/**
 	 * Formates the given message string
 	 * @param	string	$target
 	 * @param	string	$message
@@ -57,6 +66,15 @@ class InspIRCdProtocol implements Protocol {
 		return "PRIVMSG ".$target." :".$message;
 	}
 
+	/**
+	 * Formates the mode command
+	 * @param		string		$target
+	 * @param		string		$modes
+	 */
+	public function formatMode($target, $modes) {
+		return "MODE ".$target." ".time()." ".$modes;
+	}
+	
 	/**
 	 * Formates the ping command
 	 * @param	string	$target
@@ -73,6 +91,21 @@ class InspIRCdProtocol implements Protocol {
 	 */
 	public function formatPong($target) {
 		return "PONG ".Services::getConfiguration()->connection->numeric." ".$target;
+	}
+	
+	/**
+	 * Formates the UID command
+	 * @param		string		$uid
+	 * @param		string		$nickname
+	 * @param		string		$hostname
+	 * @param		string		$displayedHostname
+	 * @param		string		$ident
+	 * @param		string		$ip
+	 * @param		string		$modes
+	 * @param		string		$gecos
+	 */
+	public function formatUid($uid, $nickname, $hostname, $displayedHostname, $ident, $ip, $modes, $gecos) {
+		return "UID ".$uid." ".time()." ".$nickname." ".$hostname." ".$displayedHostname." ".$ident." ".$ip." 1 ".$modes." :".$gecos;
 	}
 
 	/**
