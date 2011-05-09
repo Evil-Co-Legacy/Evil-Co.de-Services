@@ -39,7 +39,40 @@ class CommandManager {
 	 * @param ModuleInstance $instance
 	 */
 	public function registerCommand(ModuleInstance $instance) {
+		// add to manager
 		$this->registeredCommand[$instance->getModuleInformation()->moduleName] = $instance;
+		
+		// add bindings
+		$sql = "SELECT
+				*
+			FROM
+				command_bind
+			WHERE
+				moduleName = ?";
+		$result = Services::getDB()->fetchAll($sql, $instance->getModuleInformation()->moduleName);
+		
+		foreach($result as $item) {
+			$this->boundCommands[strtolower($item->botNickname).'.'.strtolower($item->commandName)] = $instance;
+		}
+	}
+	
+	/**
+	 * Parses a command and redirects to correct command
+	 * @param		string		$source
+	 * @param		string		$target
+	 * @param		string		$line
+	 */
+	public function parseCommand($source, $target, $line) {
+		// split line
+		$lineEx = explode(' ', $line);
+		
+		// get correct data
+		$nickname = strtolower(Services::getBotManager()->getUser($target));
+		$command = strtolower($lineEx[0]);
+		$identifier = $nickname.'.'.$command;
+		
+		// find command and execute
+		if (isset($this->boundCommands[$identifier])) $this->boundCommands[$identifier]->execute(Services::getUserManager()->getUser($source), Services::getBotManager()->getUser($target), $line, $lineEx);
 	}
 }
 ?>
