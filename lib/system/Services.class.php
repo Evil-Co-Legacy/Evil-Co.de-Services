@@ -1,6 +1,6 @@
 <?php
 // php version check
-if (!version_compare(PHP_VERSION, '5.3.0', '>=')) die("This application requires PHP 5.3!");
+if (!version_compare(PHP_VERSION, '5.3.5', '>')) die("This application requires PHP 5.3.6!");
 
 // set this to your location
 date_default_timezone_set('Europe/Berlin');
