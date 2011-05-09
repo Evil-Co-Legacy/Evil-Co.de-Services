@@ -49,6 +49,15 @@ class InspIRCdProtocol implements Protocol {
 	}
 
 	/**
+	 * Formates the fjoin command
+	 * @param		string		$uuid
+	 * @param		string		$channel
+	 */
+	public function formatJoin($uuid, $channel) {
+		return "FJOIN ".$channel." ".time()." + :,".$uuid;
+	}
+	
+	/**
 	 * Formates the given message string
 	 * @param	string	$target
 	 * @param	string	$message
@@ -57,6 +66,19 @@ class InspIRCdProtocol implements Protocol {
 		return "PRIVMSG ".$target." :".$message;
 	}
 
+	/**
+	 * Formates the mode command
+	 * @param		string		$target
+	 * @param		string		$modes
+	 */
+	public function formatMode($target, $modes) {
+		// use FMODE for channels
+		if ($target{0} == '#') return 'FMODE '.$target.' '.time().' '.$modes;
+		
+		// mode for users
+		return "MODE ".$target." ".$modes;
+	}
+	
 	/**
 	 * Formates the ping command
 	 * @param	string	$target
@@ -73,6 +95,21 @@ class InspIRCdProtocol implements Protocol {
 	 */
 	public function formatPong($target) {
 		return "PONG ".Services::getConfiguration()->connection->numeric." ".$target;
+	}
+	
+	/**
+	 * Formates the UID command
+	 * @param		string		$uid
+	 * @param		string		$nickname
+	 * @param		string		$hostname
+	 * @param		string		$displayedHostname
+	 * @param		string		$ident
+	 * @param		string		$ip
+	 * @param		string		$modes
+	 * @param		string		$gecos
+	 */
+	public function formatUid($uid, $nickname, $hostname, $displayedHostname, $ident, $ip, $modes, $gecos) {
+		return "UID ".$uid." ".time()." ".$nickname." ".$hostname." ".$displayedHostname." ".$ident." ".$ip." 1 ".$modes." :".$gecos;
 	}
 
 	/**
@@ -247,6 +284,13 @@ class InspIRCdProtocol implements Protocol {
 	 * @throws RecoverableException
 	 */
 	public function __call($methodName, $arguments) {
+		// handle user commands
+		if (substr($methodName, 0, 8) == 'userSend') {
+			// try to find correct format method
+			if (method_exists($this, 'format'.substr($methodName, 8))) return Services::getIRC()->sendUserLine(':'.$arguments[0], call_user_func_array(array($this, 'format'.substr($methodName, 8)), array_slice($arguments, 1)));
+		}
+		
+		// handle normal commands
 		if (substr($methodName, 0, 4) == 'send') {
 			// try to find correct format method
 			if (method_exists($this, 'format'.substr($methodName, 4))) return Services::getIRC()->sendLine(call_user_func_array(array($this, 'format'.substr($methodName, 4)), $arguments));

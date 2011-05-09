@@ -51,6 +51,18 @@ class LoadedModule {
 	 * @var string
 	 */
 	protected $cacheClassName = '';
+	
+	/**
+	 * Contains additional strings for module hash
+	 * @var string
+	 */
+	protected $hash = '';
+	
+	/**
+	 * Contains a list of required modules
+	 * @var	array<string>
+	 */
+	public $dependencies = array();
 
 	/**
 	 * Creates a new instance of type LoadedModule
@@ -61,6 +73,7 @@ class LoadedModule {
 		// handle arguments
 		$this->moduleName = $moduleName;
 		$this->loadType = $loadType;
+		$this->hash = time();
 
 		// load or generate cache
 		if ($this->loadType != self::LOAD_DUMMY) $this->cacheClassName = ModuleCacheManager::getInstance()->getCache($moduleName, $this);
@@ -75,11 +88,19 @@ class LoadedModule {
 	}
 
 	/**
+	 * Returnes the complete class name of module cache
+	 * @return		string
+	 */
+	public function getCacheClassName() {
+		return $this->cacheClassName;
+	}
+	
+	/**
 	 * Returnes an unique hash for this module
 	 * @return string
 	 */
 	public function getModuleHash() {
-		return spl_object_hash($this);
+		return 'Module_'.$this->hash.'_'.spl_object_hash($this);
 	}
 }
 ?>

@@ -9,14 +9,6 @@
 interface UserType {
 
 	/**
-	 * Creates a new instance of UserType
-	 *
-	 * @param	mixed	$userID
-	 * @param	array	$data
-	 */
-	public function __construct($userID, $data = array());
-
-	/**
 	 * Sets a user property
 	 *
 	 * @param	string	$property

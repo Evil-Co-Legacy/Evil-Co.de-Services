@@ -77,6 +77,22 @@ class ModuleInstance extends DevNull {
 		else
 			$this->type = self::TYPE_DUMMY;
 	}
+	
+	/**
+	 * Returnes the current module instance
+	 * @return		Module
+	 */
+	public function getInstance() {
+		return $this->instance;
+	}
+	
+	/**
+	 * Returnes information about this module
+	 * @return		LoadedModule
+	 */
+	public function getModuleInformation() {
+		return $this->moduleInformation;
+	}
 
 	/**
 	 * Handles external calls ...

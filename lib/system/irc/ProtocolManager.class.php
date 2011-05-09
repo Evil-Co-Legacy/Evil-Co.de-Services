@@ -193,7 +193,7 @@ class ProtocolManager {
 	 * @return mixed
 	 */
 	public function __call($method, $arguments) {
-		if (method_exists($this->protocol, $method) or substr($method, 0, 4) == 'send')
+		if (method_exists($this->protocol, $method) or substr($method, 0, 4) == 'send' or substr($method, 0, 8) == 'userSend' or false)
 			return call_user_func_array(array($this->protocol, $method), $arguments);
 
 		// method not found ...

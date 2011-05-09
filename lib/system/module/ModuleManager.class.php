@@ -126,10 +126,10 @@ class ModuleManager implements Iterator {
 			if ($module->type != ModuleInstance::TYPE_BOT) continue;
 
 			// register bot at botmanager
-			Services::getBotManager()->registerBot($module->instance, BotManager::REGISTER_AUTOMATIC);
+			Services::getBotManager()->registerBot($module, BotManager::REGISTER_AUTOMATIC);
 
 			// register bot at commandmanager
-			Services::getCommandManager()->registerBot($module->instance);
+			Services::getCommandManager()->registerBot($module);
 		}
 	}
 
@@ -147,7 +147,7 @@ class ModuleManager implements Iterator {
 			if ($module->type != ModuleInstance::TYPE_COMMAND) continue;
 
 			// register at command manager
-			Services::getCommandManager()->registerCommand($module->instance);
+			Services::getCommandManager()->registerCommand($module);
 		}
 	}
 
@@ -165,7 +165,7 @@ class ModuleManager implements Iterator {
 			if ($module->type != ModuleInstance::TYPE_EXTENSION) continue;
 
 			// init extension
-			$module->instance->init();
+			$module->getInstance()->init();
 		}
 	}
 
@@ -226,9 +226,8 @@ class ModuleManager implements Iterator {
 
 				// create instances
 				foreach($modules as $module) {
-					$place = $this->getModule($module->moduleName);
-					if ($place === self::NONEXISTANT_MODULE_INSTANCE) $this->loadModule($module->moduleName);
-					$this->moduleInstances[] = new ModuleInstance($this->getModule($module->moduleName));
+					$this->loadedModules[] = $module;
+					$this->moduleInstances[] = new ModuleInstance($module);
 				}
 			break;
 		}
