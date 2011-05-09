@@ -280,6 +280,13 @@ class InspIRCdProtocol implements Protocol {
 	 * @throws RecoverableException
 	 */
 	public function __call($methodName, $arguments) {
+		// handle user commands
+		if (substr($methodName, 8, 'userSend')) {
+			// try to find correct format method
+			if (method_exists($this, 'format'.substr($methodName, 8))) return Services::getIRC()->sendUserLine(':'.$arguments[0], call_user_func_array(array($this, 'format'.substr($methodName, 8)), array_slice($arguments, 1)));
+		}
+		
+		// handle normal commands
 		if (substr($methodName, 0, 4) == 'send') {
 			// try to find correct format method
 			if (method_exists($this, 'format'.substr($methodName, 4))) return Services::getIRC()->sendLine(call_user_func_array(array($this, 'format'.substr($methodName, 4)), $arguments));
