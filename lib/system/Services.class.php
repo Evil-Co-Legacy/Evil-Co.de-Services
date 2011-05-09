@@ -105,6 +105,8 @@ final class Services {
 			echo "Checking for g++";
 			echo $dots()." ".(file_exists('/usr/bin/g++') ? 'yes' : 'no')."\n";
 		}
+		echo "Checking for over ninethousand";
+		echo $dots()." ".(PHP_INT_MAX > 9000 ? 'yes' : 'no')."\n";
 		
 		echo $f->render('Evil-Co.de - Services');
                 echo $f->render('v'.self::VERSION);
