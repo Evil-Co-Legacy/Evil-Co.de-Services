@@ -97,7 +97,8 @@ class InspIRCdProtocolParser {
 			$source = Services::getServerManager()->getServerByIdentifier(substr($lineEx[0], 1));
 
 			// validate
-			if ($source === null) throw new RecoverableException("Received message from non-existant server '".$lineEx[0]."'");
+			assert($source);
+			if ($source === null) return;
 
 			// delete first position in array
 			unset($lineEx[0]);
