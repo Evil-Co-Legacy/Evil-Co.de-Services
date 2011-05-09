@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<!-- [REQUIRED] General module information -->
+	<general>
+		<modulename><![CDATA[Test Bot]]></modulename> <!-- [REQUIRED] Name that will appear in full module list or webinterfaces -->
+		<moduledescription><![CDATA[Implements a default bot that does nothing ...]]></moduledescription> <!-- [REQUIRED] Description that will appear in full module list or webinterface -->
+		<mainfile><![CDATA[TestBot.class.php]]></mainfile> <!-- [REQUIRED] Main class (This will used to load module) -->
+		<version><![CDATA[1.0.0]]></version> <!-- [REQUIRED] Version that will appear in ... -->
+	</general>
+
+	<!-- [REQUIRED] Author information -->
+	<authorinformation>
+		<author><![CDATA[Johannes "Akkarin" Donath]]></author> <!-- [REQUIRED] Author's name (Will appear ...) -->
+	</authorinformation>
+</module>
