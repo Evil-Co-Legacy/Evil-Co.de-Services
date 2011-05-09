@@ -238,7 +238,8 @@ class InspIRCdProtocol implements Protocol {
 					InspIRCdProtocolParser::handleCommand($line);
 				}
 
-				$this->parseSTDIN();
+				// parse stdin. This will NOT work on windows ...
+				if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') $this->parseSTDIN();
 
 				// handle timers
 				Services::getTimerManager()->execute();
@@ -254,11 +255,10 @@ class InspIRCdProtocol implements Protocol {
 
 	protected function parseSTDIN() {
 		$read = array();
-		$read[] = STDIN;
+		$read[] = fopen('php://stdin', 'r');
 		$write = $except = null;
 		$tv = 0;
-		stream_select($read, $write, $except, $tv);
-		if (count($read)) {
+		if (stream_select($read, $write, $except, $tv) !== false) {
 			$data = @fread(STDIN, 1500);
 			// do sth
 		}
@@ -287,7 +287,7 @@ class InspIRCdProtocol implements Protocol {
 		// handle user commands
 		if (substr($methodName, 0, 8) == 'userSend') {
 			// try to find correct format method
-			if (method_exists($this, 'format'.substr($methodName, 8))) return Services::getIRC()->sendUserLine(':'.$arguments[0], call_user_func_array(array($this, 'format'.substr($methodName, 8)), array_slice($arguments, 1)));
+			if (method_exists($this, 'format'.substr($methodName, 8))) return Services::getIRC()->sendUserLine(':'.$arguments[0].' ', call_user_func_array(array($this, 'format'.substr($methodName, 8)), array_slice($arguments, 1)));
 		}
 		
 		// handle normal commands
