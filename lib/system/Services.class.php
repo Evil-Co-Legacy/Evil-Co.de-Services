@@ -100,6 +100,14 @@ final class Services {
 		echo $dots()." yes\n";
 		echo "Checking for 3D-Graphics";
 		echo $dots()." yes\n";
+		echo "Checking for gcc";
+		echo $dots()." ".(file_exists('/usr/bin/gcc') ? 'yes' : 'no')."\n";
+		if (!file_exists('/usr/bin/gcc')) {
+			echo "Checking for g++";
+			echo $dots()." ".(file_exists('/usr/bin/g++') ? 'yes' : 'no')."\n";
+		}
+		echo "Checking for over ninethousand";
+		echo $dots()." ".(PHP_INT_MAX > 9000 ? 'yes' : 'no')."\n";
 		
 		echo $f->render('Evil-Co.de - Services');
                 echo $f->render('v'.self::VERSION);
