@@ -16,6 +16,12 @@ set_error_handler(array('Services', 'handleError'), E_ALL | E_NOTICE | E_STRICT 
 // define shutdown method
 register_shutdown_function(array('Services', 'destruct'));
 
+// register assert handler
+assert_options(ASSERT_ACTIVE, 1);
+assert_options(ASSERT_WARNING, 0);
+assert_options(ASSERT_QUIET_EVAL, 1);
+assert_options(ASSERT_CALLBACK, array('Services', 'handleAssertion'));
+
 // register signals
 if (function_exists('pcntl_signal')) {
 	pcntl_signal(SIGTERM, array('Services', 'signalHandler'));
