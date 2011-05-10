@@ -2,7 +2,7 @@
 if [ test $1 ]; then
 	if [ "$1" == "start" ]; then
 		if [ test -e ./services.pid ]; then
-			echo "Error: The application runs already!"
+			echo "Error: The application is already running!"
 			echo "If you're sure that the application does not run delete the file services.pid!"
 		else
 			echo "Starting services ..."
